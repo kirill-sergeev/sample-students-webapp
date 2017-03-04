@@ -2,12 +2,11 @@ package com.sergeev.studapp.dao;
 
 import com.sergeev.studapp.model.Identified;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface GenericDao<T extends Identified<PK>, PK extends Serializable> {
+public interface GenericDao<T extends Identified<PK>, PK extends Integer> {
 
-    void persist(T object) throws PersistException;
+    T persist(T object) throws PersistException;
 
     T getByPK(PK key) throws PersistException;
 

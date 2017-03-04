@@ -62,7 +62,7 @@ public class Lesson implements Identified<Integer> {
                 '}';
     }
 
-    public enum Type implements Identified<Integer> {
+    public enum Type {
 
         PRACTICAL(1, "Practical"),
         LECTURE(2, "Lecture"),
@@ -100,7 +100,7 @@ public class Lesson implements Identified<Integer> {
         }
     }
 
-    public enum Order implements Identified<Integer> {
+    public enum Order {
 
         FIRST(1, Time.valueOf("07:45:00"), Time.valueOf("09:20:00")),
         SECOND(2, Time.valueOf("09:30:00"), Time.valueOf("11:05:00")),

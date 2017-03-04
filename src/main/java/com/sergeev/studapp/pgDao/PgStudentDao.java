@@ -4,6 +4,7 @@ import com.sergeev.studapp.dao.PersistException;
 import com.sergeev.studapp.dao.StudentDao;
 import com.sergeev.studapp.model.Student;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -13,12 +14,12 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
 
     @Override
     public String getSelectQuery() {
-        return "SELECT * FROM students WHERE student_id= ?;";
+        return "SELECT * FROM students WHERE student_id= ? ORDER BY first_name, last_name;";
     }
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM students;";
+        return "SELECT * FROM students ORDER BY first_name, last_name;";
     }
 
     @Override
@@ -77,5 +78,25 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
             throw new PersistException(e);
         }
     }
+
+    @Override
+    public List<Student> getByName(String name) throws PersistException {
+        List<Student> list;
+        String sql = "SELECT * FROM students WHERE first_name||' '||last_name LIKE (?);";
+        Connection connection = PgDaoFactory.createConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, "%" + name + "%");
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistException("Record not found.");
+        }
+        return list;
+    }
+
+
 
 }

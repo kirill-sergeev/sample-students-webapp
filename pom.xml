@@ -48,10 +48,17 @@
         </dependency>
 
         <dependency>
-            <groupId>jstl</groupId>
+            <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.0.0-alpha.6-1</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

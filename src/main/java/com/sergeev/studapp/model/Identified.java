@@ -1,7 +1,6 @@
 package com.sergeev.studapp.model;
 
-import java.io.Serializable;
-
-public interface Identified<PK extends Serializable> {
+public interface Identified<PK extends Integer> {
     PK getId();
+    void setId(Integer id);
 }
