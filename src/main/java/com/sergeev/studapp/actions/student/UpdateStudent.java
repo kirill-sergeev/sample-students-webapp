@@ -1,4 +1,4 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.actions.student;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.GroupDao;

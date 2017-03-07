@@ -3,6 +3,7 @@ package com.sergeev.studapp.actions;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
+import com.sergeev.studapp.model.Teacher;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,13 +17,17 @@ import java.util.List;
 @WebServlet(name = "TeacherServlet", urlPatterns = "/teacher")
 public class TeacherServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Course> courses = new ArrayList<>();
         Integer teacherId = Integer.valueOf(request.getParameter("id"));
+        Teacher teacher = new Teacher();
+        List<Course> courses = new ArrayList<>();
+
         try {
+            teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getByPK(teacherId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByTeacher(teacherId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
+        request.setAttribute("teacher", teacher);
         request.setAttribute("courses", courses);
         request.getRequestDispatcher("teacher.jsp").forward(request, response);
     }

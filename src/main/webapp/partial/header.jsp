@@ -11,7 +11,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="groups">All groups</a>
+                <a class="nav-link" href="groups">Groups</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="students">Students</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="teachers">Teachers</a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="new-student">Add a new student...</a>

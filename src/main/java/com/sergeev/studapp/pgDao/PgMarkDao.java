@@ -4,6 +4,7 @@ import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -78,4 +79,23 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
             throw new PersistentException(e);
         }
     }
+
+    @Override
+    public Double getAvgMark(Integer studentId, Integer disciplineId) throws PersistentException {
+        Double avgMark;
+        String sql = "SELECT student_avg_mark_by_discipline(?,?);";
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, studentId);
+            statement.setInt(2, disciplineId);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            avgMark=rs.getDouble(1);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        return avgMark;
+    }
+
+
 }

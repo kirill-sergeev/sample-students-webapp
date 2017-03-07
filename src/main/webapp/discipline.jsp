@@ -1,14 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="discipline" scope="request" type="com.sergeev.studapp.model.Discipline"/>
+<jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
+
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Discipline info"/>
 </jsp:include>
-<jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
 
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-8">
-            <h3>Courses by discipline</h3>
+            <h3>Courses in ${discipline.title}</h3>
             <c:choose>
                 <c:when test="${empty courses}">
                     <div class="alert alert-warning text-center" role="alert">

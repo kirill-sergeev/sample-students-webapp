@@ -1,6 +1,7 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.actions.student;
 
 import com.sergeev.studapp.dao.DaoFactory;
+import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
 
@@ -11,22 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet(name = "GroupListServlet", urlPatterns = "/groups")
-public class GroupListServlet extends HttpServlet {
+@WebServlet(name = "NewStudent", urlPatterns = "/new-student")
+public class NewStudent extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Group> groups = new ArrayList<>();
+        DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
+        GroupDao gd = pgFactory.getGroupDao();
+        ArrayList<Group> gr = new ArrayList<>();
 
         try {
-            groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
-
+            gr = (ArrayList<Group>) gd.getAll();
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("groups", groups);
-        request.getRequestDispatcher("groups.jsp").forward(request, response);
+        request.setAttribute("groups", gr);
+        request.getRequestDispatcher("new-student.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

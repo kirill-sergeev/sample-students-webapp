@@ -3,6 +3,7 @@ package com.sergeev.studapp.actions;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
+import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Student;
 
 import javax.servlet.ServletException;
@@ -17,16 +18,20 @@ import java.util.List;
 @WebServlet(name = "GroupServlet", urlPatterns = "/group")
 public class GroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer groupId = Integer.valueOf(request.getParameter("id"));
+        Group group = new Group();
         List<Student> students = new ArrayList<>();
         List<Course> courses = new ArrayList<>();
-        Integer groupId = Integer.valueOf(request.getParameter("id"));
+
         try {
+            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
             students = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByGroup(groupId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
+        request.setAttribute("group", group);
         request.setAttribute("students", students);
         request.setAttribute("courses", courses);
         request.getRequestDispatcher("group.jsp").forward(request, response);

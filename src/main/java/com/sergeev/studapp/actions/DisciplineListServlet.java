@@ -20,7 +20,6 @@ public class DisciplineListServlet extends HttpServlet {
 
         try {
             disciplines = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getAll();
-
         } catch (PersistentException e) {
             e.printStackTrace();
         }

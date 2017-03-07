@@ -82,6 +82,24 @@ public class PgCourseDao extends PgGenericDao<Course, Integer> implements Course
     }
 
     @Override
+    public List<Course> getByDiscipline(Integer disciplineId) throws PersistentException {
+        List<Course> list;
+        String sql = "SELECT * FROM courses WHERE discipline_id= ?;";
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, disciplineId);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
+    }
+
+    @Override
     public List<Course> getByGroup(Integer groupId) throws PersistentException {
         List<Course> list;
         String sql = "SELECT * FROM courses WHERE group_id= ?;";

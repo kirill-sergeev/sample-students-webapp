@@ -1,13 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include flush="true" page="partial/header.jsp">
-    <jsp:param name="title" value="Change student info"/>
-</jsp:include>
+
 <jsp:useBean id="groups" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Group>"/>
 <jsp:useBean id="firstName" scope="request" type="java.lang.String"/>
 <jsp:useBean id="lastName" scope="request" type="java.lang.String"/>
 <jsp:useBean id="group" scope="request" type="java.lang.Integer"/>
 <jsp:useBean id="id" scope="request" type="java.lang.Integer"/>
+
+<jsp:include flush="true" page="partial/header.jsp">
+    <jsp:param name="title" value="Change student info"/>
+</jsp:include>
 
 <div class="container">
     <div class="row justify-content-md-center">
@@ -38,4 +40,4 @@
     </div>
 </div>
 
-<jsp:include flush="true" page="partial/footer.jsp"></jsp:include>
+<jsp:include flush="true" page="partial/footer.jsp"/>

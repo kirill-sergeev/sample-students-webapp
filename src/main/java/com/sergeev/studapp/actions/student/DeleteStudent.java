@@ -1,10 +1,8 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.actions.student;
 
 import com.sergeev.studapp.dao.DaoFactory;
-import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.StudentDao;
-import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Student;
 
 import javax.servlet.ServletException;
@@ -14,30 +12,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "CreateStudent", urlPatterns = "/create-student")
-public class CreateStudent extends HttpServlet {
+@WebServlet(name = "DeleteStudent", urlPatterns = "/delete-student")
+public class DeleteStudent extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String firstName = request.getParameter("first-name");
-        String lastName = request.getParameter("last-name");
-        String group = request.getParameter("group");
+        String studentId = request.getParameter("student");
         DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
         StudentDao sd = pgFactory.getStudentDao();
-        GroupDao grd = pgFactory.getGroupDao();
-        Student st = new Student();
-        Group gr = new Group();
-        st.setFirstName(firstName);
-        st.setLastName(lastName);
+        Student student = new Student();
+        student.setId(Integer.parseInt(studentId));
 
         try {
-            gr = grd.getByPK(Integer.valueOf(group));
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        st.setGroup(gr);
-
-        try {
-            sd.persist(st);
+            sd.delete(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
