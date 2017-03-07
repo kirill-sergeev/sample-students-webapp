@@ -2,7 +2,7 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.dao.StudentDao;
+import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Student;
 
 import javax.servlet.ServletException;
@@ -12,23 +12,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-@WebServlet(name = "SearchStudent", urlPatterns = "/search-student")
-public class SearchStudent extends HttpServlet {
+@WebServlet(name = "GroupServlet", urlPatterns = "/group")
+public class GroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-        StudentDao sd = pgFactory.getStudentDao();
-        ArrayList<Student> st = new ArrayList<>();
-
+        List<Student> students = new ArrayList<>();
+        List<Course> courses = new ArrayList<>();
+        Integer groupId = Integer.valueOf(request.getParameter("id"));
         try {
-            st = (ArrayList<Student>) sd.getByName(name);
+            students = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByGroup(groupId);
+            courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("students", st);
-        request.getRequestDispatcher("students.jsp").forward(request, response);
+        request.setAttribute("students", students);
+        request.setAttribute("courses", courses);
+        request.getRequestDispatcher("group.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

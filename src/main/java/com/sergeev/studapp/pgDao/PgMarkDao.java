@@ -1,7 +1,7 @@
 package com.sergeev.studapp.pgDao;
 
 import com.sergeev.studapp.dao.MarkDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
 
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
     }
 
     @Override
-    protected List<Mark> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Mark> parseResultSet(ResultSet rs) throws PersistentException {
         List<Mark> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -51,31 +51,31 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
                 result.add(mark);
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Mark object) throws PersistException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Mark object) throws PersistentException {
         try {
             statement.setInt(1, object.getLesson().getId());
             statement.setInt(2, object.getStudent().getId());
             statement.setInt(3, object.getValue());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Mark object) throws PersistException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Mark object) throws PersistentException {
         try {
             statement.setInt(1, object.getLesson().getId());
             statement.setInt(2, object.getStudent().getId());
             statement.setInt(3, object.getValue());
             statement.setInt(4, object.getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 }

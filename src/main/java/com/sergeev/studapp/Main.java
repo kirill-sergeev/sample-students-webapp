@@ -2,14 +2,14 @@ package com.sergeev.studapp;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.GroupDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.StudentDao;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Student;
 
 public class Main {
 
-    public static void main(String[] args) throws PersistException {
+    public static void main(String[] args) throws PersistentException {
         DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
         StudentDao std = pgFactory.getStudentDao();
         GroupDao grd = pgFactory.getGroupDao();
@@ -17,7 +17,7 @@ public class Main {
         Group gr = new Group();
         try {
             gr = grd.getByPK(Integer.valueOf(5));
-        } catch (PersistException e) {
+        } catch (PersistentException e) {
             e.printStackTrace();
         }
         st.setGroup(gr);
@@ -42,7 +42,7 @@ public class Main {
 //        ArrayList<Student> st = null;
 //        try {
 //            st = (ArrayList<Student>) sd.getByName(name);
-//        } catch (PersistException e) {
+//        } catch (PersistentException e) {
 //            e.printStackTrace();
 //        }
 //

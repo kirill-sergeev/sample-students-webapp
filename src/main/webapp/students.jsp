@@ -51,5 +51,5 @@
     </div>
 </div>
 
-<jsp:include flush="true" page="partial/footer.jsp"></jsp:include>
+<jsp:include flush="true" page="partial/footer.jsp"/>
 

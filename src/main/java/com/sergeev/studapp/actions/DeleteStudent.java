@@ -1,7 +1,7 @@
 package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.StudentDao;
 import com.sergeev.studapp.model.Student;
 
@@ -23,7 +23,7 @@ public class DeleteStudent extends HttpServlet {
 
         try {
             sd.delete(student);
-        } catch (PersistException e) {
+        } catch (PersistentException e) {
             e.printStackTrace();
         }
 

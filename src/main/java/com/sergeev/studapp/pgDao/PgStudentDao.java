@@ -1,6 +1,6 @@
 package com.sergeev.studapp.pgDao;
 
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.StudentDao;
 import com.sergeev.studapp.model.Student;
 
@@ -38,7 +38,7 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
     }
 
     @Override
-    protected List<Student> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Student> parseResultSet(ResultSet rs) throws PersistentException {
         List<Student> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -51,52 +51,68 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
                 result.add(student);
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Student object) throws PersistException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Student object) throws PersistentException {
         try {
             statement.setInt(1, object.getGroup().getId());
             statement.setString(2, object.getFirstName());
             statement.setString(3, object.getLastName());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Student object) throws PersistException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Student object) throws PersistentException {
         try {
             statement.setInt(1, object.getGroup().getId());
             statement.setString(2, object.getFirstName());
             statement.setString(3, object.getLastName());
             statement.setInt(4, object.getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    public List<Student> getByName(String name) throws PersistException {
+    public List<Student> getByName(String name) throws PersistentException {
         List<Student> list;
         String sql = "SELECT * FROM students WHERE first_name||' '||last_name LIKE (?);";
-        Connection connection = PgDaoFactory.createConnection();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + name + "%");
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
-            throw new PersistException("Record not found.");
+            throw new PersistentException("Record not found.");
         }
         return list;
     }
 
-
+    @Override
+    public List<Student> getByGroup(Integer groupId) throws PersistentException {
+        List<Student> list;
+        String sql = "SELECT * FROM students WHERE group_id= ?;";
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, groupId);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
+    }
 
 }

@@ -2,7 +2,7 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.GroupDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.StudentDao;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Student;
@@ -30,7 +30,7 @@ public class CreateStudent extends HttpServlet {
 
         try {
             gr = grd.getByPK(Integer.valueOf(group));
-        } catch (PersistException e) {
+        } catch (PersistentException e) {
             e.printStackTrace();
         }
 
@@ -38,7 +38,7 @@ public class CreateStudent extends HttpServlet {
 
         try {
             sd.persist(st);
-        } catch (PersistException e) {
+        } catch (PersistentException e) {
             e.printStackTrace();
         }
 

@@ -1,7 +1,7 @@
 package com.sergeev.studapp.pgDao;
 
 import com.sergeev.studapp.dao.DisciplineDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline, Integer> implement
     }
 
     @Override
-    protected List<Discipline> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Discipline> parseResultSet(ResultSet rs) throws PersistentException {
         List<Discipline> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -47,27 +47,27 @@ public class PgDisciplineDao extends PgGenericDao<Discipline, Integer> implement
                 result.add(discipline);
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Discipline object) throws PersistException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Discipline object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) throws PersistException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 }

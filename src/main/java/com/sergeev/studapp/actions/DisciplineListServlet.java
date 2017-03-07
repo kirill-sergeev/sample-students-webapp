@@ -2,8 +2,7 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.dao.StudentDao;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.Discipline;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,23 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-@WebServlet(name = "SearchStudent", urlPatterns = "/search-student")
-public class SearchStudent extends HttpServlet {
+@WebServlet(name = "DisciplineListServlet", urlPatterns = "/disciplines")
+public class DisciplineListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter("name");
-        DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-        StudentDao sd = pgFactory.getStudentDao();
-        ArrayList<Student> st = new ArrayList<>();
+        List<Discipline> disciplines = new ArrayList<>();
 
         try {
-            st = (ArrayList<Student>) sd.getByName(name);
+            disciplines = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getAll();
+
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("students", st);
-        request.getRequestDispatcher("students.jsp").forward(request, response);
+        request.setAttribute("disciplines", disciplines);
+        request.getRequestDispatcher("disciplines.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

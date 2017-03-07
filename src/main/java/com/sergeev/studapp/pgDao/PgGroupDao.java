@@ -1,7 +1,7 @@
 package com.sergeev.studapp.pgDao;
 
 import com.sergeev.studapp.dao.GroupDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
 
 import java.sql.PreparedStatement;
@@ -36,7 +36,7 @@ public class PgGroupDao extends PgGenericDao<Group, Integer> implements GroupDao
     }
 
     @Override
-    protected List<Group> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Group> parseResultSet(ResultSet rs) throws PersistentException {
         List<Group> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -46,27 +46,27 @@ public class PgGroupDao extends PgGenericDao<Group, Integer> implements GroupDao
                 result.add(group);
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Group object) throws PersistException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Group object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Group object) throws PersistException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Group object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 }

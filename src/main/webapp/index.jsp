@@ -3,4 +3,4 @@
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Main page"/>
 </jsp:include>
-<jsp:include flush="true" page="partial/footer.jsp"></jsp:include>
+<jsp:include flush="true" page="partial/footer.jsp"/>

@@ -23,6 +23,14 @@ public class PgDaoFactory extends DaoFactory {
         return connection;
     }
 
+    static void closeConnection(Connection connection){
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public PgDaoFactory() {
         try {
             Class.forName(DRIVER);

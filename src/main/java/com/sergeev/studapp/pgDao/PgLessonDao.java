@@ -1,7 +1,7 @@
 package com.sergeev.studapp.pgDao;
 
 import com.sergeev.studapp.dao.LessonDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
 
 import java.sql.PreparedStatement;
@@ -37,7 +37,7 @@ public class PgLessonDao extends PgGenericDao<Lesson, Integer> implements Lesson
     }
 
     @Override
-    protected List<Lesson> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Lesson> parseResultSet(ResultSet rs) throws PersistentException {
         List<Lesson> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -51,25 +51,25 @@ public class PgLessonDao extends PgGenericDao<Lesson, Integer> implements Lesson
                 result.add(lesson);
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Lesson object) throws PersistException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Lesson object) throws PersistentException {
         try {
             statement.setInt(1, object.getType().getId());
             statement.setInt(2, object.getCourse().getId());
             statement.setDate(3, object.getDate());
             statement.setInt(4, object.getOrder().getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) throws PersistException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) throws PersistentException {
         try {
             statement.setInt(1, object.getType().getId());
             statement.setInt(2, object.getCourse().getId());
@@ -77,7 +77,7 @@ public class PgLessonDao extends PgGenericDao<Lesson, Integer> implements Lesson
             statement.setInt(4, object.getOrder().getId());
             statement.setInt(5, object.getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 }

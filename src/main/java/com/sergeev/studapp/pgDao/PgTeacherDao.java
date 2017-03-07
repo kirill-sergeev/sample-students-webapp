@@ -1,6 +1,6 @@
 package com.sergeev.studapp.pgDao;
 
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.TeacherDao;
 import com.sergeev.studapp.model.Teacher;
 
@@ -37,7 +37,7 @@ public class PgTeacherDao extends PgGenericDao<Teacher, Integer> implements Teac
     }
 
     @Override
-    protected List<Teacher> parseResultSet(ResultSet rs) throws PersistException {
+    protected List<Teacher> parseResultSet(ResultSet rs) throws PersistentException {
         List<Teacher> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -48,29 +48,29 @@ public class PgTeacherDao extends PgGenericDao<Teacher, Integer> implements Teac
                 result.add(teacher);
             }
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
         return result;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Teacher object) throws PersistException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Teacher object) throws PersistentException {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Teacher object) throws PersistException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Teacher object) throws PersistentException {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
             statement.setInt(3, object.getId());
         } catch (Exception e) {
-            throw new PersistException(e);
+            throw new PersistentException(e);
         }
     }
 }

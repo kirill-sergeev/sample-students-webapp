@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface GenericDao<T extends Identified<PK>, PK extends Integer> {
 
-    T persist(T object) throws PersistException;
+    T persist(T object) throws PersistentException;
 
-    T getByPK(PK key) throws PersistException;
+    T getByPK(PK key) throws PersistentException;
 
-    void update(T object) throws PersistException;
+    void update(T object) throws PersistentException;
 
-    void delete(T object) throws PersistException;
+    void delete(T object) throws PersistentException;
 
-    List<T> getAll() throws PersistException;
+    List<T> getAll() throws PersistentException;
 }

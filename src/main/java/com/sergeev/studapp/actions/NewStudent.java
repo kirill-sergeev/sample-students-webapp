@@ -2,7 +2,7 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.GroupDao;
-import com.sergeev.studapp.dao.PersistException;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ public class NewStudent extends HttpServlet {
 
         try {
             gr = (ArrayList<Group>) gd.getAll();
-        } catch (PersistException e) {
+        } catch (PersistentException e) {
             e.printStackTrace();
         }
 
