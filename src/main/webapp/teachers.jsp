@@ -22,6 +22,7 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -30,12 +31,25 @@
                                 <td>
                                     <a href="${pageContext.request.contextPath}/teacher?id=${teacher.id}">${teacher.firstName} ${teacher.lastName}</a>
                                 </td>
+                                <td>
+                                    <form action="change-teacher" method="POST">
+                                        <input type="hidden" name="id" value="${teacher.id}"/>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
+                                            <button type="submit" class="btn btn-danger btn-secondary"
+                                                    formaction="remove-teacher">Delete
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
+            <h3><a href="new-teacher">Add a new teacher...</a></h3>
         </div>
     </div>
 </div>

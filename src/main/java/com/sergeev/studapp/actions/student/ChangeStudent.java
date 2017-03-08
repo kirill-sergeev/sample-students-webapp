@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @WebServlet(name = "ChangeStudent", urlPatterns = "/change-student")
 public class ChangeStudent extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String studentId = request.getParameter("student");
+        String studentId = request.getParameter("id");
 
         DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
         StudentDao sd = pgFactory.getStudentDao();

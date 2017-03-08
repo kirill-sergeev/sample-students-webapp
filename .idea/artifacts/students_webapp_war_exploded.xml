@@ -13,6 +13,11 @@
           <element id="library" level="project" name="Maven: org.mongodb:mongodb-driver-core:3.4.2" />
           <element id="library" level="project" name="Maven: javaee:javaee-api:7.0" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.webjars:webjars-taglib:0.3" />
+          <element id="library" level="project" name="Maven: org.webjars:webjars-locator-core:0.30" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.7" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.1" />
+          <element id="library" level="project" name="Maven: org.apache.commons:commons-compress:1.9" />
           <element id="library" level="project" name="Maven: org.webjars:bootstrap:4.0.0-alpha.6-1" />
           <element id="library" level="project" name="Maven: org.webjars:jquery:1.11.1" />
         </element>

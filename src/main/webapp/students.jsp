@@ -37,7 +37,7 @@
                                 </td>
                                 <td>
                                     <form action="change-student" method="POST">
-                                        <input type="hidden" name="student" value="${student.id}"/>
+                                        <input type="hidden" name="id" value="${student.id}"/>
                                         <div class="btn-group btn-group-sm" role="group">
                                             <button type="submit" class="btn btn-info btn-secondary">Change</button>
                                             <button type="submit" class="btn btn-danger btn-secondary"

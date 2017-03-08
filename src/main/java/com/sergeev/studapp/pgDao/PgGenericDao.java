@@ -94,6 +94,25 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
     }
 
     @Override
+    public void delete(PK key) throws PersistentException {
+        String sql = getDeleteQuery();
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            try {
+                statement.setObject(1, key);
+            } catch (Exception e) {
+                throw new PersistentException(e);
+            }
+            int count = statement.executeUpdate();
+            if (count != 1) {
+                throw new PersistentException("On delete modify more then 1 record: " + count);
+            }
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+    }
+
+    @Override
     public List<T> getAll() throws PersistentException {
         List<T> list;
         String sql = getSelectAllQuery();
