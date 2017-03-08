@@ -4,7 +4,7 @@
 <jsp:useBean id="teacher" scope="request" type="com.sergeev.studapp.model.Teacher"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
-    <jsp:param name="title" value="Change teacher info"/>
+    <jsp:param name="title" value="Change teacher - ${teacher.firstName} ${teacher.lastName}"/>
 </jsp:include>
 
 <div class="container">

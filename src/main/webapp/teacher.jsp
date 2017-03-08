@@ -4,11 +4,9 @@
 <jsp:useBean id="teacher" scope="request" type="com.sergeev.studapp.model.Teacher"/>
 <jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
 
-
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Teacher info"/>
 </jsp:include>
-
 
 <div class="container">
     <div class="row justify-content-md-center">

@@ -1,9 +1,7 @@
 package com.sergeev.studapp.actions.student;
 
 import com.sergeev.studapp.dao.DaoFactory;
-import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.dao.StudentDao;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Student;
 
@@ -14,35 +12,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "CreateStudent", urlPatterns = "/create-student")
-public class CreateStudent extends HttpServlet {
+@WebServlet(name = "UpdateStudentServlet", urlPatterns = "/update-student")
+public class UpdateStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Integer studentId = Integer.valueOf(request.getParameter("id"));
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
-        String group = request.getParameter("group");
-        DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-        StudentDao sd = pgFactory.getStudentDao();
-        GroupDao grd = pgFactory.getGroupDao();
-        Student st = new Student();
-        Group gr = new Group();
-        st.setFirstName(firstName);
-        st.setLastName(lastName);
+        Integer groupId = Integer.valueOf(request.getParameter("group"));
+
+        Student student = new Student();
+        student.setId(studentId);
+        student.setFirstName(firstName);
+        student.setLastName(lastName);
 
         try {
-            gr = grd.getByPK(Integer.valueOf(group));
+            Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
+            student.setGroup(group);
+            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().update(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        st.setGroup(gr);
-
-        try {
-            sd.persist(st);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        response.sendRedirect("/");
+        response.sendRedirect("/students");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

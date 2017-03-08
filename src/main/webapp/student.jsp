@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="student" scope="request" type="com.sergeev.studapp.model.Student"/>
-<jsp:useBean id="map" scope="request" type="java.util.Map<com.sergeev.studapp.model.Course, java.lang.Double>"/>
+<jsp:useBean id="coursesMarks" scope="request"
+             type="java.util.Map<com.sergeev.studapp.model.Course, java.lang.Double>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Student - ${student.firstName} ${student.lastName}"/>
@@ -19,7 +20,7 @@
                 <br>
                 <h4>Courses</h4>
                 <c:choose>
-                    <c:when test="${empty map}">
+                    <c:when test="${empty coursesMarks}">
                         <div class="alert alert-warning text-center" role="alert">
                             <strong>No courses!</strong>
                         </div>
@@ -30,16 +31,18 @@
                             <tr>
                                 <th>Discipline</th>
                                 <th>Avg. mark</th>
+                                <th>Marks</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="map" items="${map}">
+                            <c:forEach var="item" items="${coursesMarks}">
                                 <tr>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/discipline?id=${map.key.discipline.id}">${map.key.discipline.title}</a>
+                                        <a href="${pageContext.request.contextPath}/discipline?id=${item.key.discipline.id}">${item.key.discipline.title}</a>
                                     </td>
+                                    <td>${item.value}</td>
                                     <td>
-                                        ${map.value}
+                                        <a href="${pageContext.request.contextPath}/marks?student=${student.id}&discipline=${item.key.discipline.id}">...</a>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -1,6 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:useBean id="groups" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Group>"/>
+
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Add a new student"/>
 </jsp:include>
@@ -16,14 +18,13 @@
                     <input type="text" name="last-name" class="form-control" placeholder="Last name...">
                 </div>
                 <div class="form-group">
-                    <label>Group</label>
+                    <label>Group
                     <select class="form-control" name="group">
-                        <jsp:useBean id="groups" scope="request"
-                                     type="java.util.ArrayList<com.sergeev.studapp.model.Group>"/>
                         <c:forEach items="${groups}" var="group">
                             <option value="${group.id}">${group.title}</option>
                         </c:forEach>
                     </select>
+                    </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

@@ -20,7 +20,6 @@ public class GroupListServlet extends HttpServlet {
 
         try {
             groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
-
         } catch (PersistentException e) {
             e.printStackTrace();
         }

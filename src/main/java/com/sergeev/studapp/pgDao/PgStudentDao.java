@@ -82,7 +82,7 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
     @Override
     public List<Student> getByName(String name) throws PersistentException {
         List<Student> list;
-        String sql = "SELECT * FROM students WHERE first_name||' '||last_name LIKE (?);";
+        String sql = "SELECT * FROM students WHERE lower(first_name||' '||last_name) LIKE (?);";
         try (Connection connection = PgDaoFactory.createConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + name + "%");

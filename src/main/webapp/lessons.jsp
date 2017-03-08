@@ -28,6 +28,7 @@
                             <th>Date</th>
                             <th>Start time</th>
                             <th>End time</th>
+                            <th>More info</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,6 +44,7 @@
                                 <td>${lesson.date}</td>
                                 <td>${lesson.order.startTime}</td>
                                 <td>${lesson.order.endTime}</td>
+                                <td><a href="${pageContext.request.contextPath}/lesson?id=${lesson.id}">...</a></td>
                             </tr>
                         </c:forEach>
                         </tbody>

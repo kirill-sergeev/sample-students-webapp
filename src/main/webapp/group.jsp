@@ -80,7 +80,7 @@
     <c:if test="${not empty courses}">
         <div class="row justify-content-md-center">
             <div class="col-8">
-                <h3><a href="${pageContext.request.contextPath}/lessons?id=${group.id}">All lessons in
+                <h3><a href="${pageContext.request.contextPath}/lessons?group=${group.id}">All lessons in
                     group ${group.title}</a></h3>
             </div>
         </div>

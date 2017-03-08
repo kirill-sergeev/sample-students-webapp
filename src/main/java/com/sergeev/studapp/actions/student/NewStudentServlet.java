@@ -2,8 +2,7 @@ package com.sergeev.studapp.actions.student;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.dao.StudentDao;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.Group;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,23 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-@WebServlet(name = "DeleteStudent", urlPatterns = "/delete-student")
-public class DeleteStudent extends HttpServlet {
+@WebServlet(name = "NewStudentServlet", urlPatterns = "/new-student")
+public class NewStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String studentId = request.getParameter("student");
-        DaoFactory pgFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-        StudentDao sd = pgFactory.getStudentDao();
-        Student student = new Student();
-        student.setId(Integer.parseInt(studentId));
+        List<Group> groups = new ArrayList<>();
 
         try {
-            sd.delete(student);
+            groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/");
+        request.setAttribute("groups", groups);
+        request.getRequestDispatcher("new-student.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

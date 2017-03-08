@@ -90,12 +90,48 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
             statement.setInt(2, disciplineId);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            avgMark=rs.getDouble(1);
+            avgMark = rs.getDouble(1);
         } catch (Exception e) {
             throw new PersistentException(e);
         }
         return avgMark;
     }
 
+    @Override
+    public List<Mark> getByLesson(Integer lessonId) throws PersistentException {
+        List<Mark> list;
+        String sql = "SELECT * FROM marks WHERE lesson_id= ?;";
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, lessonId);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
+    }
+
+    @Override
+    public List<Mark> getByStudentAndDiscipline(Integer studentId, Integer disciplineId) throws PersistentException {
+        List<Mark> list;
+        String sql = "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id AND l.course_id = c.course_id AND m.student_id = ? AND c.discipline_id = ?";
+        try (Connection connection = PgDaoFactory.createConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, studentId);
+            statement.setInt(2, disciplineId);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
+    }
 
 }

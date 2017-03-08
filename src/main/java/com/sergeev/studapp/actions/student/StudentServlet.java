@@ -20,9 +20,12 @@ import java.util.Map;
 public class StudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer studentId = Integer.valueOf(request.getParameter("id"));
+
         Student student = new Student();
         List<Double> avgMark = new ArrayList<>();
         List<Course> courses = new ArrayList<>();
+        Map<Course, Double> coursesMarks = new HashMap<>();
+
         try {
             student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByPK(studentId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(student.getGroup().getId());
@@ -34,12 +37,12 @@ public class StudentServlet extends HttpServlet {
         }
 
 
-        Map<Course, Double> map = new HashMap<>();
+
         for (int i = 0; i < courses.size(); i++) {
-            map.put(courses.get(i), avgMark.get(i));
+            coursesMarks.put(courses.get(i), avgMark.get(i));
         }
 
-        request.setAttribute("map", map);
+        request.setAttribute("coursesMarks", coursesMarks);
         request.setAttribute("student", student);
         request.getRequestDispatcher("student.jsp").forward(request, response);
 

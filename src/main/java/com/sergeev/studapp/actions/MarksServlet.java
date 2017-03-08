@@ -2,8 +2,9 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Discipline;
+import com.sergeev.studapp.model.Mark;
+import com.sergeev.studapp.model.Student;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,24 +15,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "DisciplineServlet", urlPatterns = "/discipline")
-public class DisciplineServlet extends HttpServlet {
+@WebServlet(name = "MarksServlet", urlPatterns = "/marks")
+public class MarksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer disciplineId = Integer.valueOf(request.getParameter("id"));
+        Integer studentId = Integer.valueOf(request.getParameter("student"));
+        Integer disciplineId = Integer.valueOf(request.getParameter("discipline"));
 
+        Student student = new Student();
         Discipline discipline = new Discipline();
-        List<Course> courses = new ArrayList<>();
+        List<Mark> marks = new ArrayList<>();
 
         try {
+            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByPK(studentId);
             discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getByPK(disciplineId);
-            courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByDiscipline(disciplineId);
+            marks = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().getByStudentAndDiscipline(studentId, disciplineId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
+        request.setAttribute("student", student);
         request.setAttribute("discipline", discipline);
-        request.setAttribute("courses", courses);
-        request.getRequestDispatcher("discipline.jsp").forward(request, response);
+        request.setAttribute("marks", marks);
+        request.getRequestDispatcher("marks.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

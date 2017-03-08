@@ -41,7 +41,7 @@
                                         <div class="btn-group btn-group-sm" role="group">
                                             <button type="submit" class="btn btn-info btn-secondary">Change</button>
                                             <button type="submit" class="btn btn-danger btn-secondary"
-                                                    formaction="delete-student">Delete
+                                                    formaction="remove-student">Delete
                                             </button>
                                         </div>
                                     </form>

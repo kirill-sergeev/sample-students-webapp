@@ -2,8 +2,8 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Lesson;
+import com.sergeev.studapp.model.Mark;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,24 +14,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "LessonListServlet", urlPatterns = "/lessons")
-public class LessonListServlet extends HttpServlet {
+@WebServlet(name = "LessonServlet", urlPatterns = "/lesson")
+public class LessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
+        Integer lessonId = Integer.valueOf(request.getParameter("id"));
 
-        List<Lesson> lessons = new ArrayList<>();
-        Group group = new Group();
+        Lesson lesson = new Lesson();
+        List<Mark> marks = new ArrayList<>();
 
         try {
-            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
-            lessons = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByGroup(groupId);
+            lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByPK(lessonId);
+            marks = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().getByLesson(lessonId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("group", group);
-        request.setAttribute("lessons", lessons);
-        request.getRequestDispatcher("lessons.jsp").forward(request, response);
+        request.setAttribute("lesson", lesson);
+        request.setAttribute("marks", marks);
+        request.getRequestDispatcher("lesson.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
