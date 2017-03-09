@@ -45,7 +45,6 @@
                                             </button>
                                         </div>
                                     </form>
-
                                 </td>
                             </tr>
                         </c:forEach>

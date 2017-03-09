@@ -3,7 +3,7 @@
 
 <jsp:useBean id="student" scope="request" type="com.sergeev.studapp.model.Student"/>
 <jsp:useBean id="coursesMarks" scope="request"
-             type="java.util.Map<com.sergeev.studapp.model.Course, java.lang.Double>"/>
+             type="java.util.LinkedHashMap<com.sergeev.studapp.model.Course, java.lang.Double>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Student - ${student.firstName} ${student.lastName}"/>

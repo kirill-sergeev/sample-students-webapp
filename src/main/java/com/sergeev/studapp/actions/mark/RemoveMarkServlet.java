@@ -1,4 +1,4 @@
-package com.sergeev.studapp.actions.teacher;
+package com.sergeev.studapp.actions.mark;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
@@ -10,18 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "RemoveTeacherServlet", urlPatterns = "/remove-teacher")
-public class RemoveTeacherServlet extends HttpServlet {
+@WebServlet(name = "RemoveMarkServlet", urlPatterns = "/remove-mark")
+public class RemoveMarkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer teacherId = Integer.valueOf(request.getParameter("id"));
+        Integer markId = Integer.valueOf(request.getParameter("id"));
 
         try {
-            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().delete(teacherId);
+            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().delete(markId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/teachers");
+        response.sendRedirect("/");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -6,7 +6,7 @@
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title"
-               value="Lesson ${lesson.course.group.title} - ${lesson.course.discipline.title} - ${lesson.date}"/>
+               value="Lesson in group ${lesson.course.group.title} - ${lesson.course.discipline.title} - ${lesson.date}"/>
 </jsp:include>
 
 <div class="container">
@@ -56,6 +56,7 @@
                         <tr>
                             <th>Student</th>
                             <th>Mark</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,12 +66,27 @@
                                     <a href="${pageContext.request.contextPath}/student?id=${mark.student.id}">${mark.student.firstName} ${mark.student.lastName}</a>
                                 </td>
                                 <td>${mark.value}</td>
+                                <td>
+                                    <form action="remove-mark" method="POST">
+                                        <input type="hidden" name="id" value="${mark.id}"/>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </div>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
+            <form action="new-mark" method="POST">
+                <input type="hidden" name="lesson" value="${lesson.id}"/>
+                <input type="hidden" name="group" value="${lesson.course.group.id}"/>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="submit" class="btn btn-info">Add a new mark</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

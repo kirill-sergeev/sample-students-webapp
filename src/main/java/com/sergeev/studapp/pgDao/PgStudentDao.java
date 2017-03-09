@@ -109,9 +109,6 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
         } catch (Exception e) {
             throw new PersistentException(e);
         }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
         return list;
     }
 

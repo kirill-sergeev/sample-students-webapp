@@ -24,7 +24,7 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO lessons (lesson_id, student_id, mark) VALUES (?, ?, ?);";
+        return "INSERT INTO marks (lesson_id, student_id, mark) VALUES (?, ?, ?);";
     }
 
     @Override
@@ -108,9 +108,6 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
             list = parseResultSet(rs);
         } catch (Exception e) {
             throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }

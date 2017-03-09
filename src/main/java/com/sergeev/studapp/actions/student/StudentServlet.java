@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,24 +21,21 @@ public class StudentServlet extends HttpServlet {
         Integer studentId = Integer.valueOf(request.getParameter("id"));
 
         Student student = new Student();
-        List<Double> avgMark = new ArrayList<>();
-        List<Course> courses = new ArrayList<>();
-        Map<Course, Double> coursesMarks = new HashMap<>();
+        List<Course> courses;
+        Map<Course, Double> coursesMarks = new LinkedHashMap<>();
 
         try {
             student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByPK(studentId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(student.getGroup().getId());
+
+            double avgMark;
             for(Course course: courses){
-                avgMark.add(DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().getAvgMark(studentId, course.getDiscipline().getId()));
+                avgMark = (DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().getAvgMark(studentId, course.getDiscipline().getId()));
+                coursesMarks.put(course, avgMark);
             }
+
         } catch (PersistentException e) {
             e.printStackTrace();
-        }
-
-
-
-        for (int i = 0; i < courses.size(); i++) {
-            coursesMarks.put(courses.get(i), avgMark.get(i));
         }
 
         request.setAttribute("coursesMarks", coursesMarks);
