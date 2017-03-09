@@ -24,7 +24,7 @@
                 <a class="nav-link" href="teachers">Teachers</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="new-student">Add a new student...</a>
+                <a class="nav-link" href="disciplines">Disciplines</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="search-student" method="POST">

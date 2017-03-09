@@ -136,6 +136,9 @@ INSERT INTO "teachers" (first_name, last_name)
 VALUES ('Barrett', 'Clements'), ('Sean', 'Hopper'), ('Cedric', 'Serrano'), ('Cody', 'Riddle'), ('Aidan', 'King'),
   ('Neville', 'Harrison'), ('Ian', 'Cash'), ('Sean', 'Cleveland'), ('Stewart', 'Lamb'), ('Trevor', 'Frazier');
 INSERT INTO "courses" (discipline_id, group_id, teacher_id)
+VALUES (1, 1, 1), (2, 1, 2), (3, 1, 3), (4, 1, 4), (5, 1, 5), (6, 1, 6), (7, 1, 7),
+  (1, 2, 1), (2, 2, 2), (3, 2, 3), (3, 3, 3), (4, 3, 5), (5, 3, 6), (7, 3, 7);
+INSERT INTO "courses" (discipline_id, group_id, teacher_id)
 VALUES (1, 3, 5), (6, 1, 9), (6, 2, 9), (3, 2, 5), (7, 2, 7), (3, 1, 2), (2, 1, 7), (3, 2, 8), (7, 2, 1), (1, 1, 1),
   (6, 2, 8), (2, 2, 9), (3, 1, 1), (6, 3, 10), (2, 2, 7), (1, 2, 5), (3, 1, 2), (1, 3, 10), (5, 1, 2), (6, 3, 5);
 INSERT INTO "lessons" (lesson_type_id, course_id, lesson_date, lesson_order)

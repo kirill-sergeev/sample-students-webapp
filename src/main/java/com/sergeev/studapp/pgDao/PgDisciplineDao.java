@@ -18,12 +18,12 @@ public class PgDisciplineDao extends PgGenericDao<Discipline, Integer> implement
 
     @Override
     public String getSelectAllQuery() {
-        return "SELECT * FROM disciplines;";
+        return "SELECT * FROM disciplines ORDER BY title;";
     }
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO courses (title) VALUES (?);";
+        return "INSERT INTO disciplines (title) VALUES (?);";
     }
 
     @Override

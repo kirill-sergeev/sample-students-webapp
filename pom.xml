@@ -7,6 +7,15 @@
     <version>1.0-SNAPSHOT</version>
     <name>studapp Maven Webapp</name>
     <url>http://maven.apache.org</url>
+
+    <repositories>
+        <repository>
+            <id>spring</id>
+            <name>spring</name>
+            <url>http://repo.spring.io/milestone/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -55,14 +64,14 @@
 
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>webjars-taglib</artifactId>
-            <version>0.3</version>
+            <artifactId>bootstrap</artifactId>
+            <version>4.0.0-alpha.6-1</version>
         </dependency>
 
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>4.0.0-alpha.6-1</version>
+            <groupId>org.cloudfoundry</groupId>
+            <artifactId>cloudfoundry-runtime</artifactId>
+            <version>0.8.6</version>
         </dependency>
 
     </dependencies>

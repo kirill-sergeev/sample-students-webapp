@@ -128,4 +128,69 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
 
     public PgGenericDao() {
     }
+
+//    static {
+//        String sql = "CREATE TABLE groups (\n" +
+//                "  group_id SERIAL PRIMARY KEY,\n" +
+//                "  title    VARCHAR(30) NOT NULL UNIQUE\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE students (\n" +
+//                "  student_id SERIAL PRIMARY KEY,\n" +
+//                "  group_id   INTEGER REFERENCES groups (group_id),\n" +
+//                "  first_name VARCHAR(30) NOT NULL,\n" +
+//                "  last_name  VARCHAR(30) NOT NULL\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE teachers (\n" +
+//                "  teacher_id SERIAL PRIMARY KEY,\n" +
+//                "  first_name VARCHAR(30) NOT NULL,\n" +
+//                "  last_name  VARCHAR(30) NOT NULL\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE lessons_types (\n" +
+//                "  lesson_type_id SERIAL PRIMARY KEY,\n" +
+//                "  title          VARCHAR(50) NOT NULL UNIQUE\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE disciplines (\n" +
+//                "  discipline_id SERIAL PRIMARY KEY,\n" +
+//                "  title         VARCHAR(50) NOT NULL UNIQUE\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE courses (\n" +
+//                "  course_id     SERIAL PRIMARY KEY,\n" +
+//                "  discipline_id INTEGER REFERENCES disciplines (discipline_id) NOT NULL,\n" +
+//                "  group_id      INTEGER REFERENCES groups (group_id)           NOT NULL,\n" +
+//                "  teacher_id    INTEGER REFERENCES teachers (teacher_id)       NOT NULL\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE lessons_order (\n" +
+//                "  order_id          SERIAL PRIMARY KEY,\n" +
+//                "  lesson_order      INTEGER NOT NULL UNIQUE CHECK (lesson_order BETWEEN 1 AND 10),\n" +
+//                "  lesson_start_time TIME     NOT NULL UNIQUE,\n" +
+//                "  lesson_end_time   TIME     NOT NULL UNIQUE\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE lessons (\n" +
+//                "  lesson_id      SERIAL PRIMARY KEY,\n" +
+//                "  lesson_type_id INTEGER REFERENCES lessons_types (lesson_type_id) NOT NULL,\n" +
+//                "  course_id      INTEGER REFERENCES courses (course_id)           NOT NULL,\n" +
+//                "  lesson_date    DATE CHECK (lesson_date BETWEEN '2000-01-01' AND '2050-01-01'),\n" +
+//                "  lesson_order   INTEGER REFERENCES lessons_order (order_id)\n" +
+//                ");\n" +
+//                "\n" +
+//                "CREATE TABLE marks (\n" +
+//                "  mark_id    SERIAL PRIMARY KEY,\n" +
+//                "  lesson_id  INTEGER REFERENCES lessons (lesson_id),\n" +
+//                "  student_id INTEGER REFERENCES students (student_id) NOT NULL,\n" +
+//                "  mark       INTEGER                                 NOT NULL CHECK (mark BETWEEN 0 AND 100)\n" +
+//                ");";
+//        try (Connection connection = PgDaoFactory.createConnection();
+//             Statement statement = connection.createStatement()){
+//            statement.execute(sql);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

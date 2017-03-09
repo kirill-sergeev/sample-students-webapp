@@ -1,7 +1,8 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.actions.lesson;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
+import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.Lesson;
 
@@ -14,24 +15,28 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "LessonListServlet", urlPatterns = "/lessons")
-public class LessonListServlet extends HttpServlet {
+@WebServlet(name = "NewLessonServlet", urlPatterns = "/new-lesson")
+public class NewLessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer groupId = Integer.valueOf(request.getParameter("group"));
 
-        List<Lesson> lessons = new ArrayList<>();
         Group group = new Group();
+        Lesson.Type[] types = Lesson.Type.values();
+        Lesson.Order[] orders = Lesson.Order.values();
+        List<Course> courses = new ArrayList<>();
 
         try {
             group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
-            lessons = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByGroup(groupId);
+            courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
+        request.setAttribute("types", types);
+        request.setAttribute("orders", orders);
         request.setAttribute("group", group);
-        request.setAttribute("lessons", lessons);
-        request.getRequestDispatcher("lessons.jsp").forward(request, response);
+        request.setAttribute("courses", courses);
+        request.getRequestDispatcher("new-lesson.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

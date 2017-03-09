@@ -11,7 +11,8 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-8">
-            <h3>Lessons in group <a href="${pageContext.request.contextPath}/group?id=${group.id}">${group.title}</a></h3>
+            <h3>Lessons in group <a href="${pageContext.request.contextPath}/group?id=${group.id}">${group.title}</a>
+            </h3>
             <c:choose>
                 <c:when test="${empty lessons}">
                     <div class="alert alert-warning text-center" role="alert">
@@ -29,6 +30,7 @@
                             <th>Start time</th>
                             <th>End time</th>
                             <th>More info</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,12 +47,29 @@
                                 <td>${lesson.order.startTime}</td>
                                 <td>${lesson.order.endTime}</td>
                                 <td><a href="${pageContext.request.contextPath}/lesson?id=${lesson.id}">...</a></td>
+                                <td>
+                                    <form action="change-lesson" method="POST">
+                                        <input type="hidden" name="id" value="${lesson.id}"/>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
+                                            <button type="submit" class="btn btn-danger btn-secondary"
+                                                    formaction="remove-lesson">Delete
+                                            </button>
+                                        </div>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
+            <form action="new-lesson" method="POST">
+                <input type="hidden" name="group" value="${group.id}"/>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="submit" class="btn btn-info">Add a new lesson</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

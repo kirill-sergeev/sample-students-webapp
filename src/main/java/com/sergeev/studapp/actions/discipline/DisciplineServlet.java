@@ -1,7 +1,8 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.actions.discipline;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
+import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Discipline;
 
 import javax.servlet.ServletException;
@@ -13,19 +14,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "DisciplineListServlet", urlPatterns = "/disciplines")
-public class DisciplineListServlet extends HttpServlet {
+@WebServlet(name = "DisciplineServlet", urlPatterns = "/discipline")
+public class DisciplineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Discipline> disciplines = new ArrayList<>();
+        Integer disciplineId = Integer.valueOf(request.getParameter("id"));
+
+        Discipline discipline = new Discipline();
+        List<Course> courses = new ArrayList<>();
 
         try {
-            disciplines = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getAll();
+            discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getByPK(disciplineId);
+            courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByDiscipline(disciplineId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("disciplines", disciplines);
-        request.getRequestDispatcher("disciplines.jsp").forward(request, response);
+        request.setAttribute("discipline", discipline);
+        request.setAttribute("courses", courses);
+        request.getRequestDispatcher("discipline.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

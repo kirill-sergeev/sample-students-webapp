@@ -22,6 +22,7 @@
                         <thead>
                         <tr>
                             <th>Title</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -30,12 +31,24 @@
                                 <td>
                                     <a href="${pageContext.request.contextPath}/discipline?id=${discipline.id}">${discipline.title}</a>
                                 </td>
+                                <td>
+                                    <form action="change-discipline" method="POST">
+                                        <input type="hidden" name="id" value="${discipline.id}"/>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
+                                            <button type="submit" class="btn btn-danger btn-secondary"
+                                                    formaction="remove-discipline">Delete
+                                            </button>
+                                        </div>
+                                    </form>
+                                </td>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
+            <h3><a href="new-discipline">Add a new discipline...</a></h3>
         </div>
     </div>
 </div>

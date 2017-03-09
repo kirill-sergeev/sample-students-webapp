@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="teachers" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Teacher>"/>
+<jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Teachers List"/>
@@ -37,7 +38,10 @@
                                         <div class="btn-group btn-group-sm" role="group">
                                             <button type="submit" class="btn btn-info btn-secondary">Change</button>
                                             <button type="submit" class="btn btn-danger btn-secondary"
-                                                    formaction="remove-teacher">Delete
+                                                    formaction="remove-teacher"
+                                                    <c:forEach var="course" items="${courses}">
+                                                        <c:if test="${teacher.id == course.teacher.id}">disabled</c:if>
+                                                    </c:forEach>>Delete
                                             </button>
                                         </div>
                                     </form>

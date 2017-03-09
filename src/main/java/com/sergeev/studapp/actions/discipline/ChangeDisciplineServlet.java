@@ -1,8 +1,8 @@
-package com.sergeev.studapp.actions.group;
+package com.sergeev.studapp.actions.discipline;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Group;
+import com.sergeev.studapp.model.Discipline;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,21 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "ChangeGroupServlet", urlPatterns = "/change-group")
-public class ChangeGroupServlet extends HttpServlet {
+@WebServlet(name = "ChangeDisciplineServlet", urlPatterns = "/change-discipline")
+public class ChangeDisciplineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("id"));
+        Integer disciplineId = Integer.valueOf(request.getParameter("id"));
 
-        Group group = new Group();
+        Discipline discipline = new Discipline();
 
         try {
-            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
+            discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getByPK(disciplineId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        request.setAttribute("group", group);
-        request.getRequestDispatcher("change-group.jsp").forward(request, response);
+        request.setAttribute("discipline", discipline);
+        request.getRequestDispatcher("change-discipline.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

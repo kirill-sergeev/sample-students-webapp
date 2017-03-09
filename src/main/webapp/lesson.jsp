@@ -80,6 +80,15 @@
                     </table>
                 </c:otherwise>
             </c:choose>
+            <form action="change-lesson" method="POST">
+                <input type="hidden" name="id" value="${lesson.id}"/>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="submit" class="btn btn-info btn-secondary">Change lesson</button>
+                    <button type="submit" class="btn btn-danger btn-secondary"
+                            formaction="remove-lesson">Delete lesson
+                    </button>
+                </div>
+            </form>
             <form action="new-mark" method="POST">
                 <input type="hidden" name="lesson" value="${lesson.id}"/>
                 <input type="hidden" name="group" value="${lesson.course.group.id}"/>

@@ -14,7 +14,8 @@
         <div class="col-8">
             <h3>
                 <a href="${pageContext.request.contextPath}/student?id=${student.id}">${student.firstName} ${student.lastName}'s</a>
-                marks in <a href="${pageContext.request.contextPath}/discipline?id=${discipline.id}">${discipline.title}</a>
+                marks in <a
+                    href="${pageContext.request.contextPath}/discipline?id=${discipline.id}">${discipline.title}</a>
             </h3>
             <c:choose>
                 <c:when test="${empty marks}">
@@ -45,6 +46,13 @@
                         </c:forEach>
                         </tbody>
                     </table>
+                    <form action="new-mark" method="POST">
+                        <input type="hidden" name="lesson" value="${marks.get(0).lesson.id}"/>
+                        <input type="hidden" name="group" value="${student.group.id}"/>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="submit" class="btn btn-info">Add a new mark</button>
+                        </div>
+                    </form>
                 </c:otherwise>
             </c:choose>
         </div>

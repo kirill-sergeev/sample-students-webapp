@@ -5,4 +5,5 @@
     <jsp:param name="title" value="Main page"/>
 </jsp:include>
 
+
 <jsp:include flush="true" page="partial/footer.jsp"/>
