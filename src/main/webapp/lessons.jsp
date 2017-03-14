@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="group" scope="request" type="com.sergeev.studapp.model.Group"/>
+<jsp:useBean id="dateNow" scope="request" type="java.sql.Date"/>
 <jsp:useBean id="lessons" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Lesson>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
@@ -10,7 +11,7 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-8">
+        <div class="col-10">
             <h3>Lessons in group <a href="${pageContext.request.contextPath}/group?id=${group.id}">${group.title}</a>
             </h3>
             <c:choose>
@@ -29,7 +30,6 @@
                             <th>Date</th>
                             <th>Start time</th>
                             <th>End time</th>
-                            <th>More info</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -46,15 +46,23 @@
                                 <td>${lesson.date}</td>
                                 <td>${lesson.order.startTime}</td>
                                 <td>${lesson.order.endTime}</td>
-                                <td><a href="${pageContext.request.contextPath}/lesson?id=${lesson.id}">...</a></td>
                                 <td>
-                                    <form action="change-lesson" method="POST">
+                                    <form action="lesson" method="POST">
                                         <input type="hidden" name="id" value="${lesson.id}"/>
                                         <div class="btn-group btn-group-sm" role="group">
-                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
+
+                                            <button type="submit" class="btn btn-info btn-secondary">Info
+                                            </button>
+
+                                            <c:if test="${lesson.date>=dateNow}">
+                                            <button type="submit" class="btn btn-warning btn-secondary"
+                                                    formaction="change-lesson">Change
+                                            </button>
+
                                             <button type="submit" class="btn btn-danger btn-secondary"
                                                     formaction="remove-lesson">Delete
                                             </button>
+                                            </c:if>
                                         </div>
                                     </form>
                                 </td>

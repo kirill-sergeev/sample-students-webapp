@@ -12,13 +12,19 @@ import java.util.List;
 public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer> implements GenericDao<T, PK> {
 
     public abstract String getSelectQuery();
+
     public abstract String getSelectAllQuery();
+
     public abstract String getCreateQuery();
+
     public abstract String getUpdateQuery();
+
     public abstract String getDeleteQuery();
 
     protected abstract List<T> parseResultSet(ResultSet rs) throws PersistentException;
+
     protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws PersistentException;
+
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws PersistentException;
 
     @Override
@@ -29,8 +35,8 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
             prepareStatementForInsert(statement, object);
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
-            if(resultSet.next()){
-                    object.setId(resultSet.getInt(1));
+            if (resultSet.next()) {
+                object.setId(resultSet.getInt(1));
             }
         } catch (Exception e) {
             throw new PersistentException(e);
@@ -43,7 +49,7 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
         String sql = getSelectQuery();
         List<T> list;
         try (Connection connection = PgDaoFactory.createConnection();
-                PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, key);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
@@ -130,7 +136,8 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
     }
 
 //    static {
-//        String sql = "CREATE TABLE groups (\n" +
+//        String sql = "DROP TABLE IF EXISTS marks, lessons, lessons_order, courses, disciplines, lessons_types, teachers, students, groups;" +
+//                "CREATE TABLE groups (\n" +
 //                "  group_id SERIAL PRIMARY KEY,\n" +
 //                "  title    VARCHAR(30) NOT NULL UNIQUE\n" +
 //                ");\n" +
@@ -185,12 +192,31 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
 //                "  lesson_id  INTEGER REFERENCES lessons (lesson_id),\n" +
 //                "  student_id INTEGER REFERENCES students (student_id) NOT NULL,\n" +
 //                "  mark       INTEGER                                 NOT NULL CHECK (mark BETWEEN 0 AND 100)\n" +
-//                ");";
+//                ");" +
+//                "\n" +
+//                "INSERT INTO \"lessons_order\" (lesson_order, lesson_start_time, lesson_end_time)\n" +
+//                "VALUES (1, '7:45:00', '9:20:00'), (2, '9:30:00', '11:05:00'), (3, '11:15:00', '12:50:00'), (4, '13:10:00', '14:45:00'),\n" +
+//                "  (5, '14:55:00', '16:30:00'), (6, '16:45:00', '18:15:00');\n" +
+//                "INSERT INTO \"disciplines\" (title)\n" +
+//                "VALUES ('algebra'), ('biology'), ('chemistry'), ('economics'), ('history'), ('english'), ('physics');\n" +
+//                "INSERT INTO \"lessons_types\" (title) VALUES ('lecture'), ('practice'), ('lab');\n" +
+//                "INSERT INTO \"groups\" (title) VALUES ('AA-2017'), ('AB-2017'), ('AC-2017');\n" +
+//                "INSERT INTO \"students\" (group_id, first_name, last_name)\n" +
+//                "VALUES (3, 'Branden', 'Sanders'), (2, 'Brian', 'Sargent'), (3, 'Macon', 'Price'), (3, 'Charles', 'Jennings'),\n" +
+//                "  (2, 'Arden', 'Bullock'), (3, 'Emerson', 'Cochran'), (2, 'Tanek', 'Salazar'), (2, 'Quinlan', 'Huffman'),\n" +
+//                "  (2, 'Cody', 'Townsend'), (2, 'Lev', 'Anderson'), (3, 'Victor', 'Eaton'), (2, 'Victor', 'Berg'), (2, 'Isaac', 'Curry'),\n" +
+//                "  (3, 'Kasimir', 'Berry'), (1, 'Phillip', 'Fowler'), (2, 'Brian', 'Holmes'), (3, 'Harper', 'Kirk'),\n" +
+//                "  (1, 'Fuller', 'Conway'), (2, 'Hu', 'Cooley'), (3, 'Charles', 'Serrano'), (2, 'Jonah', 'Burke'),\n" +
+//                "  (3, 'Castor', 'Roberson'), (3, 'Micah', 'Crane'), (2, 'Colby', 'Rosa'), (3, 'Hiram', 'Potter'), (2, 'Brent', 'Hall'),\n" +
+//                "  (2, 'Ulric', 'Perkins'), (3, 'Sebastian', 'Barnett'), (1, 'Carlos', 'Gonzales'), (2, 'Xenos', 'Fuller');\n" +
+//                "INSERT INTO \"teachers\" (first_name, last_name)\n" +
+//                "VALUES ('Barrett', 'Clements'), ('Sean', 'Hopper'), ('Cedric', 'Serrano'), ('Cody', 'Riddle'), ('Aidan', 'King'),\n" +
+//                "  ('Neville', 'Harrison'), ('Ian', 'Cash'), ('Sean', 'Cleveland'), ('Stewart', 'Lamb'), ('Trevor', 'Frazier');";
 //        try (Connection connection = PgDaoFactory.createConnection();
-//             Statement statement = connection.createStatement()){
+//             Statement statement = connection.createStatement()) {
 //            statement.execute(sql);
 //        } catch (Exception e) {
 //            e.printStackTrace();
-//        }
+//      }
 //    }
 }

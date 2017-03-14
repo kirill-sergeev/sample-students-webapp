@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @WebServlet(name = "LessonServlet", urlPatterns = "/lesson")
@@ -29,7 +31,10 @@ public class LessonServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+        Date dateNow = new Date(Calendar.getInstance().getTimeInMillis());
+
         request.setAttribute("lesson", lesson);
+        request.setAttribute("dateNow", dateNow);
         request.setAttribute("marks", marks);
         request.getRequestDispatcher("lesson.jsp").forward(request, response);
     }

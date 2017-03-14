@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="lesson" scope="request" type="com.sergeev.studapp.model.Lesson"/>
+<jsp:useBean id="dateNow" scope="request" type="java.sql.Date"/>
 <jsp:useBean id="marks" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Mark>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
@@ -43,59 +44,63 @@
                 </tbody>
             </table>
 
-            <h3>Marks</h3>
-            <c:choose>
-                <c:when test="${empty marks}">
-                    <div class="alert alert-warning text-center" role="alert">
-                        <strong>No marks!</strong>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <table class="table table-hover table-sm">
-                        <thead>
-                        <tr>
-                            <th>Student</th>
-                            <th>Mark</th>
-                            <th>Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <c:forEach var="mark" items="${marks}">
+            <c:if test="${lesson.date<=dateNow}">
+                <h3>Marks</h3>
+                <c:choose>
+                    <c:when test="${empty marks}">
+                        <div class="alert alert-warning text-center" role="alert">
+                            <strong>No marks!</strong>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <table class="table table-hover table-sm">
+                            <thead>
                             <tr>
-                                <td>
-                                    <a href="${pageContext.request.contextPath}/student?id=${mark.student.id}">${mark.student.firstName} ${mark.student.lastName}</a>
-                                </td>
-                                <td>${mark.value}</td>
-                                <td>
-                                    <form action="remove-mark" method="POST">
-                                        <input type="hidden" name="id" value="${mark.id}"/>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </div>
-                                    </form>
-                                </td>
+                                <th>Student</th>
+                                <th>Mark</th>
+                                <th>Actions</th>
                             </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </c:otherwise>
-            </c:choose>
-            <form action="change-lesson" method="POST">
-                <input type="hidden" name="id" value="${lesson.id}"/>
-                <div class="btn-group btn-group-sm" role="group">
-                    <button type="submit" class="btn btn-info btn-secondary">Change lesson</button>
-                    <button type="submit" class="btn btn-danger btn-secondary"
-                            formaction="remove-lesson">Delete lesson
-                    </button>
-                </div>
-            </form>
-            <form action="new-mark" method="POST">
-                <input type="hidden" name="lesson" value="${lesson.id}"/>
-                <input type="hidden" name="group" value="${lesson.course.group.id}"/>
-                <div class="btn-group btn-group-sm" role="group">
-                    <button type="submit" class="btn btn-info">Add a new mark</button>
-                </div>
-            </form>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="mark" items="${marks}">
+                                <tr>
+                                    <td>
+                                        <a href="${pageContext.request.contextPath}/student?id=${mark.student.id}">${mark.student.firstName} ${mark.student.lastName}</a>
+                                    </td>
+                                    <td>${mark.value}</td>
+                                    <td>
+                                        <form action="remove-mark" method="POST">
+                                            <input type="hidden" name="id" value="${mark.id}"/>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </c:otherwise>
+                </c:choose>
+                <form action="new-mark" method="POST">
+                    <input type="hidden" name="lesson" value="${lesson.id}"/>
+                    <input type="hidden" name="group" value="${lesson.course.group.id}"/>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="submit" class="btn btn-info">Add a new mark</button>
+                    </div>
+                </form>
+            </c:if>
+            <c:if test="${lesson.date>=dateNow}">
+                <form action="change-lesson" method="POST">
+                    <input type="hidden" name="id" value="${lesson.id}"/>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button type="submit" class="btn btn-info btn-secondary">Change lesson</button>
+                        <button type="submit" class="btn btn-danger btn-secondary"
+                                formaction="remove-lesson">Delete lesson
+                        </button>
+                    </div>
+                </form>
+            </c:if>
         </div>
     </div>
 </div>

@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class PgDaoFactory extends DaoFactory {
 
     private static final String DRIVER = "org.postgresql.Driver";
-    private static String URL;
-    private static String USER;
-    private static String PASSWORD;
+    private static final String URL;
+    private static final String USER;
+    private static final String PASSWORD;
 
     static {
 //  for ElephantSQL

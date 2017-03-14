@@ -57,6 +57,7 @@
                             <tr>
                                 <th>Discipline</th>
                                 <th>Teacher</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -67,6 +68,17 @@
                                     </td>
                                     <td>
                                         <a href="${pageContext.request.contextPath}/teacher?id=${course.teacher.id}">${course.teacher.firstName} ${course.teacher.lastName}</a>
+                                    </td>
+                                    <td>
+                                        <form action="change-course" method="POST">
+                                            <input type="hidden" name="id" value="${course.id}"/>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <button type="submit" class="btn btn-info btn-secondary">Change</button>
+                                                <button type="submit" class="btn btn-danger btn-secondary"
+                                                        formaction="remove-course">Delete
+                                                </button>
+                                            </div>
+                                        </form>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -80,7 +92,7 @@
     <c:if test="${not empty courses}">
         <div class="row justify-content-md-center">
             <div class="col-8">
-                <h3><a href="${pageContext.request.contextPath}/lessons?group=${group.id}">Lessons in
+                <h3><a href="${pageContext.request.contextPath}/lessons?group=${group.id}">All lessons in
                     group ${group.title}</a></h3>
             </div>
         </div>

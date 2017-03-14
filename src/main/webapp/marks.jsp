@@ -46,15 +46,15 @@
                         </c:forEach>
                         </tbody>
                     </table>
-                    <form action="new-mark" method="POST">
-                        <input type="hidden" name="lesson" value="${marks.get(0).lesson.id}"/>
-                        <input type="hidden" name="group" value="${student.group.id}"/>
-                        <div class="btn-group btn-group-sm" role="group">
-                            <button type="submit" class="btn btn-info">Add a new mark</button>
-                        </div>
-                    </form>
                 </c:otherwise>
             </c:choose>
+            <form action="new-mark" method="POST">
+                <input type="hidden" name="lesson" value="${marks.get(0).lesson.id}"/>
+                <input type="hidden" name="group" value="${student.group.id}"/>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="submit" class="btn btn-info">Add a new mark</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
