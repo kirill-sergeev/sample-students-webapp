@@ -1,6 +1,6 @@
 package com.sergeev.studapp.model;
 
-public class Discipline implements Identified<Integer> {
+public class Discipline implements Identified {
 
     private Integer id;
     private String title;

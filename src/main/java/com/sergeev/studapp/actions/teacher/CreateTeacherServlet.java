@@ -23,7 +23,7 @@ public class CreateTeacherServlet extends HttpServlet {
             teacher.setFirstName(firstName);
             teacher.setLastName(lastName);
         } else{
-            response.sendRedirect("/new-teacher");
+            response.sendRedirect("new-teacher");
             return;
         }
 
@@ -33,7 +33,7 @@ public class CreateTeacherServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/teachers");
+        response.sendRedirect("teachers");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

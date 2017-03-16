@@ -1,6 +1,6 @@
 package com.sergeev.studapp.model;
 
-public class Course implements Identified<Integer> {
+public class Course implements Identified {
 
     private Integer id;
     private Discipline discipline;
@@ -48,4 +48,6 @@ public class Course implements Identified<Integer> {
                 ", teacher=" + teacher +
                 '}';
     }
+
+
 }

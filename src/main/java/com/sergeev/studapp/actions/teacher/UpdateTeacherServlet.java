@@ -29,7 +29,7 @@ public class UpdateTeacherServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/teachers");
+        response.sendRedirect("teachers");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PgStudentDao extends PgGenericDao<Student, Integer> implements StudentDao {
+public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
 
     @Override
     public String getSelectQuery() {
@@ -44,7 +44,7 @@ public class PgStudentDao extends PgGenericDao<Student, Integer> implements Stud
             while (rs.next()) {
                 Student student = new Student();
                 PgGroupDao pgd = new PgGroupDao();
-                student.setGroup(pgd.getByPK(rs.getInt("group_id")));
+                student.setGroup(pgd.getById(rs.getInt("group_id")));
                 student.setId(rs.getInt("student_id"));
                 student.setFirstName(rs.getString("first_name"));
                 student.setLastName(rs.getString("last_name"));

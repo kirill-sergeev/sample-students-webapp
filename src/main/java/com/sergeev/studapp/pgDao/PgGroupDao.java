@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PgGroupDao extends PgGenericDao<Group, Integer> implements GroupDao {
+public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
     @Override
     public String getSelectQuery() {

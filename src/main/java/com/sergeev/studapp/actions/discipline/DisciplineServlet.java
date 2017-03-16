@@ -23,7 +23,7 @@ public class DisciplineServlet extends HttpServlet {
         List<Course> courses = new ArrayList<>();
 
         try {
-            discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getByPK(disciplineId);
+            discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getById(disciplineId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByDiscipline(disciplineId);
         } catch (PersistentException e) {
             e.printStackTrace();

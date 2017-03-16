@@ -19,7 +19,7 @@ public class ChangeGroupServlet extends HttpServlet {
         Group group = new Group();
 
         try {
-            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
+            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getById(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

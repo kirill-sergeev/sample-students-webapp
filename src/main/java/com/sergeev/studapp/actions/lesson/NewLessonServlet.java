@@ -26,7 +26,7 @@ public class NewLessonServlet extends HttpServlet {
         List<Course> courses = new ArrayList<>();
 
         try {
-            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
+            group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getById(groupId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();

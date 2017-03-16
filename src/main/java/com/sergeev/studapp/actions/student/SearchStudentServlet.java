@@ -18,7 +18,7 @@ public class SearchStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String name = request.getParameter("name").toLowerCase();
         if (name.length() < 2) {
-            response.sendRedirect("/students");
+            response.sendRedirect("students");
             return;
         }
 

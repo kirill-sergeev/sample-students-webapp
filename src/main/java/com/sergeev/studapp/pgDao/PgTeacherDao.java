@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PgTeacherDao extends PgGenericDao<Teacher, Integer> implements TeacherDao {
+public class PgTeacherDao extends PgGenericDao<Teacher> implements TeacherDao {
 
     @Override
     public String getSelectQuery() {

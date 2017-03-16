@@ -24,9 +24,9 @@ public class CreateCourseServlet extends HttpServlet {
         try {
             Course course = new Course();
 
-            Discipline discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getByPK(disciplineId);
-            Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
-            Teacher teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getByPK(teacherId);
+            Discipline discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getById(disciplineId);
+            Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getById(groupId);
+            Teacher teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getById(teacherId);
 
             course.setDiscipline(discipline);
             course.setGroup(group);
@@ -37,7 +37,7 @@ public class CreateCourseServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/group?id="+groupId);
+        response.sendRedirect("group?id="+groupId);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
+public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     public String getSelectQuery() {
@@ -46,8 +46,8 @@ public class PgMarkDao extends PgGenericDao<Mark, Integer> implements MarkDao {
                 PgLessonDao pld = new PgLessonDao();
                 PgStudentDao psd = new PgStudentDao();
                 mark.setId(rs.getInt("mark_id"));
-                mark.setLesson(pld.getByPK(rs.getInt("lesson_id")));
-                mark.setStudent(psd.getByPK(rs.getInt("student_id")));
+                mark.setLesson(pld.getById(rs.getInt("lesson_id")));
+                mark.setStudent(psd.getById(rs.getInt("student_id")));
                 mark.setValue(rs.getInt("mark"));
                 result.add(mark);
             }

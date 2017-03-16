@@ -19,7 +19,7 @@ public class ChangeTeacherServlet extends HttpServlet {
         Teacher teacher = new Teacher();
 
         try {
-            teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getByPK(teacherId);
+            teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getById(teacherId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

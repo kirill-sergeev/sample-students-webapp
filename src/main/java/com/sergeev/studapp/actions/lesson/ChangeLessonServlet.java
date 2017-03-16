@@ -21,7 +21,7 @@ public class ChangeLessonServlet extends HttpServlet {
         Lesson.Order[] orders = Lesson.Order.values();
 
         try {
-            lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByPK(LessonId);
+            lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(LessonId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

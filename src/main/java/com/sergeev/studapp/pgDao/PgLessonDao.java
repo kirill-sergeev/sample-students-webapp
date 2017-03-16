@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PgLessonDao extends PgGenericDao<Lesson, Integer> implements LessonDao {
+public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
     @Override
     public String getSelectQuery() {
@@ -45,7 +45,7 @@ public class PgLessonDao extends PgGenericDao<Lesson, Integer> implements Lesson
                 Lesson lesson = new Lesson();
                 PgCourseDao pcd = new PgCourseDao();
                 lesson.setId(rs.getInt("lesson_id"));
-                lesson.setCourse(pcd.getByPK(rs.getInt("course_id")));
+                lesson.setCourse(pcd.getById(rs.getInt("course_id")));
                 lesson.setDate(rs.getDate("lesson_date"));
                 lesson.setOrder(Lesson.Order.getById(rs.getInt("lesson_order")));
                 lesson.setType(Lesson.Type.getById(rs.getInt("lesson_type_id")));

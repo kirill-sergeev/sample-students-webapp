@@ -21,7 +21,7 @@ public class RemoveGroupServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/groups");
+        response.sendRedirect("groups");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

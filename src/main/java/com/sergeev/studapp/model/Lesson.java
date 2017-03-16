@@ -3,7 +3,7 @@ package com.sergeev.studapp.model;
 import java.sql.Date;
 import java.sql.Time;
 
-public class Lesson implements Identified<Integer> {
+public class Lesson implements Identified {
 
     private Integer id;
     private Course course;

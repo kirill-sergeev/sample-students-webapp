@@ -27,7 +27,7 @@ public class UpdateDisciplineServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/disciplines");
+        response.sendRedirect("disciplines");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

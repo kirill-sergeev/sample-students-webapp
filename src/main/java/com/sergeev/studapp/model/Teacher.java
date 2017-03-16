@@ -1,6 +1,6 @@
 package com.sergeev.studapp.model;
 
-public class Teacher implements Identified<Integer> {
+public class Teacher implements Identified {
 
     private Integer id;
     private String firstName;

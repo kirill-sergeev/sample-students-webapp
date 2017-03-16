@@ -21,7 +21,7 @@ public class RemoveMarkServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/");
+        response.sendRedirect("");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

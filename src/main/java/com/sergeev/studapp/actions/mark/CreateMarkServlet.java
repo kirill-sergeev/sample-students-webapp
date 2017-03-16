@@ -24,8 +24,8 @@ public class CreateMarkServlet extends HttpServlet {
         mark.setValue(value);
 
         try {
-            Lesson lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByPK(lessonId);
-            Student student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByPK(studentId);
+            Lesson lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(lessonId);
+            Student student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getById(studentId);
             mark.setLesson(lesson);
             mark.setStudent(student);
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().persist(mark);
@@ -33,7 +33,7 @@ public class CreateMarkServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/lesson?id="+lessonId);
+        response.sendRedirect("lesson?id="+lessonId);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

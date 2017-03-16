@@ -1,6 +1,6 @@
 package com.sergeev.studapp.model;
 
-public class Student implements Identified<Integer> {
+public class Student implements Identified {
 
     private Integer id;
     private Group group;

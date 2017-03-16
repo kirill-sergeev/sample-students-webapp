@@ -23,7 +23,7 @@ public class ChangeStudentServlet extends HttpServlet {
         List<Group> groups = new ArrayList<>();
 
         try {
-            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByPK(studentId);
+            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getById(studentId);
             groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
         } catch (PersistentException e) {
             e.printStackTrace();

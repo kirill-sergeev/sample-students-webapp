@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.List;
 
-public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer> implements GenericDao<T, PK> {
+public abstract class PgGenericDao<T extends Identified> implements GenericDao<T> {
 
     public abstract String getSelectQuery();
 
@@ -45,7 +45,7 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
     }
 
     @Override
-    public T getByPK(Integer key) throws PersistentException {
+    public T getById(Integer key) throws PersistentException {
         String sql = getSelectQuery();
         List<T> list;
         try (Connection connection = PgDaoFactory.createConnection();
@@ -100,7 +100,7 @@ public abstract class PgGenericDao<T extends Identified<PK>, PK extends Integer>
     }
 
     @Override
-    public void delete(PK key) throws PersistentException {
+    public void delete(Integer key) throws PersistentException {
         String sql = getDeleteQuery();
         try (Connection connection = PgDaoFactory.createConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

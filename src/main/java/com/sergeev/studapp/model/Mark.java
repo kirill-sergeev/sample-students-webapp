@@ -1,6 +1,6 @@
 package com.sergeev.studapp.model;
 
-public class Mark implements Identified<Integer> {
+public class Mark implements Identified {
 
     private Integer id;
     private Lesson lesson;

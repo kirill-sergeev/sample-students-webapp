@@ -26,14 +26,14 @@ public class UpdateStudentServlet extends HttpServlet {
         student.setLastName(lastName);
 
         try {
-            Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getByPK(groupId);
+            Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getById(groupId);
             student.setGroup(group);
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().update(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/students");
+        response.sendRedirect("students");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

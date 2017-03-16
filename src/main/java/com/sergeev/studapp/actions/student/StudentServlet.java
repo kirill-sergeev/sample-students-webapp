@@ -25,7 +25,7 @@ public class StudentServlet extends HttpServlet {
         Map<Course, Double> coursesMarks = new LinkedHashMap<>();
 
         try {
-            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByPK(studentId);
+            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getById(studentId);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByGroup(student.getGroup().getId());
 
             double avgMark;

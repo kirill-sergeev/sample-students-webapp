@@ -17,13 +17,13 @@ public class RemoveCourseServlet extends HttpServlet {
         Integer groupId = null;
 
         try {
-            groupId = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByPK(courseId).getGroup().getId();
+            groupId = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getById(courseId).getGroup().getId();
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().delete(courseId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/group?id=" + groupId);
+        response.sendRedirect("group?id=" + groupId);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

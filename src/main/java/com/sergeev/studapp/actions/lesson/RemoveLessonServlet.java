@@ -19,13 +19,13 @@ public class RemoveLessonServlet extends HttpServlet {
 
         try {
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().delete(lessonId);
-            groupId = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByPK(lessonId).getCourse().getGroup().getId();
+            groupId = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(lessonId).getCourse().getGroup().getId();
         } catch (PersistentException e) {
             e.printStackTrace();
         }
 
         if (groupId == null) {
-            response.sendRedirect("/");
+            response.sendRedirect("");
             return;
         }
 

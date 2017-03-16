@@ -21,7 +21,7 @@ public class RemoveStudentServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("/students");
+        response.sendRedirect("students");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

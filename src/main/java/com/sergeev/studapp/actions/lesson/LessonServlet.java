@@ -25,7 +25,7 @@ public class LessonServlet extends HttpServlet {
         List<Mark> marks = new ArrayList<>();
 
         try {
-            lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getByPK(lessonId);
+            lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(lessonId);
             marks = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().getByLesson(lessonId);
         } catch (PersistentException e) {
             e.printStackTrace();

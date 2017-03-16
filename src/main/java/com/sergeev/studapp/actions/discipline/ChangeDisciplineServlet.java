@@ -19,7 +19,7 @@ public class ChangeDisciplineServlet extends HttpServlet {
         Discipline discipline = new Discipline();
 
         try {
-            discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getByPK(disciplineId);
+            discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getById(disciplineId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

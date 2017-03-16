@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PgCourseDao extends PgGenericDao<Course, Integer> implements CourseDao {
+public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     public String getSelectQuery() {
@@ -47,9 +47,9 @@ public class PgCourseDao extends PgGenericDao<Course, Integer> implements Course
                 PgGroupDao pgd = new PgGroupDao();
                 PgTeacherDao ptd = new PgTeacherDao();
                 course.setId(rs.getInt("course_id"));
-                course.setGroup(pgd.getByPK(rs.getInt("group_id")));
-                course.setDiscipline(pdd.getByPK(rs.getInt("discipline_id")));
-                course.setTeacher(ptd.getByPK(rs.getInt("teacher_id")));
+                course.setGroup(pgd.getById(rs.getInt("group_id")));
+                course.setDiscipline(pdd.getById(rs.getInt("discipline_id")));
+                course.setTeacher(ptd.getById(rs.getInt("teacher_id")));
                 result.add(course);
             }
         } catch (Exception e) {

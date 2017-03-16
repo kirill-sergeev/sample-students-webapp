@@ -1,57 +1,67 @@
 package com.sergeev.studapp.pgDao;
 
 import com.sergeev.studapp.dao.*;
+import org.apache.commons.dbcp.BasicDataSource;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class PgDaoFactory extends DaoFactory {
 
-    private static final String DRIVER = "org.postgresql.Driver";
+    private static final String DRIVER;
     private static final String URL;
     private static final String USER;
     private static final String PASSWORD;
 
+    private static final String PROPERTIES_FILE = "db_postgres_local.properties";
+    private static final Properties PROPERTIES = new Properties();
+
+    private static BasicDataSource dataSource;
+
     static {
-//  for ElephantSQL
-//        URL="jdbc:postgresql://echo-01.db.elephantsql.com:5432/dcowipjd";
-//        USER="dcowipjd";
-//        PASSWORD="BAbsnENkcmB2v7FLLHpxYc1o0tCPKAJR";
-//  for PostgreSQL at Bluemix
-//        URL = "jdbc:postgresql://159.8.128.91:5433/d6dff8b6212054249bf05aed791106499";
-//        USER = "ue8d9771e79e840de8f1a3bb47f05ca96";
-//        PASSWORD = "pdbdf01712fe54ada8739a3c7041d1182";
-//  for PostgresQL at localhost
-        URL = "jdbc:postgresql://localhost:5432/postgres_test";
-        USER = "root";
-        PASSWORD = "root";
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+        try (InputStream resourceStream = classLoader.getResourceAsStream(PROPERTIES_FILE)) {
+            PROPERTIES.load(resourceStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        DRIVER = PROPERTIES.getProperty("driver");
+        URL = PROPERTIES.getProperty("url");
+        USER = PROPERTIES.getProperty("username");
+        PASSWORD = PROPERTIES.getProperty("password");
+    }
+
+    private static BasicDataSource getDataSource() {
+        if (dataSource == null) {
+            BasicDataSource ds = new BasicDataSource();
+            ds.setUrl(URL);
+            ds.setUsername(USER);
+            ds.setPassword(PASSWORD);
+            ds.setDriverClassName(DRIVER);
+
+            ds.setMinIdle(5);
+            ds.setMaxIdle(10);
+            ds.setMaxOpenPreparedStatements(5);
+
+            dataSource = ds;
+        }
+        return dataSource;
     }
 
     static Connection createConnection() {
         Connection connection = null;
+        BasicDataSource dataSource = PgDaoFactory.getDataSource();
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
-    }
-
-    static void closeConnection(Connection connection) {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public PgDaoFactory() {
-        try {
-            Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

@@ -30,7 +30,7 @@ public class ChangeCourseServlet extends HttpServlet {
             disciplines = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getAll();
             groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
             teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getAll();
-            course = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getByPK(courseId);
+            course = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getById(courseId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
