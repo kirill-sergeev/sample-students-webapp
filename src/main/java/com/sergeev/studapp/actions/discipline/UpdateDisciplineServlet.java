@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "UpdateDisciplineServlet", urlPatterns = "/update-discipline")
 public class UpdateDisciplineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer disciplineId = Integer.valueOf(request.getParameter("id"));
+        String disciplineId = request.getParameter("id");
         String title = request.getParameter("title");
 
         Discipline discipline = new Discipline();

@@ -38,9 +38,9 @@
                 </div>
                 <div class="form-group">
                     <label>Time
-                        <select class="form-control" name="order">
+                        <select class="form-control" name="number">
                             <c:forEach items="${orders}" var="order">
-                                <option value="${order.id}">${order.startTime} - ${order.endTime}</option>
+                                <option value="${order.number}">${order.startTime} - ${order.endTime}</option>
                             </c:forEach>
                         </select>
                     </label>

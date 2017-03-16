@@ -44,8 +44,8 @@ public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
             while (rs.next()) {
                 Student student = new Student();
                 PgGroupDao pgd = new PgGroupDao();
-                student.setGroup(pgd.getById(rs.getInt("group_id")));
-                student.setId(rs.getInt("student_id"));
+                student.setGroup(pgd.getById(rs.getString("group_id")));
+                student.setId(rs.getString("student_id"));
                 student.setFirstName(rs.getString("first_name"));
                 student.setLastName(rs.getString("last_name"));
                 result.add(student);
@@ -59,7 +59,7 @@ public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Student object) throws PersistentException {
         try {
-            statement.setInt(1, object.getGroup().getId());
+            statement.setInt(1, Integer.parseInt(object.getGroup().getId()));
             statement.setString(2, object.getFirstName());
             statement.setString(3, object.getLastName());
         } catch (Exception e) {
@@ -70,10 +70,10 @@ public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, Student object) throws PersistentException {
         try {
-            statement.setInt(1, object.getGroup().getId());
+            statement.setInt(1, Integer.parseInt(object.getGroup().getId()));
             statement.setString(2, object.getFirstName());
             statement.setString(3, object.getLastName());
-            statement.setInt(4, object.getId());
+            statement.setInt(4, Integer.parseInt(object.getId()));
         } catch (Exception e) {
             throw new PersistentException(e);
         }
@@ -98,12 +98,12 @@ public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
     }
 
     @Override
-    public List<Student> getByGroup(Integer groupId) throws PersistentException {
+    public List<Student> getByGroup(String groupId) throws PersistentException {
         List<Student> list;
         String sql = "SELECT * FROM students WHERE group_id= ?;";
         try (Connection connection = PgDaoFactory.createConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, groupId);
+            statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (Exception e) {

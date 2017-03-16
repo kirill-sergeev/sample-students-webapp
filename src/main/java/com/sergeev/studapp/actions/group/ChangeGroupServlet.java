@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "ChangeGroupServlet", urlPatterns = "/change-group")
 public class ChangeGroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("id"));
+        String groupId = request.getParameter("id");
 
         Group group = new Group();
 

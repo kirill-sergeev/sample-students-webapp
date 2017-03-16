@@ -5,17 +5,17 @@ import java.sql.Time;
 
 public class Lesson implements Identified {
 
-    private Integer id;
+    private String id;
     private Course course;
     private Date date;
     private Order order;
     private Type type;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -64,26 +64,26 @@ public class Lesson implements Identified {
 
     public enum Type {
 
-        PRACTICAL(1, "Practical"),
-        LECTURE(2, "Lecture"),
-        LAB(3, "Lab");
+        PRACTICAL("1", "Practical"),
+        LECTURE("2", "Lecture"),
+        LAB("3", "Lab");
 
-        private Integer id;
+        private String id;
         private String type;
 
-        Type(Integer id, String type) {
+        Type(String id, String type) {
             this.id = id;
             this.type = type;
         }
 
-        public static Type getById(Integer id) {
+        public static Type getById(String id) {
             for (Type type : values()) {
                 if (type.id.equals(id)) return type;
             }
             return null;
         }
 
-        public Integer getId() {
+        public String getId() {
             return id;
         }
 
@@ -109,25 +109,30 @@ public class Lesson implements Identified {
         FIFTH(5, Time.valueOf("14:55:00"), Time.valueOf("16:30:00")),
         SIXTH(6, Time.valueOf("16:45:00"), Time.valueOf("18:15:00"));
 
-        private Integer id;
+        private String id;
+        private Integer number;
         private Time startTime;
         private Time endTime;
 
-        Order(Integer id, Time startTime, Time endTime) {
-            this.id = id;
+        Order(Integer number, Time startTime, Time endTime) {
+            this.number = number;
             this.startTime = startTime;
             this.endTime = endTime;
         }
 
-        public static Order getById(Integer id) {
-            for (Order order : values()) {
-                if (order.id.equals(id)) return order;
+        public static Order getByNumber(Integer number) {
+            for (Order o : values()) {
+                if (o.number.equals(number)) return o;
             }
             return null;
         }
 
-        public Integer getId() {
+        public String getId() {
             return id;
+        }
+
+        public Integer  getNumber() {
+            return number;
         }
 
         public Time getStartTime() {
@@ -142,6 +147,7 @@ public class Lesson implements Identified {
         public String toString() {
             return "Order{" +
                     "id=" + id +
+                    "number=" + number +
                     ", startTime=" + startTime +
                     ", endTime=" + endTime +
                     '}';

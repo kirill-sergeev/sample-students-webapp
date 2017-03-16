@@ -42,7 +42,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
         try {
             while (rs.next()) {
                 Discipline discipline = new Discipline();
-                discipline.setId(rs.getInt("discipline_id"));
+                discipline.setId(rs.getString("discipline_id"));
                 discipline.setTitle(rs.getString("title"));
                 result.add(discipline);
             }
@@ -65,7 +65,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
-            statement.setInt(2, object.getId());
+            statement.setInt(2, Integer.parseInt(object.getId()));
         } catch (Exception e) {
             throw new PersistentException(e);
         }

@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "ChangeCourseServlet", urlPatterns = "/change-course")
 public class ChangeCourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer courseId = Integer.valueOf(request.getParameter("id"));
+        String courseId = request.getParameter("id");
 
         Course course = new Course();
         List<Discipline> disciplines = new ArrayList<>();

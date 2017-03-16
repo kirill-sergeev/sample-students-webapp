@@ -44,11 +44,11 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
             while (rs.next()) {
                 Lesson lesson = new Lesson();
                 PgCourseDao pcd = new PgCourseDao();
-                lesson.setId(rs.getInt("lesson_id"));
-                lesson.setCourse(pcd.getById(rs.getInt("course_id")));
+                lesson.setId(rs.getString("lesson_id"));
+                lesson.setCourse(pcd.getById(rs.getString("course_id")));
                 lesson.setDate(rs.getDate("lesson_date"));
-                lesson.setOrder(Lesson.Order.getById(rs.getInt("lesson_order")));
-                lesson.setType(Lesson.Type.getById(rs.getInt("lesson_type_id")));
+                lesson.setOrder(Lesson.Order.getByNumber(rs.getInt("lesson_order")));
+                lesson.setType(Lesson.Type.getById(rs.getString("lesson_type_id")));
                 result.add(lesson);
             }
         } catch (Exception e) {
@@ -60,10 +60,10 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, Lesson object) throws PersistentException {
         try {
-            statement.setInt(1, object.getType().getId());
-            statement.setInt(2, object.getCourse().getId());
+            statement.setInt(1, Integer.parseInt(object.getType().getId()));
+            statement.setInt(2, Integer.parseInt(object.getCourse().getId()));
             statement.setDate(3, object.getDate());
-            statement.setInt(4, object.getOrder().getId());
+            statement.setInt(4, object.getOrder().getNumber());
         } catch (Exception e) {
             throw new PersistentException(e);
         }
@@ -72,23 +72,23 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) throws PersistentException {
         try {
-            statement.setInt(1, object.getType().getId());
-            statement.setInt(2, object.getCourse().getId());
+            statement.setString(1, object.getType().getId());
+            statement.setString(2, object.getCourse().getId());
             statement.setDate(3, object.getDate());
-            statement.setInt(4, object.getOrder().getId());
-            statement.setInt(5, object.getId());
+            statement.setInt(4, object.getOrder().getNumber());
+            statement.setString(5, object.getId());
         } catch (Exception e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    public List<Lesson> getByGroup(Integer groupId) throws PersistentException {
+    public List<Lesson> getByGroup(String groupId) throws PersistentException {
         List<Lesson> list;
         String sql = "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id AND courses.group_id= ? ORDER BY lessons.lesson_date, lesson_order;";
         try (Connection connection = PgDaoFactory.createConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, groupId);
+            statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (Exception e) {

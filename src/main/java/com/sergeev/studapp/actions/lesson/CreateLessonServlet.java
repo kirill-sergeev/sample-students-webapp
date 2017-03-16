@@ -16,15 +16,15 @@ import java.sql.Date;
 @WebServlet(name = "CreateLessonServlet", urlPatterns = "/create-lesson")
 public class CreateLessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
-        Integer disciplineId = Integer.valueOf(request.getParameter("discipline"));
-        Integer typeId = Integer.valueOf(request.getParameter("type"));
-        Integer orderId = Integer.valueOf(request.getParameter("order"));
+        String groupId = request.getParameter("group");
+        String disciplineId = request.getParameter("discipline");
+        String typeId = request.getParameter("type");
+        Integer number = Integer.valueOf(request.getParameter("number"));
         Date date = Date.valueOf((request.getParameter("date")));
 
         Lesson lesson = new Lesson();
         lesson.setType(Lesson.Type.getById(typeId));
-        lesson.setOrder(Lesson.Order.getById(orderId));
+        lesson.setOrder(Lesson.Order.getByNumber(number));
         lesson.setDate(date);
 
         try {

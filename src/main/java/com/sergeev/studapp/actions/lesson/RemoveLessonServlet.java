@@ -13,9 +13,9 @@ import java.io.IOException;
 @WebServlet(name = "RemoveLessonServlet", urlPatterns = "/remove-lesson")
 public class RemoveLessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer lessonId = Integer.valueOf(request.getParameter("id"));
+        String lessonId = request.getParameter("id");
 
-        Integer groupId = null;
+        String groupId = null;
 
         try {
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().delete(lessonId);

@@ -17,7 +17,7 @@ import java.util.List;
 @WebServlet(name = "ChangeStudentServlet", urlPatterns = "/change-student")
 public class ChangeStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer studentId = Integer.valueOf(request.getParameter("id"));
+        String studentId = request.getParameter("id");
 
         Student student = new Student();
         List<Group> groups = new ArrayList<>();

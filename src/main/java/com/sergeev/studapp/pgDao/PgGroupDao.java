@@ -41,7 +41,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
         try {
             while (rs.next()) {
                 Group group = new Group();
-                group.setId(rs.getInt("group_id"));
+                group.setId(rs.getString("group_id"));
                 group.setTitle(rs.getString("title"));
                 result.add(group);
             }
@@ -64,7 +64,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     protected void prepareStatementForUpdate(PreparedStatement statement, Group object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
-            statement.setInt(2, object.getId());
+            statement.setInt(2, Integer.parseInt(object.getId()));
         } catch (Exception e) {
             throw new PersistentException(e);
         }

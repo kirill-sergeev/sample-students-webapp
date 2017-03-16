@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "UpdateTeacherServlet", urlPatterns = "/update-teacher")
 public class UpdateTeacherServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer teacherId = Integer.valueOf(request.getParameter("id"));
+        String teacherId = request.getParameter("id");
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
 

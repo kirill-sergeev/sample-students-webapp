@@ -17,7 +17,7 @@ import java.util.List;
 @WebServlet(name = "TeacherServlet", urlPatterns = "/teacher")
 public class TeacherServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer teacherId = Integer.valueOf(request.getParameter("id"));
+        String teacherId = request.getParameter("id");
 
         Teacher teacher = new Teacher();
         List<Course> courses = new ArrayList<>();

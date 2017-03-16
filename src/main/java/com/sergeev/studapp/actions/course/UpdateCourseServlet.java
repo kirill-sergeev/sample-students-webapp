@@ -17,10 +17,10 @@ import java.io.IOException;
 @WebServlet(name = "UpdateCourseServlet", urlPatterns = "/update-course")
 public class UpdateCourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer courseId = Integer.valueOf(request.getParameter("id"));
-        Integer disciplineId = Integer.valueOf(request.getParameter("discipline"));
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
-        Integer teacherId  = Integer.valueOf(request.getParameter("teacher"));
+        String courseId = request.getParameter("id");
+        String disciplineId = request.getParameter("discipline");
+        String groupId = request.getParameter("group");
+        String teacherId  = request.getParameter("teacher");
 
         Course course = new Course();
         course.setId(courseId);

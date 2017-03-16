@@ -17,9 +17,9 @@ import java.io.IOException;
 @WebServlet(name = "CreateCourseServlet", urlPatterns = "/create-course")
 public class CreateCourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer disciplineId = Integer.valueOf(request.getParameter("discipline"));
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
-        Integer teacherId  = Integer.valueOf(request.getParameter("teacher"));
+        String disciplineId = request.getParameter("discipline");
+        String groupId = request.getParameter("group");
+        String teacherId  = request.getParameter("teacher");
 
         try {
             Course course = new Course();

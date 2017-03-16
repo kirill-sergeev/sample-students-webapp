@@ -18,7 +18,7 @@ import java.util.Map;
 @WebServlet(name = "StudentServlet", urlPatterns = "/student")
 public class StudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer studentId = Integer.valueOf(request.getParameter("id"));
+        String studentId = request.getParameter("id");
 
         Student student = new Student();
         List<Course> courses;

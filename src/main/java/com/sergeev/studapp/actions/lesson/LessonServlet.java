@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "LessonServlet", urlPatterns = "/lesson")
 public class LessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer lessonId = Integer.valueOf(request.getParameter("id"));
+        String lessonId = request.getParameter("id");
 
         Lesson lesson = new Lesson();
         List<Mark> marks = new ArrayList<>();

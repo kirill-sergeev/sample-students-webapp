@@ -17,7 +17,7 @@ public class CreateStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
+        String groupId = request.getParameter("group");
 
         Student student = new Student();
         student.setFirstName(firstName);

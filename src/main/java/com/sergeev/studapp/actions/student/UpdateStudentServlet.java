@@ -15,10 +15,10 @@ import java.io.IOException;
 @WebServlet(name = "UpdateStudentServlet", urlPatterns = "/update-student")
 public class UpdateStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer studentId = Integer.valueOf(request.getParameter("id"));
+        String studentId = request.getParameter("id");
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
+        String groupId = request.getParameter("group");
 
         Student student = new Student();
         student.setId(studentId);

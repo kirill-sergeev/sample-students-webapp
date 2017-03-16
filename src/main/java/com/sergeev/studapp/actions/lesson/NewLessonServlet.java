@@ -18,7 +18,7 @@ import java.util.List;
 @WebServlet(name = "NewLessonServlet", urlPatterns = "/new-lesson")
 public class NewLessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
+        String groupId = request.getParameter("group");
 
         Group group = new Group();
         Lesson.Type[] types = Lesson.Type.values();

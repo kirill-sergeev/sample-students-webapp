@@ -13,8 +13,8 @@ import java.io.IOException;
 @WebServlet(name = "RemoveCourseServlet", urlPatterns = "/remove-course")
 public class RemoveCourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer courseId = Integer.valueOf(request.getParameter("id"));
-        Integer groupId = null;
+        String courseId = request.getParameter("id");
+        String groupId = null;
 
         try {
             groupId = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getById(courseId).getGroup().getId();

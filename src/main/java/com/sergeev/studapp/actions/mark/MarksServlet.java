@@ -18,8 +18,8 @@ import java.util.List;
 @WebServlet(name = "MarksServlet", urlPatterns = "/marks")
 public class MarksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer studentId = Integer.valueOf(request.getParameter("student"));
-        Integer disciplineId = Integer.valueOf(request.getParameter("discipline"));
+        String studentId = request.getParameter("student");
+        String disciplineId = request.getParameter("discipline");
 
         Student student = new Student();
         Discipline discipline = new Discipline();

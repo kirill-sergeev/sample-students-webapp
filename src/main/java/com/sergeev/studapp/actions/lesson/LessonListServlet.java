@@ -19,7 +19,7 @@ import java.util.List;
 @WebServlet(name = "LessonListServlet", urlPatterns = "/lessons")
 public class LessonListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
+        String groupId = request.getParameter("group");
 
         List<Lesson> lessons = new ArrayList<>();
         Group group = new Group();

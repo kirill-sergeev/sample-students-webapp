@@ -8,13 +8,13 @@ public interface GenericDao<T extends Identified> {
 
     T persist(T object) throws PersistentException;
 
-    T getById(Integer key) throws PersistentException;
+    T getById(String key) throws PersistentException;
 
     void update(T object) throws PersistentException;
 
     void delete(T object) throws PersistentException;
 
-    void delete(Integer key) throws PersistentException;
+    void delete(String key) throws PersistentException;
 
     List<T> getAll() throws PersistentException;
 }

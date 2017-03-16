@@ -14,7 +14,7 @@ import java.io.IOException;
 @WebServlet(name = "ChangeLessonServlet", urlPatterns = "/change-lesson")
 public class ChangeLessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer LessonId = Integer.valueOf(request.getParameter("id"));
+        String LessonId = request.getParameter("id");
 
         Lesson lesson = new Lesson();
         Lesson.Type[] types = Lesson.Type.values();

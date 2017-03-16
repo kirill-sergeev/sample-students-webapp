@@ -1,8 +1,6 @@
 package com.sergeev.studapp.model;
 
-import java.io.Serializable;
-
-public interface Identified extends Serializable {
-    Integer getId();
-    void setId(Integer id);
+public interface Identified {
+    String getId();
+    void setId(String id);
 }

@@ -8,5 +8,5 @@ public interface StudentDao extends GenericDao<Student> {
 
     List<Student> getByName(String name) throws PersistentException;
 
-    List<Student> getByGroup(Integer groupId) throws PersistentException;
+    List<Student> getByGroup(String groupId) throws PersistentException;
 }

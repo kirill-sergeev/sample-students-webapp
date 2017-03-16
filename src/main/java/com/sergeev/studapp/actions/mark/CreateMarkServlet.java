@@ -16,8 +16,8 @@ import java.io.IOException;
 @WebServlet(name = "CreateMarkServlet", urlPatterns = "/create-mark")
 public class CreateMarkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer lessonId = Integer.valueOf(request.getParameter("lesson"));
-        Integer studentId = Integer.valueOf(request.getParameter("student"));
+        String lessonId = request.getParameter("lesson");
+        String studentId = request.getParameter("student");
         Integer value = Integer.valueOf(request.getParameter("value"));
 
         Mark mark = new Mark();

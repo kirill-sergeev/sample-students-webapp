@@ -42,7 +42,7 @@ public class PgTeacherDao extends PgGenericDao<Teacher> implements TeacherDao {
         try {
             while (rs.next()) {
                 Teacher teacher = new Teacher();
-                teacher.setId(rs.getInt("teacher_id"));
+                teacher.setId(rs.getString("teacher_id"));
                 teacher.setFirstName(rs.getString("first_name"));
                 teacher.setLastName(rs.getString("last_name"));
                 result.add(teacher);
@@ -68,7 +68,7 @@ public class PgTeacherDao extends PgGenericDao<Teacher> implements TeacherDao {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
-            statement.setInt(3, object.getId());
+            statement.setInt(3, Integer.parseInt(object.getId()));
         } catch (Exception e) {
             throw new PersistentException(e);
         }

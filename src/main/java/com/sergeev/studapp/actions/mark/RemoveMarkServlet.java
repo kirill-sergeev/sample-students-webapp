@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "RemoveMarkServlet", urlPatterns = "/remove-mark")
 public class RemoveMarkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer markId = Integer.valueOf(request.getParameter("id"));
+        String markId = request.getParameter("id");
 
         try {
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().delete(markId);

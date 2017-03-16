@@ -17,8 +17,8 @@ import java.util.List;
 @WebServlet(name = "NewMarkServlet", urlPatterns = "/new-mark")
 public class NewMarkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer lessonId = Integer.valueOf(request.getParameter("lesson"));
-        Integer groupId = Integer.valueOf(request.getParameter("group"));
+        String lessonId = request.getParameter("lesson");
+        String groupId = request.getParameter("group");
 
         Lesson lesson = new Lesson();
         List<Student> students = new ArrayList<>();

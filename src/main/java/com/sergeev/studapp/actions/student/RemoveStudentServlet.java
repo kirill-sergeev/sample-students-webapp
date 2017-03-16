@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "RemoveStudentServlet", urlPatterns = "/remove-student")
 public class RemoveStudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer studentId = Integer.valueOf(request.getParameter("id"));
+        String studentId = request.getParameter("id");
 
         try {
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().delete(studentId);

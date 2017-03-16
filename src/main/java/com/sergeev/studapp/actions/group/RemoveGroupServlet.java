@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "RemoveGroupServlet", urlPatterns = "/remove-group")
 public class RemoveGroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Integer groupId = Integer.valueOf(request.getParameter("id"));
+        String groupId = request.getParameter("id");
 
         try {
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().delete(groupId);
