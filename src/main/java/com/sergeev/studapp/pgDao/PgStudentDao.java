@@ -83,7 +83,7 @@ public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
     public List<Student> getByName(String name) throws PersistentException {
         List<Student> list;
         String sql = "SELECT * FROM students WHERE lower(first_name||' '||last_name) LIKE (?);";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + name + "%");
             ResultSet rs = statement.executeQuery();
@@ -101,7 +101,7 @@ public class PgStudentDao extends PgGenericDao<Student> implements StudentDao {
     public List<Student> getByGroup(String groupId) throws PersistentException {
         List<Student> list;
         String sql = "SELECT * FROM students WHERE group_id= ?;";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();

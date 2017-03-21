@@ -1,8 +1,16 @@
 package com.sergeev.studapp.model;
 
-public class Student implements Identified {
+import org.mongodb.morphia.annotations.*;
 
+@Entity("students")
+@Indexes(
+        {@Index(value = "firstName", fields = @Field("firstName")),
+                @Index(value = "lastName", fields = @Field("lastName"))}
+)
+public class Student implements Identified {
+    @Id
     private String id;
+    @Reference
     private Group group;
     private String firstName;
     private String lastName;
@@ -48,4 +56,5 @@ public class Student implements Identified {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
+
 }

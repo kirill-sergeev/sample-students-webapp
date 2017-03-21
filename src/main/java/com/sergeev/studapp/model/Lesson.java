@@ -1,11 +1,19 @@
 package com.sergeev.studapp.model;
 
+import org.mongodb.morphia.annotations.*;
+
 import java.sql.Date;
 import java.sql.Time;
 
+@Entity("lessons")
+@Indexes(
+        {@Index(value = "order", fields = @Field("order")),
+                @Index(value = "type", fields = @Field("type"))}
+)
 public class Lesson implements Identified {
-
+    @Id
     private String id;
+    @Reference
     private Course course;
     private Date date;
     private Order order;
@@ -109,7 +117,6 @@ public class Lesson implements Identified {
         FIFTH(5, Time.valueOf("14:55:00"), Time.valueOf("16:30:00")),
         SIXTH(6, Time.valueOf("16:45:00"), Time.valueOf("18:15:00"));
 
-        private String id;
         private Integer number;
         private Time startTime;
         private Time endTime;
@@ -127,11 +134,7 @@ public class Lesson implements Identified {
             return null;
         }
 
-        public String getId() {
-            return id;
-        }
-
-        public Integer  getNumber() {
+        public Integer getNumber() {
             return number;
         }
 
@@ -146,7 +149,6 @@ public class Lesson implements Identified {
         @Override
         public String toString() {
             return "Order{" +
-                    "id=" + id +
                     "number=" + number +
                     ", startTime=" + startTime +
                     ", endTime=" + endTime +

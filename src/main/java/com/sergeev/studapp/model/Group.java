@@ -1,7 +1,13 @@
 package com.sergeev.studapp.model;
 
-public class Group implements Identified {
+import org.mongodb.morphia.annotations.*;
 
+@Entity("groups")
+@Indexes(
+        @Index(value = "title", fields = @Field("title"))
+)
+public class Group implements Identified {
+    @Id
     private String id;
     private String title;
 

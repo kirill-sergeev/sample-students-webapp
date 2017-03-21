@@ -85,7 +85,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     public List<Course> getByDiscipline(String disciplineId) throws PersistentException {
         List<Course> list;
         String sql = "SELECT * FROM courses WHERE discipline_id= ?;";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(disciplineId));
             ResultSet rs = statement.executeQuery();
@@ -103,7 +103,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     public List<Course> getByGroup(String groupId) throws PersistentException {
         List<Course> list;
         String sql = "SELECT * FROM courses WHERE group_id= ?;";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();
@@ -121,7 +121,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     public List<Course> getByTeacher(String teacherId) throws PersistentException {
         List<Course> list;
         String sql = "SELECT * FROM courses WHERE teacher_id= ?;";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(teacherId));
             ResultSet rs = statement.executeQuery();
@@ -139,7 +139,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     public Course getByGroupAndDiscipline(String groupId, String disciplineId) throws PersistentException {
         List<Course> list;
         String sql = "SELECT * FROM courses c WHERE c.group_id= ? AND c.discipline_id= ?";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(groupId));
             statement.setInt(2, Integer.parseInt(disciplineId));

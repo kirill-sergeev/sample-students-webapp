@@ -84,7 +84,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     public Double getAvgMark(String studentId, String disciplineId) throws PersistentException {
         Double avgMark;
         String sql = "SELECT student_avg_mark_by_discipline(?,?);";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(studentId));
             statement.setInt(2, Integer.parseInt(disciplineId));
@@ -101,7 +101,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     public List<Mark> getByLesson(String lessonId) throws PersistentException {
         List<Mark> list;
         String sql = "SELECT * FROM marks WHERE lesson_id= ?;";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(lessonId));
             ResultSet rs = statement.executeQuery();
@@ -116,7 +116,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     public List<Mark> getByStudentAndDiscipline(String studentId, String disciplineId) throws PersistentException {
         List<Mark> list;
         String sql = "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id AND l.course_id = c.course_id AND m.student_id = ? AND c.discipline_id = ?";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(studentId));
             statement.setInt(2, Integer.parseInt(disciplineId));

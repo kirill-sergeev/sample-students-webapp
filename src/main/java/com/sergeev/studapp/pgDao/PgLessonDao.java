@@ -86,7 +86,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     public List<Lesson> getByGroup(String groupId) throws PersistentException {
         List<Lesson> list;
         String sql = "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id AND courses.group_id= ? ORDER BY lessons.lesson_date, lesson_order;";
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();

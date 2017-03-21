@@ -53,7 +53,7 @@ public class PgDaoFactory extends DaoFactory {
         return dataSource;
     }
 
-    static Connection createConnection() {
+    static Connection getConnection() {
         Connection connection = null;
         BasicDataSource dataSource = PgDaoFactory.getDataSource();
         try {

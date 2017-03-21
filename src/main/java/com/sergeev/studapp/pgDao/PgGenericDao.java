@@ -30,7 +30,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     @Override
     public T persist(T object) throws PersistentException {
         String sql = getCreateQuery();
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             prepareStatementForInsert(statement, object);
             statement.executeUpdate();
@@ -48,7 +48,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     public T getById(String key) throws PersistentException {
         String sql = getSelectQuery();
         List<T> list;
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(key));
             ResultSet rs = statement.executeQuery();
@@ -68,7 +68,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     @Override
     public void update(T object) throws PersistentException {
         String sql = getUpdateQuery();
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             prepareStatementForUpdate(statement, object);
             int count = statement.executeUpdate();
@@ -83,7 +83,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     @Override
     public void delete(T object) throws PersistentException {
         String sql = getDeleteQuery();
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             try {
                 statement.setInt(1, Integer.parseInt(object.getId()));
@@ -102,7 +102,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     @Override
     public void delete(String key) throws PersistentException {
         String sql = getDeleteQuery();
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             try {
                 statement.setInt(1, Integer.parseInt(key));
@@ -122,7 +122,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     public List<T> getAll() throws PersistentException {
         List<T> list;
         String sql = getSelectAllQuery();
-        try (Connection connection = PgDaoFactory.createConnection();
+        try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet rs = statement.executeQuery()) {
             list = parseResultSet(rs);
@@ -212,7 +212,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
 //                "INSERT INTO \"teachers\" (first_name, last_name)\n" +
 //                "VALUES ('Barrett', 'Clements'), ('Sean', 'Hopper'), ('Cedric', 'Serrano'), ('Cody', 'Riddle'), ('Aidan', 'King'),\n" +
 //                "  ('Neville', 'Harrison'), ('Ian', 'Cash'), ('Sean', 'Cleveland'), ('Stewart', 'Lamb'), ('Trevor', 'Frazier');";
-//        try (Connection connection = PgDaoFactory.createConnection();
+//        try (Connection connection = PgDaoFactory.getConnection();
 //             Statement statement = connection.createStatement()) {
 //            statement.execute(sql);
 //        } catch (Exception e) {
