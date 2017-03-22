@@ -2,79 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="493ee518-63f3-478d-8ad0-66231030171e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/RemoveCourseServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/discipline/RemoveDisciplineServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/group/RemoveGroupServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/RemoveLessonServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/RemoveMarkServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/CreateStudentServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/NewStudentServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/RemoveStudentServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/CreateTeacherServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/NewTeacherServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/RemoveTeacherServlet.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/StudentDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/TeacherDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Student.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Teacher.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoDao/MongoTeacherDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgStudentDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgTeacherDao.java" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoDao/MongoStudentDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoDao/MongoUserDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/40d33d41-b531-475c-ab1c-2bc6d6130f8a.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/40d33d41-b531-475c-ab1c-2bc6d6130f8a.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db_old.sql" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/AddServlet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/RemoveServlet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/account/CreateAccountServlet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/account/NewAccountServlet.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/UserDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/User.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgUserDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sql" afterPath="$PROJECT_DIR$/db.sql" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/ChangeCourseServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/ChangeCourseServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/CreateCourseServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/CreateCourseServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/NewCourseServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/NewCourseServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/UpdateCourseServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/course/UpdateCourseServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/group/GroupListServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/group/GroupListServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/group/GroupServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/group/GroupServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/ChangeLessonServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/ChangeLessonServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/CreateLessonServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/CreateLessonServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/NewLessonServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/NewLessonServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/UpdateLessonServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/lesson/UpdateLessonServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/CreateMarkServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/CreateMarkServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/MarksServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/MarksServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/NewMarkServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/mark/NewMarkServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/ChangeStudentServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/ChangeStudentServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/SearchStudentServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/SearchStudentServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/StudentListServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/StudentListServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/StudentServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/StudentServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/UpdateStudentServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/student/UpdateStudentServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/ChangeTeacherServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/ChangeTeacherServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/TeacherListServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/TeacherListServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/TeacherServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/TeacherServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/UpdateTeacherServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/teacher/UpdateTeacherServlet.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/CourseDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/CourseDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Course.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Course.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Lesson.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Lesson.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Mark.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Mark.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoDao/MongoDaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoDao/MongoDaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgCourseDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgCourseDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgDaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgDaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgDisciplineDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgDisciplineDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgGenericDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgGenericDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgGroupDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgGroupDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgLessonDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgLessonDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgMarkDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/pgDao/PgMarkDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/change-course.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/change-course.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/change-lesson.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/change-lesson.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/change-student.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/change-student.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/change-teacher.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/change-teacher.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/group.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/group.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/marks.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/marks.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/new-course.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/new-course.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/new-lesson.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/new-lesson.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/new-mark.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/new-mark.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/new-student.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/new-student.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/new-teacher.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/new-teacher.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/student.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/student.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/students.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/students.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/teacher.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/teacher.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/teachers.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/teachers.jsp" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -1094,12 +1030,12 @@
       <workItem from="1489760778569" duration="1380000" />
       <workItem from="1490109230551" duration="10540000" />
       <workItem from="1490121356952" duration="7314000" />
-      <workItem from="1490164889425" duration="9719000" />
+      <workItem from="1490164889425" duration="10003000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="218088000" />
+    <option name="totallyTimeSpent" value="218372000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="2560" height="1050" extended-state="6" />
