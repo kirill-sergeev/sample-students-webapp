@@ -3,7 +3,7 @@ package com.sergeev.studapp.actions.student;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,15 +20,16 @@ public class UpdateStudentServlet extends HttpServlet {
         String lastName = request.getParameter("last-name");
         String groupId = request.getParameter("group");
 
-        Student student = new Student();
+        User student = new User();
         student.setId(studentId);
         student.setFirstName(firstName);
         student.setLastName(lastName);
+        student.setType(User.AccountType.STUDENT);
 
         try {
             Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getById(groupId);
             student.setGroup(group);
-            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().update(student);
+            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().update(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="group" scope="request" type="com.sergeev.studapp.model.Group"/>
-<jsp:useBean id="students" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Student>"/>
+<jsp:useBean id="students" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.User>"/>
 <jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">

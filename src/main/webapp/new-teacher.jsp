@@ -15,7 +15,10 @@
                 <div class="form-group">
                     <input type="text" name="last-name" class="form-control" placeholder="Last name...">
                 </div>
-                <button type="submit" class="btn btn-primary">Create</button>
+                <div class="form-group">
+                    <input type="hidden" name="type" class="form-control" value="${2}">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>

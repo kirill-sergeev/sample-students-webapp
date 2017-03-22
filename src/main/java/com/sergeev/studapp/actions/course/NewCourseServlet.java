@@ -4,7 +4,7 @@ import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Group;
-import com.sergeev.studapp.model.Teacher;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,12 +20,12 @@ public class NewCourseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Discipline> disciplines = new ArrayList<>();
         List<Group> groups = new ArrayList<>();
-        List<Teacher> teachers = new ArrayList<>();
+        List<User> teachers = new ArrayList<>();
 
         try {
             disciplines = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getAll();
             groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
-            teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getAll();
+            teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getAll(User.AccountType.TEACHER);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

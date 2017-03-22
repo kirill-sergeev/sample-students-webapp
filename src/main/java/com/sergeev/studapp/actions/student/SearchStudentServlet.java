@@ -2,7 +2,7 @@ package com.sergeev.studapp.actions.student;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,10 +22,10 @@ public class SearchStudentServlet extends HttpServlet {
             return;
         }
 
-        List<Student> students = new ArrayList<>();
+        List<User> students = new ArrayList<>();
 
         try {
-            students = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByName(name);
+            students = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getByName(name, User.AccountType.STUDENT);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

@@ -25,8 +25,8 @@ public class UpdateLessonServlet extends HttpServlet {
 
         Lesson lesson = new Lesson();
         lesson.setId(lessonId);
-        lesson.setType(Lesson.Type.getById(typeId));
-        lesson.setOrder(Lesson.Order.getByNumber(number));
+        lesson.setType(Lesson.LessonType.getById(typeId));
+        lesson.setOrder(Lesson.LessonOrder.getByNumber(number));
         lesson.setDate(date);
 
         try {

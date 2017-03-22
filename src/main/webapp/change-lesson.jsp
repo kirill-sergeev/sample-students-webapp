@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="lesson" scope="request" type="com.sergeev.studapp.model.Lesson"/>
-<jsp:useBean id="types" scope="request" type="com.sergeev.studapp.model.Lesson.Type[]"/>
-<jsp:useBean id="orders" scope="request" type="com.sergeev.studapp.model.Lesson.Order[]"/>
+<jsp:useBean id="types" scope="request" type="com.sergeev.studapp.model.Lesson.LessonType[]"/>
+<jsp:useBean id="orders" scope="request" type="com.sergeev.studapp.model.Lesson.LessonOrder[]"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Change lesson in course ${lesson.course.discipline.title} - ${lesson.course.group.title} - ${lesson.date}"/>

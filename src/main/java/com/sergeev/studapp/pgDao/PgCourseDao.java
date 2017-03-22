@@ -10,7 +10,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.pgDao.PgDisciplineDao.DISCIPLINE_ID;
+import static com.sergeev.studapp.pgDao.PgGroupDao.GROUP_ID;
+import static com.sergeev.studapp.pgDao.PgUserDao.USER_ID;
+
 public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
+
+    protected static final String COURSE_ID = "course_id";
 
     @Override
     public String getSelectQuery() {
@@ -24,12 +30,12 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO courses (discipline_id, group_id, teacher_id) VALUES (?, ?, ?);";
+        return "INSERT INTO courses (discipline_id, group_id, user_id) VALUES (?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE courses SET discipline_id= ?, group_id= ?, teacher_id= ? WHERE course_id= ?;";
+        return "UPDATE courses SET discipline_id= ?, group_id= ?, user_id= ? WHERE course_id= ?;";
     }
 
     @Override
@@ -45,11 +51,11 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
                 Course course = new Course();
                 PgDisciplineDao pdd = new PgDisciplineDao();
                 PgGroupDao pgd = new PgGroupDao();
-                PgTeacherDao ptd = new PgTeacherDao();
-                course.setId(rs.getString("course_id"));
-                course.setGroup(pgd.getById(rs.getString("group_id")));
-                course.setDiscipline(pdd.getById(rs.getString("discipline_id")));
-                course.setTeacher(ptd.getById(rs.getString("teacher_id")));
+                PgUserDao ptd = new PgUserDao();
+                course.setId(rs.getString(COURSE_ID));
+                course.setGroup(pgd.getById(rs.getString(GROUP_ID)));
+                course.setDiscipline(pdd.getById(rs.getString(DISCIPLINE_ID)));
+                course.setTeacher(ptd.getById(rs.getString(USER_ID)));
                 result.add(course);
             }
         } catch (Exception e) {
@@ -118,12 +124,12 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    public List<Course> getByTeacher(String teacherId) throws PersistentException {
+    public List<Course> getByTeacher(String userId) throws PersistentException {
         List<Course> list;
-        String sql = "SELECT * FROM courses WHERE teacher_id= ?;";
+        String sql = "SELECT * FROM courses WHERE user_id= ?;";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, Integer.parseInt(teacherId));
+            statement.setInt(1, Integer.parseInt(userId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (Exception e) {
@@ -138,7 +144,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     @Override
     public Course getByGroupAndDiscipline(String groupId, String disciplineId) throws PersistentException {
         List<Course> list;
-        String sql = "SELECT * FROM courses c WHERE c.group_id= ? AND c.discipline_id= ?";
+        String sql = "SELECT * FROM courses WHERE group_id= ? AND discipline_id= ?";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(groupId));

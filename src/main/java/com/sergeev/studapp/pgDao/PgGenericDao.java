@@ -36,7 +36,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                object.setId( resultSet.getString(1));
+                object.setId(resultSet.getString(1));
             }
         } catch (Exception e) {
             throw new PersistentException(e);

@@ -17,8 +17,8 @@ public class ChangeLessonServlet extends HttpServlet {
         String LessonId = request.getParameter("id");
 
         Lesson lesson = new Lesson();
-        Lesson.Type[] types = Lesson.Type.values();
-        Lesson.Order[] orders = Lesson.Order.values();
+        Lesson.LessonType[] types = Lesson.LessonType.values();
+        Lesson.LessonOrder[] orders = Lesson.LessonOrder.values();
 
         try {
             lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(LessonId);

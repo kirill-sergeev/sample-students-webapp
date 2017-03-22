@@ -13,8 +13,7 @@ public abstract class DaoFactory {
     public abstract GroupDao getGroupDao();
     public abstract LessonDao getLessonDao();
     public abstract MarkDao getMarkDao();
-    public abstract StudentDao getStudentDao();
-    public abstract TeacherDao getTeacherDao();
+    public abstract UserDao getUserDao();
 
     public static DaoFactory getDaoFactory(int whichFactory) {
         switch (whichFactory) {

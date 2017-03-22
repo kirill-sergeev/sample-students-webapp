@@ -1,8 +1,6 @@
 package com.sergeev.studapp;
 
-import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Student;
 
 public class Main {
     public static void main(String[] args) throws PersistentException {
@@ -53,7 +51,7 @@ public class Main {
 //
 //        System.out.println(store.getKey(mark));
 
-        Student student = new Student();
+ //       Student student = new Student();
 //        Group group = new Group();
 //        group.setTitle("AA-2018");
 //        student.setGroup(group);
@@ -61,6 +59,6 @@ public class Main {
 //        student.setLastName("Lolovich");
 //        System.out.println(student);
 
-        System.out.println(DaoFactory.getDaoFactory(DaoFactory.MONGO).getStudentDao().getAll());
+    //    System.out.println(DaoFactory.getDaoFactory(DaoFactory.MONGO).getStudentDao().getAll());
     }
 }

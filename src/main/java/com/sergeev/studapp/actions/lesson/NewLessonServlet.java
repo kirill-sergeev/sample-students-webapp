@@ -21,8 +21,8 @@ public class NewLessonServlet extends HttpServlet {
         String groupId = request.getParameter("group");
 
         Group group = new Group();
-        Lesson.Type[] types = Lesson.Type.values();
-        Lesson.Order[] orders = Lesson.Order.values();
+        Lesson.LessonType[] types = Lesson.LessonType.values();
+        Lesson.LessonOrder[] orders = Lesson.LessonOrder.values();
         List<Course> courses = new ArrayList<>();
 
         try {

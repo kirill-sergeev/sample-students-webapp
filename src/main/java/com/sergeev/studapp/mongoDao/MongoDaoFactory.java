@@ -77,12 +77,7 @@ public class MongoDaoFactory extends DaoFactory {
     }
 
     @Override
-    public StudentDao getStudentDao() {
-        return new MongoStudentDao();
-    }
-
-    @Override
-    public TeacherDao getTeacherDao() {
-        return null;
+    public UserDao getUserDao() {
+        return new MongoUserDao();
     }
 }

@@ -10,7 +10,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.pgDao.PgCourseDao.COURSE_ID;
+
 public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
+
+    protected static final String LESSON_ID = "lesson_id";
+    protected static final String LESSON_DATE = "lesson_date";
+    protected static final String LESSON_ORDER = "lesson_order";
+    protected static final String LESSON_TYPE = "lesson_type_id";
 
     @Override
     public String getSelectQuery() {
@@ -44,11 +51,11 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
             while (rs.next()) {
                 Lesson lesson = new Lesson();
                 PgCourseDao pcd = new PgCourseDao();
-                lesson.setId(rs.getString("lesson_id"));
-                lesson.setCourse(pcd.getById(rs.getString("course_id")));
-                lesson.setDate(rs.getDate("lesson_date"));
-                lesson.setOrder(Lesson.Order.getByNumber(rs.getInt("lesson_order")));
-                lesson.setType(Lesson.Type.getById(rs.getString("lesson_type_id")));
+                lesson.setId(rs.getString(LESSON_ID));
+                lesson.setCourse(pcd.getById(rs.getString(COURSE_ID)));
+                lesson.setDate(rs.getDate(LESSON_DATE));
+                lesson.setOrder(Lesson.LessonOrder.getByNumber(rs.getInt(LESSON_ORDER)));
+                lesson.setType(Lesson.LessonType.getById(rs.getString(LESSON_TYPE)));
                 result.add(lesson);
             }
         } catch (Exception e) {

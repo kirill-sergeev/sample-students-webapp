@@ -4,7 +4,7 @@ import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Mark;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,12 +21,12 @@ public class MarksServlet extends HttpServlet {
         String studentId = request.getParameter("student");
         String disciplineId = request.getParameter("discipline");
 
-        Student student = new Student();
+        User student = new User();
         Discipline discipline = new Discipline();
         List<Mark> marks = new ArrayList<>();
 
         try {
-            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getById(studentId);
+            student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getById(studentId);
             discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getById(disciplineId);
             marks = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().getByStudentAndDiscipline(studentId, disciplineId);
         } catch (PersistentException e) {

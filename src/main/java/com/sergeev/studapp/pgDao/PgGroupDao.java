@@ -11,6 +11,9 @@ import java.util.List;
 
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
+    protected static final String GROUP_ID = "group_id";
+    protected static final String GROUP_TITLE = "title";
+
     @Override
     public String getSelectQuery() {
         return "SELECT * FROM groups Where group_id= ?;";
@@ -41,8 +44,8 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
         try {
             while (rs.next()) {
                 Group group = new Group();
-                group.setId(rs.getString("group_id"));
-                group.setTitle(rs.getString("title"));
+                group.setId(rs.getString(GROUP_ID));
+                group.setTitle(rs.getString(GROUP_TITLE));
                 result.add(group);
             }
         } catch (Exception e) {

@@ -10,7 +10,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.pgDao.PgLessonDao.LESSON_ID;
+import static com.sergeev.studapp.pgDao.PgUserDao.USER_ID;
+
 public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
+
+    protected static final String MARK_ID = "mark_id";
+    protected static final String VALUE = "value";
 
     @Override
     public String getSelectQuery() {
@@ -29,7 +35,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE marks SET lesson_id= ?, student_id= ?, mark= ? WHERE mark_id= ?;";
+        return "UPDATE marks SET lesson_id= ?, user_id= ?, mark= ? WHERE mark_id= ?;";
     }
 
     @Override
@@ -44,11 +50,11 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             while (rs.next()) {
                 Mark mark = new Mark();
                 PgLessonDao pld = new PgLessonDao();
-                PgStudentDao psd = new PgStudentDao();
-                mark.setId(rs.getString("mark_id"));
-                mark.setLesson(pld.getById(rs.getString("lesson_id")));
-                mark.setStudent(psd.getById(rs.getString("student_id")));
-                mark.setValue(rs.getInt("mark"));
+                PgUserDao pud = new PgUserDao();
+                mark.setId(rs.getString(MARK_ID));
+                mark.setLesson(pld.getById(rs.getString(LESSON_ID)));
+                mark.setStudent(pud.getById(rs.getString(USER_ID)));
+                mark.setValue(rs.getInt(VALUE));
                 result.add(mark);
             }
         } catch (Exception e) {
@@ -115,7 +121,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     @Override
     public List<Mark> getByStudentAndDiscipline(String studentId, String disciplineId) throws PersistentException {
         List<Mark> list;
-        String sql = "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id AND l.course_id = c.course_id AND m.student_id = ? AND c.discipline_id = ?";
+        String sql = "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id AND l.course_id = c.course_id AND m.user_id = ? AND c.discipline_id = ?";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(studentId));

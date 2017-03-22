@@ -3,7 +3,7 @@ package com.sergeev.studapp.actions.mark;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,11 +21,11 @@ public class NewMarkServlet extends HttpServlet {
         String groupId = request.getParameter("group");
 
         Lesson lesson = new Lesson();
-        List<Student> students = new ArrayList<>();
+        List<User> students = new ArrayList<>();
 
         try {
             lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(lessonId);
-            students = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByGroup(groupId);
+            students = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getByGroup(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

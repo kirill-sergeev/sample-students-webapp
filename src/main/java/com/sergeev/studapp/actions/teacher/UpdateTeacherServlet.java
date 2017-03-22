@@ -2,7 +2,7 @@ package com.sergeev.studapp.actions.teacher;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Teacher;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +18,14 @@ public class UpdateTeacherServlet extends HttpServlet {
         String firstName = request.getParameter("first-name");
         String lastName = request.getParameter("last-name");
 
-        Teacher teacher = new Teacher();
+        User teacher = new User();
         teacher.setId(teacherId);
         teacher.setFirstName(firstName);
         teacher.setLastName(lastName);
+        teacher.setType(User.AccountType.TEACHER);
 
         try {
-            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().update(teacher);
+            DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().update(teacher);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

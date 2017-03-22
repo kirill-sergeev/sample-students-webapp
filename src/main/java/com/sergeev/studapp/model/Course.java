@@ -13,7 +13,7 @@ public class Course implements Identified {
     @Reference
     private Group group;
     @Reference
-    private Teacher teacher;
+    private User teacher;
 
     public String getId() {
         return id;
@@ -39,11 +39,11 @@ public class Course implements Identified {
         this.group = group;
     }
 
-    public Teacher getTeacher() {
+    public User getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(Teacher teacher) {
+    public void setTeacher(User teacher) {
         this.teacher = teacher;
     }
 

@@ -5,7 +5,7 @@ import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Group;
-import com.sergeev.studapp.model.Teacher;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,12 +24,12 @@ public class ChangeCourseServlet extends HttpServlet {
         Course course = new Course();
         List<Discipline> disciplines = new ArrayList<>();
         List<Group> groups = new ArrayList<>();
-        List<Teacher> teachers = new ArrayList<>();
+        List<User> teachers = new ArrayList<>();
 
         try {
             disciplines = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getAll();
             groups = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getAll();
-            teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getAll();
+            teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getAll();
             course = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getById(courseId);
         } catch (PersistentException e) {
             e.printStackTrace();

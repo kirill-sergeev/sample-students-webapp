@@ -18,12 +18,16 @@
                     <input type="text" name="last-name" class="form-control" placeholder="Last name...">
                 </div>
                 <div class="form-group">
+                    <input type="hidden" name="type" class="form-control" value="${1}">
+                </div>
+                <div class="form-group">
                     <label>Group
-                    <select class="form-control" name="group">
-                        <c:forEach items="${groups}" var="group">
-                            <option value="${group.id}">${group.title}</option>
-                        </c:forEach>
-                    </select>
+                        <select class="form-control" name="group">
+                            <option disabled selected value> -- select an option --</option>
+                            <c:forEach items="${groups}" var="group">
+                                <option value="${group.id}">${group.title}</option>
+                            </c:forEach>
+                        </select>
                     </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

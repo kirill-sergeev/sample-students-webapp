@@ -3,7 +3,7 @@
 
 <jsp:useBean id="disciplines" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Discipline>"/>
 <jsp:useBean id="groups" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Group>"/>
-<jsp:useBean id="teachers" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Teacher>"/>
+<jsp:useBean id="teachers" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.User>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Add a new course"/>

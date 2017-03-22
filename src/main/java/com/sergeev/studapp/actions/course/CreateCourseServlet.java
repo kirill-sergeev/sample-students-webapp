@@ -5,7 +5,7 @@ import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Group;
-import com.sergeev.studapp.model.Teacher;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +26,7 @@ public class CreateCourseServlet extends HttpServlet {
 
             Discipline discipline = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao().getById(disciplineId);
             Group group = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao().getById(groupId);
-            Teacher teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getById(teacherId);
+            User teacher = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getById(teacherId);
 
             course.setDiscipline(discipline);
             course.setGroup(group);

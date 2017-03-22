@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="teacher" scope="request" type="com.sergeev.studapp.model.Teacher"/>
+<jsp:useBean id="teacher" scope="request" type="com.sergeev.studapp.model.User"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Change teacher - ${teacher.firstName} ${teacher.lastName}"/>

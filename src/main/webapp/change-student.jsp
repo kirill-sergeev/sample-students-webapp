@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="student" scope="request" type="com.sergeev.studapp.model.Student"/>
+<jsp:useBean id="student" scope="request" type="com.sergeev.studapp.model.User"/>
 <jsp:useBean id="groups" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Group>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">

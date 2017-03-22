@@ -90,12 +90,8 @@ public class PgDaoFactory extends DaoFactory {
     }
 
     @Override
-    public StudentDao getStudentDao() {
-        return new PgStudentDao();
+    public UserDao getUserDao() {
+        return new PgUserDao();
     }
 
-    @Override
-    public TeacherDao getTeacherDao() {
-        return new PgTeacherDao();
-    }
 }

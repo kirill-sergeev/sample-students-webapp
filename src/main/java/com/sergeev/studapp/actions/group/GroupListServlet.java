@@ -26,7 +26,7 @@ public class GroupListServlet extends HttpServlet {
 
             int studentCount;
             for(Group group: groups) {
-                 studentCount = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getByGroup(group.getId()).size();
+                 studentCount = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getByGroup(group.getId()).size();
                  groupsStudents.put(group, studentCount);
             }
 

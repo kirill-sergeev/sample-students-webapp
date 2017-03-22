@@ -11,6 +11,9 @@ import java.util.List;
 
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
 
+    protected static final String DISCIPLINE_ID = "discipline_id";
+    protected static final String DISCIPLINE_TITLE = "title";
+
     @Override
     public String getSelectQuery() {
         return "SELECT * FROM disciplines WHERE discipline_id= ?;";
@@ -42,8 +45,8 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
         try {
             while (rs.next()) {
                 Discipline discipline = new Discipline();
-                discipline.setId(rs.getString("discipline_id"));
-                discipline.setTitle(rs.getString("title"));
+                discipline.setId(rs.getString(DISCIPLINE_ID));
+                discipline.setTitle(rs.getString(DISCIPLINE_TITLE));
                 result.add(discipline);
             }
         } catch (Exception e) {

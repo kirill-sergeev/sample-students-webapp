@@ -4,7 +4,7 @@ import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
 import com.sergeev.studapp.model.Mark;
-import com.sergeev.studapp.model.Student;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,7 +25,7 @@ public class CreateMarkServlet extends HttpServlet {
 
         try {
             Lesson lesson = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao().getById(lessonId);
-            Student student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getStudentDao().getById(studentId);
+            User student = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getById(studentId);
             mark.setLesson(lesson);
             mark.setStudent(student);
             DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao().persist(mark);

@@ -11,7 +11,7 @@ public class Mark implements Identified {
     @Reference
     private Lesson lesson;
     @Reference
-    private Student student;
+    private User student;
     private Integer value;
 
     public String getId() {
@@ -30,11 +30,11 @@ public class Mark implements Identified {
         this.lesson = lesson;
     }
 
-    public Student getStudent() {
+    public User getStudent() {
         return student;
     }
 
-    public void setStudent(Student student) {
+    public void setStudent(User student) {
         this.student = student;
     }
 

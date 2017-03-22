@@ -3,7 +3,7 @@ package com.sergeev.studapp.actions.teacher;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
-import com.sergeev.studapp.model.Teacher;
+import com.sergeev.studapp.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,11 +17,11 @@ import java.util.List;
 @WebServlet(name = "TeacherListServlet", urlPatterns = "/teachers")
 public class TeacherListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Teacher> teachers = new ArrayList<>();
+        List<User> teachers = new ArrayList<>();
         List<Course> courses = new ArrayList<>();
 
         try {
-            teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getTeacherDao().getAll();
+            teachers = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getAll(User.AccountType.TEACHER);
             courses = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao().getAll();
         } catch (PersistentException e) {
             e.printStackTrace();

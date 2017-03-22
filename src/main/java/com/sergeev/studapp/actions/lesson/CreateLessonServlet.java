@@ -23,8 +23,8 @@ public class CreateLessonServlet extends HttpServlet {
         Date date = Date.valueOf((request.getParameter("date")));
 
         Lesson lesson = new Lesson();
-        lesson.setType(Lesson.Type.getById(typeId));
-        lesson.setOrder(Lesson.Order.getByNumber(number));
+        lesson.setType(Lesson.LessonType.getById(typeId));
+        lesson.setOrder(Lesson.LessonOrder.getByNumber(number));
         lesson.setDate(date);
 
         try {
