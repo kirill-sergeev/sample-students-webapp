@@ -51,8 +51,8 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <h3><a href="new-group">Add a new group...</a></h3>
-            <h3><a href="new-course">Add a new course...</a></h3>
+            <h3><a href="add-group">Add a new group...</a></h3>
+            <h3><a href="add-course">Add a new course...</a></h3>
         </div>
     </div>
 </div>

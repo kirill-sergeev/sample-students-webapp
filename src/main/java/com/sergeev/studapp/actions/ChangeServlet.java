@@ -13,69 +13,68 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AddServlet", urlPatterns = {"/add-course", "/add-discipline", "/add-group", "/add-lesson", "/add-mark", "/add-student", "/add-teacher"})
-public class AddServlet extends HttpServlet {
+@WebServlet(name = "ChangeServlet", urlPatterns = {"/change-course", "/change-discipline", "/change-group", "/change-lesson", "/change-student", "/change-teacher"})
+public class ChangeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
+        final String id = request.getParameter("id");
         DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
 
-        String groupId;
-        String lessonId;
+        Course course;
         Group group;
+        Discipline discipline;
         Lesson lesson;
-        List<Course> courses;
+        User student;
+        User teacher;
         List<Discipline> disciplines;
         List<Group> groups;
-        List<User> students;
         List<User> teachers;
         Lesson.LessonType[] types;
         Lesson.LessonOrder[] orders;
 
         try {
             switch (path) {
-                case "/add-course":
+                case "/change-course":
+                    course = daoFactory.getCourseDao().getById(id);
                     disciplines = daoFactory.getDisciplineDao().getAll();
                     groups = daoFactory.getGroupDao().getAll();
                     teachers = daoFactory.getUserDao().getAll(User.AccountType.TEACHER);
 
+                    request.setAttribute("course", course);
                     request.setAttribute("disciplines", disciplines);
                     request.setAttribute("groups", groups);
                     request.setAttribute("teachers", teachers);
                     break;
-                case "/add-discipline":
-                    break;
-                case "/add-group":
-                    break;
-                case "/add-lesson":
-                    groupId = request.getParameter("group");
+                case "/change-discipline":
+                    discipline = daoFactory.getDisciplineDao().getById(id);
 
+                    request.setAttribute("discipline", discipline);
+                    break;
+                case "/change-group":
+                    group = daoFactory.getGroupDao().getById(id);
+
+                    request.setAttribute("group", group);
+                    break;
+                case "/change-lesson":
+                    lesson = daoFactory.getLessonDao().getById(id);
                     types = Lesson.LessonType.values();
                     orders = Lesson.LessonOrder.values();
-                    group = daoFactory.getGroupDao().getById(groupId);
-                    courses = daoFactory.getCourseDao().getByGroup(groupId);
-
-                    request.setAttribute("types", types);
-                    request.setAttribute("orders", orders);
-                    request.setAttribute("group", group);
-                    request.setAttribute("courses", courses);
-                    break;
-                case "/add-mark":
-                    groupId = request.getParameter("group");
-                    lessonId = request.getParameter("lesson");
-
-                    lesson = daoFactory.getLessonDao().getById(lessonId);
-                    students = daoFactory.getUserDao().getByGroup(groupId);
 
                     request.setAttribute("lesson", lesson);
-                    request.setAttribute("students", students);
+                    request.setAttribute("types", types);
+                    request.setAttribute("orders", orders);
                     break;
-                case "/add-student":
+                case "/change-student":
+                    student = daoFactory.getUserDao().getById(id);
                     groups = daoFactory.getGroupDao().getAll();
 
+                    request.setAttribute("student", student);
                     request.setAttribute("groups", groups);
                     break;
-                case "/add-teacher":
+                case "/change-teacher":
+                    teacher = daoFactory.getUserDao().getById(id);
 
+                    request.setAttribute("teacher", teacher);
                     break;
                 default:
                     response.sendRedirect("");

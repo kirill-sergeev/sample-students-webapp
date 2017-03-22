@@ -48,7 +48,7 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <form action="new-mark" method="POST">
+            <form action="add-mark" method="POST">
                 <input type="hidden" name="lesson" value="${marks.get(0).lesson.id}"/>
                 <input type="hidden" name="group" value="${student.group.id}"/>
                 <div class="btn-group btn-group-sm" role="group">

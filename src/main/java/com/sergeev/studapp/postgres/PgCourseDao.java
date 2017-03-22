@@ -1,4 +1,4 @@
-package com.sergeev.studapp.pgDao;
+package com.sergeev.studapp.postgres;
 
 import com.sergeev.studapp.dao.CourseDao;
 import com.sergeev.studapp.dao.PersistentException;
@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.pgDao.PgDisciplineDao.DISCIPLINE_ID;
-import static com.sergeev.studapp.pgDao.PgGroupDao.GROUP_ID;
-import static com.sergeev.studapp.pgDao.PgUserDao.USER_ID;
+import static com.sergeev.studapp.postgres.PgDisciplineDao.DISCIPLINE_ID;
+import static com.sergeev.studapp.postgres.PgGroupDao.GROUP_ID;
+import static com.sergeev.studapp.postgres.PgUserDao.USER_ID;
 
 public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 

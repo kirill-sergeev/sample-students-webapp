@@ -72,7 +72,7 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <form action="new-lesson" method="POST">
+            <form action="add-lesson" method="POST">
                 <input type="hidden" name="group" value="${group.id}"/>
                 <div class="btn-group btn-group-sm" role="group">
                     <button type="submit" class="btn btn-info">Add a new lesson</button>

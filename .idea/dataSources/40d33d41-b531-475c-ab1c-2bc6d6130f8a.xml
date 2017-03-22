@@ -24,8 +24,8 @@
     </schema>
     <schema id="8" parent="2" name="public">
       <ObjectId>44576</ObjectId>
-      <IntrospectionTimestamp>2017-03-22.10:51:40.699</IntrospectionTimestamp>
-      <IntrospectionStateNumber>2124</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-03-22.12:03:27.190</IntrospectionTimestamp>
+      <IntrospectionStateNumber>2169</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -110,8 +110,8 @@
       <StateNumber>2119</StateNumber>
     </table>
     <routine id="25" parent="8" name="student_avg_mark_by_discipline">
-      <ObjectId>44707</ObjectId>
-      <StateNumber>2124</StateNumber>
+      <ObjectId>44712</ObjectId>
+      <StateNumber>2169</StateNumber>
       <LanguageName>sql</LanguageName>
       <RoutineKind>function</RoutineKind>
     </routine>

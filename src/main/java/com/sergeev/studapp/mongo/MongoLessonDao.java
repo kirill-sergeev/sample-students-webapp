@@ -1,4 +1,4 @@
-package com.sergeev.studapp.mongoDao;
+package com.sergeev.studapp.mongo;
 
 import com.sergeev.studapp.dao.LessonDao;
 import com.sergeev.studapp.dao.PersistentException;

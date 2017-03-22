@@ -1,4 +1,4 @@
-package com.sergeev.studapp.pgDao;
+package com.sergeev.studapp.postgres;
 
 import com.sergeev.studapp.dao.LessonDao;
 import com.sergeev.studapp.dao.PersistentException;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.pgDao.PgCourseDao.COURSE_ID;
+import static com.sergeev.studapp.postgres.PgCourseDao.COURSE_ID;
 
 public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
@@ -79,11 +79,11 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     @Override
     protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) throws PersistentException {
         try {
-            statement.setString(1, object.getType().getId());
-            statement.setString(2, object.getCourse().getId());
+            statement.setInt(1, Integer.parseInt(object.getType().getId()));
+            statement.setInt(2, Integer.parseInt(object.getCourse().getId()));
             statement.setDate(3, object.getDate());
             statement.setInt(4, object.getOrder().getNumber());
-            statement.setString(5, object.getId());
+            statement.setInt(5, Integer.parseInt(object.getId()));
         } catch (Exception e) {
             throw new PersistentException(e);
         }

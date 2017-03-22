@@ -14,11 +14,13 @@ import java.io.IOException;
 @WebServlet(name = "RemoveServlet", urlPatterns = {"/remove-course", "/remove-discipline", "/remove-group", "/remove-lesson", "/remove-mark", "/remove-student", "/remove-teacher"})
 public class RemoveServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final String id = request.getParameter("id");
         final String path = request.getRequestURI().substring(request.getContextPath().length());
-        final String groupId;
-
+        final String id = request.getParameter("id");
         DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
+
+        String groupId;
+        User.AccountType type;
+
         try {
             switch (path) {
                 case "/remove-course":
@@ -45,7 +47,7 @@ public class RemoveServlet extends HttpServlet {
                     break;
                 case "/remove-student":
                 case "/remove-teacher":
-                    User.AccountType type = daoFactory.getUserDao().getById(id).getType();
+                    type = daoFactory.getUserDao().getById(id).getType();
                     daoFactory.getUserDao().delete(id);
                     if (type == User.AccountType.STUDENT) {
                         response.sendRedirect("students");
@@ -59,7 +61,6 @@ public class RemoveServlet extends HttpServlet {
         } catch (PersistentException e) {
             e.printStackTrace();
         }
-
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

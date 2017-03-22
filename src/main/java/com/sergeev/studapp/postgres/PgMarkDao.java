@@ -1,4 +1,4 @@
-package com.sergeev.studapp.pgDao;
+package com.sergeev.studapp.postgres;
 
 import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
@@ -10,13 +10,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.pgDao.PgLessonDao.LESSON_ID;
-import static com.sergeev.studapp.pgDao.PgUserDao.USER_ID;
+import static com.sergeev.studapp.postgres.PgLessonDao.LESSON_ID;
+import static com.sergeev.studapp.postgres.PgUserDao.USER_ID;
 
 public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     protected static final String MARK_ID = "mark_id";
-    protected static final String VALUE = "value";
+    protected static final String VALUE = "mark";
 
     @Override
     public String getSelectQuery() {
@@ -30,7 +30,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO marks (lesson_id, student_id, mark) VALUES (?, ?, ?);";
+        return "INSERT INTO marks (lesson_id, user_id, mark) VALUES (?, ?, ?);";
     }
 
     @Override

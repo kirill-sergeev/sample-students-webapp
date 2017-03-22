@@ -56,7 +56,7 @@ CREATE TABLE marks (
   mark_id   SERIAL PRIMARY KEY,
   lesson_id INTEGER REFERENCES lessons (lesson_id),
   user_id   INTEGER REFERENCES users (user_id) NOT NULL,
-  mark      SMALLINT                              NOT NULL CHECK (mark BETWEEN 0 AND 100)
+  mark      SMALLINT                           NOT NULL CHECK (mark BETWEEN 0 AND 100)
 );
 
 ------------------------------------------------
@@ -68,13 +68,13 @@ CREATE FUNCTION trigger_before_insert_on_marks()
   RETURNS TRIGGER AS $marks_check$
 BEGIN
   IF NEW.user_id NOT IN (SELECT user_id
-                            FROM users
-                            WHERE users.group_id IN (SELECT courses.group_id
-                                                        FROM courses
-                                                        WHERE courses.course_id IN (SELECT lessons.course_id
-                                                                                    FROM lessons
-                                                                                    WHERE lessons.lesson_id =
-                                                                                          new.lesson_id))
+                         FROM users
+                         WHERE users.group_id IN (SELECT courses.group_id
+                                                  FROM courses
+                                                  WHERE courses.course_id IN (SELECT lessons.course_id
+                                                                              FROM lessons
+                                                                              WHERE lessons.lesson_id =
+                                                                                    new.lesson_id))
   )
   THEN
     RAISE EXCEPTION 'This student is not a member of this course!';
@@ -116,19 +116,20 @@ BEFORE INSERT ON courses
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_before_insert_on_courses();
 
-DROP FUNCTION IF EXISTS student_avg_mark_by_discipline();
+DROP FUNCTION IF EXISTS student_avg_mark_by_discipline(INTEGER, INTEGER);
 CREATE FUNCTION student_avg_mark_by_discipline(INTEGER, INTEGER)
   RETURNS NUMERIC
 AS 'SELECT avg(marks.mark)
     FROM users, disciplines, courses, lessons, marks, groups
-    WHERE users.group_id = groups.group_id AND courses.group_id = groups.group_id AND
-          courses.discipline_id = disciplines.discipline_id AND lessons.course_id = courses.course_id AND
-          marks.lesson_id = lessons.lesson_id AND users.user_id = marks.user_id AND
-          courses.user_id = users.user_id AND users.user_id = $1 AND disciplines.discipline_id = $2
+    WHERE users.group_id = groups.group_id AND groups.group_id = courses.group_id AND
+          courses.discipline_id = disciplines.discipline_id AND courses.course_id = lessons.course_id AND
+          lessons.lesson_id = marks.lesson_id AND marks.user_id = users.user_id AND users.user_id = $1 AND
+          disciplines.discipline_id = $2
     GROUP BY users.user_id, disciplines.discipline_id;'
 LANGUAGE SQL
 IMMUTABLE
 RETURNS NULL ON NULL INPUT;
+SELECT student_avg_mark_by_discipline(5, 2);
 
 INSERT INTO "lessons_order" (number, start_time, end_time)
 VALUES (1, '7:45:00', '9:20:00'), (2, '9:30:00', '11:05:00'), (3, '11:15:00', '12:50:00'), (4, '13:10:00', '14:45:00'),
@@ -144,8 +145,7 @@ INSERT INTO "groups" (title)
 VALUES ('AA-2017'), ('AB-2017'), ('AC-2017');
 
 INSERT INTO "users" (login, password, first_name, last_name, type, group_id)
-VALUES ('kirill_sergeev1', '123456', 'Kirill1', 'Sergeev1', 3, NULL );
+VALUES ('kirill_sergeev1', '123456', 'Kirill1', 'Sergeev1', 3, NULL);
 ------------------------------------------------
 ------------------queries-----------------------
 ------------------------------------------------
-

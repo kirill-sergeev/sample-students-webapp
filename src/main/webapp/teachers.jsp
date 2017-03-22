@@ -53,7 +53,7 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <h3><a href="new-teacher">Add a new teacher...</a></h3>
+            <h3><a href="add-teacher">Add a new teacher...</a></h3>
         </div>
     </div>
 </div>

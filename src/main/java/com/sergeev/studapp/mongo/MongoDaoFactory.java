@@ -1,4 +1,4 @@
-package com.sergeev.studapp.mongoDao;
+package com.sergeev.studapp.mongo;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;

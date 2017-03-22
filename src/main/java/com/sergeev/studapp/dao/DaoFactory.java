@@ -1,7 +1,7 @@
 package com.sergeev.studapp.dao;
 
-import com.sergeev.studapp.mongoDao.MongoDaoFactory;
-import com.sergeev.studapp.pgDao.PgDaoFactory;
+import com.sergeev.studapp.mongo.MongoDaoFactory;
+import com.sergeev.studapp.postgres.PgDaoFactory;
 
 public abstract class DaoFactory {
 

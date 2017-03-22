@@ -1,4 +1,4 @@
-package com.sergeev.studapp.pgDao;
+package com.sergeev.studapp.postgres;
 
 import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;

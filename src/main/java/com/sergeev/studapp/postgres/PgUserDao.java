@@ -1,4 +1,4 @@
-package com.sergeev.studapp.pgDao;
+package com.sergeev.studapp.postgres;
 
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.pgDao.PgGroupDao.GROUP_ID;
+import static com.sergeev.studapp.postgres.PgGroupDao.GROUP_ID;
 import static java.sql.Types.NULL;
 
 public class PgUserDao extends PgGenericDao<User> implements UserDao {

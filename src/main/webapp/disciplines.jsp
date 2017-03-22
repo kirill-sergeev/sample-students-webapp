@@ -51,7 +51,7 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <h3><a href="new-discipline">Add a new discipline...</a></h3>
+            <h3><a href="add-discipline">Add a new discipline...</a></h3>
         </div>
     </div>
 </div>

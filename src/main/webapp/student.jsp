@@ -14,8 +14,8 @@
             <h3>Student's info page</h3>
             <c:if test="${not empty student}">
                 <br>
-                <h4>${student.firstName} ${student.lastName} from <a
-                        href="${pageContext.request.contextPath}/group?id=${student.group.id}">${student.group.title}</a>
+                <h4>${student.firstName} ${student.lastName} from group
+                    <a href="${pageContext.request.contextPath}/group?id=${student.group.id}">${student.group.title}</a>
                 </h4>
                 <br>
                 <h4>Courses</h4>
