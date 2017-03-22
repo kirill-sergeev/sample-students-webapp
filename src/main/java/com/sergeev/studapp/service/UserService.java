@@ -1,20 +1,26 @@
 package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
+import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
+import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserService {
+    private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
+    private static UserDao userDao = daoFactory.getUserDao();
+    private static GroupDao groupDao = daoFactory.getGroupDao();
 
-    private DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-
-    public User createStudent(String firstName, String lastName, String groupId){
-        User student = createUser(firstName, lastName);
+    public static User createStudent(String firstName, String lastName, String groupId){
+        User student = create(firstName, lastName);
         student.setType(User.AccountType.STUDENT);
 
         try {
-            student.setGroup(daoFactory.getGroupDao().getById(groupId));
-            student = daoFactory.getUserDao().persist(student);
+            student.setGroup(groupDao.getById(groupId));
+            student = userDao.persist(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -22,12 +28,12 @@ public class UserService {
         return student;
     }
 
-    public User createTeacher(String firstName, String lastName){
-        User teacher = createUser(firstName, lastName);
+    public static User createTeacher(String firstName, String lastName){
+        User teacher = create(firstName, lastName);
         teacher.setType(User.AccountType.TEACHER);
 
         try {
-            teacher = daoFactory.getUserDao().persist(teacher);
+            teacher = userDao.persist(teacher);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -35,13 +41,25 @@ public class UserService {
         return teacher;
     }
 
-    public User updateStudent(String firstName, String lastName, String userId, String groupId){
-        User student = updateUser(userId, firstName, lastName);
+    public static List<User> readAll(User.AccountType type){
+        List<User> users = new ArrayList<>();
+
+        try {
+            users = userDao.getAll(type);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public static User updateStudent(String firstName, String lastName, String userId, String groupId){
+        User student = update(userId, firstName, lastName);
         student.setType(User.AccountType.STUDENT);
 
         try {
-            student.setGroup(daoFactory.getGroupDao().getById(groupId));
-            daoFactory.getUserDao().update(student);
+            student.setGroup(groupDao.getById(groupId));
+            userDao.update(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -49,12 +67,12 @@ public class UserService {
         return student;
     }
 
-    public User updateTeacher(String firstName, String lastName, String userId){
-        User teacher = updateUser(userId, firstName, lastName);
+    public static User updateTeacher(String firstName, String lastName, String userId){
+        User teacher = update(userId, firstName, lastName);
         teacher.setType(User.AccountType.TEACHER);
 
         try {
-            daoFactory.getUserDao().update(teacher);
+            userDao.update(teacher);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -62,18 +80,18 @@ public class UserService {
         return teacher;
     }
 
-    public User.AccountType deleteUser(String userId){
+    public static User.AccountType delete(String userId){
         User.AccountType type = null;
         try {
-            type = daoFactory.getUserDao().getById(userId).getType();
-            daoFactory.getUserDao().delete(userId);
+            type = userDao.getById(userId).getType();
+            userDao.delete(userId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
         return type;
     }
 
-    private User createUser(String firstName, String lastName){
+    private static User create(String firstName, String lastName){
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -82,7 +100,7 @@ public class UserService {
         return user;
     }
 
-    private User updateUser(String firstName, String lastName, String userId){
+    private static User update(String firstName, String lastName, String userId){
         User user = new User();
         user.setId(userId);
         user.setFirstName(firstName);
