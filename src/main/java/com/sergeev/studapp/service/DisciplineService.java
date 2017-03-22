@@ -59,4 +59,16 @@ public class DisciplineService {
         }
     }
 
+    public static Discipline find(String id) {
+        Discipline discipline = new Discipline();
+
+        try {
+            discipline = disciplineDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return discipline;
+    }
+
 }

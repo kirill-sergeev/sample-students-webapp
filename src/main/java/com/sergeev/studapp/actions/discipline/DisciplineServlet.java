@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "DisciplineServlet", urlPatterns = "/discipline")
+@WebServlet(name = "DisciplineServlet", urlPatterns = "/disciplinea")
 public class DisciplineServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String disciplineId = request.getParameter("id");

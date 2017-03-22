@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "GroupServlet", urlPatterns = "/group")
+@WebServlet(name = "GroupServlet", urlPatterns = "/groupa")
 public class GroupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String groupId = request.getParameter("id");

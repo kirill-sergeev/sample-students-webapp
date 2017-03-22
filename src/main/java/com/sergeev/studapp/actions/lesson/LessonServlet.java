@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-@WebServlet(name = "LessonServlet", urlPatterns = "/lesson")
+@WebServlet(name = "LessonServlet", urlPatterns = "/lessona")
 public class LessonServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String lessonId = request.getParameter("id");

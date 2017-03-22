@@ -6,6 +6,9 @@ import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CourseService {
     private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
     private static CourseDao courseDao = daoFactory.getCourseDao();
@@ -31,6 +34,42 @@ public class CourseService {
         }
 
         return course;
+    }
+
+    public static List<Course> readAll(){
+        List<Course> courses = new ArrayList<>();
+
+        try {
+            courses = courseDao.getAll();
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
+    }
+
+    public static List<Course> readByGroup(String groupId){
+        List<Course> courses = new ArrayList<>();
+
+        try {
+            courses = courseDao.getByGroup(groupId);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
+    }
+
+    public static List<Course> readByDiscipline(String disciplineId) {
+        List<Course> courses = new ArrayList<>();
+
+        try {
+            courses = courseDao.getByDiscipline(disciplineId);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
     }
 
     public static Course update(String disciplineId, String groupId, String teacherId, String courseId) {

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "MarksServlet", urlPatterns = "/marks")
+@WebServlet(name = "MarksServlet", urlPatterns = "/marksa")
 public class MarksServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String studentId = request.getParameter("student");

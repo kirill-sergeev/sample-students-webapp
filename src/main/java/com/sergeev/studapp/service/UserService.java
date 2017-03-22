@@ -53,6 +53,18 @@ public class UserService {
         return users;
     }
 
+    public static List<User> readByGroup(String groupId){
+        List<User> users = new ArrayList<>();
+
+        try {
+            users = userDao.getByGroup(groupId);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
     public static User updateStudent(String firstName, String lastName, String userId, String groupId){
         User student = update(userId, firstName, lastName);
         student.setType(User.AccountType.STUDENT);
@@ -89,6 +101,18 @@ public class UserService {
             e.printStackTrace();
         }
         return type;
+    }
+
+    public static List<User> find(User.AccountType type, String name){
+        List<User> users = new ArrayList<>();
+
+        try {
+            users = userDao.getByName(name, type);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
     private static User create(String firstName, String lastName){

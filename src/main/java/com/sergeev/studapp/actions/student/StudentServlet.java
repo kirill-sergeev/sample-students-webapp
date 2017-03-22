@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "StudentServlet", urlPatterns = "/student")
+@WebServlet(name = "StudentServlet", urlPatterns = "/studenta")
 public class StudentServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String studentId = request.getParameter("id");

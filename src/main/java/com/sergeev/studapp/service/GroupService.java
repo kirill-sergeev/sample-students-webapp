@@ -6,7 +6,9 @@ import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GroupService {
     private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
@@ -59,4 +61,32 @@ public class GroupService {
         }
     }
 
+    public static Map<Group, Integer> studentsCount(){
+        Map<Group, Integer> groupsStudents = new LinkedHashMap<>();
+
+        try {
+            List<Group> groups = groupDao.getAll();
+            int studentCount;
+            for(Group group: groups) {
+                studentCount = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getByGroup(group.getId()).size();
+                groupsStudents.put(group, studentCount);
+            }
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return groupsStudents;
+    }
+
+    public static Group find(String id) {
+        Group group = new Group();
+
+        try {
+            group = groupDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return group;
+    }
 }
