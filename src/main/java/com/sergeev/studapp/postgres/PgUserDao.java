@@ -10,14 +10,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.postgres.PgAccountDao.ACCOUNT_ID;
 import static com.sergeev.studapp.postgres.PgGroupDao.GROUP_ID;
 import static java.sql.Types.NULL;
 
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     protected static final String USER_ID = "user_id";
-    protected static final String LOGIN = "login";
-    protected static final String PASSWORD = "password";
     protected static final String FIRST_NAME = "first_name";
     protected static final String LAST_NAME = "last_name";
     protected static final String USER_TYPE = "type";
@@ -34,17 +33,17 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     @Override
     public String getCreateQuery() {
-        return "INSERT INTO users (" + LOGIN + ", " + PASSWORD + ", " + FIRST_NAME + ", " + LAST_NAME + ", " + USER_TYPE + ", " + GROUP_ID + ") VALUES (?, ?, ?, ?, ?, ?);";
+        return "INSERT INTO users (first_name, last_name, type, account_id, group_id) VALUES (?, ?, ?, ?, ?);";
     }
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE users SET "+ FIRST_NAME + "=?, " + LAST_NAME + "=?, " + GROUP_ID + "=? WHERE user_id= ?;";
+        return "UPDATE users SET first_name=?, last_name=?, group_id=? WHERE user_id=?;";
     }
 
     @Override
     public String getDeleteQuery() {
-        return "DELETE FROM users WHERE user_id= ?;";
+        return "DELETE FROM users WHERE user_id=?;";
     }
 
     @Override
@@ -53,11 +52,11 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         try {
             while (rs.next()) {
                 User user = new User();
+                PgAccountDao pad = new PgAccountDao();
                 user.setId(rs.getString(USER_ID));
                 user.setFirstName(rs.getString(FIRST_NAME));
                 user.setLastName(rs.getString(LAST_NAME));
-                user.setLogin(rs.getString(LOGIN));
-                user.setPassword(rs.getString(PASSWORD));
+                user.setAccount(pad.getById(rs.getString(ACCOUNT_ID)));
                 user.setType(User.Role.getById(rs.getString(USER_TYPE)));
                 if (user.getType() == User.Role.STUDENT) {
                     PgGroupDao pgd = new PgGroupDao();
@@ -74,15 +73,14 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     protected void prepareStatementForInsert(PreparedStatement statement, User object) throws PersistentException {
         try {
-            statement.setString(1, object.getLogin());
-            statement.setString(2, object.getPassword());
-            statement.setString(3, object.getFirstName());
-            statement.setString(4, object.getLastName());
-            statement.setInt(5, Integer.parseInt(object.getType().getId()));
+            statement.setString(1, object.getFirstName());
+            statement.setString(2, object.getLastName());
+            statement.setInt(3, Integer.parseInt(object.getType().getId()));
+            statement.setInt(4, Integer.parseInt(object.getAccount().getId()));
             if (object.getType() == User.Role.STUDENT) {
-                statement.setInt(6, Integer.parseInt(object.getGroup().getId()));
+                statement.setInt(5, Integer.parseInt(object.getGroup().getId()));
             } else {
-                statement.setNull(6, NULL);
+                statement.setNull(5, NULL);
             }
         } catch (Exception e) {
             throw new PersistentException(e);
@@ -153,27 +151,5 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         }
         return list;
     }
-
-    @Override
-    public User getAccountInfo(String login) throws PersistentException {
-        List<User> list;
-        String sql = "SELECT * FROM users WHERE login= ?;";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, login);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (Exception e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record with login = " + login + " not found.");
-        }
-        if (list.size() > 1) {
-            throw new PersistentException("Received more than one record.");
-        }
-        return list.iterator().next();
-    }
-
 
 }

@@ -52,6 +52,11 @@ public class MongoDaoFactory extends DaoFactory {
     }
 
     @Override
+    public AccountDao getAccountDao() {
+        return null;
+    }
+
+    @Override
     public CourseDao getCourseDao() {
         return null;
     }

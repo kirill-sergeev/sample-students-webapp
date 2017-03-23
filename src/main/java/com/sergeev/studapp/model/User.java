@@ -3,11 +3,10 @@ package com.sergeev.studapp.model;
 public class User implements Identified {
 
     private String id;
+    private Account account;
     private Group group;
     private String firstName;
     private String lastName;
-    private String login;
-    private String password;
     private Role type;
 
     @Override
@@ -18,6 +17,14 @@ public class User implements Identified {
     @Override
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     public Group getGroup() {
@@ -44,22 +51,6 @@ public class User implements Identified {
         this.lastName = lastName;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Role getType() {
         return type;
     }
@@ -70,11 +61,13 @@ public class User implements Identified {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
+        return "User{" +
+                "id='" + id + '\'' +
+                ", account=" + account +
                 ", group=" + group +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", type=" + type +
                 '}';
     }
 

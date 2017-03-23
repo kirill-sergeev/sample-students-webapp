@@ -8,6 +8,7 @@ public abstract class DaoFactory {
     public static final int POSTGRES = 1;
     public static final int MONGO = 2;
 
+    public abstract AccountDao getAccountDao();
     public abstract CourseDao getCourseDao();
     public abstract DisciplineDao getDisciplineDao();
     public abstract GroupDao getGroupDao();

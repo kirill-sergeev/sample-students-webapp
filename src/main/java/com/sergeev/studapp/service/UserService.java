@@ -3,6 +3,7 @@ package com.sergeev.studapp.service;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
+import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.User;
 
@@ -106,10 +107,13 @@ public class UserService {
     }
 
     public static User.Role delete(String id) {
-        User.Role type = UserService.read(id).getType();
+        User user = UserService.read(id);
+        User.Role type = user.getType();
+        String accountId = user.getAccount().getId();
 
         try {
             userDao.delete(id);
+            AccountService.delete(accountId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -146,8 +150,8 @@ public class UserService {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setLogin(firstName.toLowerCase() + "_" + lastName.toLowerCase());
-        user.setPassword("pass");
+        Account account = AccountService.create(user);
+        user.setAccount(account);
         return user;
     }
 
@@ -156,6 +160,8 @@ public class UserService {
         user.setId(userId);
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        Account account = AccountService.update(user);
+        user.setAccount(account);
         return user;
     }
 

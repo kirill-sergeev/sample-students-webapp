@@ -5,6 +5,12 @@ CREATE SCHEMA public;
 ------------------structure---------------------
 ------------------------------------------------
 
+CREATE TABLE accounts (
+  account_id SERIAL PRIMARY KEY,
+  login      VARCHAR(60)  NOT NULL,
+  password   VARCHAR(100) NOT NULL
+);
+
 CREATE TABLE groups (
   group_id SERIAL PRIMARY KEY,
   title    VARCHAR(30) NOT NULL UNIQUE
@@ -12,10 +18,9 @@ CREATE TABLE groups (
 
 CREATE TABLE users (
   user_id    SERIAL PRIMARY KEY,
-  login      VARCHAR(60)  NOT NULL,
-  password   VARCHAR(100) NOT NULL,
-  first_name VARCHAR(30)  NOT NULL,
-  last_name  VARCHAR(30)  NOT NULL,
+  first_name VARCHAR(30) NOT NULL,
+  last_name  VARCHAR(30) NOT NULL,
+  account_id INTEGER REFERENCES accounts (account_id),
   group_id   INTEGER REFERENCES groups (group_id) DEFAULT NULL,
   type       SMALLINT                             DEFAULT 1 CHECK (type BETWEEN 1 AND 10)
 );
@@ -116,7 +121,7 @@ BEFORE INSERT ON courses
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_before_insert_on_courses();
 
-DROP FUNCTION IF EXISTS student_avg_mark_by_discipline(INTEGER, INTEGER);
+DROP FUNCTION IF EXISTS student_avg_mark_by_discipline( INTEGER, INTEGER );
 CREATE FUNCTION student_avg_mark_by_discipline(INTEGER, INTEGER)
   RETURNS NUMERIC
 AS 'SELECT avg(marks.mark)
