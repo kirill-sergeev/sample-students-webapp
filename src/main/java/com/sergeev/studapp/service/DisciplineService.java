@@ -25,6 +25,18 @@ public class DisciplineService {
         return discipline;
     }
 
+    public static Discipline read(String id) {
+        Discipline discipline = new Discipline();
+
+        try {
+            discipline = disciplineDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return discipline;
+    }
+
     public static List<Discipline> readAll(){
         List<Discipline> disciplines = new ArrayList<>();
 
@@ -57,18 +69,6 @@ public class DisciplineService {
         } catch (PersistentException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Discipline find(String id) {
-        Discipline discipline = new Discipline();
-
-        try {
-            discipline = disciplineDao.getById(id);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        return discipline;
     }
 
 }

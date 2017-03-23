@@ -119,7 +119,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    public List<Mark> getByStudentAndDiscipline(String studentId, String disciplineId) throws PersistentException {
+    public List<Mark> getByDisciplineAndStudent(String disciplineId, String studentId) throws PersistentException {
         List<Mark> list;
         String sql = "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id AND l.course_id = c.course_id AND m.user_id = ? AND c.discipline_id = ?";
         try (Connection connection = PgDaoFactory.getConnection();

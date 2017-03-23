@@ -27,6 +27,18 @@ public class GroupService {
         return group;
     }
 
+    public static Group read(String id) {
+        Group group = new Group();
+
+        try {
+            group = groupDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return group;
+    }
+
     public static List<Group> readAll(){
         List<Group> groups = new ArrayList<>();
 
@@ -78,15 +90,4 @@ public class GroupService {
         return groupsStudents;
     }
 
-    public static Group find(String id) {
-        Group group = new Group();
-
-        try {
-            group = groupDao.getById(id);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        return group;
-    }
 }

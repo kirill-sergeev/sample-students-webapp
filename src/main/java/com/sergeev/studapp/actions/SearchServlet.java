@@ -26,12 +26,12 @@ public class SearchServlet extends HttpServlet {
                 List<User> students = UserService.find(User.AccountType.STUDENT, name);
                 request.setAttribute("students", students);
                 request.getRequestDispatcher("students.jsp").forward(request, response);
-                break;
+                return;
             case "/search-teacher":
                 List<User> teachers = UserService.find(User.AccountType.TEACHER, name);
                 request.setAttribute("teachers", teachers);
                 request.getRequestDispatcher("teachers.jsp").forward(request, response);
-                break;
+                return;
             default:
                 response.sendRedirect("");
         }

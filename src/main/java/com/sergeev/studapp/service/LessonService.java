@@ -33,6 +33,18 @@ public class LessonService {
         return lesson;
     }
 
+    public static Lesson read(String id) {
+        Lesson lesson = new Lesson();
+
+        try {
+            lesson = lessonDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return lesson;
+    }
+
     public static List<Lesson> readAll(String groupId){
         List<Lesson> lessons = new ArrayList<>();
 

@@ -1,7 +1,6 @@
 package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
-import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.User;
@@ -10,16 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
-    private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-    private static UserDao userDao = daoFactory.getUserDao();
-    private static GroupDao groupDao = daoFactory.getGroupDao();
+
+    private static UserDao userDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao();
 
     public static User createStudent(String firstName, String lastName, String groupId){
         User student = create(firstName, lastName);
         student.setType(User.AccountType.STUDENT);
 
         try {
-            student.setGroup(groupDao.getById(groupId));
+            student.setGroup(GroupService.read(groupId));
             student = userDao.persist(student);
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -39,6 +37,18 @@ public class UserService {
         }
 
         return teacher;
+    }
+
+    public static User read(String id) {
+        User user = null;
+
+        try {
+            user = userDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     public static List<User> readAll(User.AccountType type){
@@ -70,7 +80,7 @@ public class UserService {
         student.setType(User.AccountType.STUDENT);
 
         try {
-            student.setGroup(groupDao.getById(groupId));
+            student.setGroup(GroupService.read(groupId));
             userDao.update(student);
         } catch (PersistentException e) {
             e.printStackTrace();

@@ -55,7 +55,7 @@ public class PgDaoFactory extends DaoFactory {
 
     static Connection getConnection() {
         Connection connection = null;
-        BasicDataSource dataSource = PgDaoFactory.getDataSource();
+        BasicDataSource dataSource = getDataSource();
         try {
             connection = dataSource.getConnection();
         } catch (SQLException e) {

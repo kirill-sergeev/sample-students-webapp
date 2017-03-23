@@ -14,7 +14,6 @@ public class CreateServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
-
         String date;
         String order;
         String title;

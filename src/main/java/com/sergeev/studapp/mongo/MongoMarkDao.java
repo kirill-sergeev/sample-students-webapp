@@ -18,7 +18,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    public List<Mark> getByStudentAndDiscipline(String studentId, String disciplineId) throws PersistentException {
+    public List<Mark> getByDisciplineAndStudent(String disciplineId, String studentId) throws PersistentException {
         return null;
     }
 

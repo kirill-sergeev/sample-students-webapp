@@ -36,6 +36,18 @@ public class CourseService {
         return course;
     }
 
+    public static Course read(String id) {
+        Course course = null;
+
+        try {
+            course = courseDao.getById(id);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return course;
+    }
+
     public static List<Course> readAll(){
         List<Course> courses = new ArrayList<>();
 
@@ -53,6 +65,18 @@ public class CourseService {
 
         try {
             courses = courseDao.getByGroup(groupId);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return courses;
+    }
+
+    public static List<Course> readByTeacher(String teacherId) {
+        List<Course> courses = new ArrayList<>();
+
+        try {
+            courses = courseDao.getByTeacher(teacherId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -100,4 +124,5 @@ public class CourseService {
             e.printStackTrace();
         }
     }
+
 }

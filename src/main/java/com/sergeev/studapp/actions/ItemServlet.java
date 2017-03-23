@@ -1,13 +1,7 @@
 package com.sergeev.studapp.actions;
 
-import com.sergeev.studapp.model.Course;
-import com.sergeev.studapp.model.Discipline;
-import com.sergeev.studapp.model.Group;
-import com.sergeev.studapp.model.User;
-import com.sergeev.studapp.service.CourseService;
-import com.sergeev.studapp.service.DisciplineService;
-import com.sergeev.studapp.service.GroupService;
-import com.sergeev.studapp.service.UserService;
+import com.sergeev.studapp.model.*;
+import com.sergeev.studapp.service.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "ItemServlet", urlPatterns = {"/discipline", "/group", "/lesson", "/mark", "/student", "/teacher"})
 public class ItemServlet extends HttpServlet {
@@ -24,22 +22,27 @@ public class ItemServlet extends HttpServlet {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String id = request.getParameter("id");
 
+        Date dateNow;
+        Discipline discipline;
         Group group;
+        Lesson lesson;
+        User student;
+        User teacher;
         List<User> students;
         List<Course> courses;
-        Discipline discipline;
-
+        List<Mark> marks;
+        Map<Course, Double> coursesMarks = new LinkedHashMap<>();
 
         switch (path) {
             case "/discipline":
-                discipline = DisciplineService.find(id);
+                discipline = DisciplineService.read(id);
                 courses = CourseService.readByDiscipline(id);
 
                 request.setAttribute("discipline", discipline);
                 request.setAttribute("courses", courses);
                 break;
             case "/group":
-                group = GroupService.find(id);
+                group = GroupService.read(id);
                 courses = CourseService.readByGroup(id);
                 students = UserService.readByGroup(id);
 
@@ -48,17 +51,32 @@ public class ItemServlet extends HttpServlet {
                 request.setAttribute("courses", courses);
                 break;
             case "/lesson":
+                lesson = LessonService.read(id);
+                marks = MarkService.readByLesson(id);
+                dateNow = new Date(Calendar.getInstance().getTimeInMillis());
 
-
-                break;
-            case "/mark":
-
+                request.setAttribute("lesson", lesson);
+                request.setAttribute("marks", marks);
+                request.setAttribute("dateNow", dateNow);
                 break;
             case "/student":
+                student = UserService.read(id);
+                courses = CourseService.readByDiscipline(student.getGroup().getId());
 
+                for(Course course: courses){
+                    double avgMark = MarkService.calculateAvgMark(id, course.getDiscipline().getId());
+                    coursesMarks.put(course, avgMark);
+                }
+
+                request.setAttribute("coursesMarks", coursesMarks);
+                request.setAttribute("student", student);
                 break;
             case "/teacher":
+                teacher = UserService.read(id);
+                courses = CourseService.readByTeacher(id);
 
+                request.setAttribute("teacher", teacher);
+                request.setAttribute("courses", courses);
                 break;
             default:
                 response.sendRedirect("");

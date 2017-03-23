@@ -1,8 +1,7 @@
 package com.sergeev.studapp.actions;
 
-import com.sergeev.studapp.dao.DaoFactory;
-import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.*;
+import com.sergeev.studapp.service.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,7 +17,6 @@ public class ChangeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String id = request.getParameter("id");
-        DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
 
         Course course;
         Group group;
@@ -32,55 +30,51 @@ public class ChangeServlet extends HttpServlet {
         Lesson.LessonType[] types;
         Lesson.LessonOrder[] orders;
 
-        try {
-            switch (path) {
-                case "/change-course":
-                    course = daoFactory.getCourseDao().getById(id);
-                    disciplines = daoFactory.getDisciplineDao().getAll();
-                    groups = daoFactory.getGroupDao().getAll();
-                    teachers = daoFactory.getUserDao().getAll(User.AccountType.TEACHER);
+        switch (path) {
+            case "/change-course":
+                course = CourseService.read(id);
+                disciplines = DisciplineService.readAll();
+                groups = GroupService.readAll();
+                teachers = UserService.readAll(User.AccountType.TEACHER);
 
-                    request.setAttribute("course", course);
-                    request.setAttribute("disciplines", disciplines);
-                    request.setAttribute("groups", groups);
-                    request.setAttribute("teachers", teachers);
-                    break;
-                case "/change-discipline":
-                    discipline = daoFactory.getDisciplineDao().getById(id);
+                request.setAttribute("course", course);
+                request.setAttribute("disciplines", disciplines);
+                request.setAttribute("groups", groups);
+                request.setAttribute("teachers", teachers);
+                break;
+            case "/change-discipline":
+                discipline = DisciplineService.read(id);
 
-                    request.setAttribute("discipline", discipline);
-                    break;
-                case "/change-group":
-                    group = daoFactory.getGroupDao().getById(id);
+                request.setAttribute("discipline", discipline);
+                break;
+            case "/change-group":
+                group = GroupService.read(id);
 
-                    request.setAttribute("group", group);
-                    break;
-                case "/change-lesson":
-                    lesson = daoFactory.getLessonDao().getById(id);
-                    types = Lesson.LessonType.values();
-                    orders = Lesson.LessonOrder.values();
+                request.setAttribute("group", group);
+                break;
+            case "/change-lesson":
+                lesson = LessonService.read(id);
+                types = Lesson.LessonType.values();
+                orders = Lesson.LessonOrder.values();
 
-                    request.setAttribute("lesson", lesson);
-                    request.setAttribute("types", types);
-                    request.setAttribute("orders", orders);
-                    break;
-                case "/change-student":
-                    student = daoFactory.getUserDao().getById(id);
-                    groups = daoFactory.getGroupDao().getAll();
+                request.setAttribute("lesson", lesson);
+                request.setAttribute("types", types);
+                request.setAttribute("orders", orders);
+                break;
+            case "/change-student":
+                student = UserService.read(id);
+                groups = GroupService.readAll();
 
-                    request.setAttribute("student", student);
-                    request.setAttribute("groups", groups);
-                    break;
-                case "/change-teacher":
-                    teacher = daoFactory.getUserDao().getById(id);
+                request.setAttribute("student", student);
+                request.setAttribute("groups", groups);
+                break;
+            case "/change-teacher":
+                teacher = UserService.read(id);
 
-                    request.setAttribute("teacher", teacher);
-                    break;
-                default:
-                    response.sendRedirect("");
-            }
-        } catch (PersistentException e) {
-            e.printStackTrace();
+                request.setAttribute("teacher", teacher);
+                break;
+            default:
+                response.sendRedirect("");
         }
 
         RequestDispatcher view = request.getRequestDispatcher(path + ".jsp");
