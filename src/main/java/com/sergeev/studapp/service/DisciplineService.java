@@ -5,12 +5,11 @@ import com.sergeev.studapp.dao.DisciplineDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DisciplineService {
-    private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-    private static DisciplineDao disciplineDao = daoFactory.getDisciplineDao();
+
+    private static DisciplineDao disciplineDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao();
 
     public static Discipline create(String title){
         Discipline discipline = new Discipline();
@@ -26,7 +25,7 @@ public class DisciplineService {
     }
 
     public static Discipline read(String id) {
-        Discipline discipline = new Discipline();
+        Discipline discipline = null;
 
         try {
             discipline = disciplineDao.getById(id);
@@ -38,7 +37,7 @@ public class DisciplineService {
     }
 
     public static List<Discipline> readAll(){
-        List<Discipline> disciplines = new ArrayList<>();
+        List<Discipline> disciplines = null;
 
         try {
             disciplines = disciplineDao.getAll();

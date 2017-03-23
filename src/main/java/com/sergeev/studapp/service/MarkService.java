@@ -6,18 +6,16 @@ import com.sergeev.studapp.model.Mark;
 import java.util.List;
 
 public class MarkService {
-    private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-    private static MarkDao markDao = daoFactory.getMarkDao();
-    private static LessonDao lessonDao = daoFactory.getLessonDao();
-    private static UserDao userDao = daoFactory.getUserDao();
+
+    private static MarkDao markDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao();
 
     public static Mark create(String lessonId, String studentId, String value){
         Mark mark = new Mark();
         mark.setValue(Integer.valueOf(value));
+        mark.setLesson(LessonService.read(lessonId));
+        mark.setStudent(UserService.read(studentId));
 
         try {
-            mark.setLesson(lessonDao.getById(lessonId));
-            mark.setStudent(userDao.getById(studentId));
             mark = markDao.persist(mark);
         } catch (PersistentException e) {
             e.printStackTrace();

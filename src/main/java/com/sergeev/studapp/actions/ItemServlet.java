@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Calendar;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +30,7 @@ public class ItemServlet extends HttpServlet {
         List<User> students;
         List<Course> courses;
         List<Mark> marks;
-        Map<Course, Double> coursesMarks = new LinkedHashMap<>();
+        Map<Course, Double> coursesMarks;
 
         switch (path) {
             case "/discipline":
@@ -61,12 +60,7 @@ public class ItemServlet extends HttpServlet {
                 break;
             case "/student":
                 student = UserService.read(id);
-                courses = CourseService.readByDiscipline(student.getGroup().getId());
-
-                for(Course course: courses){
-                    double avgMark = MarkService.calculateAvgMark(id, course.getDiscipline().getId());
-                    coursesMarks.put(course, avgMark);
-                }
+                coursesMarks = UserService.studentAvgMarks(id);
 
                 request.setAttribute("coursesMarks", coursesMarks);
                 request.setAttribute("student", student);

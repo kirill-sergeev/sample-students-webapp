@@ -5,16 +5,15 @@ import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class GroupService {
-    private static DaoFactory daoFactory = DaoFactory.getDaoFactory(DaoFactory.POSTGRES);
-    private static GroupDao groupDao = daoFactory.getGroupDao();
 
-    public static Group create(String title){
+    private static GroupDao groupDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao();
+
+    public static Group create(String title) {
         Group group = new Group();
         group.setTitle(title);
 
@@ -28,7 +27,7 @@ public class GroupService {
     }
 
     public static Group read(String id) {
-        Group group = new Group();
+        Group group = null;
 
         try {
             group = groupDao.getById(id);
@@ -39,8 +38,8 @@ public class GroupService {
         return group;
     }
 
-    public static List<Group> readAll(){
-        List<Group> groups = new ArrayList<>();
+    public static List<Group> readAll() {
+        List<Group> groups = null;
 
         try {
             groups = groupDao.getAll();
@@ -51,7 +50,7 @@ public class GroupService {
         return groups;
     }
 
-    public static Group update(String title, String id){
+    public static Group update(String title, String id) {
         Group group = new Group();
         group.setId(id);
         group.setTitle(title);
@@ -73,18 +72,14 @@ public class GroupService {
         }
     }
 
-    public static Map<Group, Integer> studentsCount(){
+    public static Map<Group, Integer> studentsCount() {
         Map<Group, Integer> groupsStudents = new LinkedHashMap<>();
+        List<Group> groups = GroupService.readAll();
+        int studentCount;
 
-        try {
-            List<Group> groups = groupDao.getAll();
-            int studentCount;
-            for(Group group: groups) {
-                studentCount = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao().getByGroup(group.getId()).size();
-                groupsStudents.put(group, studentCount);
-            }
-        } catch (PersistentException e) {
-            e.printStackTrace();
+        for (Group group : groups) {
+            studentCount = UserService.readByGroup(group.getId()).size();
+            groupsStudents.put(group, studentCount);
         }
 
         return groupsStudents;

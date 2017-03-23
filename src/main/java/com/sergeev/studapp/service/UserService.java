@@ -3,21 +3,23 @@ package com.sergeev.studapp.service;
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
+import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.User;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserService {
 
     private static UserDao userDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao();
 
-    public static User createStudent(String firstName, String lastName, String groupId){
-        User student = create(firstName, lastName);
+    public static User createStudent(String firstName, String lastName, String groupId) {
+        User student = UserService.create(firstName, lastName);
         student.setType(User.AccountType.STUDENT);
+        student.setGroup(GroupService.read(groupId));
 
         try {
-            student.setGroup(GroupService.read(groupId));
             student = userDao.persist(student);
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -26,8 +28,8 @@ public class UserService {
         return student;
     }
 
-    public static User createTeacher(String firstName, String lastName){
-        User teacher = create(firstName, lastName);
+    public static User createTeacher(String firstName, String lastName) {
+        User teacher = UserService.create(firstName, lastName);
         teacher.setType(User.AccountType.TEACHER);
 
         try {
@@ -51,8 +53,8 @@ public class UserService {
         return user;
     }
 
-    public static List<User> readAll(User.AccountType type){
-        List<User> users = new ArrayList<>();
+    public static List<User> readAll(User.AccountType type) {
+        List<User> users = null;
 
         try {
             users = userDao.getAll(type);
@@ -63,8 +65,8 @@ public class UserService {
         return users;
     }
 
-    public static List<User> readByGroup(String groupId){
-        List<User> users = new ArrayList<>();
+    public static List<User> readByGroup(String groupId) {
+        List<User> users = null;
 
         try {
             users = userDao.getByGroup(groupId);
@@ -75,12 +77,12 @@ public class UserService {
         return users;
     }
 
-    public static User updateStudent(String firstName, String lastName, String userId, String groupId){
-        User student = update(userId, firstName, lastName);
+    public static User updateStudent(String firstName, String lastName, String userId, String groupId) {
+        User student = UserService.update(userId, firstName, lastName);
         student.setType(User.AccountType.STUDENT);
+        student.setGroup(GroupService.read(groupId));
 
         try {
-            student.setGroup(GroupService.read(groupId));
             userDao.update(student);
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -89,8 +91,8 @@ public class UserService {
         return student;
     }
 
-    public static User updateTeacher(String firstName, String lastName, String userId){
-        User teacher = update(userId, firstName, lastName);
+    public static User updateTeacher(String firstName, String lastName, String userId) {
+        User teacher = UserService.update(userId, firstName, lastName);
         teacher.setType(User.AccountType.TEACHER);
 
         try {
@@ -102,19 +104,20 @@ public class UserService {
         return teacher;
     }
 
-    public static User.AccountType delete(String userId){
-        User.AccountType type = null;
+    public static User.AccountType delete(String id) {
+        User.AccountType type = UserService.read(id).getType();
+
         try {
-            type = userDao.getById(userId).getType();
-            userDao.delete(userId);
+            userDao.delete(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
+
         return type;
     }
 
-    public static List<User> find(User.AccountType type, String name){
-        List<User> users = new ArrayList<>();
+    public static List<User> find(User.AccountType type, String name) {
+        List<User> users = null;
 
         try {
             users = userDao.getByName(name, type);
@@ -125,7 +128,20 @@ public class UserService {
         return users;
     }
 
-    private static User create(String firstName, String lastName){
+    public static Map<Course, Double> studentAvgMarks(String id) {
+        User student = UserService.read(id);
+        List<Course> courses = CourseService.readByDiscipline(student.getGroup().getId());
+        Map<Course, Double> coursesMarks = new LinkedHashMap<>();
+
+        for (Course course : courses) {
+            double avgMark = MarkService.calculateAvgMark(id, course.getDiscipline().getId());
+            coursesMarks.put(course, avgMark);
+        }
+
+        return coursesMarks;
+    }
+
+    private static User create(String firstName, String lastName) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -134,7 +150,7 @@ public class UserService {
         return user;
     }
 
-    private static User update(String firstName, String lastName, String userId){
+    private static User update(String firstName, String lastName, String userId) {
         User user = new User();
         user.setId(userId);
         user.setFirstName(firstName);

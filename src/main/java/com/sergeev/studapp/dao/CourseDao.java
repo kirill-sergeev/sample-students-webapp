@@ -12,5 +12,5 @@ public interface CourseDao extends GenericDao<Course> {
 
     List<Course> getByTeacher(String userId) throws PersistentException;
 
-    Course getByGroupAndDiscipline(String groupId, String disciplineId) throws PersistentException;
+    Course getByDisciplineAndGroup(String disciplineId, String groupId) throws PersistentException;
 }

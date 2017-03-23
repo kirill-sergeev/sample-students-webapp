@@ -142,7 +142,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    public Course getByGroupAndDiscipline(String groupId, String disciplineId) throws PersistentException {
+    public Course getByDisciplineAndGroup(String disciplineId, String groupId) throws PersistentException {
         List<Course> list;
         String sql = "SELECT * FROM courses WHERE group_id= ? AND discipline_id= ?";
         try (Connection connection = PgDaoFactory.getConnection();
