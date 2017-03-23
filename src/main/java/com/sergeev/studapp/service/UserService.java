@@ -6,6 +6,7 @@ import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.User;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class UserService {
 
     public static User createStudent(String firstName, String lastName, String groupId) {
         User student = UserService.create(firstName, lastName);
-        student.setType(User.AccountType.STUDENT);
+        student.setType(User.Role.STUDENT);
         student.setGroup(GroupService.read(groupId));
 
         try {
@@ -30,7 +31,7 @@ public class UserService {
 
     public static User createTeacher(String firstName, String lastName) {
         User teacher = UserService.create(firstName, lastName);
-        teacher.setType(User.AccountType.TEACHER);
+        teacher.setType(User.Role.TEACHER);
 
         try {
             teacher = userDao.persist(teacher);
@@ -53,8 +54,8 @@ public class UserService {
         return user;
     }
 
-    public static List<User> readAll(User.AccountType type) {
-        List<User> users = null;
+    public static List<User> readAll(User.Role type) {
+        List<User> users = new ArrayList<>();
 
         try {
             users = userDao.getAll(type);
@@ -66,7 +67,7 @@ public class UserService {
     }
 
     public static List<User> readByGroup(String groupId) {
-        List<User> users = null;
+        List<User> users = new ArrayList<>();
 
         try {
             users = userDao.getByGroup(groupId);
@@ -77,9 +78,9 @@ public class UserService {
         return users;
     }
 
-    public static User updateStudent(String firstName, String lastName, String userId, String groupId) {
-        User student = UserService.update(userId, firstName, lastName);
-        student.setType(User.AccountType.STUDENT);
+    public static User updateStudent(String firstName, String lastName, String groupId, String userId) {
+        User student = UserService.update(firstName, lastName, userId);
+        student.setType(User.Role.STUDENT);
         student.setGroup(GroupService.read(groupId));
 
         try {
@@ -92,8 +93,8 @@ public class UserService {
     }
 
     public static User updateTeacher(String firstName, String lastName, String userId) {
-        User teacher = UserService.update(userId, firstName, lastName);
-        teacher.setType(User.AccountType.TEACHER);
+        User teacher = UserService.update(firstName, lastName, userId);
+        teacher.setType(User.Role.TEACHER);
 
         try {
             userDao.update(teacher);
@@ -104,8 +105,8 @@ public class UserService {
         return teacher;
     }
 
-    public static User.AccountType delete(String id) {
-        User.AccountType type = UserService.read(id).getType();
+    public static User.Role delete(String id) {
+        User.Role type = UserService.read(id).getType();
 
         try {
             userDao.delete(id);
@@ -116,8 +117,8 @@ public class UserService {
         return type;
     }
 
-    public static List<User> find(User.AccountType type, String name) {
-        List<User> users = null;
+    public static List<User> find(User.Role type, String name) {
+        List<User> users = new ArrayList<>();
 
         try {
             users = userDao.getByName(name, type);

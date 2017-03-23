@@ -54,8 +54,8 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
                 lesson.setId(rs.getString(LESSON_ID));
                 lesson.setCourse(pcd.getById(rs.getString(COURSE_ID)));
                 lesson.setDate(rs.getDate(LESSON_DATE));
-                lesson.setOrder(Lesson.LessonOrder.getByNumber(rs.getInt(LESSON_ORDER)));
-                lesson.setType(Lesson.LessonType.getById(rs.getString(LESSON_TYPE)));
+                lesson.setOrder(Lesson.Order.getByNumber(rs.getInt(LESSON_ORDER)));
+                lesson.setType(Lesson.Type.getById(rs.getString(LESSON_TYPE)));
                 result.add(lesson);
             }
         } catch (Exception e) {

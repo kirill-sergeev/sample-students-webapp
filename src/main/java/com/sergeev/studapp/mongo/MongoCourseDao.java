@@ -23,7 +23,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    public Course getByGroupAndDiscipline(String groupId, String disciplineId) throws PersistentException {
+    public Course getByDisciplineAndGroup(String disciplineId, String groupId) throws PersistentException {
         return null;
     }
 

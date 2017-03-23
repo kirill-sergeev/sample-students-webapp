@@ -8,7 +8,7 @@ public class User implements Identified {
     private String lastName;
     private String login;
     private String password;
-    private AccountType type;
+    private Role type;
 
     @Override
     public String getId() {
@@ -60,11 +60,11 @@ public class User implements Identified {
         this.password = password;
     }
 
-    public AccountType getType() {
+    public Role getType() {
         return type;
     }
 
-    public void setType(AccountType type) {
+    public void setType(Role type) {
         this.type = type;
     }
 
@@ -78,7 +78,7 @@ public class User implements Identified {
                 '}';
     }
 
-    public enum AccountType {
+    public enum Role {
 
         STUDENT("1", "Student"),
         TEACHER("2", "Teacher"),
@@ -87,13 +87,13 @@ public class User implements Identified {
         private String id;
         private String type;
 
-        AccountType(String id, String type) {
+        Role(String id, String type) {
             this.id = id;
             this.type = type;
         }
 
-        public static AccountType getById(String id) {
-            for (AccountType type : values()) {
+        public static Role getById(String id) {
+            for (Role type : values()) {
                 if (type.id.equals(id)) return type;
             }
             return null;
@@ -109,7 +109,7 @@ public class User implements Identified {
 
         @Override
         public String toString() {
-            return "AccountType{" +
+            return "Role{" +
                     "id=" + id +
                     ", type='" + type +
                     '}';

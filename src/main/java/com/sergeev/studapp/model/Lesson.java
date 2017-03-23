@@ -16,8 +16,8 @@ public class Lesson implements Identified {
     @Reference
     private Course course;
     private Date date;
-    private LessonOrder order;
-    private LessonType type;
+    private Order order;
+    private Type type;
 
     public String getId() {
         return id;
@@ -43,19 +43,19 @@ public class Lesson implements Identified {
         this.date = date;
     }
 
-    public LessonOrder getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(LessonOrder order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
-    public LessonType getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(LessonType type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -70,7 +70,7 @@ public class Lesson implements Identified {
                 '}';
     }
 
-    public enum LessonType {
+    public enum Type {
 
         PRACTICAL("1", "Practical"),
         LECTURE("2", "Lecture"),
@@ -79,13 +79,13 @@ public class Lesson implements Identified {
         private String id;
         private String type;
 
-        LessonType(String id, String type) {
+        Type(String id, String type) {
             this.id = id;
             this.type = type;
         }
 
-        public static LessonType getById(String id) {
-            for (LessonType type : values()) {
+        public static Type getById(String id) {
+            for (Type type : values()) {
                 if (type.id.equals(id)) return type;
             }
             return null;
@@ -101,14 +101,14 @@ public class Lesson implements Identified {
 
         @Override
         public String toString() {
-            return "LessonType{" +
+            return "Type{" +
                     "id=" + id +
                     ", type='" + type +
                     '}';
         }
     }
 
-    public enum LessonOrder {
+    public enum Order {
 
         FIRST(1, Time.valueOf("07:45:00"), Time.valueOf("09:20:00")),
         SECOND(2, Time.valueOf("09:30:00"), Time.valueOf("11:05:00")),
@@ -121,14 +121,14 @@ public class Lesson implements Identified {
         private Time startTime;
         private Time endTime;
 
-        LessonOrder(Integer number, Time startTime, Time endTime) {
+        Order(Integer number, Time startTime, Time endTime) {
             this.number = number;
             this.startTime = startTime;
             this.endTime = endTime;
         }
 
-        public static LessonOrder getByNumber(Integer number) {
-            for (LessonOrder o : values()) {
+        public static Order getByNumber(Integer number) {
+            for (Order o : values()) {
                 if (o.number.equals(number)) return o;
             }
             return null;
@@ -148,7 +148,7 @@ public class Lesson implements Identified {
 
         @Override
         public String toString() {
-            return "LessonOrder{" +
+            return "Order{" +
                     "number=" + number +
                     ", startTime=" + startTime +
                     ", endTime=" + endTime +

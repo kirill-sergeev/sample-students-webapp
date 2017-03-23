@@ -23,12 +23,12 @@ public class SearchServlet extends HttpServlet {
 
         switch (path) {
             case "/search-student":
-                List<User> students = UserService.find(User.AccountType.STUDENT, name);
+                List<User> students = UserService.find(User.Role.STUDENT, name);
                 request.setAttribute("students", students);
                 request.getRequestDispatcher("students.jsp").forward(request, response);
                 return;
             case "/search-teacher":
-                List<User> teachers = UserService.find(User.AccountType.TEACHER, name);
+                List<User> teachers = UserService.find(User.Role.TEACHER, name);
                 request.setAttribute("teachers", teachers);
                 request.getRequestDispatcher("teachers.jsp").forward(request, response);
                 return;

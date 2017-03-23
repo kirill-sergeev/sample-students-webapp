@@ -27,15 +27,15 @@ public class ChangeServlet extends HttpServlet {
         List<Discipline> disciplines;
         List<Group> groups;
         List<User> teachers;
-        Lesson.LessonType[] types;
-        Lesson.LessonOrder[] orders;
+        Lesson.Type[] types;
+        Lesson.Order[] orders;
 
         switch (path) {
             case "/change-course":
                 course = CourseService.read(id);
                 disciplines = DisciplineService.readAll();
                 groups = GroupService.readAll();
-                teachers = UserService.readAll(User.AccountType.TEACHER);
+                teachers = UserService.readAll(User.Role.TEACHER);
 
                 request.setAttribute("course", course);
                 request.setAttribute("disciplines", disciplines);
@@ -54,8 +54,8 @@ public class ChangeServlet extends HttpServlet {
                 break;
             case "/change-lesson":
                 lesson = LessonService.read(id);
-                types = Lesson.LessonType.values();
-                orders = Lesson.LessonOrder.values();
+                types = Lesson.Type.values();
+                orders = Lesson.Order.values();
 
                 request.setAttribute("lesson", lesson);
                 request.setAttribute("types", types);

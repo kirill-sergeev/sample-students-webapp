@@ -17,7 +17,7 @@ public class RemoveServlet extends HttpServlet {
         final String id = request.getParameter("id");
 
         String groupId;
-        User.AccountType type;
+        User.Role type;
 
         switch (path) {
             case "/remove-course":
@@ -46,7 +46,7 @@ public class RemoveServlet extends HttpServlet {
             case "/remove-teacher":
                 type = UserService.read(id).getType();
                 UserService.delete(id);
-                if (type == User.AccountType.STUDENT) {
+                if (type == User.Role.STUDENT) {
                     response.sendRedirect("students");
                 } else {
                     response.sendRedirect("teachers");

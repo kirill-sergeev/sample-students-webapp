@@ -70,7 +70,7 @@ public class UpdateServlet extends HttpServlet {
                 lastName = request.getParameter("last-name");
 
                 UserService.updateTeacher(firstName, lastName, id);
-                response.sendRedirect("students");
+                response.sendRedirect("teachers");
                 break;
             default:
                 response.sendRedirect("");

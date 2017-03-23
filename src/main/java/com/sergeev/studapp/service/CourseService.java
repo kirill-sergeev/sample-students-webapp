@@ -8,6 +8,7 @@ import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CourseService {
@@ -46,7 +47,7 @@ public class CourseService {
     }
 
     public static List<Course> readAll() {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
 
         try {
             courses = courseDao.getAll();
@@ -58,7 +59,7 @@ public class CourseService {
     }
 
     public static List<Course> readByGroup(String groupId) {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
 
         try {
             courses = courseDao.getByGroup(groupId);
@@ -70,7 +71,7 @@ public class CourseService {
     }
 
     public static List<Course> readByTeacher(String teacherId) {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
 
         try {
             courses = courseDao.getByTeacher(teacherId);
@@ -82,7 +83,7 @@ public class CourseService {
     }
 
     public static List<Course> readByDiscipline(String disciplineId) {
-        List<Course> courses = null;
+        List<Course> courses = new ArrayList<>();
 
         try {
             courses = courseDao.getByDiscipline(disciplineId);

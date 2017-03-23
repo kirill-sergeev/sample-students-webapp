@@ -71,12 +71,12 @@ public class ListServlet extends HttpServlet {
                 request.setAttribute("marks", marks);
                 break;
             case "/students":
-                students = UserService.readAll(User.AccountType.STUDENT);
+                students = UserService.readAll(User.Role.STUDENT);
 
                 request.setAttribute("students", students);
                 break;
             case "/teachers":
-                teachers = UserService.readAll(User.AccountType.TEACHER);
+                teachers = UserService.readAll(User.Role.TEACHER);
                 courses = CourseService.readAll();
 
                 request.setAttribute("courses", courses);

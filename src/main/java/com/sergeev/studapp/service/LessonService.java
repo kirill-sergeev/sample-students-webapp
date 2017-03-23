@@ -7,6 +7,7 @@ import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Lesson;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LessonService {
@@ -17,8 +18,8 @@ public class LessonService {
         Course course = CourseService.readByDisciplineAndGroup(disciplineId, groupId);
 
         Lesson lesson = new Lesson();
-        lesson.setType(Lesson.LessonType.getById(typeId));
-        lesson.setOrder(Lesson.LessonOrder.getByNumber(Integer.valueOf(order)));
+        lesson.setType(Lesson.Type.getById(typeId));
+        lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
         lesson.setDate(Date.valueOf(date));
         lesson.setCourse(course);
 
@@ -44,7 +45,7 @@ public class LessonService {
     }
 
     public static List<Lesson> readAll(String groupId){
-        List<Lesson> lessons = null;
+        List<Lesson> lessons = new ArrayList<>();
 
         try {
             lessons = lessonDao.getByGroup(groupId);
@@ -60,8 +61,8 @@ public class LessonService {
 
         Lesson lesson = new Lesson();
         lesson.setId(lessonId);
-        lesson.setType(Lesson.LessonType.getById(typeId));
-        lesson.setOrder(Lesson.LessonOrder.getByNumber(Integer.valueOf(order)));
+        lesson.setType(Lesson.Type.getById(typeId));
+        lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
         lesson.setDate(Date.valueOf(date));
         lesson.setCourse(course);
 

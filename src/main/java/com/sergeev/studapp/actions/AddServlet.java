@@ -26,14 +26,14 @@ public class AddServlet extends HttpServlet {
         List<Group> groups;
         List<User> students;
         List<User> teachers;
-        Lesson.LessonType[] types;
-        Lesson.LessonOrder[] orders;
+        Lesson.Type[] types;
+        Lesson.Order[] orders;
 
         switch (path) {
             case "/add-course":
                 disciplines = DisciplineService.readAll();
                 groups = GroupService.readAll();
-                teachers = UserService.readAll(User.AccountType.TEACHER);
+                teachers = UserService.readAll(User.Role.TEACHER);
 
                 request.setAttribute("disciplines", disciplines);
                 request.setAttribute("groups", groups);
@@ -45,8 +45,8 @@ public class AddServlet extends HttpServlet {
             case "/add-lesson":
                 groupId = request.getParameter("group");
 
-                types = Lesson.LessonType.values();
-                orders = Lesson.LessonOrder.values();
+                types = Lesson.Type.values();
+                orders = Lesson.Order.values();
                 group = GroupService.read(groupId);
                 courses = CourseService.readByGroup(groupId);
 

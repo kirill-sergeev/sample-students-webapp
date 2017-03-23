@@ -58,8 +58,8 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
                 user.setLastName(rs.getString(LAST_NAME));
                 user.setLogin(rs.getString(LOGIN));
                 user.setPassword(rs.getString(PASSWORD));
-                user.setType(User.AccountType.getById(rs.getString(USER_TYPE)));
-                if (user.getType() == User.AccountType.STUDENT) {
+                user.setType(User.Role.getById(rs.getString(USER_TYPE)));
+                if (user.getType() == User.Role.STUDENT) {
                     PgGroupDao pgd = new PgGroupDao();
                     user.setGroup(pgd.getById(rs.getString(GROUP_ID)));
                 }
@@ -79,7 +79,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             statement.setString(3, object.getFirstName());
             statement.setString(4, object.getLastName());
             statement.setInt(5, Integer.parseInt(object.getType().getId()));
-            if (object.getType() == User.AccountType.STUDENT) {
+            if (object.getType() == User.Role.STUDENT) {
                 statement.setInt(6, Integer.parseInt(object.getGroup().getId()));
             } else {
                 statement.setNull(6, NULL);
@@ -94,7 +94,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
-            if (object.getType() == User.AccountType.STUDENT) {
+            if (object.getType() == User.Role.STUDENT) {
                 statement.setInt(3, Integer.parseInt(object.getGroup().getId()));
             } else {
                 statement.setNull(3, NULL);
@@ -106,7 +106,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getByName(String name, User.AccountType type) throws PersistentException {
+    public List<User> getByName(String name, User.Role type) throws PersistentException {
         List<User> list;
         String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND type= ?;";
         try (Connection connection = PgDaoFactory.getConnection();
@@ -140,7 +140,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getAll(User.AccountType type) throws PersistentException {
+    public List<User> getAll(User.Role type) throws PersistentException {
         List<User> list;
         String sql = "SELECT * FROM users WHERE type= ? ORDER BY first_name, last_name;";
         try (Connection connection = PgDaoFactory.getConnection();

@@ -5,6 +5,7 @@ import com.sergeev.studapp.dao.DisciplineDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DisciplineService {
@@ -37,7 +38,7 @@ public class DisciplineService {
     }
 
     public static List<Discipline> readAll(){
-        List<Discipline> disciplines = null;
+        List<Discipline> disciplines = new ArrayList<>();
 
         try {
             disciplines = disciplineDao.getAll();

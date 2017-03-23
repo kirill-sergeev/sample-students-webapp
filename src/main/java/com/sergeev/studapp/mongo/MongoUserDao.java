@@ -18,7 +18,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao{
     }
 
     @Override
-    public List<User> getByName(String name, User.AccountType type) throws PersistentException {
+    public List<User> getByName(String name, User.Role type) throws PersistentException {
         return null;
     }
 
@@ -29,7 +29,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao{
     }
 
     @Override
-    public List<User> getAll(User.AccountType type) throws PersistentException {
+    public List<User> getAll(User.Role type) throws PersistentException {
         return null;
     }
 

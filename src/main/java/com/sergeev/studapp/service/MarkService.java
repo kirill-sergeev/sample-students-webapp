@@ -3,6 +3,7 @@ package com.sergeev.studapp.service;
 import com.sergeev.studapp.dao.*;
 import com.sergeev.studapp.model.Mark;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MarkService {
@@ -25,7 +26,7 @@ public class MarkService {
     }
 
     public static List<Mark> readByLesson(String lessonId) {
-        List<Mark> marks = null;
+        List<Mark> marks = new ArrayList<>();
 
         try {
             marks = markDao.getByLesson(lessonId);
@@ -37,7 +38,7 @@ public class MarkService {
     }
 
     public static List<Mark> readByDisciplineAndStudent(String disciplineId, String studentId) {
-        List<Mark> marks = null;
+        List<Mark> marks = new ArrayList<>();
 
         try {
             marks = markDao.getByDisciplineAndStudent(disciplineId, studentId);
