@@ -77,4 +77,5 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
             throw new PersistentException(e);
         }
     }
+
 }

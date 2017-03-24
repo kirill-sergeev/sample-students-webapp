@@ -36,5 +36,13 @@
                     </span>
             </div>
         </form>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="${pageContext.request.contextPath}/login.jsp">Log In</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="logout">Log Out</a>
+            </li>
+        </ul>
     </div>
 </nav>

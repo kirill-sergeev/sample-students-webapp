@@ -11,4 +11,6 @@ public interface UserDao extends GenericDao<User>{
     List<User> getByGroup(String groupId) throws PersistentException;
 
     List<User> getAll(User.Role type) throws PersistentException;
+
+    User getByAccount(String login, String password) throws PersistentException;
 }

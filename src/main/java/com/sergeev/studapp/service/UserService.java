@@ -146,6 +146,18 @@ public class UserService {
         return coursesMarks;
     }
 
+    public static User logIn(String login, String password) {
+        User user = null;
+
+        try {
+            user = userDao.getByAccount(login, password);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
     private static User create(String firstName, String lastName) {
         User user = new User();
         user.setFirstName(firstName);
