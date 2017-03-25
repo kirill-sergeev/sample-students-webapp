@@ -5,6 +5,7 @@ public class Account implements Identified {
     private String id;
     private String login;
     private String password;
+    private String token;
 
     @Override
     public String getId() {
@@ -32,12 +33,20 @@ public class Account implements Identified {
         this.password = password;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
                 "id='" + id + '\'' +
                 ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
+
 }

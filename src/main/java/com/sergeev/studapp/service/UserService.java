@@ -55,6 +55,30 @@ public class UserService {
         return user;
     }
 
+    public static User readByAccount(Account account) {
+        User user = null;
+
+        try {
+            user = userDao.getByAccount(account.getId());
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
+    public static User readByAccount(String login, String password) {
+        User user = null;
+
+        try {
+            user = userDao.getByAccount(login, password);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return user;
+    }
+
     public static List<User> readAll(User.Role type) {
         List<User> users = new ArrayList<>();
 
@@ -144,18 +168,6 @@ public class UserService {
         }
 
         return coursesMarks;
-    }
-
-    public static User logIn(String login, String password) {
-        User user = null;
-
-        try {
-            user = userDao.getByAccount(login, password);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        return user;
     }
 
     private static User create(String firstName, String lastName) {

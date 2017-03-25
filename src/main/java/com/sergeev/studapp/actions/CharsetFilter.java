@@ -9,9 +9,6 @@ public class CharsetFilter implements Filter {
 
     private String encoding;
 
-    public void destroy() {
-    }
-
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
             if (null == request.getCharacterEncoding()) {
                 request.setCharacterEncoding(encoding);
@@ -29,4 +26,6 @@ public class CharsetFilter implements Filter {
         }
     }
 
+    public void destroy() {
+    }
 }

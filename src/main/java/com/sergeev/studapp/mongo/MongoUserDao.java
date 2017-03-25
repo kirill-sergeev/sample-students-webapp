@@ -34,6 +34,11 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao{
     }
 
     @Override
+    public User getByAccount(String accountId) throws PersistentException {
+        return null;
+    }
+
+    @Override
     public User getByAccount(String login, String password) throws PersistentException {
         return null;
     }

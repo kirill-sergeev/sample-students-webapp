@@ -1,62 +1,60 @@
-//package com.sergeev.studapp.actions;
-//
-//import javax.servlet.*;
-//import javax.servlet.annotation.WebFilter;
-//import javax.servlet.http.Cookie;
-//import javax.servlet.http.HttpServletRequest;
-//import javax.servlet.http.HttpServletResponse;
-//import java.io.IOException;
-//import java.util.Arrays;
-//import java.util.UUID;
-//
-//@WebFilter(filterName = "LoginFilter")
-//public class LoginFilter implements Filter {
-//    public void destroy() {
-//    }
-//
-//    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-//        HttpServletRequest req = (HttpServletRequest) request;
-//        HttpServletResponse resp = (HttpServletResponse) response;
-//
-//        // Java 1.8 stream API used here
-//        Cookie loginCookie = Arrays.stream(req.getCookies()).filter(c -> c.getName()
-//                .equals("MY_SESSION_COOKIE")).findAny().orElse(null);
-//
-//        // if we don't have the user already in session, check our cookie MY_SESSION_COOKIE
-//        if (req.getSession().getAttribute("currentUser") == null) {
-//            // if the cookie is not present, add it
-//            if (loginCookie == null) {
-//                loginCookie = new Cookie("MY_SESSION_COOKIE", UUID.randomUUID().toString());
-//                // Store that cookie only for our app. You can store it under "/",
-//                // if you wish to cover all webapps on the server, but the same datastore
-//                // needs to be available for all webapps.
-//                loginCookie.setPath(req.getContextPath());
-//                loginCookie.setMaxAge(24*60*60); // valid for one day, choose your value
-//                resp.addCookie(loginCookie);
-//            }
-//            // if we have our cookie, check it
-//            else {
-//                String userId = datastore.getLoggedUserForToken(loginCookie.getValue());
-//                // the datastore returned null, if it does not know the token, or
-//                // if the token is expired
-//                req.getSession().setAttribute("currentUser", userId);
-//            }
-//        }
-//        else {
-//            if (loginCookie != null)
-//                datastore.updateTokenLastActivity(loginCookie.getValue());
-//        }
-//
-//        // if we still don't have the userId, forward to login
-//        if (req.getSession().getAttribute("currentUser") == null)
-//            resp.sendRedirect("login.jsp");
-//            // else return the requested resource
-//        else
-//            chain.doFilter(request, response);
-//    }
-//
-//    public void init(FilterConfig config) throws ServletException {
-//
-//    }
-//
-//}
+package com.sergeev.studapp.actions;
+
+import com.sergeev.studapp.model.User;
+import com.sergeev.studapp.service.AccountService;
+import com.sergeev.studapp.service.UserService;
+
+import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
+public class LoginFilter implements Filter {
+
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse resp = (HttpServletResponse) response;
+
+        final String path = req.getRequestURI().substring(req.getContextPath().length());
+
+        Cookie loginCookie = null;
+        for (Cookie cookie : req.getCookies()) {
+            if (cookie.getName().equals("MY_SESSION_COOKIE")) {
+                loginCookie = cookie;
+                break;
+            }
+        }
+
+        if (path.startsWith("/login")) {
+            if (loginCookie != null) {
+                resp.addCookie(loginCookie);
+            }
+            chain.doFilter(request, response);
+            return;
+        }
+
+        if (req.getSession().getAttribute("user") == null) {
+            if (loginCookie != null) {
+                User user = UserService.readByAccount(AccountService.readByToken(loginCookie.getValue()));
+                //datastore.updateTokenLastActivity(loginCookie.getValue());
+                req.getSession().setAttribute("user", user);
+            }
+        }
+
+        if (req.getSession().getAttribute("user") == null) {
+            resp.sendRedirect("login.jsp");
+        } else {
+            resp.addCookie(loginCookie);
+            chain.doFilter(request, response);
+        }
+    }
+
+    public void init(FilterConfig config) throws ServletException {
+    }
+
+    public void destroy() {
+    }
+}

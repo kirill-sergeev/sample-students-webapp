@@ -4,6 +4,7 @@ import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
     protected static final String ACCOUNT_ID = "account_id";
     protected static final String LOGIN = "login";
     protected static final String PASSWORD = "password";
+    protected static final String TOKEN = "token";
 
     @Override
     public String getSelectQuery() {
@@ -32,7 +34,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
 
     @Override
     public String getUpdateQuery() {
-        return "UPDATE accounts SET login= ?, password= ? WHERE account_id= ?;";
+        return "UPDATE accounts SET login= ?, password= ?, token= ? WHERE account_id= ?;";
     }
 
     @Override
@@ -49,6 +51,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
                 account.setId(rs.getString(ACCOUNT_ID));
                 account.setLogin(rs.getString(LOGIN));
                 account.setPassword(rs.getString(PASSWORD));
+                account.setToken(rs.getString(TOKEN));
                 result.add(account);
             }
         } catch (Exception e) {
@@ -72,10 +75,31 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
         try {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());
-            statement.setInt(3, Integer.parseInt(object.getId()));
+            statement.setString(3, object.getToken());
+            statement.setInt(4, Integer.parseInt(object.getId()));
         } catch (Exception e) {
             throw new PersistentException(e);
         }
     }
 
+    @Override
+    public Account getByToken(String token) throws PersistentException{
+        List<Account> list;
+        String sql = "SELECT * FROM accounts WHERE token=?";
+        try (Connection connection = PgDaoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, token);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        if (list.size() > 1) {
+            throw new PersistentException("Received more than one record.");
+        }
+        return list.iterator().next();
+    }
 }

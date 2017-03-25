@@ -153,6 +153,27 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
+    public User getByAccount(String accountId) throws PersistentException {
+        List<User> list;
+        String sql = "SELECT * FROM users WHERE account_id= ?";
+        try (Connection connection = PgDaoFactory.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, Integer.parseInt(accountId));
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        if (list.size() > 1) {
+            throw new PersistentException("Received more than one record.");
+        }
+        return list.iterator().next();
+    }
+
+    @Override
     public User getByAccount(String login, String password) throws PersistentException {
         List<User> list;
         String sql = "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login=? AND accounts.password=?";

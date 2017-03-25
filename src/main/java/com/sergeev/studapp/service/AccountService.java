@@ -41,6 +41,18 @@ public class AccountService {
         return account;
     }
 
+    public static Account readByToken(String token) {
+        Account account = null;
+
+        try {
+            account = accountDao.getByToken(token);
+        } catch (PersistentException e) {
+            e.printStackTrace();
+        }
+
+        return account;
+    }
+
     public static List<Account> readAll() {
         List<Account> accounts = new ArrayList<>();
 
@@ -59,6 +71,7 @@ public class AccountService {
         account.setId(accountId);
         account.setLogin(generateLogin(user.getFirstName(), user.getLastName()));
         account.setPassword(AccountService.read(accountId).getPassword());
+        account.setToken(user.getAccount().getToken());
 
         try {
             accountDao.update(account);

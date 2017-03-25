@@ -8,7 +8,8 @@ CREATE SCHEMA public;
 CREATE TABLE accounts (
   account_id SERIAL PRIMARY KEY,
   login      VARCHAR(60)  NOT NULL,
-  password   VARCHAR(100) NOT NULL
+  password   VARCHAR(100) NOT NULL,
+  token   VARCHAR(100) DEFAULT NULL
 );
 
 CREATE TABLE groups (
@@ -149,8 +150,6 @@ VALUES ('LECTURE'), ('PRACTICE'), ('LAB');
 INSERT INTO "groups" (title)
 VALUES ('AA-2017'), ('AB-2017'), ('AC-2017');
 
-INSERT INTO "users" (login, password, first_name, last_name, type, group_id)
-VALUES ('kirill_sergeev1', '123456', 'Kirill1', 'Sergeev1', 3, NULL);
 ------------------------------------------------
 ------------------queries-----------------------
 ------------------------------------------------
