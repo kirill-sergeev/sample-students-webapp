@@ -1,5 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:catch var="exception">
+    <jsp:useBean id="login" scope="request" type="java.lang.String"/>
+</c:catch>
+
 <html>
 <head>
     <title>Log in</title>
@@ -14,16 +19,18 @@
                 <h2 class="form-signin-heading">Please sign in</h2>
 
                 <label for="inputLogin" class="sr-only">Login</label>
-                <input type="text" name="login" id="inputLogin" class="form-control" placeholder="Login" required
-                       autofocus>
+                <input type="text" name="login"
+                <c:if test="${login != null}"> value="${login}"</c:if>
+                       id="inputLogin" class="form-control" placeholder="Login"
+                       <c:if test="${login == null}">autofocus</c:if> required>
 
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password"
-                       required>
+                       required <c:if test="${login != null}">autofocus</c:if>>
 
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox" value="remember"> Remember me
+                        <input type="checkbox" name="remember" value="remember"> Remember me
                     </label>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
@@ -31,6 +38,5 @@
         </div>
     </div>
 </div>
-
 
 <jsp:include flush="true" page="partial/footer.jsp"/>

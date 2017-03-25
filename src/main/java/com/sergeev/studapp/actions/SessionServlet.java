@@ -10,60 +10,52 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.UUID;
 
+import static com.sergeev.studapp.actions.LoginFilter.LOGIN_COOKIE;
+
 @WebServlet(name = "SessionServlet", urlPatterns = {"/login", "/logout"})
 public class SessionServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         HttpSession session = request.getSession(true);
 
-        Cookie loginCookie = null;
-        User user = null;
+        Cookie loginCookie;
+        User user;
         String login;
         String password;
         String token;
+        String remember;
 
         switch (path) {
             case "/login":
-
-                if (session.getAttribute("user") != null) {
-                    response.sendRedirect("/");
+                if (!request.getParameterMap().containsKey("login")) {
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
                     return;
                 }
 
-                for (Cookie cookie : request.getCookies()) {
-                    if (cookie.getName().equals("MY_SESSION_COOKIE")) {
-                        loginCookie = cookie;
-                        break;
-                    }
-                }
-
-                if (loginCookie != null) {
-                    user = UserService.readByAccount(AccountService.readByToken(loginCookie.getValue()));
-                }
+                login = request.getParameter("login").toLowerCase();
+                password = request.getParameter("password");
+                user = UserService.readByAccount(login, password);
+                remember = request.getParameter("remember");
 
                 if (user == null) {
-                    login = request.getParameter("login").toLowerCase();
-                    password = request.getParameter("password");
-                    user = UserService.readByAccount(login, password);
+                    request.setAttribute("login", login);
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                    return;
+                }
 
-                    if (user == null) {
-                        response.sendRedirect("login.jsp");
-                        return;
-                    }
+                session.setAttribute("user", user);
+                session.setAttribute("remember", remember);
 
+                if ("remember".equals(remember)) {
                     token = UUID.randomUUID().toString();
                     user.getAccount().setToken(token);
                     AccountService.update(user);
 
-                    loginCookie = new Cookie("MY_SESSION_COOKIE", token);
+                    loginCookie = new Cookie(LOGIN_COOKIE, token);
                     loginCookie.setPath(request.getContextPath());
-                    loginCookie.setMaxAge(60);
-
+                    loginCookie.setMaxAge(24 * 60 * 60);
                     response.addCookie(loginCookie);
                 }
-
-                session.setAttribute("user", user);
-
                 if (user.getType() == User.Role.STUDENT) {
                     response.sendRedirect("/students");
                     return;
@@ -81,7 +73,7 @@ public class SessionServlet extends HttpServlet {
                 response.addCookie(loginCookie);
 
                 session.invalidate();
-                response.sendRedirect("/login.jsp");
+                response.sendRedirect("/login");
         }
     }
 
