@@ -4,7 +4,6 @@ import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -80,26 +79,5 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
         } catch (Exception e) {
             throw new PersistentException(e);
         }
-    }
-
-    @Override
-    public Account getByToken(String token) throws PersistentException{
-        List<Account> list;
-        String sql = "SELECT * FROM accounts WHERE token=?";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, token);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (Exception e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        if (list.size() > 1) {
-            throw new PersistentException("Received more than one record.");
-        }
-        return list.iterator().next();
     }
 }

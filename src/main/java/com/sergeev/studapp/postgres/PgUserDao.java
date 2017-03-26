@@ -153,12 +153,12 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    public User getByAccount(String accountId) throws PersistentException {
+    public User getByToken(String token) throws PersistentException {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE account_id= ?";
+        String sql = "SELECT * FROM users, accounts WHERE accounts.account_id=users.account_id AND token= ?";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, Integer.parseInt(accountId));
+            statement.setString(1, token);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (Exception e) {
@@ -174,7 +174,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    public User getByAccount(String login, String password) throws PersistentException {
+    public User getByLogin(String login, String password) throws PersistentException {
         List<User> list;
         String sql = "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login=? AND accounts.password=?";
         try (Connection connection = PgDaoFactory.getConnection();

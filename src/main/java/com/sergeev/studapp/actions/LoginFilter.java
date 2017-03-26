@@ -1,8 +1,6 @@
 package com.sergeev.studapp.actions;
 
-import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.User;
-import com.sergeev.studapp.service.AccountService;
 import com.sergeev.studapp.service.UserService;
 
 import javax.servlet.*;
@@ -24,7 +22,6 @@ public class LoginFilter implements Filter {
         HttpSession session = req.getSession(true);
         final String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        Account account;
         User user = (User) session.getAttribute("user");
         String remember = (String) session.getAttribute("remember");
         Cookie loginCookie = null;
@@ -42,8 +39,7 @@ public class LoginFilter implements Filter {
         }
 
         if (user == null) {
-            if (loginCookie != null && (account = AccountService.readByToken(loginCookie.getValue())) != null) {
-                user = UserService.readByAccount(account);
+            if (loginCookie != null && (user = UserService.readByToken(loginCookie.getValue())) != null) {
                 //datastore.updateTokenLastActivity(loginCookie.getValue());
                 req.getSession().setAttribute("user", user);
             }

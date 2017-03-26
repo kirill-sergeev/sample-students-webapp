@@ -41,18 +41,6 @@ public class AccountService {
         return account;
     }
 
-    public static Account readByToken(String token) {
-        Account account = null;
-
-        try {
-            account = accountDao.getByToken(token);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
-        return account;
-    }
-
     public static List<Account> readAll() {
         List<Account> accounts = new ArrayList<>();
 

@@ -55,11 +55,11 @@ public class UserService {
         return user;
     }
 
-    public static User readByAccount(Account account) {
+    public static User readByToken(String token) {
         User user = null;
 
         try {
-            user = userDao.getByAccount(account.getId());
+            user = userDao.getByToken(token);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -67,11 +67,11 @@ public class UserService {
         return user;
     }
 
-    public static User readByAccount(String login, String password) {
+    public static User readByLogin(String login, String password) {
         User user = null;
 
         try {
-            user = userDao.getByAccount(login, password);
+            user = userDao.getByLogin(login, password);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

@@ -34,7 +34,7 @@ public class SessionServlet extends HttpServlet {
 
                 login = request.getParameter("login").toLowerCase();
                 password = request.getParameter("password");
-                user = UserService.readByAccount(login, password);
+                user = UserService.readByLogin(login, password);
                 remember = request.getParameter("remember");
 
                 if (user == null) {

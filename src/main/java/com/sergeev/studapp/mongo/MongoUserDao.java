@@ -34,12 +34,12 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao{
     }
 
     @Override
-    public User getByAccount(String accountId) throws PersistentException {
+    public User getByToken(String token) throws PersistentException {
         return null;
     }
 
     @Override
-    public User getByAccount(String login, String password) throws PersistentException {
+    public User getByLogin(String login, String password) throws PersistentException {
         return null;
     }
 
