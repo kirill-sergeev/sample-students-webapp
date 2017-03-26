@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class UserService {
 
-    private static UserDao userDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao();
+    private static UserDao userDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getUserDao();
 
     public static User createStudent(String firstName, String lastName, String groupId) {
         User student = UserService.create(firstName, lastName);

@@ -1,13 +1,8 @@
 package com.sergeev.studapp.model;
 
-import org.mongodb.morphia.annotations.*;
 
-@Entity("disciplines")
-@Indexes(
-        @Index(value = "title", fields = @Field("title"))
-)
 public class Discipline implements Identified {
-    @Id
+
     private String id;
     private String title;
 

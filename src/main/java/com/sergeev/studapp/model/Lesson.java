@@ -1,19 +1,13 @@
 package com.sergeev.studapp.model;
 
-import org.mongodb.morphia.annotations.*;
 
 import java.sql.Date;
 import java.sql.Time;
 
-@Entity("lessons")
-@Indexes(
-        {@Index(value = "order", fields = @Field("order")),
-                @Index(value = "type", fields = @Field("type"))}
-)
 public class Lesson implements Identified {
-    @Id
+
     private String id;
-    @Reference
+
     private Course course;
     private Date date;
     private Order order;

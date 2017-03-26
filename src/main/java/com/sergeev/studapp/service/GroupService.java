@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class GroupService {
 
-    private static GroupDao groupDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao();
+    private static GroupDao groupDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getGroupDao();
 
     public static Group create(String title) {
         Group group = new Group();

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Random;
 
 public class AccountService {
-    private static AccountDao accountDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getAccountDao();
+    private static AccountDao accountDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getAccountDao();
 
     public static Account create(User user) {
         String password = generatePassword();

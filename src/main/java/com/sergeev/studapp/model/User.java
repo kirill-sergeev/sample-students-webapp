@@ -3,7 +3,9 @@ package com.sergeev.studapp.model;
 public class User implements Identified {
 
     private String id;
+
     private Account account;
+
     private Group group;
     private String firstName;
     private String lastName;

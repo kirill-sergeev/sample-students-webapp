@@ -1,16 +1,11 @@
 package com.sergeev.studapp.model;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
-
-@Entity("marks")
 public class Mark implements Identified {
-    @Id
+
     private String id;
-    @Reference
+
     private Lesson lesson;
-    @Reference
+
     private User student;
     private Integer value;
 

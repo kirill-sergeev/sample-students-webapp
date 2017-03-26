@@ -1,5 +1,6 @@
 package com.sergeev.studapp.model;
 
+
 public class Account implements Identified {
 
     private String id;

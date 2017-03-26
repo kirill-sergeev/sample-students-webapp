@@ -1,8 +1,10 @@
-package com.sergeev.studapp.mongo;
+package com.sergeev.studapp.mongoOLD.mongo;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.*;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,6 +42,15 @@ public class MongoDaoFactory extends DaoFactory {
         return mongoClient.getDatabase(DATABASE);
     }
 
+    public static Datastore getStore() {
+        Morphia morphia = new Morphia();
+        morphia.mapPackage("com.sergeev.model");
+        MongoClient mongoClient = new MongoClient(ADDRESS, PORT);
+        Datastore store = morphia.createDatastore(mongoClient, DATABASE);
+        store.ensureIndexes();
+        return store;
+    }
+
     @Override
     public AccountDao getAccountDao() {
         return new MongoAccountDao();
@@ -47,12 +58,12 @@ public class MongoDaoFactory extends DaoFactory {
 
     @Override
     public CourseDao getCourseDao() {
-        return null;
+        return new MongoCourseDao();
     }
 
     @Override
     public DisciplineDao getDisciplineDao() {
-        return null;
+        return new MongoDisciplineDao();
     }
 
     @Override
@@ -62,12 +73,12 @@ public class MongoDaoFactory extends DaoFactory {
 
     @Override
     public LessonDao getLessonDao() {
-        return null;
+        return new MongoLessonDao();
     }
 
     @Override
     public MarkDao getMarkDao() {
-        return null;
+        return new MongoMarkDao();
     }
 
     @Override
