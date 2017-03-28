@@ -1,0 +1,26 @@
+
+Vsquid:S1118":Add a private constructor to hide the implicit public one.(ΤΔλª8τώ ©±+
+`squid:S2259"?NullPointerException might be thrown as 'user' is nullable here(ε‘¥έψÿÿÿÿ8τώ ©±+
+csquid:S2259"BNullPointerException might be thrown as 'student' is nullable here(ΘΤΜ±όÿÿÿÿ8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+

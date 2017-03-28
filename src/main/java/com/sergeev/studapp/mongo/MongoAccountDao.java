@@ -12,18 +12,16 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
     protected static final String PASSWORD= "password";
     protected static final String TOKEN= "token";
 
-    private Document doc;
     private Account account;
-    private MongoCollection<Document> collection;
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection("accounts");
+        return db.getCollection("accounts");
     }
 
     @Override
     protected Document getDocument(Account object) {
-        return doc = new Document(LOGIN, object.getLogin()).append(PASSWORD, object.getPassword()).append(TOKEN, object.getToken());
+        return new Document(LOGIN, object.getLogin()).append(PASSWORD, object.getPassword()).append(TOKEN, object.getToken());
     }
 
     @Override

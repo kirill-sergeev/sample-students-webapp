@@ -1,0 +1,15 @@
+
+xsquid:S1488"]Immediately return this expression instead of assigning it to the temporary variable "login".(Ò‹Βx8τώ ©±+
+squid:S1488"`Immediately return this expression instead of assigning it to the temporary variable "password".(ωρΐªόÿÿÿÿ8τώ ©±+
+[squid:S1118":Add a private constructor to hide the implicit public one.(½τξϋÿÿÿÿ8τώ ©±+
+`squid:S2259"?NullPointerException might be thrown as 'read' is nullable here(‡ωΏλωÿÿÿÿ8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+@squid:S1166"%Either log or rethrow this exception.(¦v8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
+Dsquid:S1148"#Use a logger to log this exception.(€ΙΤ…ύÿÿÿÿ8τώ ©±+
