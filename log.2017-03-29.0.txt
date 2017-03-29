@@ -1,0 +1,13 @@
+08:50:38.446 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object class com.sergeev.studapp.mongo.MongoUserDao with id 58daa82e92dbc154fe77cb09 not found.
+08:52:37.576 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object com.sergeev.studapp.mongo.MongoUserDao with id 58daa82e92dbc154fe77cb09 not found.
+08:52:49.471 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object com.sergeev.studapp.mongo.MongoUserDao with id 58daa82e92dbc154fe77cb09 not found.
+08:53:10.575 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with id 58daa82e92dbc154fe77cb09 not found.
+08:53:27.737 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+08:56:30.953 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+08:56:44.502 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+08:57:16.006 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Bad ID 58daa82e92dbc154fe77cb0
+08:58:24.659 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+08:58:37.336 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+08:59:22.489 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+09:10:05.893 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Object with ID 58daa82e92dbc154fe77cb09 not found.
+09:15:51.968 [main] ERROR c.sergeev.studapp.mongo.MongoUserDao - Bad fields for entity com.sergeev.studapp.model.User

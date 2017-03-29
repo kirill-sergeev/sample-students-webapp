@@ -4,20 +4,23 @@ import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.DisciplineDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DisciplineService {
 
-    private static DisciplineDao disciplineDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao();
+    private static final Logger LOG = LoggerFactory.getLogger(DisciplineService.class);
+    private static final DisciplineDao DISCIPLINE_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao();
 
     public static Discipline create(String title){
         Discipline discipline = new Discipline();
         discipline.setTitle(title);
 
         try {
-            discipline = disciplineDao.persist(discipline);
+            discipline = DISCIPLINE_DAO.persist(discipline);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -29,7 +32,7 @@ public class DisciplineService {
         Discipline discipline = null;
 
         try {
-            discipline = disciplineDao.getById(id);
+            discipline = DISCIPLINE_DAO.getById(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -41,7 +44,7 @@ public class DisciplineService {
         List<Discipline> disciplines = new ArrayList<>();
 
         try {
-            disciplines = disciplineDao.getAll();
+            disciplines = DISCIPLINE_DAO.getAll();
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -55,7 +58,7 @@ public class DisciplineService {
         discipline.setTitle(title);
 
         try {
-            disciplineDao.update(discipline);
+            DISCIPLINE_DAO.update(discipline);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -65,7 +68,7 @@ public class DisciplineService {
 
     public static void delete(String id) {
         try {
-            disciplineDao.delete(id);
+            DISCIPLINE_DAO.delete(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

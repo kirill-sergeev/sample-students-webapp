@@ -3,39 +3,39 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.DisciplineDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgDisciplineDao.class);
     protected static final String DISCIPLINE_ID = "discipline_id";
     protected static final String DISCIPLINE_TITLE = "title";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM disciplines WHERE discipline_id= ?;";
     }
-
     @Override
-    public String getSelectAllQuery() {
+    protected String getSelectAllQuery() {
         return "SELECT * FROM disciplines ORDER BY title;";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO disciplines (title) VALUES (?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE disciplines SET title= ? WHERE discipline_id= ?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM disciplines WHERE discipline_id= ?;";
     }
 
@@ -49,7 +49,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
                 discipline.setTitle(rs.getString(DISCIPLINE_TITLE));
                 result.add(discipline);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -59,7 +59,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     protected void prepareStatementForInsert(PreparedStatement statement, Discipline object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -69,7 +69,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }

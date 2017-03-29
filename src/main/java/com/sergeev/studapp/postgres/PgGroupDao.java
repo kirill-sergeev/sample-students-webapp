@@ -3,38 +3,39 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgGroupDao.class);
     protected static final String GROUP_ID = "group_id";
     protected static final String GROUP_TITLE = "title";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM groups Where group_id= ?;";
     }
-
-    public String getSelectAllQuery() {
+    @Override
+    protected String getSelectAllQuery() {
         return "SELECT * FROM groups";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO groups (title) VALUES (?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE groups SET title= ? WHERE group_id= ?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM groups WHERE group_id= ?;";
     }
 
@@ -48,7 +49,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
                 group.setTitle(rs.getString(GROUP_TITLE));
                 result.add(group);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -58,7 +59,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     protected void prepareStatementForInsert(PreparedStatement statement, Group object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -68,7 +69,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }

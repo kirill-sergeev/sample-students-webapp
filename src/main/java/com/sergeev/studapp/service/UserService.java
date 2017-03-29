@@ -6,6 +6,8 @@ import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,7 +16,8 @@ import java.util.Map;
 
 public class UserService {
 
-    private static UserDao userDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getUserDao();
+    private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
+    private static final UserDao USER_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao();
 
     public static User createStudent(String firstName, String lastName, String groupId) {
         User student = UserService.create(firstName, lastName);
@@ -22,7 +25,7 @@ public class UserService {
         student.setGroup(GroupService.read(groupId));
 
         try {
-            student = userDao.persist(student);
+            student = USER_DAO.persist(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -35,7 +38,7 @@ public class UserService {
         teacher.setType(User.Role.TEACHER);
 
         try {
-            teacher = userDao.persist(teacher);
+            teacher = USER_DAO.persist(teacher);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -47,7 +50,7 @@ public class UserService {
         User user = null;
 
         try {
-            user = userDao.getById(id);
+            user = USER_DAO.getById(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -59,7 +62,7 @@ public class UserService {
         User user = null;
 
         try {
-            user = userDao.getByToken(token);
+            user = USER_DAO.getByToken(token);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -71,7 +74,7 @@ public class UserService {
         User user = null;
 
         try {
-            user = userDao.getByLogin(login, password);
+            user = USER_DAO.getByLogin(login, password);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -83,7 +86,7 @@ public class UserService {
         List<User> users = new ArrayList<>();
 
         try {
-            users = userDao.getAll(type);
+            users = USER_DAO.getAll(type);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -95,7 +98,7 @@ public class UserService {
         List<User> users = new ArrayList<>();
 
         try {
-            users = userDao.getByGroup(groupId);
+            users = USER_DAO.getByGroup(groupId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -109,7 +112,7 @@ public class UserService {
         student.setGroup(GroupService.read(groupId));
 
         try {
-            userDao.update(student);
+            USER_DAO.update(student);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -122,7 +125,7 @@ public class UserService {
         teacher.setType(User.Role.TEACHER);
 
         try {
-            userDao.update(teacher);
+            USER_DAO.update(teacher);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -136,7 +139,7 @@ public class UserService {
         String accountId = user.getAccount().getId();
 
         try {
-            userDao.delete(id);
+            USER_DAO.delete(id);
             AccountService.delete(accountId);
         } catch (PersistentException e) {
             e.printStackTrace();
@@ -149,7 +152,7 @@ public class UserService {
         List<User> users = new ArrayList<>();
 
         try {
-            users = userDao.getByName(name, type);
+            users = USER_DAO.getByName(name, type);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

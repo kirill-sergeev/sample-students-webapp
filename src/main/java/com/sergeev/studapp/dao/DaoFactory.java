@@ -2,8 +2,12 @@ package com.sergeev.studapp.dao;
 
 import com.sergeev.studapp.mongo.MongoDaoFactory;
 import com.sergeev.studapp.postgres.PgDaoFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class DaoFactory {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DaoFactory.class);
 
     public static final int POSTGRES = 1;
     public static final int MONGO = 2;
@@ -19,11 +23,11 @@ public abstract class DaoFactory {
     public static DaoFactory getDaoFactory(int whichFactory) {
         switch (whichFactory) {
             case POSTGRES:
-                return new PgDaoFactory();
+                return PgDaoFactory.getInstance();
             case MONGO:
-                return new MongoDaoFactory();
+                return MongoDaoFactory.getInstance();
             default:
-                return new PgDaoFactory();
+                throw new IllegalArgumentException();
         }
     }
 }

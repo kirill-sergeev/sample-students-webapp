@@ -5,13 +5,17 @@ import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class AccountService {
-    private static AccountDao accountDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getAccountDao();
+
+    private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
+    private static final AccountDao ACCOUNT_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getAccountDao();
 
     public static Account create(User user) {
         String password = generatePassword();
@@ -21,7 +25,7 @@ public class AccountService {
         account.setPassword(password);
 
         try {
-            account = accountDao.persist(account);
+            account = ACCOUNT_DAO.persist(account);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -33,7 +37,7 @@ public class AccountService {
         Account account = null;
 
         try {
-            account = accountDao.getById(id);
+            account = ACCOUNT_DAO.getById(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -45,7 +49,7 @@ public class AccountService {
         List<Account> accounts = new ArrayList<>();
 
         try {
-            accounts = accountDao.getAll();
+            accounts = ACCOUNT_DAO.getAll();
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -62,7 +66,7 @@ public class AccountService {
         account.setToken(user.getAccount().getToken());
 
         try {
-            accountDao.update(account);
+            ACCOUNT_DAO.update(account);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -72,7 +76,7 @@ public class AccountService {
 
     public static void delete(String id) {
         try {
-            accountDao.delete(id);
+            ACCOUNT_DAO.delete(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

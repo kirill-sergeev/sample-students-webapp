@@ -3,10 +3,13 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,31 +18,28 @@ import static com.sergeev.studapp.postgres.PgUserDao.USER_ID;
 
 public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgMarkDao.class);
     protected static final String MARK_ID = "mark_id";
     protected static final String VALUE = "mark";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM marks WHERE mark_id= ?;";
     }
-
     @Override
-    public String getSelectAllQuery() {
+    protected String getSelectAllQuery() {
         return "SELECT * FROM marks;";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO marks (lesson_id, user_id, mark) VALUES (?, ?, ?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE marks SET lesson_id= ?, user_id= ?, mark= ? WHERE mark_id= ?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM marks WHERE mark_id= ?;";
     }
 
@@ -57,7 +57,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
                 mark.setValue(rs.getInt(VALUE));
                 result.add(mark);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -69,7 +69,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             statement.setInt(1, Integer.parseInt(object.getLesson().getId()));
             statement.setInt(2, Integer.parseInt(object.getStudent().getId()));
             statement.setInt(3, object.getValue());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -81,7 +81,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             statement.setInt(2, Integer.parseInt(object.getStudent().getId()));
             statement.setInt(3, object.getValue());
             statement.setInt(4, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -97,7 +97,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             ResultSet rs = statement.executeQuery();
             rs.next();
             avgMark = rs.getDouble(1);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return avgMark;
@@ -112,7 +112,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             statement.setInt(1, Integer.parseInt(lessonId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return list;
@@ -128,7 +128,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             statement.setInt(2, Integer.parseInt(disciplineId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {

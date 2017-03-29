@@ -12,8 +12,6 @@ public interface GenericDao<T extends Identified> {
 
     void update(T object) throws PersistentException;
 
-    void delete(T object) throws PersistentException;
-
     void delete(String key) throws PersistentException;
 
     List<T> getAll() throws PersistentException;

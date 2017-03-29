@@ -5,8 +5,12 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
+import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.User;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,8 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
-    private static MongoDatabase db = MongoDaoFactory.getConnection();
+    private static final Logger logger = LoggerFactory.getLogger(MongoUserDao.class);
+
     protected static final String FIRST_NAME = "first_name";
     protected static final String LAST_NAME = "last_name";
     protected static final String ACCOUNT = "account";
@@ -33,28 +38,36 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    protected Document getDocument(User object) {
+    protected Document getDocument(User object) throws PersistentException{
         doc = new Document(FIRST_NAME, object.getFirstName()).append(LAST_NAME, object.getLastName())
-                .append(TYPE, object.getType().getId()).append(ACCOUNT, object.getAccount().getId());
+                .append(TYPE, object.getType().getId()).append(ACCOUNT, new DBRef("accounts", object.getAccount().getId()));
         if (object.getType() == User.Role.STUDENT) {
-            doc.append(GROUP, object.getGroup().getId());
+            doc.append(GROUP, new DBRef("groups", object.getGroup().getId()));
+        }
+
+        if(doc == null){
+            logger.error("Bad fields for entity {}", object.getClass().getName());
+            throw new PersistentException();
         }
         return doc;
     }
 
     @Override
-    protected User parseResult(Document doc) throws PersistentException {
+    protected User parseDocument(Document doc) throws PersistentException {
         user = new User();
-        user.setId(String.valueOf(doc.get(ID)));
+        ObjectId oid = (ObjectId) doc.get(ID);
+        user.setId(String.valueOf(oid));
         user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));
         user.setLastName(String.valueOf(doc.get(LAST_NAME)));
         user.setType(User.Role.getById(String.valueOf(doc.get(TYPE))));
         if (user.getType() == User.Role.STUDENT) {
             MongoGroupDao mgd = new MongoGroupDao();
-            user.setGroup(mgd.getById(String.valueOf(doc.get(GROUP))));
+            DBRef groupRef = (DBRef) doc.get(GROUP);
+            user.setGroup(mgd.getById(String.valueOf(groupRef.getId())));
         }
+        DBRef accountRef = (DBRef) doc.get(ACCOUNT);
         MongoAccountDao mad = new MongoAccountDao();
-        user.setAccount(mad.getById(String.valueOf(doc.get(ACCOUNT))));
+        user.setAccount(mad.getById(String.valueOf(accountRef.getId())));
         return user;
     }
 
@@ -72,7 +85,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         Block<Document> documents = doc -> {
             User item = null;
             try {
-                item = parseResult(doc);
+                item = parseDocument(doc);
             } catch (PersistentException e) {
                 e.printStackTrace();
             }
@@ -88,13 +101,14 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         Block<Document> documents = doc -> {
             User item = null;
             try {
-                item = parseResult(doc);
+                item = parseDocument(doc);
             } catch (PersistentException e) {
                 e.printStackTrace();
             }
             list.add(item);
         };
-        collection.find(eq(GROUP, groupId)).forEach(documents);
+        DBRef ref = new DBRef("groups", groupId);
+        collection.find(eq(GROUP, ref)).forEach(documents);
         return list;
     }
 
@@ -104,7 +118,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         Block<Document> documents = doc -> {
             User item = null;
             try {
-                item = parseResult(doc);
+                item = parseDocument(doc);
             } catch (PersistentException e) {
                 e.printStackTrace();
             }
@@ -116,22 +130,18 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     public User getByToken(String token) throws PersistentException {
-        List<User> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            User item = null;
-            try {
-                item = parseResult(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
-            }
-            list.add(item);
-        };
-        collection.find(eq("account.token", token)).forEach(documents);
-        return list.listIterator().next();
+        Account account = new MongoAccountDao().getByToken(token);
+        DBRef ref = new DBRef("accounts", account.getId());
+        doc = collection.find(eq(ACCOUNT, ref)).first();
+        return parseDocument(doc);
     }
 
     @Override
     public User getByLogin(String login, String password) throws PersistentException {
-        return null;
+        Account account = new MongoAccountDao().getByLogin(login, password);
+        DBRef ref = new DBRef("accounts", account.getId());
+        doc = collection.find(eq(ACCOUNT, ref)).first();
+        return parseDocument(doc);
     }
 }
+

@@ -1,14 +1,19 @@
 package com.sergeev.studapp.service;
 
-import com.sergeev.studapp.dao.*;
+import com.sergeev.studapp.dao.DaoFactory;
+import com.sergeev.studapp.dao.MarkDao;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MarkService {
 
-    private static MarkDao markDao = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao();
+    private static final Logger LOG = LoggerFactory.getLogger(MarkService.class);
+    private static final MarkDao MARK_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao();
 
     public static Mark create(String lessonId, String studentId, String value){
         Mark mark = new Mark();
@@ -17,7 +22,7 @@ public class MarkService {
         mark.setStudent(UserService.read(studentId));
 
         try {
-            mark = markDao.persist(mark);
+            mark = MARK_DAO.persist(mark);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -29,7 +34,7 @@ public class MarkService {
         List<Mark> marks = new ArrayList<>();
 
         try {
-            marks = markDao.getByLesson(lessonId);
+            marks = MARK_DAO.getByLesson(lessonId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -41,7 +46,7 @@ public class MarkService {
         List<Mark> marks = new ArrayList<>();
 
         try {
-            marks = markDao.getByDisciplineAndStudent(disciplineId, studentId);
+            marks = MARK_DAO.getByDisciplineAndStudent(disciplineId, studentId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -51,7 +56,7 @@ public class MarkService {
 
     public static void delete(String id) {
         try {
-            markDao.delete(id);
+            MARK_DAO.delete(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -61,7 +66,7 @@ public class MarkService {
         Double avgMark = null;
 
         try {
-            avgMark = markDao.getAvgMark(studentId, disciplineId);
+            avgMark = MARK_DAO.getAvgMark(studentId, disciplineId);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

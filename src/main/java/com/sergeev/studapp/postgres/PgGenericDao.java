@@ -3,28 +3,25 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.GenericDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Identified;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public abstract class PgGenericDao<T extends Identified> implements GenericDao<T>{
 
-    public abstract String getSelectQuery();
-
-    public abstract String getSelectAllQuery();
-
-    public abstract String getCreateQuery();
-
-    public abstract String getUpdateQuery();
-
-    public abstract String getDeleteQuery();
-
+    private static final Logger LOG = LoggerFactory.getLogger(PgGenericDao.class);
+    protected abstract String getSelectQuery();
+    protected abstract String getSelectAllQuery();
+    protected abstract String getCreateQuery();
+    protected abstract String getUpdateQuery();
+    protected abstract String getDeleteQuery();
     protected abstract List<T> parseResultSet(ResultSet rs) throws PersistentException;
-
     protected abstract void prepareStatementForInsert(PreparedStatement statement, T object) throws PersistentException;
-
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws PersistentException;
 
     @Override
@@ -38,7 +35,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
             if (resultSet.next()) {
                 object.setId(resultSet.getString(1));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return object;
@@ -53,7 +50,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
             statement.setInt(1, Integer.parseInt(key));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
@@ -75,26 +72,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
             if (count != 1) {
                 throw new PersistentException("On update modify more then 1 record: " + count);
             }
-        } catch (Exception e) {
-            throw new PersistentException(e);
-        }
-    }
-
-    @Override
-    public void delete(T object) throws PersistentException {
-        String sql = getDeleteQuery();
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            try {
-                statement.setInt(1, Integer.parseInt(object.getId()));
-            } catch (Exception e) {
-                throw new PersistentException(e);
-            }
-            int count = statement.executeUpdate();
-            if (count != 1) {
-                throw new PersistentException("On delete modify more then 1 record: " + count);
-            }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -113,7 +91,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
             if (count != 1) {
                 throw new PersistentException("On delete modify more then 1 record: " + count);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }

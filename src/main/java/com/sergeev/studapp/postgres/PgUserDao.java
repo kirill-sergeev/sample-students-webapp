@@ -3,10 +3,13 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,33 +19,30 @@ import static java.sql.Types.NULL;
 
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgUserDao.class);
     protected static final String USER_ID = "user_id";
     protected static final String FIRST_NAME = "first_name";
     protected static final String LAST_NAME = "last_name";
     protected static final String USER_TYPE = "type";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM users WHERE user_id= ? ORDER BY first_name, last_name;";
     }
-
     @Override
-    public String getSelectAllQuery() {
+    protected String getSelectAllQuery() {
         return "SELECT * FROM users ORDER BY first_name, last_name;";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO users (first_name, last_name, type, account_id, group_id) VALUES (?, ?, ?, ?, ?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE users SET first_name=?, last_name=?, group_id=? WHERE user_id=?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM users WHERE user_id=?;";
     }
 
@@ -64,7 +64,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
                 }
                 result.add(user);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -82,7 +82,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             } else {
                 statement.setNull(5, NULL);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -98,7 +98,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
                 statement.setNull(3, NULL);
             }
             statement.setInt(4, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -113,7 +113,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             statement.setInt(2, Integer.parseInt(type.getId()));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
@@ -131,7 +131,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return list;
@@ -146,7 +146,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             statement.setInt(1, Integer.parseInt(type.getId()));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return list;
@@ -161,7 +161,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             statement.setString(1, token);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
@@ -183,7 +183,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             statement.setString(2, password);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {

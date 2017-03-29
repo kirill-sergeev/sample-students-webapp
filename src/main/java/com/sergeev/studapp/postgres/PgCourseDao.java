@@ -3,10 +3,13 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.CourseDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,30 +19,27 @@ import static com.sergeev.studapp.postgres.PgUserDao.USER_ID;
 
 public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgCourseDao.class);
     protected static final String COURSE_ID = "course_id";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM courses WHERE course_id= ?;";
     }
-
     @Override
-    public String getSelectAllQuery() {
+    protected String getSelectAllQuery() {
         return "SELECT * FROM courses;";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO courses (discipline_id, group_id, user_id) VALUES (?, ?, ?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE courses SET discipline_id= ?, group_id= ?, user_id= ? WHERE course_id= ?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM courses WHERE course_id= ?;";
     }
 
@@ -58,7 +58,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
                 course.setTeacher(ptd.getById(rs.getString(USER_ID)));
                 result.add(course);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -70,7 +70,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
             statement.setInt(1, Integer.parseInt(object.getDiscipline().getId()));
             statement.setInt(2, Integer.parseInt(object.getGroup().getId()));
             statement.setInt(3, Integer.parseInt(object.getTeacher().getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -82,7 +82,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
             statement.setInt(2, Integer.parseInt(object.getGroup().getId()));
             statement.setInt(3, Integer.parseInt(object.getTeacher().getId()));
             statement.setInt(4, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -96,7 +96,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
             statement.setInt(1, Integer.parseInt(disciplineId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
@@ -114,7 +114,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
             statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
@@ -132,7 +132,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
             statement.setInt(1, Integer.parseInt(userId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
@@ -151,7 +151,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
             statement.setInt(2, Integer.parseInt(disciplineId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {

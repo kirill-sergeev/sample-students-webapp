@@ -3,6 +3,8 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,32 +14,30 @@ import java.util.List;
 
 public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgAccountDao.class);
     protected static final String ACCOUNT_ID = "account_id";
     protected static final String LOGIN = "login";
     protected static final String PASSWORD = "password";
     protected static final String TOKEN = "token";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM accounts WHERE account_id= ?;";
     }
-
-    public String getSelectAllQuery() {
+    @Override
+    protected String getSelectAllQuery() {
         return "SELECT * FROM accounts";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO accounts (login, password) VALUES (?, ?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE accounts SET login= ?, password= ?, token= ? WHERE account_id= ?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM accounts WHERE account_id= ?;";
     }
 
@@ -53,7 +53,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
                 account.setToken(rs.getString(TOKEN));
                 result.add(account);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -76,7 +76,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
             statement.setString(2, object.getPassword());
             statement.setString(3, object.getToken());
             statement.setInt(4, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }

@@ -3,10 +3,13 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.LessonDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,33 +17,30 @@ import static com.sergeev.studapp.postgres.PgCourseDao.COURSE_ID;
 
 public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PgLessonDao.class);
     protected static final String LESSON_ID = "lesson_id";
     protected static final String LESSON_DATE = "lesson_date";
     protected static final String LESSON_ORDER = "lesson_order";
     protected static final String LESSON_TYPE = "lesson_type_id";
 
     @Override
-    public String getSelectQuery() {
+    protected String getSelectQuery() {
         return "SELECT * FROM lessons WHERE lesson_id= ?;";
     }
-
     @Override
-    public String getSelectAllQuery() {
+    protected String getSelectAllQuery() {
         return "SELECT * FROM lessons;";
     }
-
     @Override
-    public String getCreateQuery() {
+    protected String getCreateQuery() {
         return "INSERT INTO lessons (lesson_type_id, course_id, lesson_date, lesson_order) VALUES (?, ?, ?, ?);";
     }
-
     @Override
-    public String getUpdateQuery() {
+    protected String getUpdateQuery() {
         return "UPDATE lessons SET lesson_type_id= ?, course_id= ?, lesson_date= ?, lesson_order= ? WHERE lesson_id= ?;";
     }
-
     @Override
-    public String getDeleteQuery() {
+    protected String getDeleteQuery() {
         return "DELETE FROM lessons WHERE lesson_id= ?;";
     }
 
@@ -58,7 +58,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
                 lesson.setType(Lesson.Type.getById(rs.getString(LESSON_TYPE)));
                 result.add(lesson);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return result;
@@ -71,7 +71,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
             statement.setInt(2, Integer.parseInt(object.getCourse().getId()));
             statement.setDate(3, object.getDate());
             statement.setInt(4, object.getOrder().getNumber());
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -84,7 +84,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
             statement.setDate(3, object.getDate());
             statement.setInt(4, object.getOrder().getNumber());
             statement.setInt(5, Integer.parseInt(object.getId()));
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
@@ -98,7 +98,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
             statement.setInt(1, Integer.parseInt(groupId));
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {

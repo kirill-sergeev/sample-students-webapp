@@ -4,6 +4,8 @@ import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -12,14 +14,15 @@ import java.util.Map;
 
 public class GroupService {
 
-    private static GroupDao groupDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getGroupDao();
+    private static final Logger LOG = LoggerFactory.getLogger(GroupService.class);
+    private static final GroupDao GROUP_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao();
 
     public static Group create(String title) {
         Group group = new Group();
         group.setTitle(title);
 
         try {
-            group = groupDao.persist(group);
+            group = GROUP_DAO.persist(group);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -31,7 +34,7 @@ public class GroupService {
         Group group = null;
 
         try {
-            group = groupDao.getById(id);
+            group = GROUP_DAO.getById(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -43,7 +46,7 @@ public class GroupService {
         List<Group> groups = new ArrayList<>();
 
         try {
-            groups = groupDao.getAll();
+            groups = GROUP_DAO.getAll();
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -57,7 +60,7 @@ public class GroupService {
         group.setTitle(title);
 
         try {
-            groupDao.update(group);
+            GROUP_DAO.update(group);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -67,7 +70,7 @@ public class GroupService {
 
     public static void delete(String id) {
         try {
-            groupDao.delete(id);
+            GROUP_DAO.delete(id);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
