@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class LessonService {
@@ -17,10 +17,17 @@ public class LessonService {
     private static final Logger LOG = LoggerFactory.getLogger(LessonService.class);
     private static final LessonDao LESSON_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao();
 
-    public static Lesson create(String groupId, String disciplineId, String typeId, String order, String date) {
+    private static Lesson lesson;
+    private static List<Lesson> lessons;
+
+    public static Lesson create(String groupId, String disciplineId, String typeId, String order, String date) throws ApplicationException {
+        if (date == null || date.isEmpty() || !checkOrder(order) || !checkType(typeId)){
+            throw new ApplicationException("Bad parameters.");
+        }
+
         Course course = CourseService.readByDisciplineAndGroup(disciplineId, groupId);
 
-        Lesson lesson = new Lesson();
+        lesson = new Lesson();
         lesson.setType(Lesson.Type.getById(typeId));
         lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
         lesson.setDate(Date.valueOf(date));
@@ -29,41 +36,46 @@ public class LessonService {
         try {
             lesson = LESSON_DAO.persist(lesson);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot save lesson.", e);
         }
 
         return lesson;
     }
 
-    public static Lesson read(String id) {
-        Lesson lesson = null;
+    public static Lesson read(String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
 
         try {
             lesson = LESSON_DAO.getById(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Lesson not found.", e);
         }
 
         return lesson;
     }
 
     public static List<Lesson> readAll(String groupId){
-        List<Lesson> lessons = new ArrayList<>();
 
         try {
             lessons = LESSON_DAO.getByGroup(groupId);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            lessons  = Collections.emptyList();
         }
 
         return lessons;
     }
 
-    public static Lesson update(String groupId, String disciplineId, String typeId, String order, String date, String lessonId) {
+    public static Lesson update(String groupId, String disciplineId, String typeId, String order, String date, String id) throws ApplicationException {
+        if (id == null || id.isEmpty() || date == null || date.isEmpty() || !checkOrder(order) || !checkType(typeId)){
+            throw new ApplicationException("Bad parameters.");
+        }
+
         Course course = CourseService.readByDisciplineAndGroup(disciplineId, groupId);
 
-        Lesson lesson = new Lesson();
-        lesson.setId(lessonId);
+        lesson = new Lesson();
+        lesson.setId(id);
         lesson.setType(Lesson.Type.getById(typeId));
         lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
         lesson.setDate(Date.valueOf(date));
@@ -72,18 +84,35 @@ public class LessonService {
         try {
             LESSON_DAO.update(lesson);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot update lesson.", e);
         }
 
         return lesson;
     }
 
-    public static void delete(String id) {
+    public static void delete(String id) throws ApplicationException {
         try {
             LESSON_DAO.delete(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot delete lesson, because lesson not found.", e);
         }
     }
 
+    private static boolean checkType(String typeId){
+        for(Lesson.Type value: Lesson.Type.values()){
+            if (typeId.equals(value.getId())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean checkOrder(String order){
+        for(Lesson.Order value: Lesson.Order.values()){
+            if (order.equals(value.getNumber().toString())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

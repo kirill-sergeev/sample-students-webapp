@@ -2,6 +2,8 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.model.User;
 import com.sergeev.studapp.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -14,6 +16,7 @@ import java.io.IOException;
 @WebFilter(filterName = "LoginFilter", urlPatterns = "/*")
 public class LoginFilter implements Filter {
 
+    private static final Logger LOG = LoggerFactory.getLogger(LoginFilter.class);
     static final String LOGIN_COOKIE = "MY_SESSION_COOKIE";
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {

@@ -10,7 +10,7 @@ import com.sergeev.studapp.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CourseService {
@@ -18,12 +18,15 @@ public class CourseService {
     private static final Logger LOG = LoggerFactory.getLogger(CourseService.class);
     private static final CourseDao COURSE_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao();
 
-    public static Course create(String disciplineId, String groupId, String teacherId) {
+    private static Course course;
+    private static List<Course> courses;
+
+    public static Course create(String disciplineId, String groupId, String teacherId) throws ApplicationException {
         Discipline discipline = DisciplineService.read(disciplineId);
         Group group = GroupService.read(groupId);
         User teacher = UserService.read(teacherId);
 
-        Course course = new Course();
+        course = new Course();
         course.setDiscipline(discipline);
         course.setGroup(group);
         course.setTeacher(teacher);
@@ -31,91 +34,90 @@ public class CourseService {
         try {
             course = COURSE_DAO.persist(course);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot save course.", e);
         }
 
         return course;
     }
 
-    public static Course read(String id) {
-        Course course = null;
+    public static Course read(String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
 
         try {
             course = COURSE_DAO.getById(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Course not found.", e);
         }
 
         return course;
     }
 
     public static List<Course> readAll() {
-        List<Course> courses = new ArrayList<>();
 
         try {
             courses = COURSE_DAO.getAll();
         } catch (PersistentException e) {
-            e.printStackTrace();
+            courses = Collections.emptyList();
         }
 
         return courses;
     }
 
-    public static List<Course> readByGroup(String groupId) {
-        List<Course> courses = new ArrayList<>();
+    public static List<Course> readByGroup(String groupId) throws ApplicationException {
+        if (groupId == null || groupId.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
 
         try {
             courses = COURSE_DAO.getByGroup(groupId);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            courses = Collections.emptyList();
         }
 
         return courses;
     }
 
-    public static List<Course> readByTeacher(String teacherId) {
-        List<Course> courses = new ArrayList<>();
+    public static List<Course> readByTeacher(String teacherId) throws ApplicationException {
+        if (teacherId == null || teacherId.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
 
         try {
             courses = COURSE_DAO.getByTeacher(teacherId);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            courses = Collections.emptyList();
         }
 
         return courses;
     }
 
-    public static List<Course> readByDiscipline(String disciplineId) {
-        List<Course> courses = new ArrayList<>();
+    public static List<Course> readByDiscipline(String disciplineId) throws ApplicationException {
+        if (disciplineId == null || disciplineId.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
 
         try {
             courses = COURSE_DAO.getByDiscipline(disciplineId);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            courses = Collections.emptyList();
         }
 
         return courses;
     }
 
-    public static Course readByDisciplineAndGroup(String disciplineId, String groupId) {
-        Course course = null;
-
-        try {
-            course = COURSE_DAO.getByDisciplineAndGroup(disciplineId, groupId);
-        } catch (PersistentException e) {
-            e.printStackTrace();
+    public static Course update(String disciplineId, String groupId, String teacherId, String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
         }
 
-        return course;
-    }
-
-    public static Course update(String disciplineId, String groupId, String teacherId, String courseId) {
         Discipline discipline = DisciplineService.read(disciplineId);
         Group group = GroupService.read(groupId);
         User teacher = UserService.read(teacherId);
 
-        Course course = new Course();
-        course.setId(courseId);
+        course = new Course();
+        course.setId(id);
         course.setDiscipline(discipline);
         course.setGroup(group);
         course.setTeacher(teacher);
@@ -123,18 +125,35 @@ public class CourseService {
         try {
             COURSE_DAO.update(course);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot update course.", e);
         }
 
         return course;
     }
 
-    public static void delete(String courseId) {
+    public static void delete(String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
+
         try {
-            COURSE_DAO.delete(courseId);
+            COURSE_DAO.delete(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot delete course, because course not found.", e);
         }
     }
 
+    protected static Course readByDisciplineAndGroup(String disciplineId, String groupId) throws ApplicationException {
+        if (disciplineId == null || groupId == null || disciplineId.isEmpty() || groupId.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
+
+        try {
+            course = COURSE_DAO.getByDisciplineAndGroup(disciplineId, groupId);
+        } catch (PersistentException e) {
+            throw new ApplicationException("Course not found.", e);
+        }
+
+        return course;
+    }
 }

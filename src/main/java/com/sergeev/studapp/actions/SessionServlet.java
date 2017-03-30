@@ -3,6 +3,8 @@ package com.sergeev.studapp.actions;
 import com.sergeev.studapp.model.User;
 import com.sergeev.studapp.service.AccountService;
 import com.sergeev.studapp.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,9 @@ import static com.sergeev.studapp.actions.LoginFilter.LOGIN_COOKIE;
 
 @WebServlet(name = "SessionServlet", urlPatterns = {"/login", "/logout"})
 public class SessionServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SessionServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         HttpSession session = request.getSession(true);

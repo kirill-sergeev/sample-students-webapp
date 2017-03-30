@@ -8,7 +8,7 @@ import com.sergeev.studapp.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -17,49 +17,49 @@ public class AccountService {
     private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
     private static final AccountDao ACCOUNT_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getAccountDao();
 
-    public static Account create(User user) {
+    private static Account account;
+    private static List<Account> accounts;
+
+    public static Account create(User user) throws ApplicationException {
         String password = generatePassword();
         String login = generateLogin(user.getFirstName(), user.getLastName());
-        Account account = new Account();
+
+        account = new Account();
         account.setLogin(login);
         account.setPassword(password);
 
         try {
             account = ACCOUNT_DAO.persist(account);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot create account.", e);
         }
-
         return account;
     }
 
-    public static Account read(String id) {
-        Account account = null;
-
+    public static Account read(String id) throws ApplicationException {
         try {
             account = ACCOUNT_DAO.getById(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Account not found.", e);
         }
 
         return account;
     }
 
     public static List<Account> readAll() {
-        List<Account> accounts = new ArrayList<>();
+        List<Account> accounts;
 
         try {
             accounts = ACCOUNT_DAO.getAll();
         } catch (PersistentException e) {
-            e.printStackTrace();
+            accounts = Collections.emptyList();
         }
 
         return accounts;
     }
 
-    public static Account update(User user) {
+    public static Account update(User user) throws ApplicationException {
         String accountId = UserService.read(user.getId()).getAccount().getId();
-        Account account = new Account();
         account.setId(accountId);
         account.setLogin(generateLogin(user.getFirstName(), user.getLastName()));
         account.setPassword(AccountService.read(accountId).getPassword());
@@ -68,29 +68,27 @@ public class AccountService {
         try {
             ACCOUNT_DAO.update(account);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot update account.", e);
         }
 
         return account;
     }
 
-    public static void delete(String id) {
+    public static void delete(String id) throws ApplicationException {
         try {
             ACCOUNT_DAO.delete(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot delete account, because account not found.", e);
         }
     }
 
     private static String generateLogin(String firstName, String lastName){
-        String login = firstName.toLowerCase() + "_" + lastName.toLowerCase();
-        return login;
+        return (firstName + "_" + lastName).toLowerCase();
     }
 
     private static String generatePassword(){
         Random random = new Random();
-        String password = String.valueOf(random.nextInt(899999) + 100000);
-        return password;
+        return String.valueOf(random.nextInt(899999) + 100000);
     }
 }
 

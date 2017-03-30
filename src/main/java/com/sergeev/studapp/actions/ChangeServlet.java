@@ -2,6 +2,8 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.model.*;
 import com.sergeev.studapp.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +16,18 @@ import java.util.List;
 
 @WebServlet(name = "ChangeServlet", urlPatterns = {"/change-course", "/change-discipline", "/change-group", "/change-lesson", "/change-student", "/change-teacher"})
 public class ChangeServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ChangeServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String id = request.getParameter("id");
+
+        if (id == null || id.isEmpty()){
+            LOG.info("Bad path {}.", path);
+            response.sendRedirect("/");
+            return;
+        }
 
         Course course;
         Group group;

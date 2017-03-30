@@ -7,72 +7,85 @@ import com.sergeev.studapp.model.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class GroupService {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupService.class);
     private static final GroupDao GROUP_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao();
 
-    public static Group create(String title) {
-        Group group = new Group();
+    private static Group group;
+    private static List<Group> groups;
+
+    public static Group create(String title) throws ApplicationException {
+        if (!checkTitle(title)){
+            throw new ApplicationException("Bad parameters.");
+        }
+
+        group = new Group();
         group.setTitle(title);
 
         try {
             group = GROUP_DAO.persist(group);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot save group.", e);
         }
 
         return group;
     }
 
-    public static Group read(String id) {
-        Group group = null;
+    public static Group read(String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
 
         try {
             group = GROUP_DAO.getById(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Group not found.", e);
         }
 
         return group;
     }
 
     public static List<Group> readAll() {
-        List<Group> groups = new ArrayList<>();
 
         try {
             groups = GROUP_DAO.getAll();
         } catch (PersistentException e) {
-            e.printStackTrace();
+            groups  = Collections.emptyList();
         }
 
         return groups;
     }
 
-    public static Group update(String title, String id) {
-        Group group = new Group();
+    public static Group update(String title, String id) throws ApplicationException {
+        if (id == null || id.isEmpty() || !checkTitle(title)) {
+            throw new ApplicationException("Bad parameters.");
+        }
+
+        group = new Group();
         group.setId(id);
         group.setTitle(title);
 
         try {
             GROUP_DAO.update(group);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot update group.", e);
         }
 
         return group;
     }
 
-    public static void delete(String id) {
+    public static void delete(String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
+
         try {
             GROUP_DAO.delete(id);
         } catch (PersistentException e) {
-            e.printStackTrace();
+            throw new ApplicationException("Cannot delete group, because group not found.", e);
         }
     }
 
@@ -89,4 +102,11 @@ public class GroupService {
         return groupsStudents;
     }
 
+    private static boolean checkTitle(String title) {
+        if (title == null || title.isEmpty()) {
+            return false;
+        }
+        String expression = "(?u)^\\p{Lu}\\w+$";
+        return title.matches(expression);
+    }
 }

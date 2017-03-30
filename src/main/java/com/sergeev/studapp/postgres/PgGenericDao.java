@@ -104,13 +104,10 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet rs = statement.executeQuery()) {
             list = parseResultSet(rs);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new PersistentException(e);
         }
         return list;
-    }
-
-    public PgGenericDao() {
     }
 
 //    static {

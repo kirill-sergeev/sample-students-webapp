@@ -115,6 +115,9 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 

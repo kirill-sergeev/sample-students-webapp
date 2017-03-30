@@ -65,7 +65,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new PersistentException(e);
         }
     }
 

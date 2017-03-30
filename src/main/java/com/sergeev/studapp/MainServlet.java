@@ -1,4 +1,7 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +12,9 @@ import java.io.IOException;
 
 @WebServlet(name = "MainServlet", urlPatterns = "/")
 public class MainServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(MainServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }

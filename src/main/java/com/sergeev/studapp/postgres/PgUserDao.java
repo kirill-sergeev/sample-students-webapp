@@ -134,6 +134,9 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 
@@ -148,6 +151,9 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             list = parseResultSet(rs);
         } catch (SQLException e) {
             throw new PersistentException(e);
+        }
+        if (list == null || list.size() == 0) {
+            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -194,4 +200,5 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         }
         return list.iterator().next();
     }
+
 }

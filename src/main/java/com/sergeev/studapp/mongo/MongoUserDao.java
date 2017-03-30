@@ -65,8 +65,8 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             DBRef groupRef = (DBRef) doc.get(GROUP);
             user.setGroup(mgd.getById(String.valueOf(groupRef.getId())));
         }
-        DBRef accountRef = (DBRef) doc.get(ACCOUNT);
         MongoAccountDao mad = new MongoAccountDao();
+        DBRef accountRef = (DBRef) doc.get(ACCOUNT);
         user.setAccount(mad.getById(String.valueOf(accountRef.getId())));
         return user;
     }

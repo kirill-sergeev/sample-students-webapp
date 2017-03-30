@@ -1,6 +1,8 @@
 package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +13,8 @@ import java.io.IOException;
 
 @WebServlet(name = "CreateServlet", urlPatterns = {"/create-course", "/create-discipline", "/create-group", "/create-lesson", "/create-mark", "/create-student", "/create-teacher"})
 public class CreateServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(CreateServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
@@ -31,19 +35,31 @@ public class CreateServlet extends HttpServlet {
                 disciplineId = request.getParameter("discipline");
                 groupId = request.getParameter("group");
                 teacherId = request.getParameter("teacher");
-
+                if (disciplineId.isEmpty() || groupId.isEmpty() || teacherId.isEmpty()){
+                    LOG.info("Course cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-course");
+                    return;
+                }
                 CourseService.create(disciplineId, groupId, teacherId);
                 response.sendRedirect("group?id=" + groupId);
                 break;
             case "/create-discipline":
                 title = request.getParameter("title");
-
+                if (title.isEmpty()){
+                    LOG.info("Discipline cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-discipline");
+                    return;
+                }
                 DisciplineService.create(title);
                 response.sendRedirect("disciplines");
                 break;
             case "/create-group":
                 title = request.getParameter("title");
-
+                if (title.isEmpty()){
+                    LOG.info("Group cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-group");
+                    return;
+                }
                 GroupService.create(title);
                 response.sendRedirect("groups");
                 break;
@@ -53,7 +69,11 @@ public class CreateServlet extends HttpServlet {
                 typeId = request.getParameter("type");
                 order = request.getParameter("number");
                 date = request.getParameter("date");
-
+                if (groupId.isEmpty() || disciplineId.isEmpty() || typeId.isEmpty() || order.isEmpty() || date.isEmpty()){
+                    LOG.info("Lesson cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-lesson");
+                    return;
+                }
                 LessonService.create(groupId, disciplineId, typeId, order, date);
                 response.sendRedirect("lessons?group=" + groupId);
                 break;
@@ -61,7 +81,11 @@ public class CreateServlet extends HttpServlet {
                 lessonId = request.getParameter("lesson");
                 studentId = request.getParameter("student");
                 String value = (request.getParameter("value"));
-
+                if (lessonId.isEmpty() || studentId.isEmpty() || value.isEmpty()){
+                    LOG.info("Mark cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-mark");
+                    return;
+                }
                 MarkService.create(lessonId, studentId, value);
                 response.sendRedirect("lesson?id=" + lessonId);
                 break;
@@ -69,14 +93,22 @@ public class CreateServlet extends HttpServlet {
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
                 groupId = request.getParameter("group");
-
+                if (firstName.isEmpty() || lastName.isEmpty() || groupId.isEmpty()){
+                    LOG.info("Student cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-student");
+                    return;
+                }
                 UserService.createStudent(firstName, lastName, groupId);
                 response.sendRedirect("students");
                 break;
             case "/create-teacher":
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
-
+                if (firstName.isEmpty() || lastName.isEmpty()){
+                    LOG.info("Teacher cannot be created, because request with empty fields.");
+                    response.sendRedirect("/add-teacher");
+                    return;
+                }
                 UserService.createTeacher(firstName, lastName);
                 response.sendRedirect("students");
                 break;

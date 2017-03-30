@@ -2,6 +2,8 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.model.*;
 import com.sergeev.studapp.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,9 +19,18 @@ import java.util.Map;
 
 @WebServlet(name = "ItemServlet", urlPatterns = {"/discipline", "/group", "/lesson", "/mark", "/student", "/teacher"})
 public class ItemServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ItemServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String id = request.getParameter("id");
+
+        if (id == null || id.isEmpty()){
+            LOG.info("Bad path {}.", path);
+            response.sendRedirect("/");
+            return;
+        }
 
         Date dateNow;
         Discipline discipline;

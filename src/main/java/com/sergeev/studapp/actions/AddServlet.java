@@ -2,6 +2,8 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.model.*;
 import com.sergeev.studapp.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +16,9 @@ import java.util.List;
 
 @WebServlet(name = "AddServlet", urlPatterns = {"/add-course", "/add-discipline", "/add-group", "/add-lesson", "/add-mark", "/add-student", "/add-teacher"})
 public class AddServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AddServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
 

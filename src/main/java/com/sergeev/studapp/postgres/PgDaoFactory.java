@@ -73,32 +73,26 @@ public class PgDaoFactory extends DaoFactory {
     public AccountDao getAccountDao() {
         return new PgAccountDao();
     }
-
     @Override
     public CourseDao getCourseDao() {
         return new PgCourseDao();
     }
-
     @Override
     public DisciplineDao getDisciplineDao() {
         return new PgDisciplineDao();
     }
-
     @Override
     public GroupDao getGroupDao() {
         return new PgGroupDao();
     }
-
     @Override
     public LessonDao getLessonDao() {
         return new PgLessonDao();
     }
-
     @Override
     public MarkDao getMarkDao() {
         return new PgMarkDao();
     }
-
     @Override
     public UserDao getUserDao() {
         return new PgUserDao();

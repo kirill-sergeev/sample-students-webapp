@@ -2,6 +2,8 @@ package com.sergeev.studapp.actions;
 
 import com.sergeev.studapp.model.User;
 import com.sergeev.studapp.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,12 +15,17 @@ import java.util.List;
 
 @WebServlet(name = "SearchServlet", urlPatterns = {"/search-student", "/search-teacher"})
 public class SearchServlet extends HttpServlet {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SearchServlet.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String name = request.getParameter("name").toLowerCase();
 
-        if (name.length() < 2) {
-            response.sendRedirect("");
+        if (name.length() < 2){
+            LOG.info("Bad path parameter {} in search field {}.", name, path);
+            response.sendRedirect("/");
+            return;
         }
 
         switch (path) {

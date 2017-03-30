@@ -8,9 +8,10 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-4">
-            <form action="create-group" method="POST">
+            <form action="${pageContext.request.contextPath}/group" method="POST">
                 <div class="form-group">
                     <input type="text" name="title" class="form-control" placeholder="Title...">
+                    <input type="hidden" name="action" value="create">
                 </div>
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>

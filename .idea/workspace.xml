@@ -2,33 +2,33 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="493ee518-63f3-478d-8ad0-66231030171e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoAccountDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoCourseDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoDBExample.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoDaoFactory.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoDisciplineDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoGenericDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoGroupDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoLessonDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoMarkDao.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoUserDao.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDaoOLD.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/GroupServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/GroupServlet1.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/MainServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/MainServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javaee_javaee_api_7_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javaee_javaee_api_7_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_3_1_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_3_1_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log.2017-03-29.0.txt" afterPath="$PROJECT_DIR$/log.2017-03-29.0.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/AddServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/AddServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ChangeServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ChangeServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/CreateServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/CreateServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ItemServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ItemServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ListServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ListServlet.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/LoginFilter.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/LoginFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoAccountDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoAccountDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDisciplineDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDisciplineDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/RemoveServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/RemoveServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SearchServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SearchServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SessionServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SessionServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/UpdateServlet.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/UpdateServlet.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/CourseDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/CourseDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/MarkDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/MarkDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoUserDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoUserDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGenericDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGenericDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgLessonDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgLessonDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgMarkDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgMarkDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgUserDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgUserDao.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/AccountService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/AccountService.java" />
@@ -38,7 +38,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/LessonService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/LessonService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/MarkService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/MarkService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/UserService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/add-group.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/add-group.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/groups.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/groups.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/students-webapp.iml" afterPath="$PROJECT_DIR$/students-webapp.iml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -107,125 +109,52 @@
         <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$GroupNode" />
       </PATH_ELEMENT>
     </PATH>
+    <PATH>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="postgres_test@localhost" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="postgres_test" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="public" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" />
+        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$GroupNode" />
+      </PATH_ELEMENT>
+      <PATH_ELEMENT>
+        <option name="myItemId" value="courses" />
+        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
+      </PATH_ELEMENT>
+    </PATH>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PgDaoFactory.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java">
+      <file leaf-file-name="GroupServlet.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/GroupServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-144">
-              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-              <folding>
-                <element signature="e#2277#2278#0" expanded="true" />
-                <element signature="e#2311#2312#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgDisciplineDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="71" column="31" lean-forward="false" selection-start-line="71" selection-start-column="31" selection-end-line="71" selection-end-column="31" />
+            <state relative-caret-position="272">
+              <caret line="38" column="23" lean-forward="false" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PgGenericDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGenericDao.java">
+      <file leaf-file-name="add-group.jsp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/add-group.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="112" column="31" lean-forward="false" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
+            <state relative-caret-position="160">
+              <caret line="10" column="26" lean-forward="false" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="60" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgGroupDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="71" column="31" lean-forward="false" selection-start-line="71" selection-start-column="31" selection-end-line="71" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgLessonDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgLessonDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="100" column="31" lean-forward="false" selection-start-line="100" selection-start-column="31" selection-end-line="100" selection-end-column="31" />
-              <folding>
-                <element signature="method#getCreateQuery#0;class#PgLessonDao#0" expanded="false" />
-                <element signature="method#getUpdateQuery#0;class#PgLessonDao#0" expanded="false" />
-                <marker date="1490773931297" expanded="true" signature="3638:3779" ph="SELECT * FRO... lessons" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgMarkDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgMarkDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="130" column="31" lean-forward="false" selection-start-line="130" selection-start-column="31" selection-end-line="130" selection-end-column="31" />
-              <folding>
-                <marker date="1490773931241" expanded="true" signature="3278:3320" ph="SELECT stude... " />
-                <marker date="1490773931241" expanded="true" signature="3975:4013" ph="SELECT * FRO... marks" />
-                <marker date="1490773931241" expanded="true" signature="4612:4759" ph="SELECT * FRO... marks" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgUserDao.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgUserDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-326">
-              <caret line="66" column="31" lean-forward="false" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
-              <folding>
-                <element signature="method#getCreateQuery#0;class#PgUserDao#0" expanded="false" />
-                <element signature="method#getUpdateQuery#0;class#PgUserDao#0" expanded="false" />
-                <marker date="1490773931465" expanded="true" signature="4170:4250" ph="SELECT * FRO... users" />
-                <marker date="1490773931465" expanded="true" signature="4991:5040" ph="SELECT * FRO... users" />
-                <marker date="1490773931465" expanded="true" signature="5596:5660" ph="SELECT * FRO... users" />
-                <marker date="1490773931465" expanded="true" signature="6217:6302" ph="SELECT * FRO... users" />
-                <marker date="1490773931465" expanded="true" signature="7111:7230" ph="SELECT * FRO... accounts" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgAccountDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#getUpdateQuery#0;class#PgAccountDao#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PgCourseDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="153" column="31" lean-forward="false" selection-start-line="153" selection-start-column="31" selection-end-line="153" selection-end-column="31" />
-              <folding>
-                <element signature="method#getCreateQuery#0;class#PgCourseDao#0" expanded="false" />
-                <element signature="method#getUpdateQuery#0;class#PgCourseDao#0" expanded="false" />
-                <marker date="1490773931505" expanded="true" signature="3516:3560" ph="SELECT * FRO... courses" />
-                <marker date="1490773931505" expanded="true" signature="4251:4290" ph="SELECT * FRO... courses" />
-                <marker date="1490773931505" expanded="true" signature="4977:5015" ph="SELECT * FRO... courses" />
-                <marker date="1490773931505" expanded="true" signature="5728:5788" ph="SELECT * FRO... courses" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -291,57 +220,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ItemServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/UpdateServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ListServlet.java" />
-        <option value="$PROJECT_DIR$/db.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/CharsetFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/partial/header.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/login.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/UserDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/AccountDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SessionServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDBExample.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD/mongo/MongoMarkDao.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoMarkDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Group.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Account.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Course.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Discipline.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Mark.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Lesson.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDaoOLD.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/LoginFilter.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoAccountDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDisciplineDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/logback.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDaoFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/GenericDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/MarkDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/UserDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/CourseDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/LoginFilter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SessionServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/MainServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/CreateServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SearchServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/UpdateServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/RemoveServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ChangeServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ListServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ItemServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoUserDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgLessonDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgMarkDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgUserDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/ServiceException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/AddServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/AccountService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/CourseService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/DisciplineService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/GroupService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/LessonService.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/MarkService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/GroupService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/logback.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDaoFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGenericDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgLessonDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgMarkDao.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgUserDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/GroupServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/MainServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/groups.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/add-group.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/GroupServlet.java" />
       </list>
     </option>
   </component>
@@ -403,6 +332,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -564,7 +495,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="postgres" />
+              <option name="myItemId" value="service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -594,44 +525,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="mongo" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="students-webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="students-webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="studapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
+              <option name="myItemId" value="actions" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -647,17 +546,16 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/webapp/index.jsp" />
     <property name="add_unversioned_files" value="true&#10;/home/kirill/Dropbox/Workspace/Java/students-webapp/target/studapp/index.jsp" />
     <property name="SearchEverywhereHistoryKey" value="PgDaoFactory.createConnection();&#9;null&#9;null" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
     <property name="SONARLINT_ANALYSIS_RESULTS_SCOPE" value="VCS changed files" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources" />
-      <recent name="$PROJECT_DIR$/src/main/webapp/partial" />
-      <recent name="$PROJECT_DIR$/src/main/webapp" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.sergeev.studapp.postgres" />
+      <recent name="com.sergeev.studapp.model" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongoOLD" />
@@ -666,11 +564,13 @@
       <recent name="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.sergeev.studapp.service" />
       <recent name="com.sergeev.studapp.mongo" />
     </key>
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="com.sergeev.studapp.postgres" />
-      <recent name="com.sergeev.studapp.model" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+      <recent name="$PROJECT_DIR$/src/main/webapp/partial" />
+      <recent name="$PROJECT_DIR$/src/main/webapp" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1093,25 +993,29 @@
       <workItem from="1490706907366" duration="1407000" />
       <workItem from="1490708478621" duration="292000" />
       <workItem from="1490708802818" duration="19754000" />
-      <workItem from="1490762431872" duration="11527000" />
+      <workItem from="1490762431872" duration="19712000" />
+      <workItem from="1490792275089" duration="3410000" />
+      <workItem from="1490850806230" duration="9232000" />
+      <workItem from="1490875846438" duration="8015000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="342380000" />
+    <option name="totallyTimeSpent" value="371222000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="2560" height="1050" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5031822" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27982646" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298893" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.57374394" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.5735879" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.49602228" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1185362" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13245824" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24980111" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975337" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1120,12 +1024,12 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3383948" sideWeight="0.4984089" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29284164" sideWeight="0.4984089" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.49681783" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24403471" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14041369" sideWeight="0.5675287" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14041369" sideWeight="0.56290674" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975337" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15354018" sideWeight="0.4318508" order="5" side_tool="true" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14041369" sideWeight="0.4370933" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="JRebel" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1155,427 +1059,114 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Course.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Discipline.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Group.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Lesson.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="106" column="46" lean-forward="false" selection-start-line="106" selection-start-column="46" selection-end-line="106" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Mark.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDaoOLD.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDaoFactory.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
-          <caret line="35" column="66" lean-forward="true" selection-start-line="35" selection-start-column="66" selection-end-line="35" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32">
-          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DisciplineDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="4" column="17" lean-forward="false" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="16">
-          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2.jar!/com/mongodb/client/MongoCollection.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="71" column="28" lean-forward="false" selection-start-line="71" selection-start-column="28" selection-end-line="71" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2-sources.jar!/com/mongodb/QueryBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="878">
-          <caret line="419" column="24" lean-forward="false" selection-start-line="419" selection-start-column="24" selection-end-line="419" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/UserDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="12" column="65" lean-forward="false" selection-start-line="12" selection-start-column="65" selection-end-line="12" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoMarkDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SessionServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-256">
-          <caret line="15" column="13" lean-forward="false" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2-sources.jar!/com/mongodb/DBRef.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="43" column="11" lean-forward="false" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/CharsetFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2-sources.jar!/com/mongodb/WriteResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1247">
-          <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-          <folding>
-            <element signature="e#1256#1257#0" expanded="false" />
-            <element signature="e#1295#1296#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-core/3.4.2/mongodb-driver-core-3.4.2.jar!/com/mongodb/client/model/InsertOneOptions.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="64">
-          <caret line="7" column="19" lean-forward="false" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-core/3.4.2/mongodb-driver-core-3.4.2-sources.jar!/com/mongodb/client/model/InsertOneOptions.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="27" column="20" lean-forward="false" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2-sources.jar!/com/mongodb/client/MongoCollection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="321" column="47" lean-forward="false" selection-start-line="321" selection-start-column="47" selection-end-line="321" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2-sources.jar!/com/mongodb/Mongo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="337" column="16" lean-forward="false" selection-start-line="337" selection-start-column="16" selection-end-line="337" selection-end-column="16" />
-          <folding>
-            <element signature="e#14961#14962#0" expanded="false" />
-            <element signature="e#15009#15010#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver/3.4.2/mongodb-driver-3.4.2-sources.jar!/com/mongodb/MongoClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="401" column="25" lean-forward="false" selection-start-line="401" selection-start-column="25" selection-end-line="401" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/mongodb-driver-core/3.4.2/mongodb-driver-core-3.4.2-sources.jar!/com/mongodb/ServerAddress.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-128">
-          <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/mongodb/bson/3.4.2/bson-3.4.2-sources.jar!/org/bson/types/ObjectId.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="238" column="11" lean-forward="false" selection-start-line="238" selection-start-column="11" selection-end-line="238" selection-end-column="11" />
-          <folding>
-            <element signature="e#8553#8554#0" expanded="false" />
-            <element signature="e#8600#8601#0" expanded="false" />
-          </folding>
+          <caret line="34" column="9" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoAccountDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="832">
+        <state relative-caret-position="880">
           <caret line="68" column="45" lean-forward="true" selection-start-line="68" selection-start-column="45" selection-end-line="68" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDisciplineDao.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/CourseDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="24" column="80" lean-forward="false" selection-start-line="24" selection-start-column="80" selection-end-line="24" selection-end-column="80" />
-          <folding />
+        <state relative-caret-position="80">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDaoOLD.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="24" column="75" lean-forward="false" selection-start-line="24" selection-start-column="75" selection-end-line="24" selection-end-column="75" />
-          <folding />
+        <state relative-caret-position="384">
+          <caret line="30" column="8" lean-forward="false" selection-start-line="30" selection-start-column="8" selection-end-line="34" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="431">
-          <caret line="31" column="31" lean-forward="true" selection-start-line="31" selection-start-column="31" selection-end-line="31" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+    <entry file="dbDummy://dbtable:/e88d5ce8/40d33d41-b531-475c-ab1c-2bc6d6130f8a/postgres_test.public.lessons">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/MarkService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/LessonDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="64">
+          <caret line="6" column="17" lean-forward="false" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/LessonService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/Lesson.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="17" column="45" lean-forward="false" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding />
+        <state relative-caret-position="80">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/GroupService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoMarkDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="17" column="90" lean-forward="false" selection-start-line="17" selection-start-column="90" selection-end-line="17" selection-end-column="90" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/DisciplineService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="24" column="32" lean-forward="true" selection-start-line="24" selection-start-column="32" selection-end-line="24" selection-end-column="32" />
-          <folding />
+        <state relative-caret-position="656">
+          <caret line="50" column="46" lean-forward="false" selection-start-line="50" selection-start-column="46" selection-end-line="50" selection-end-column="46" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/CourseService.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="18" column="45" lean-forward="false" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/AccountService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="16" column="4" lean-forward="false" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="84" />
-          <folding>
-            <marker date="1490770466217" expanded="true" signature="1959:2204" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="31" column="37" lean-forward="true" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
-          <folding />
+        <state relative-caret-position="560">
+          <caret line="45" column="61" lean-forward="false" selection-start-line="45" selection-start-column="61" selection-end-line="45" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoUserDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="48" column="25" lean-forward="false" selection-start-line="48" selection-start-column="25" selection-end-line="48" selection-end-column="25" />
-          <folding />
+        <state relative-caret-position="832">
+          <caret line="68" column="52" lean-forward="false" selection-start-line="68" selection-start-column="52" selection-end-line="68" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/logback.xml">
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/lang/IllegalArgumentException.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="23" column="22" lean-forward="false" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/UserService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="64" column="0" lean-forward="false" selection-start-line="64" selection-start-column="0" selection-end-line="64" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <marker date="1490770257561" expanded="true" signature="5398:5427" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/LoginFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDaoFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
-          <caret line="34" column="9" lean-forward="false" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
-          <folding>
-            <element signature="e#1992#1993#0" expanded="true" />
-            <element signature="e#2026#2027#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="464">
-          <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="56" column="42" lean-forward="false" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#getUpdateQuery#0;class#PgAccountDao#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="153" column="31" lean-forward="false" selection-start-line="153" selection-start-column="31" selection-end-line="153" selection-end-column="31" />
-          <folding>
-            <element signature="method#getCreateQuery#0;class#PgCourseDao#0" expanded="false" />
-            <element signature="method#getUpdateQuery#0;class#PgCourseDao#0" expanded="false" />
-            <marker date="1490773931505" expanded="true" signature="3516:3560" ph="SELECT * FRO... courses" />
-            <marker date="1490773931505" expanded="true" signature="4251:4290" ph="SELECT * FRO... courses" />
-            <marker date="1490773931505" expanded="true" signature="4977:5015" ph="SELECT * FRO... courses" />
-            <marker date="1490773931505" expanded="true" signature="5728:5788" ph="SELECT * FRO... courses" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-144">
-          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding>
-            <element signature="e#2277#2278#0" expanded="true" />
-            <element signature="e#2311#2312#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="71" column="31" lean-forward="false" selection-start-line="71" selection-start-column="31" selection-end-line="71" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGenericDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="112" column="31" lean-forward="false" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="71" column="31" lean-forward="false" selection-start-line="71" selection-start-column="31" selection-end-line="71" selection-end-column="31" />
-          <folding />
+        <state relative-caret-position="64">
+          <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgLessonDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="100" column="31" lean-forward="false" selection-start-line="100" selection-start-column="31" selection-end-line="100" selection-end-column="31" />
-          <folding>
-            <element signature="method#getCreateQuery#0;class#PgLessonDao#0" expanded="false" />
-            <element signature="method#getUpdateQuery#0;class#PgLessonDao#0" expanded="false" />
-            <marker date="1490773931297" expanded="true" signature="3638:3779" ph="SELECT * FRO... lessons" />
-          </folding>
+        <state relative-caret-position="663">
+          <caret line="102" column="9" lean-forward="false" selection-start-line="102" selection-start-column="9" selection-end-line="102" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgMarkDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="130" column="31" lean-forward="false" selection-start-line="130" selection-start-column="31" selection-end-line="130" selection-end-column="31" />
-          <folding>
-            <marker date="1490773931241" expanded="true" signature="3278:3320" ph="SELECT stude... " />
-            <marker date="1490773931241" expanded="true" signature="3975:4013" ph="SELECT * FRO... marks" />
-            <marker date="1490773931241" expanded="true" signature="4612:4759" ph="SELECT * FRO... marks" />
-          </folding>
+        <state relative-caret-position="1117">
+          <caret line="101" column="9" lean-forward="false" selection-start-line="101" selection-start-column="9" selection-end-line="101" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/model/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-352">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1587,19 +1178,302 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ChangeServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-393">
+          <caret line="25" column="38" lean-forward="false" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/UpdateServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-809">
+          <caret line="19" column="86" lean-forward="false" selection-start-line="19" selection-start-column="62" selection-end-line="19" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SessionServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="80">
+          <caret line="17" column="49" lean-forward="true" selection-start-line="17" selection-start-column="49" selection-end-line="17" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/SearchServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="24" column="29" lean-forward="false" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/jre/lib/rt.jar!/java/sql/Date.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/CourseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="20" selection-end-column="4" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/DisciplineService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="17" column="4" lean-forward="false" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/UserService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3408">
+          <caret line="213" column="0" lean-forward="true" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1490879200284" expanded="true" signature="6747:6776" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/LessonService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-793">
+          <caret line="19" column="3" lean-forward="true" selection-start-line="19" selection-start-column="3" selection-end-line="20" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/MarkService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1536">
+          <caret line="96" column="22" lean-forward="false" selection-start-line="96" selection-start-column="22" selection-end-line="96" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgAccountDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="67" column="45" lean-forward="true" selection-start-line="67" selection-start-column="45" selection-end-line="67" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgCourseDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="142" column="42" lean-forward="false" selection-start-line="142" selection-start-column="42" selection-end-line="142" selection-end-column="42" />
+          <folding>
+            <element signature="method#getCreateQuery#0;class#PgCourseDao#0" expanded="false" />
+            <element signature="method#getUpdateQuery#0;class#PgCourseDao#0" expanded="false" />
+            <marker date="1490853993511" expanded="true" signature="4507:4551" ph="SELECT * FRO... courses" />
+            <marker date="1490853993511" expanded="true" signature="4625:4664" ph="SELECT * FRO... courses" />
+            <marker date="1490853993511" expanded="true" signature="4740:4778" ph="SELECT * FRO... courses" />
+            <marker date="1490853993511" expanded="true" signature="4863:4923" ph="SELECT * FRO... courses" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGroupDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="64">
+          <caret line="17" column="10" lean-forward="true" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgGenericDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="736">
+          <caret line="110" column="5" lean-forward="false" selection-start-line="110" selection-start-column="5" selection-end-line="110" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDaoFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1104">
+          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgUserDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-326">
-          <caret line="66" column="31" lean-forward="false" selection-start-line="66" selection-start-column="31" selection-end-line="66" selection-end-column="31" />
+        <state relative-caret-position="2096">
+          <caret line="156" column="9" lean-forward="false" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
           <folding>
             <element signature="method#getCreateQuery#0;class#PgUserDao#0" expanded="false" />
             <element signature="method#getUpdateQuery#0;class#PgUserDao#0" expanded="false" />
-            <marker date="1490773931465" expanded="true" signature="4170:4250" ph="SELECT * FRO... users" />
-            <marker date="1490773931465" expanded="true" signature="4991:5040" ph="SELECT * FRO... users" />
-            <marker date="1490773931465" expanded="true" signature="5596:5660" ph="SELECT * FRO... users" />
-            <marker date="1490773931465" expanded="true" signature="6217:6302" ph="SELECT * FRO... users" />
-            <marker date="1490773931465" expanded="true" signature="7111:7230" ph="SELECT * FRO... accounts" />
+            <marker date="1490854467411" expanded="true" signature="4170:4250" ph="SELECT * FRO... users" />
+            <marker date="1490854467411" expanded="true" signature="4991:5040" ph="SELECT * FRO... users" />
+            <marker date="1490854467411" expanded="true" signature="5718:5782" ph="SELECT * FRO... users" />
+            <marker date="1490854467411" expanded="true" signature="6461:6546" ph="SELECT * FRO... users" />
+            <marker date="1490854467411" expanded="true" signature="7355:7474" ph="SELECT * FRO... accounts" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/postgres/PgDisciplineDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-57">
+          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/ApplicationException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="22" column="1" lean-forward="true" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/AccountService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="944">
+          <caret line="61" column="42" lean-forward="true" selection-start-line="61" selection-start-column="42" selection-end-line="61" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <marker date="1490879200360" expanded="true" signature="2114:2399" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/teacher.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/students.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-144">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/teachers.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/CreateServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-201">
+          <caret line="63" column="16" lean-forward="false" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/ListServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="59">
+          <caret line="40" column="8" lean-forward="false" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/group.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/MainServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="24" column="1" lean-forward="false" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="27" column="38" lean-forward="false" selection-start-line="27" selection-start-column="38" selection-end-line="27" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/GroupService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1280">
+          <caret line="87" column="12" lean-forward="true" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/actions/AddServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-160">
+          <caret line="47" column="12" lean-forward="true" selection-start-line="47" selection-start-column="12" selection-end-line="47" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/change-teacher.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/index.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/groups.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="48" column="36" lean-forward="true" selection-start-line="48" selection-start-column="36" selection-end-line="48" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/GroupServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="38" column="23" lean-forward="false" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/add-group.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="10" column="26" lean-forward="false" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1669,11 +1543,11 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: javaee:javaee-api:7.0</last-edited>
+          <last-edited>Maven: javax.servlet:servlet-api:3.1.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2" />
+                <option value="0.36663008" />
               </list>
             </option>
           </splitter-proportions>
