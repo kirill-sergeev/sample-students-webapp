@@ -29,7 +29,6 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     protected static final String TYPE = "type";
 
     private Document doc;
-    private User user;
     private MongoCollection<Document> collection;
 
     @Override
@@ -54,7 +53,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     protected User parseDocument(Document doc) throws PersistentException {
-        user = new User();
+        User user = new User();
         ObjectId oid = (ObjectId) doc.get(ID);
         user.setId(String.valueOf(oid));
         user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));

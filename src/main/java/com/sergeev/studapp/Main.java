@@ -1,49 +1,88 @@
 package com.sergeev.studapp;
 
 import com.sergeev.studapp.dao.PersistentException;
-import com.sergeev.studapp.model.Lesson;
-import com.sergeev.studapp.mongo.MongoLessonDao;
+import com.sergeev.studapp.model.*;
+import com.sergeev.studapp.mongo.*;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws PersistentException {
 
-//        Group group = GroupService.create("AA-2017");
-//        User user = UserService.createStudent("Kirill", "Sergeev", group.getId());
-//        user.getAccount().setToken("111");
-//        AccountService.update(user);
-//        System.out.println(user);
-//
-//        long ji = System.currentTimeMillis();
-//        User user = UserService.readByToken("111");
-//        long jj = System.currentTimeMillis();
-//        System.out.println(user);
-//        System.out.println(jj - ji);
+        Group group = new Group();
+        group.setTitle("AA-2017");
+        MongoGroupDao gdao = new MongoGroupDao();
+        gdao.persist(group);
+
+        Discipline discipline = new Discipline();
+        discipline.setTitle("Algebra");
+        MongoDisciplineDao ddao = new MongoDisciplineDao();
+        ddao.persist(discipline);
+
+        Account account = new Account();
+        account.setLogin("kirill_sergeev");
+        account.setPassword("111");
+        MongoAccountDao adao = new MongoAccountDao();
+        adao.persist(account);
+
+        User user = new User();
+        user.setType(User.Role.TEACHER);
+        user.setFirstName("Kirill");
+        user.setLastName("Sergeev");
+        user.setAccount(account);
+        MongoUserDao udao = new MongoUserDao();
+        udao.persist(user);
 
 
-//        Group group = GroupService.create("AA-2017");
-//        User user = UserService.createStudent("Kirill", "Sergeev", group.getId());
-//        user.getAccount().setToken("111");
-//        AccountService.update(user);
-//        System.out.println(user);
+        User user1 = new User();
+        user1.setType(User.Role.STUDENT);
+        user1.setFirstName("Vasya");
+        user1.setLastName("Pupkin");
+        user1.setAccount(account);
+        user1.setGroup(group);
+        udao.persist(user1);
 
-//        User user = UserService.readByLogin("kirill_sergeev", "811265");
-//        System.out.println(user);
-
-//        User user = new User();
-//        MongoUserDao dao = new MongoUserDao();
-//        dao.persist(user);
-//        UserService.updateStudent("aa", "aa", "58daa82e92dbc154fe77cb09", "58daa82e92dbc154fe77cb09");
+        Course course = new Course();
+        course.setTeacher(user);
+        course.setDiscipline(discipline);
+        course.setGroup(group);
+        MongoCourseDao cdao = new MongoCourseDao();
+        cdao.persist(course);
 
         Lesson lesson = new Lesson();
         lesson.setType(Lesson.Type.PRACTICAL);
-        lesson.setDate(Date.valueOf("2017-03-06"));
+        lesson.setDate(LocalDate.parse("2017-03-06"));
         lesson.setOrder(Lesson.Order.FIFTH);
-        lesson.setCourse(null);
-        MongoLessonDao dao = new MongoLessonDao();
-        dao.persist(lesson);
+        lesson.setCourse(course);
+        MongoLessonDao ldao = new MongoLessonDao();
+        ldao.persist(lesson);
 
+        Mark mark = new Mark();
+        mark.setStudent(user1);
+        mark.setLesson(lesson);
+        mark.setValue(100);
+        MongoMarkDao mdao = new MongoMarkDao();
+        mdao.persist(mark);
 
+        System.out.println("lessons");
+        List<Lesson> lessons;
+        lessons = ldao.getAll();
+        System.out.println(lessons);
+
+        System.out.println("users");
+        List<User> users;
+        users = udao.getAll();
+        System.out.println(users);
+
+        System.out.println("groups");
+        List<Group> groups;
+        groups =gdao.getAll();
+        System.out.println(groups);
+
+        System.out.println("marks");
+        List <Mark> marks;
+        marks = mdao.getAll();
+        System.out.println(marks);
     }
 }

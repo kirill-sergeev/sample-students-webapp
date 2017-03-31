@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="discipline" scope="request" type="com.sergeev.studapp.model.Discipline"/>
-<jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
+<jsp:useBean id="courses" scope="request" type="java.util.List<com.sergeev.studapp.model.Course>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Discipline info"/>
@@ -30,10 +30,10 @@
                         <c:forEach var="course" items="${courses}">
                             <tr>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/teacher?id=${course.teacher.id}">${course.teacher.firstName} ${course.teacher.lastName}</a>
+                                    <a href="${pageContext.request.contextPath}/teacher/${course.teacher.id}">${course.teacher.firstName} ${course.teacher.lastName}</a>
                                 </td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/group?id=${course.group.id}">${course.group.title}</a>
+                                    <a href="${pageContext.request.contextPath}/group/${course.group.id}">${course.group.title}</a>
                                 </td>
                             </tr>
                         </c:forEach>

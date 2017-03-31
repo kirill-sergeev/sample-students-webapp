@@ -22,7 +22,6 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
     protected static final String TOKEN = "token";
 
     private Document doc;
-    private Account account;
     private MongoCollection<Document> collection;
 
     @Override
@@ -37,6 +36,7 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
 
     @Override
     protected Account parseDocument(Document doc) throws PersistentException{
+        Account account = new Account();
         ObjectId oid = (ObjectId) doc.get(ID);
         account.setId(oid.toString());
         account.setLogin(String.valueOf(doc.get(LOGIN)));

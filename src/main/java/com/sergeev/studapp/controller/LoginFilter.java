@@ -1,6 +1,7 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.controller;
 
 import com.sergeev.studapp.model.User;
+import com.sergeev.studapp.service.ApplicationException;
 import com.sergeev.studapp.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,6 @@ public class LoginFilter implements Filter {
         final String path = req.getRequestURI().substring(req.getContextPath().length());
 
         User user = (User) session.getAttribute("user");
-        String remember = (String) session.getAttribute("remember");
         Cookie loginCookie = null;
 
         if (req.getCookies() == null) {
@@ -42,7 +42,12 @@ public class LoginFilter implements Filter {
         }
 
         if (user == null) {
-            if (loginCookie != null && (user = UserService.readByToken(loginCookie.getValue())) != null) {
+            if (loginCookie != null) {
+                try {
+                    user = UserService.readByToken(loginCookie.getValue());
+                } catch (ApplicationException e) {
+                    LOG.info("Broken cookie.");
+                }
                 //datastore.updateTokenLastActivity(loginCookie.getValue());
                 req.getSession().setAttribute("user", user);
             }
@@ -60,9 +65,6 @@ public class LoginFilter implements Filter {
         if (user == null) {
             resp.sendRedirect("/login");
         } else {
-            if ("remember".equals(remember)) {
-                resp.addCookie(loginCookie);
-            }
             chain.doFilter(request, response);
         }
     }

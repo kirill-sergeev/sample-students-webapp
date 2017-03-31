@@ -10,6 +10,9 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.sql.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 
  public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao {
@@ -20,7 +23,6 @@ import java.util.List;
     protected static final String COURSE  = "course";
 
     private Document doc;
-    private Lesson lesson;
     private MongoCollection<Document> collection;
 
     @Override
@@ -30,15 +32,16 @@ import java.util.List;
 
     @Override
     protected Document getDocument(Lesson object) throws PersistentException {
-        return doc = new Document(DATE , object.getDate()).append(TYPE, object.getType().getId()).append(ORDER, object.getOrder().getNumber()).append(COURSE, new DBRef("courses", object.getCourse().getId()));
+        return doc = new Document(DATE , Date.valueOf(object.getDate())).append(TYPE, object.getType().getId()).append(ORDER, object.getOrder().getNumber()).append(COURSE, new DBRef("courses", object.getCourse().getId()));
     }
 
     @Override
     protected Lesson parseDocument(Document doc) throws PersistentException {
-        lesson = new Lesson();
+        Lesson lesson = new Lesson();
         ObjectId oid = (ObjectId) doc.get(ID);
         lesson.setId(String.valueOf(oid));
-        lesson.setDate(Date.valueOf(doc.get(DATE).toString()));
+        LocalDate date = Instant.ofEpochMilli(doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneOffset.ofHours(2)).toLocalDate();
+        lesson.setDate(date);
         lesson.setType(Lesson.Type.getById(String.valueOf(doc.get(TYPE))));
         lesson.setOrder(Lesson.Order.getByNumber((Integer) doc.get(ORDER)));
         MongoCourseDao mcd = new MongoCourseDao();

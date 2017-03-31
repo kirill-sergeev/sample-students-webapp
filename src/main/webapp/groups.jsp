@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<jsp:useBean id="courses" scope="request" type="java.util.List<com.sergeev.studapp.model.Course>"/>
 <jsp:useBean id="groupsStudents" scope="request"
              type="java.util.LinkedHashMap<com.sergeev.studapp.model.Group, java.lang.Integer>"/>
 
@@ -31,19 +32,30 @@
                         <c:forEach var="item" items="${groupsStudents}">
                             <tr>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/group?id=${item.key.id}">${item.key.title}</a>
+                                    <a href="${pageContext.request.contextPath}/group/${item.key.id}">${item.key.title}</a>
                                 </td>
                                 <td>${item.value}</td>
                                 <td>
-                                    <form action="change-group" method="POST">
-                                        <input type="hidden" name="id" value="${item.key.id}"/>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
-                                            <button type="submit" class="btn btn-danger btn-secondary"
-                                                    formaction="remove-group" <c:if test="${item.value!=0}">disabled</c:if>>Delete
-                                            </button>
-                                        </div>
+                                    <form id="delete${item.key.id}" action="${pageContext.request.contextPath}/group"
+                                          method="POST">
+                                        <input type="hidden" name="id" value="${item.key.id}">
+                                        <input type="hidden" name="action" value="delete">
                                     </form>
+
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button class="btn btn-info btn-secondary" type="button"
+                                                onclick="location.href='${pageContext.request.contextPath}/group/${item.key.id}/change'">
+                                            Change
+                                        </button>
+                                        <button class="btn btn-danger btn-secondary" type="submit"
+                                                form="delete${item.key.id}"
+                                                <c:forEach var="course" items="${courses}">
+                                                    <c:if test="${item.key.id == course.group.id}">disabled</c:if>
+                                                </c:forEach>
+                                                <c:if test="${item.value!=0}">disabled</c:if>>
+                                            Delete
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -51,8 +63,14 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <h3><a href="group/new">Add a new group...</a></h3>
-            <h3><a href="add-course">Add a new course...</a></h3>
+            <button class="btn btn-info btn-secondary" type="button"
+                    onclick="location.href='${pageContext.request.contextPath}/group/new'">
+                Add a new group
+            </button>
+            <button class="btn btn-info btn-secondary" type="button"
+                    onclick="location.href='${pageContext.request.contextPath}/course/new'">
+                Add a new course
+            </button>
         </div>
     </div>
 </div>

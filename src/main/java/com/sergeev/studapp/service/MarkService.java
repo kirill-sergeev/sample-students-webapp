@@ -37,6 +37,20 @@ public class MarkService {
         return mark;
     }
 
+    public static Mark read(String id) throws ApplicationException {
+        if (id == null || id.isEmpty()){
+            throw new ApplicationException("Bad parameters.");
+        }
+
+        try {
+            mark = MARK_DAO.getById(id);
+        } catch (PersistentException e) {
+            throw new ApplicationException("Mark not found.", e);
+        }
+
+        return mark;
+    }
+
     public static List<Mark> readByLesson(String lessonId) throws ApplicationException {
         if (lessonId == null || lessonId.isEmpty()){
             throw new ApplicationException("Bad parameters.");
@@ -61,7 +75,6 @@ public class MarkService {
         } catch (PersistentException e) {
             marks = Collections.emptyList();
         }
-
         return marks;
     }
 

@@ -14,15 +14,12 @@ public class GroupService {
     private static final Logger LOG = LoggerFactory.getLogger(GroupService.class);
     private static final GroupDao GROUP_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao();
 
-    private static Group group;
-    private static List<Group> groups;
-
     public static Group create(String title) throws ApplicationException {
         if (!checkTitle(title)){
             throw new ApplicationException("Bad parameters.");
         }
 
-        group = new Group();
+        Group group = new Group();
         group.setTitle(title);
 
         try {
@@ -38,6 +35,7 @@ public class GroupService {
         if (id == null || id.isEmpty()){
             throw new ApplicationException("Bad parameters.");
         }
+        Group group;
 
         try {
             group = GROUP_DAO.getById(id);
@@ -49,7 +47,7 @@ public class GroupService {
     }
 
     public static List<Group> readAll() {
-
+        List<Group> groups;
         try {
             groups = GROUP_DAO.getAll();
         } catch (PersistentException e) {
@@ -63,8 +61,7 @@ public class GroupService {
         if (id == null || id.isEmpty() || !checkTitle(title)) {
             throw new ApplicationException("Bad parameters.");
         }
-
-        group = new Group();
+        Group group = new Group();
         group.setId(id);
         group.setTitle(title);
 
@@ -95,7 +92,11 @@ public class GroupService {
         int studentCount;
 
         for (Group group : groups) {
-            studentCount = UserService.readByGroup(group.getId()).size();
+            try {
+                studentCount = UserService.readByGroup(group.getId()).size();
+            } catch (ApplicationException e) {
+                studentCount = 0;
+            }
             groupsStudents.put(group, studentCount);
         }
 

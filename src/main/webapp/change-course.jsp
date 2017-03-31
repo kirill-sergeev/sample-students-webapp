@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="course" scope="request" type="com.sergeev.studapp.model.Course"/>
-<jsp:useBean id="disciplines" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Discipline>"/>
-<jsp:useBean id="groups" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Group>"/>
-<jsp:useBean id="teachers" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.User>"/>
+<jsp:useBean id="disciplines" scope="request" type="java.util.List<com.sergeev.studapp.model.Discipline>"/>
+<jsp:useBean id="groups" scope="request" type="java.util.List<com.sergeev.studapp.model.Group>"/>
+<jsp:useBean id="teachers" scope="request" type="java.util.List<com.sergeev.studapp.model.User>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Change course in group ${course.group}"/>
@@ -13,8 +13,9 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-4">
-            <form action="update-course" method="POST">
+            <form action="${pageContext.request.contextPath}/course" method="POST">
                 <div class="form-group">
+                    <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" class="form-control" value="${course.id}">
                 </div>
                 <div class="form-group">

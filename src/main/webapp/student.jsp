@@ -11,11 +11,10 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-8">
-            <h3>Student's info page</h3>
             <c:if test="${not empty student}">
                 <br>
                 <h4>${student.firstName} ${student.lastName} from group
-                    <a href="${pageContext.request.contextPath}/group?id=${student.group.id}">${student.group.title}</a>
+                    <a href="${pageContext.request.contextPath}/group/${student.group.id}">${student.group.title}</a>
                 </h4>
                 <br>
                 <h4>Courses</h4>
@@ -38,11 +37,14 @@
                             <c:forEach var="item" items="${coursesMarks}">
                                 <tr>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/discipline?id=${item.key.discipline.id}">${item.key.discipline.title}</a>
+                                        <a href="${pageContext.request.contextPath}/discipline/${item.key.discipline.id}">${item.key.discipline.title}</a>
                                     </td>
                                     <td>${item.value}</td>
                                     <td>
-                                        <a href="${pageContext.request.contextPath}/marks?student=${student.id}&discipline=${item.key.discipline.id}">...</a>
+                                        <button class="btn btn-info btn-sm" type="button"
+                                                onclick="location.href='${pageContext.request.contextPath}/mark/student/${student.id}/discipline/${item.key.discipline.id}'">
+                                            All marks
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>

@@ -130,7 +130,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
                 sql = "SELECT * FROM courses WHERE user_id= ?;";
                 break;
             case DISCIPLINE_GROUP:
-                sql = "SELECT * FROM courses WHERE group_id= ? AND discipline_id= ?";
+                sql = "SELECT * FROM courses WHERE discipline_id= ? AND group_id= ?";
                 break;
             default:
                 throw new IllegalArgumentException();

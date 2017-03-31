@@ -1,4 +1,4 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.controller;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

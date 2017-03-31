@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="lesson" scope="request" type="com.sergeev.studapp.model.Lesson"/>
-<jsp:useBean id="students" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.User>"/>
+<jsp:useBean id="students" scope="request" type="java.util.List<com.sergeev.studapp.model.User>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Add a new mark in group ${lesson.course.group} at lesson ${lesson.course.discipline} ${lesson.date}"/>
@@ -11,8 +11,9 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-4">
-            <form action="create-mark" method="POST">
+            <form action="${pageContext.request.contextPath}/mark" method="POST">
                 <div class="form-group">
+                    <input type="hidden" name="action" value="create">
                     <input type="hidden" name="lesson" class="form-control" value="${lesson.id}">
                 </div>
                 <div class="form-group">

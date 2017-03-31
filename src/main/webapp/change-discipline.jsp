@@ -10,8 +10,9 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-4">
-            <form action="update-discipline" method="POST">
+            <form action="${pageContext.request.contextPath}/discipline" method="POST">
                 <div class="form-group">
+                    <input type="hidden" name="action" value="update">
                     <input type="hidden" name="id" class="form-control" value="${discipline.id}">
                 </div>
                 <div class="form-group">

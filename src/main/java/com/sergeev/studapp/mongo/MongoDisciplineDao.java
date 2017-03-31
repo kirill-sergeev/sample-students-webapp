@@ -13,7 +13,6 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
     protected static final String DISCIPLINE_TITLE = "title";
 
     private Document doc;
-    private Discipline discipline;
     private MongoCollection<Document> collection;
 
     @Override
@@ -28,7 +27,7 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
 
     @Override
     protected Discipline parseDocument(Document doc) {
-        discipline = new Discipline();
+        Discipline discipline = new Discipline();
         ObjectId oid = (ObjectId) doc.get(ID);
         discipline.setId(String.valueOf(oid));
         discipline.setTitle(String.valueOf(doc.get(DISCIPLINE_TITLE)));

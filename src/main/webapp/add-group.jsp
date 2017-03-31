@@ -10,8 +10,8 @@
         <div class="col-4">
             <form action="${pageContext.request.contextPath}/group" method="POST">
                 <div class="form-group">
-                    <input type="text" name="title" class="form-control" placeholder="Title...">
                     <input type="hidden" name="action" value="create">
+                    <input type="text" name="title" class="form-control" placeholder="Title...">
                 </div>
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>

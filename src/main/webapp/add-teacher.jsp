@@ -8,8 +8,9 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-4">
-            <form action="create-teacher" method="POST">
+            <form action="${pageContext.request.contextPath}/teacher" method="POST">
                 <div class="form-group">
+                    <input type="hidden" name="action" value="create">
                     <input type="text" name="first-name" class="form-control" placeholder="First name...">
                 </div>
                 <div class="form-group">

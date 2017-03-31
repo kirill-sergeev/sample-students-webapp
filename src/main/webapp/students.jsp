@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="students" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.User>"/>
+<jsp:useBean id="students" scope="request" type="java.util.List<com.sergeev.studapp.model.User>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Sudents List"/>
@@ -30,21 +30,26 @@
                         <c:forEach var="student" items="${students}">
                             <tr>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/student?id=${student.id}">${student.firstName} ${student.lastName}</a>
+                                    <a href="${pageContext.request.contextPath}/student/${student.id}">${student.firstName} ${student.lastName}</a>
                                 </td>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/group?id=${student.group.id}">${student.group.title}</a>
+                                    <a href="${pageContext.request.contextPath}/group/${student.group.id}">${student.group.title}</a>
                                 </td>
                                 <td>
-                                    <form action="change-student" method="POST">
-                                        <input type="hidden" name="id" value="${student.id}"/>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
-                                            <button type="submit" class="btn btn-danger btn-secondary"
-                                                    formaction="remove-student">Delete
-                                            </button>
-                                        </div>
+                                    <form id="delete${student.id}" action="${pageContext.request.contextPath}/teacher"
+                                          method="POST">
+                                        <input type="hidden" name="id" value="${student.id}">
+                                        <input type="hidden" name="action" value="delete">
                                     </form>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button class="btn btn-info btn-secondary" type="button"
+                                                onclick="location.href='${pageContext.request.contextPath}/student/${student.id}/change'">
+                                            Change
+                                        </button>
+                                        <button class="btn btn-danger btn-secondary" type="submit"
+                                                form="delete${student.id}">Delete
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -52,7 +57,10 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <h3><a href="add-student">Add a new student...</a></h3>
+            <button class="btn btn-info btn-secondary" type="button"
+                    onclick="location.href='${pageContext.request.contextPath}/student/new'">
+                Add a new student
+            </button>
         </div>
     </div>
 </div>

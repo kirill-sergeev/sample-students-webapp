@@ -17,14 +17,11 @@ public class AccountService {
     private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
     private static final AccountDao ACCOUNT_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getAccountDao();
 
-    private static Account account;
-    private static List<Account> accounts;
-
     public static Account create(User user) throws ApplicationException {
         String password = generatePassword();
         String login = generateLogin(user.getFirstName(), user.getLastName());
 
-        account = new Account();
+        Account account = new Account();
         account.setLogin(login);
         account.setPassword(password);
 
@@ -37,6 +34,7 @@ public class AccountService {
     }
 
     public static Account read(String id) throws ApplicationException {
+        Account account;
         try {
             account = ACCOUNT_DAO.getById(id);
         } catch (PersistentException e) {
@@ -59,11 +57,13 @@ public class AccountService {
     }
 
     public static Account update(User user) throws ApplicationException {
+        Account account = new Account();
         String accountId = UserService.read(user.getId()).getAccount().getId();
         account.setId(accountId);
         account.setLogin(generateLogin(user.getFirstName(), user.getLastName()));
         account.setPassword(AccountService.read(accountId).getPassword());
-        account.setToken(user.getAccount().getToken());
+        String token = user.getAccount().getToken();
+        account.setToken(token);
 
         try {
             ACCOUNT_DAO.update(account);
@@ -82,11 +82,11 @@ public class AccountService {
         }
     }
 
-    private static String generateLogin(String firstName, String lastName){
+    private static String generateLogin(String firstName, String lastName) {
         return (firstName + "_" + lastName).toLowerCase();
     }
 
-    private static String generatePassword(){
+    private static String generatePassword() {
         Random random = new Random();
         return String.valueOf(random.nextInt(899999) + 100000);
     }

@@ -4,7 +4,7 @@
 <jsp:useBean id="group" scope="request" type="com.sergeev.studapp.model.Group"/>
 <jsp:useBean id="types" scope="request" type="com.sergeev.studapp.model.Lesson.Type[]"/>
 <jsp:useBean id="orders" scope="request" type="com.sergeev.studapp.model.Lesson.Order[]"/>
-<jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
+<jsp:useBean id="courses" scope="request" type="java.util.List<com.sergeev.studapp.model.Course>"/>
 
 
 <jsp:include flush="true" page="partial/header.jsp">
@@ -14,8 +14,9 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-4">
-            <form action="create-lesson" method="POST">
+            <form action="${pageContext.request.contextPath}/lesson" method="POST">
                 <div class="form-group">
+                    <input type="hidden" name="action" value="create">
                     <input type="hidden" name="group" class="form-control" value="${group.id}">
                 </div>
                 <div class="form-group">

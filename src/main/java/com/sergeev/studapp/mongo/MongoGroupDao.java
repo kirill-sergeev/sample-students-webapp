@@ -13,7 +13,6 @@ public class MongoGroupDao extends MongoGenericDao<Group> implements GroupDao {
     protected static final String GROUP_TITLE = "title";
 
     private Document doc;
-    private Group group;
     private MongoCollection<Document> collection;
 
     @Override
@@ -28,7 +27,7 @@ public class MongoGroupDao extends MongoGenericDao<Group> implements GroupDao {
 
     @Override
     protected Group parseDocument(Document doc) {
-        group = new Group();
+        Group group = new Group();
         ObjectId oid = (ObjectId) doc.get(ID);
         group.setId(String.valueOf(oid));
         group.setTitle(String.valueOf(doc.get(GROUP_TITLE)));

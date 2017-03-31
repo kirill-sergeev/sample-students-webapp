@@ -1,8 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="disciplines" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Discipline>"/>
-<jsp:useBean id="courses" scope="request" type="java.util.ArrayList<com.sergeev.studapp.model.Course>"/>
+<jsp:useBean id="disciplines" scope="request" type="java.util.List<com.sergeev.studapp.model.Discipline>"/>
+<jsp:useBean id="courses" scope="request" type="java.util.List<com.sergeev.studapp.model.Course>"/>
 
 <jsp:include flush="true" page="partial/header.jsp">
     <jsp:param name="title" value="Disciplines List"/>
@@ -30,20 +30,26 @@
                         <c:forEach var="discipline" items="${disciplines}">
                             <tr>
                                 <td>
-                                    <a href="${pageContext.request.contextPath}/discipline?id=${discipline.id}">${discipline.title}</a>
+                                    <a href="${pageContext.request.contextPath}/discipline/${discipline.id}">${discipline.title}</a>
                                 </td>
                                 <td>
-                                    <form action="change-discipline" method="POST">
-                                        <input type="hidden" name="id" value="${discipline.id}"/>
-                                        <div class="btn-group btn-group-sm" role="group">
-                                            <button type="submit" class="btn btn-info btn-secondary">Change</button>
-                                            <button type="submit" class="btn btn-danger btn-secondary"
-                                                    formaction="remove-discipline" <c:forEach var="course" items="${courses}">
-                                                <c:if test="${discipline.id == course.discipline.id}">disabled</c:if>
-                                            </c:forEach>>Delete
-                                            </button>
-                                        </div>
+                                    <form id="delete${discipline.id}" action="${pageContext.request.contextPath}/discipline"
+                                          method="POST">
+                                        <input type="hidden" name="id" value="${discipline.id}">
+                                        <input type="hidden" name="action" value="delete">
                                     </form>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button class="btn btn-info btn-secondary" type="button"
+                                                onclick="location.href='${pageContext.request.contextPath}/discipline/${discipline.id}/change'">
+                                            Change
+                                        </button>
+                                        <button class="btn btn-danger btn-secondary" type="submit"
+                                                form="delete${discipline.id}"
+                                                <c:forEach var="course" items="${courses}">
+                                                    <c:if test="${discipline.id == course.discipline.id}">disabled</c:if>
+                                                </c:forEach>>Delete
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -51,7 +57,10 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <h3><a href="add-discipline">Add a new discipline...</a></h3>
+            <button class="btn btn-info btn-secondary" type="button"
+                    onclick="location.href='${pageContext.request.contextPath}/discipline/new'">
+                Add a new discipline
+            </button>
         </div>
     </div>
 </div>

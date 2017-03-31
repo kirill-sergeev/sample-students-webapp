@@ -1,7 +1,8 @@
-package com.sergeev.studapp.actions;
+package com.sergeev.studapp.controller;
 
 import com.sergeev.studapp.model.User;
 import com.sergeev.studapp.service.AccountService;
+import com.sergeev.studapp.service.ApplicationException;
 import com.sergeev.studapp.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.UUID;
-
-import static com.sergeev.studapp.actions.LoginFilter.LOGIN_COOKIE;
 
 @WebServlet(name = "SessionServlet", urlPatterns = {"/login", "/logout"})
 public class SessionServlet extends HttpServlet {
@@ -24,7 +23,7 @@ public class SessionServlet extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         Cookie loginCookie;
-        User user;
+        User user = null;
         String login;
         String password;
         String token;
@@ -39,8 +38,11 @@ public class SessionServlet extends HttpServlet {
 
                 login = request.getParameter("login").toLowerCase();
                 password = request.getParameter("password");
-                user = UserService.readByLogin(login, password);
-                remember = request.getParameter("remember");
+                try {
+                    user = UserService.readByLogin(login, password);
+                } catch (ApplicationException e) {
+                    LOG.info("Bad login/password.");
+                }
 
                 if (user == null) {
                     request.setAttribute("login", login);
@@ -48,29 +50,34 @@ public class SessionServlet extends HttpServlet {
                     return;
                 }
 
+                remember = request.getParameter("remember");
                 session.setAttribute("user", user);
                 session.setAttribute("remember", remember);
 
                 if ("remember".equals(remember)) {
                     token = UUID.randomUUID().toString();
                     user.getAccount().setToken(token);
-                    AccountService.update(user);
+                    try {
+                        AccountService.update(user);
+                    } catch (ApplicationException e) {
+                        LOG.info("Cannot update token.");
+                    }
 
-                    loginCookie = new Cookie(LOGIN_COOKIE, token);
+                    loginCookie = new Cookie(LoginFilter.LOGIN_COOKIE, token);
                     loginCookie.setPath(request.getContextPath());
                     loginCookie.setMaxAge(24 * 60 * 60);
                     response.addCookie(loginCookie);
                 }
                 if (user.getType() == User.Role.STUDENT) {
-                    response.sendRedirect("/students");
+                    response.sendRedirect("/student/"+user.getId());
+                    return;
+                }else if (user.getType() == User.Role.TEACHER) {
+                    response.sendRedirect("/teacher/"+user.getId());
+                    return;
+                }else if (user.getType() == User.Role.ADMIN) {
+                    response.sendRedirect("/admin/");
                     return;
                 }
-                if (user.getType() == User.Role.TEACHER) {
-                    response.sendRedirect("/teachers");
-                    return;
-                }
-                break;
-
             case "/logout":
                 loginCookie = new Cookie("MY_SESSION_COOKIE", "");
                 loginCookie.setPath(request.getContextPath());
@@ -81,7 +88,6 @@ public class SessionServlet extends HttpServlet {
                 response.sendRedirect("/login");
         }
     }
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);

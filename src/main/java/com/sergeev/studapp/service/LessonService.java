@@ -8,7 +8,7 @@ import com.sergeev.studapp.model.Lesson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public class LessonService {
         lesson = new Lesson();
         lesson.setType(Lesson.Type.getById(typeId));
         lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
-        lesson.setDate(Date.valueOf(date));
+        lesson.setDate(LocalDate.parse(date));
         lesson.setCourse(course);
 
         try {
@@ -78,7 +78,7 @@ public class LessonService {
         lesson.setId(id);
         lesson.setType(Lesson.Type.getById(typeId));
         lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
-        lesson.setDate(Date.valueOf(date));
+        lesson.setDate(LocalDate.parse(date));
         lesson.setCourse(course);
 
         try {

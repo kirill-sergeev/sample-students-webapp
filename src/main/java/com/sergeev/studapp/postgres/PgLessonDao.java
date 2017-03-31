@@ -6,10 +6,7 @@ import com.sergeev.studapp.model.Lesson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +50,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
                 PgCourseDao pcd = new PgCourseDao();
                 lesson.setId(rs.getString(LESSON_ID));
                 lesson.setCourse(pcd.getById(rs.getString(COURSE_ID)));
-                lesson.setDate(rs.getDate(LESSON_DATE));
+                lesson.setDate(rs.getDate(LESSON_DATE).toLocalDate());
                 lesson.setOrder(Lesson.Order.getByNumber(rs.getInt(LESSON_ORDER)));
                 lesson.setType(Lesson.Type.getById(rs.getString(LESSON_TYPE)));
                 result.add(lesson);
@@ -69,7 +66,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
         try {
             statement.setInt(1, Integer.parseInt(object.getType().getId()));
             statement.setInt(2, Integer.parseInt(object.getCourse().getId()));
-            statement.setDate(3, object.getDate());
+            statement.setDate(3, Date.valueOf(object.getDate()));
             statement.setInt(4, object.getOrder().getNumber());
         } catch (SQLException e) {
             throw new PersistentException(e);
@@ -81,7 +78,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
         try {
             statement.setInt(1, Integer.parseInt(object.getType().getId()));
             statement.setInt(2, Integer.parseInt(object.getCourse().getId()));
-            statement.setDate(3, object.getDate());
+            statement.setDate(3, Date.valueOf(object.getDate()));
             statement.setInt(4, object.getOrder().getNumber());
             statement.setInt(5, Integer.parseInt(object.getId()));
         } catch (SQLException e) {

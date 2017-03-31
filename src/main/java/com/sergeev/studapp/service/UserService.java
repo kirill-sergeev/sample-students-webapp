@@ -19,12 +19,8 @@ public class UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     private static final UserDao USER_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao();
 
-    private static User user;
-    private static List<User> users;
-
-
     public static User createStudent(String firstName, String lastName, String groupId) throws ApplicationException {
-        user = UserService.create(firstName, lastName);
+        User user = UserService.create(firstName, lastName);
         user.setType(User.Role.STUDENT);
         user.setGroup(GroupService.read(groupId));
 
@@ -38,7 +34,7 @@ public class UserService {
     }
 
     public static User createTeacher(String firstName, String lastName) throws ApplicationException {
-        user = UserService.create(firstName, lastName);
+        User user = UserService.create(firstName, lastName);
         user.setType(User.Role.TEACHER);
 
         try {
@@ -51,9 +47,10 @@ public class UserService {
     }
 
     public static User read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
+        User user;
 
         try {
             user = USER_DAO.getById(id);
@@ -65,9 +62,10 @@ public class UserService {
     }
 
     public static User readByToken(String token) throws ApplicationException {
-        if (token == null || token.isEmpty()){
+        if (token == null || token.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
+        User user;
 
         try {
             user = USER_DAO.getByToken(token);
@@ -79,10 +77,11 @@ public class UserService {
     }
 
     public static User readByLogin(String login, String password) throws ApplicationException {
-        if (login == null || password == null || login.isEmpty() || password.isEmpty()){
+        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
 
+        User user;
         try {
             user = USER_DAO.getByLogin(login, password);
         } catch (PersistentException e) {
@@ -93,7 +92,9 @@ public class UserService {
     }
 
     public static List<User> readAll(User.Role type) {
-           try {
+
+        List<User> users;
+        try {
             users = USER_DAO.getAll(type);
         } catch (PersistentException e) {
             users = Collections.emptyList();
@@ -102,8 +103,13 @@ public class UserService {
         return users;
     }
 
-    public static List<User> readByGroup(String groupId) {
-          try {
+    public static List<User> readByGroup(String groupId) throws ApplicationException {
+        if (groupId == null || groupId.isEmpty()) {
+            throw new ApplicationException("Bad parameters.");
+        }
+        List<User> users;
+
+        try {
             users = USER_DAO.getByGroup(groupId);
         } catch (PersistentException e) {
             users = Collections.emptyList();
@@ -113,7 +119,7 @@ public class UserService {
     }
 
     public static User updateStudent(String firstName, String lastName, String groupId, String userId) throws ApplicationException {
-        user = UserService.update(firstName, lastName, userId);
+        User user = UserService.update(firstName, lastName, userId);
         user.setType(User.Role.STUDENT);
         user.setGroup(GroupService.read(groupId));
 
@@ -127,7 +133,7 @@ public class UserService {
     }
 
     public static User updateTeacher(String firstName, String lastName, String userId) throws ApplicationException {
-        user = UserService.update(firstName, lastName, userId);
+        User user = UserService.update(firstName, lastName, userId);
         user.setType(User.Role.TEACHER);
 
         try {
@@ -140,11 +146,11 @@ public class UserService {
     }
 
     public static User.Role delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
 
-        user = UserService.read(id);
+        User user = UserService.read(id);
         User.Role type = user.getType();
         String accountId = user.getAccount().getId();
 
@@ -159,9 +165,11 @@ public class UserService {
     }
 
     public static List<User> find(User.Role type, String name) throws ApplicationException {
-        if (name == null || name.isEmpty()){
+        if (name == null || name.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
+
+        List<User> users;
 
         try {
             users = USER_DAO.getByName(name, type);
@@ -173,8 +181,8 @@ public class UserService {
     }
 
     public static Map<Course, Double> studentAvgMarks(String id) throws ApplicationException {
-        user = UserService.read(id);
-        List<Course> courses = CourseService.readByDiscipline(user.getGroup().getId());
+        User user = UserService.read(id);
+        List<Course> courses = CourseService.readByGroup(user.getGroup().getId());
         Map<Course, Double> coursesMarks = new LinkedHashMap<>();
 
         for (Course course : courses) {
@@ -190,7 +198,7 @@ public class UserService {
             throw new ApplicationException("Bad parameters.");
         }
 
-        user = new User();
+        User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
         Account account = AccountService.create(user);
@@ -203,7 +211,7 @@ public class UserService {
             throw new ApplicationException("Bad parameters.");
         }
 
-        user = new User();
+        User user = new User();
         user.setId(userId);
         user.setFirstName(firstName);
         user.setLastName(lastName);

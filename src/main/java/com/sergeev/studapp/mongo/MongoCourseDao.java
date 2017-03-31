@@ -18,7 +18,6 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     protected static final String TEACHER = "teacher";
 
     private Document doc;
-    private Course course;
     private MongoCollection<Document> collection;
 
     @Override
@@ -29,14 +28,14 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     @Override
     protected Document getDocument(Course object) throws PersistentException {
         doc = new Document(DISCIPLINE, new DBRef("disciplines", object.getDiscipline().getId()))
-                .append(GROUP,new DBRef("groups", object.getGroup().getId()))
+                .append(GROUP, new DBRef("groups", object.getGroup().getId()))
                 .append(TEACHER, new DBRef("users", object.getTeacher().getId()));
         return doc;
     }
 
     @Override
     protected Course parseDocument(Document doc) throws PersistentException {
-        course = new Course();
+        Course course = new Course();
         ObjectId oid = (ObjectId) doc.get(ID);
         course.setId(String.valueOf(oid));
 
