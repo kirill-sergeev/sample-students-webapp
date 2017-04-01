@@ -18,15 +18,12 @@ public class CourseService {
     private static final Logger LOG = LoggerFactory.getLogger(CourseService.class);
     private static final CourseDao COURSE_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao();
 
-    private static Course course;
-    private static List<Course> courses;
-
     public static Course create(String disciplineId, String groupId, String teacherId) throws ApplicationException {
         Discipline discipline = DisciplineService.read(disciplineId);
         Group group = GroupService.read(groupId);
         User teacher = UserService.read(teacherId);
 
-        course = new Course();
+        Course course = new Course();
         course.setDiscipline(discipline);
         course.setGroup(group);
         course.setTeacher(teacher);
@@ -41,10 +38,10 @@ public class CourseService {
     }
 
     public static Course read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-
+        Course course;
         try {
             course = COURSE_DAO.getById(id);
         } catch (PersistentException e) {
@@ -55,21 +52,20 @@ public class CourseService {
     }
 
     public static List<Course> readAll() {
-
+        List<Course> courses;
         try {
             courses = COURSE_DAO.getAll();
         } catch (PersistentException e) {
             courses = Collections.emptyList();
         }
-
         return courses;
     }
 
     public static List<Course> readByGroup(String groupId) throws ApplicationException {
-        if (groupId == null || groupId.isEmpty()){
+        if (groupId == null || groupId.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-
+        List<Course> courses;
         try {
             courses = COURSE_DAO.getByGroup(groupId);
         } catch (PersistentException e) {
@@ -80,10 +76,10 @@ public class CourseService {
     }
 
     public static List<Course> readByTeacher(String teacherId) throws ApplicationException {
-        if (teacherId == null || teacherId.isEmpty()){
+        if (teacherId == null || teacherId.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-
+        List<Course> courses;
         try {
             courses = COURSE_DAO.getByTeacher(teacherId);
         } catch (PersistentException e) {
@@ -94,10 +90,10 @@ public class CourseService {
     }
 
     public static List<Course> readByDiscipline(String disciplineId) throws ApplicationException {
-        if (disciplineId == null || disciplineId.isEmpty()){
+        if (disciplineId == null || disciplineId.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-
+        List<Course> courses;
         try {
             courses = COURSE_DAO.getByDiscipline(disciplineId);
         } catch (PersistentException e) {
@@ -108,7 +104,7 @@ public class CourseService {
     }
 
     public static Course update(String disciplineId, String groupId, String teacherId, String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -116,7 +112,7 @@ public class CourseService {
         Group group = GroupService.read(groupId);
         User teacher = UserService.read(teacherId);
 
-        course = new Course();
+        Course course = new Course();
         course.setId(id);
         course.setDiscipline(discipline);
         course.setGroup(group);
@@ -132,7 +128,7 @@ public class CourseService {
     }
 
     public static void delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -144,10 +140,10 @@ public class CourseService {
     }
 
     protected static Course readByDisciplineAndGroup(String disciplineId, String groupId) throws ApplicationException {
-        if (disciplineId == null || groupId == null || disciplineId.isEmpty() || groupId.isEmpty()){
+        if (disciplineId == null || groupId == null || disciplineId.isEmpty() || groupId.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-
+        Course course;
         try {
             course = COURSE_DAO.getByDisciplineAndGroup(disciplineId, groupId);
         } catch (PersistentException e) {

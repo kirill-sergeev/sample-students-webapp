@@ -76,7 +76,7 @@ public class MarkServlet extends HttpServlet {
         List<Mark> marks;
         List<User> students;
 
-        if (path.matches("^/mark/student/\\p{Nd}+/discipline/\\p{Nd}+?")) {
+        if (path.matches("^/mark/student/[^/]+/discipline/[^/]+/?")) {
             studentId = path.split("/")[3];
             disciplineId = path.split("/")[5];
             try {
@@ -95,7 +95,7 @@ public class MarkServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/mark/new/group/\\p{Nd}+/lesson/\\p{Nd}+/?")) {
+        if (path.matches("^/mark/new/group/[^/]+/lesson/[^/]+/?")) {
             groupId = path.split("/")[4];
             lessonId = path.split("/")[6];
 

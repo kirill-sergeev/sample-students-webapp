@@ -224,7 +224,7 @@ public class UserService {
         if (firstName == null || lastName == null) {
             return false;
         }
-        String expression = "(?u)^\\p{Lu}\\p{Ll}+$";
+        String expression = "(?u)^\\p{Lu}[\\p{Ll}-]{1,29}$";
         return firstName.matches(expression) && lastName.matches(expression);
     }
 }

@@ -103,7 +103,7 @@ public class LessonServlet extends HttpServlet {
         Lesson.Order[] orders;
         List<Mark> marks;
 
-        if (path.matches("^/lesson/group/\\p{Nd}+/?")) {
+        if (path.matches("^/lesson/group/[^/]+/?")) {
             groupId= path.split("/")[3];
             try {
                 group = GroupService.read(groupId);
@@ -120,24 +120,7 @@ public class LessonServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/lesson/\\p{Nd}+/?")) {
-            String id = path.split("/")[2];
-            try {
-                lesson = LessonService.read(id);
-                marks = MarkService.readByLesson(id);
-            } catch (ApplicationException e) {
-                LOG.info("Lesson not found.");
-                response.sendRedirect("/");
-                return;
-            }
-            request.setAttribute("lesson", lesson);
-            request.setAttribute("marks", marks);
-            request.setAttribute("dateNow", dateNow);
-            request.getRequestDispatcher("/lesson.jsp").forward(request, response);
-            return;
-        }
-
-        if (path.matches("^/lesson/new/group/\\p{Nd}+/?")) {
+        if (path.matches("^/lesson/new/group/[^/]+/?")) {
             groupId= path.split("/")[4];
             types = Lesson.Type.values();
             orders = Lesson.Order.values();
@@ -156,8 +139,25 @@ public class LessonServlet extends HttpServlet {
             request.getRequestDispatcher("/add-lesson.jsp").forward(request, response);
             return;
         }
+        if (path.matches("^/lesson/[^/]+/?")) {
+            String id = path.split("/")[2];
+            try {
+                lesson = LessonService.read(id);
+                marks = MarkService.readByLesson(id);
+            } catch (ApplicationException e) {
+                LOG.info("Lesson not found.");
+                response.sendRedirect("/");
+                return;
+            }
+            request.setAttribute("lesson", lesson);
+            request.setAttribute("marks", marks);
+            request.setAttribute("dateNow", dateNow);
+            request.getRequestDispatcher("/lesson.jsp").forward(request, response);
+            return;
+        }
 
-        if (path.matches("^/lesson/\\p{Nd}+/change/?")) {
+
+        if (path.matches("^/lesson/[^/]+/change/?")) {
             String id = path.split("/")[2];
             try {
                 lesson = LessonService.read(id);

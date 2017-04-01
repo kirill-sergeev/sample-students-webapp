@@ -91,7 +91,12 @@ public class DisciplineServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/discipline/\\p{Nd}+/?")) {
+        if (path.matches("^/discipline/new/?")) {
+            request.getRequestDispatcher("/add-discipline.jsp").forward(request, response);
+            return;
+        }
+
+        if (path.matches("^/discipline/[^/]+/?")) {
             String id = path.split("/")[2];
             try {
                 discipline = DisciplineService.read(id);
@@ -107,12 +112,7 @@ public class DisciplineServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/discipline/new/?")) {
-            request.getRequestDispatcher("/add-discipline.jsp").forward(request, response);
-            return;
-        }
-
-        if (path.matches("^/discipline/\\p{Nd}+/change/?")) {
+        if (path.matches("^/discipline/[^/]+/change/?")) {
             String id = path.split("/")[2];
             try {
                 discipline = DisciplineService.read(id);

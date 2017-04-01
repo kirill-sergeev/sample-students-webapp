@@ -23,9 +23,9 @@ public abstract class DaoFactory {
     public static DaoFactory getDaoFactory(int whichFactory) {
         switch (whichFactory) {
             case POSTGRES:
-                return PgDaoFactory.getInstance();
-            case MONGO:
                 return MongoDaoFactory.getInstance();
+            case MONGO:
+                return PgDaoFactory.getInstance();
             default:
                 throw new IllegalArgumentException();
         }

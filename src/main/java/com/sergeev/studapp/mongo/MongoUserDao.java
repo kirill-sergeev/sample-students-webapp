@@ -39,14 +39,13 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     protected Document getDocument(User object) throws PersistentException{
         doc = new Document(FIRST_NAME, object.getFirstName()).append(LAST_NAME, object.getLastName())
-                .append(TYPE, object.getType().getId()).append(ACCOUNT, new DBRef("accounts", object.getAccount().getId()));
+                .append(TYPE, object.getType().getId()).append(ACCOUNT, object.getAccount().getId());
         if (object.getType() == User.Role.STUDENT) {
-            doc.append(GROUP, new DBRef("groups", object.getGroup().getId()));
+            doc.append(GROUP, object.getGroup().getId());
         }
 
-        if(doc == null){
-            logger.error("Bad fields for entity {}", object.getClass().getName());
-            throw new PersistentException();
+        if(doc == null || doc.isEmpty()){
+            throw new PersistentException("Bad fields for entity " + object.getClass().getName());
         }
         return doc;
     }
@@ -59,14 +58,12 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));
         user.setLastName(String.valueOf(doc.get(LAST_NAME)));
         user.setType(User.Role.getById(String.valueOf(doc.get(TYPE))));
+        MongoAccountDao mad = new MongoAccountDao();
+        user.setAccount(mad.getById(String.valueOf(doc.get(ACCOUNT))));
         if (user.getType() == User.Role.STUDENT) {
             MongoGroupDao mgd = new MongoGroupDao();
-            DBRef groupRef = (DBRef) doc.get(GROUP);
-            user.setGroup(mgd.getById(String.valueOf(groupRef.getId())));
+            user.setGroup(mgd.getById(String.valueOf(doc.get(GROUP))));
         }
-        MongoAccountDao mad = new MongoAccountDao();
-        DBRef accountRef = (DBRef) doc.get(ACCOUNT);
-        user.setAccount(mad.getById(String.valueOf(accountRef.getId())));
         return user;
     }
 
@@ -90,7 +87,10 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             }
             list.add(item);
         };
-        collection.find(query).forEach(documents);
+        collection.find(query).sort(new BasicDBObject("first_name", 1).append("last_name", 1)).forEach(documents);
+        if (list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 
@@ -106,8 +106,10 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             }
             list.add(item);
         };
-        DBRef ref = new DBRef("groups", groupId);
-        collection.find(eq(GROUP, ref)).forEach(documents);
+        collection.find(eq(GROUP, groupId)).sort(new BasicDBObject("first_name", 1).append("last_name", 1)).forEach(documents);
+        if (list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 
@@ -123,23 +125,30 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             }
             list.add(item);
         };
-        collection.find(eq(TYPE, type.getId())).forEach(documents);
+        collection.find(eq(TYPE, type.getId())).sort(new BasicDBObject("first_name", 1).append("last_name", 1)).forEach(documents);
+        if (list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 
     @Override
     public User getByToken(String token) throws PersistentException {
         Account account = new MongoAccountDao().getByToken(token);
-        DBRef ref = new DBRef("accounts", account.getId());
-        doc = collection.find(eq(ACCOUNT, ref)).first();
+        doc = collection.find(eq(ACCOUNT, account.getId())).first();
+        if(doc == null || doc.isEmpty()){
+            throw new PersistentException("Record not found.");
+        }
         return parseDocument(doc);
     }
 
     @Override
     public User getByLogin(String login, String password) throws PersistentException {
         Account account = new MongoAccountDao().getByLogin(login, password);
-        DBRef ref = new DBRef("accounts", account.getId());
-        doc = collection.find(eq(ACCOUNT, ref)).first();
+        doc = collection.find(eq(ACCOUNT, account.getId())).first();
+        if(doc == null || doc.isEmpty()){
+            throw new PersistentException("Record not found.");
+        }
         return parseDocument(doc);
     }
 }

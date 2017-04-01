@@ -62,9 +62,11 @@ public class AccountService {
         account.setId(accountId);
         account.setLogin(generateLogin(user.getFirstName(), user.getLastName()));
         account.setPassword(AccountService.read(accountId).getPassword());
-        String token = user.getAccount().getToken();
-        account.setToken(token);
-
+        if (user.getAccount() == null) {
+            account.setToken(UserService.read(user.getId()).getAccount().getToken());
+        } else{
+            account.setToken(user.getAccount().getToken());
+        }
         try {
             ACCOUNT_DAO.update(account);
         } catch (PersistentException e) {

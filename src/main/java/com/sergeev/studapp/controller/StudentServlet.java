@@ -112,7 +112,14 @@ public class StudentServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/student/\\p{Nd}+/?")) {
+        if (path.matches("^/student/new/?")) {
+            groups = GroupService.readAll();
+            request.setAttribute("groups", groups);
+            request.getRequestDispatcher("/add-student.jsp").forward(request, response);
+            return;
+        }
+
+        if (path.matches("^/student/[^/]+/?")) {
             String id = path.split("/")[2];
             try {
                 student = UserService.read(id);
@@ -128,14 +135,7 @@ public class StudentServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/student/new/?")) {
-            groups = GroupService.readAll();
-            request.setAttribute("groups", groups);
-            request.getRequestDispatcher("/add-student.jsp").forward(request, response);
-            return;
-        }
-
-        if (path.matches("^/student/\\p{Nd}+/change/?")) {
+        if (path.matches("^/student/[^/]+/change/?")) {
             String id = path.split("/")[2];
             try {
                 student = UserService.read(id);

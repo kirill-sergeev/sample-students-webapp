@@ -48,7 +48,7 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
     protected Account getByToken(String token) throws PersistentException {
         doc = collection.find(eq(TOKEN, token)).first();
         if (doc == null) {
-            throw new PersistentException();
+            throw new PersistentException("Record not found.");
         }
         return parseDocument(doc);
     }
@@ -72,6 +72,12 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
             list.add(item);
         };
         collection.find(query).forEach(documents);
+        if (list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        if (list.size() > 1) {
+            throw new PersistentException("Received more than one record.");
+        }
         return list.listIterator().next();
     }
 }

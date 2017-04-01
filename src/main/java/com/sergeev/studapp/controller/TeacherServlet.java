@@ -94,7 +94,12 @@ public class TeacherServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/teacher/\\p{Nd}+/?")) {
+        if (path.matches("^/teacher/new/?")) {
+            request.getRequestDispatcher("/add-teacher.jsp").forward(request, response);
+            return;
+        }
+
+        if (path.matches("^/teacher/[^/]+/?")) {
             String id = path.split("/")[2];
             try {
                 teacher = UserService.read(id);
@@ -110,12 +115,7 @@ public class TeacherServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/teacher/new/?")) {
-            request.getRequestDispatcher("/add-teacher.jsp").forward(request, response);
-            return;
-        }
-
-        if (path.matches("^/teacher/\\p{Nd}+/change/?")) {
+        if (path.matches("^/teacher/[^/]+/change/?")) {
             String id = path.split("/")[2];
             try {
                 teacher = UserService.read(id);

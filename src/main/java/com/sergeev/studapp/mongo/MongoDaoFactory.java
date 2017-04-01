@@ -60,11 +60,11 @@ public class MongoDaoFactory extends DaoFactory {
     }
     @Override
     public CourseDao getCourseDao() {
-        return null;
+        return new MongoCourseDao();
     }
     @Override
     public DisciplineDao getDisciplineDao() {
-        return null;
+        return new MongoDisciplineDao();
     }
     @Override
     public GroupDao getGroupDao() {
@@ -72,11 +72,11 @@ public class MongoDaoFactory extends DaoFactory {
     }
     @Override
     public LessonDao getLessonDao() {
-        return null;
+        return new MongoLessonDao();
     }
     @Override
     public MarkDao getMarkDao() {
-        return null;
+        return new MongoMarkDao();
     }
     @Override
     public UserDao getUserDao() {

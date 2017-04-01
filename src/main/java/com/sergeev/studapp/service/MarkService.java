@@ -103,7 +103,7 @@ public class MarkService {
     }
 
     private static boolean checkValue(String value) {
-        if (value == null || value.isEmpty()) {
+        if (value == null || value.isEmpty() || !value.matches("^\\d{1,3}$")) {
             return false;
         }
         int mark = Integer.parseInt(value);

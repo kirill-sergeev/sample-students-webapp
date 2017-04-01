@@ -93,7 +93,12 @@ public class GroupServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/group/\\p{Nd}+/?")) {
+        if (path.matches("^/group/new/?")) {
+            request.getRequestDispatcher("/add-group.jsp").forward(request, response);
+            return;
+        }
+
+        if (path.matches("^/group/[^/]+/?")) {
             String id = path.split("/")[2];
             try {
                 group = GroupService.read(id);
@@ -113,12 +118,7 @@ public class GroupServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/group/new/?")) {
-            request.getRequestDispatcher("/add-group.jsp").forward(request, response);
-            return;
-        }
-
-        if (path.matches("^/group/\\p{Nd}+/change/?")) {
+        if (path.matches("^/group/[^/]+/change/?")) {
             String id = path.split("/")[2];
             try {
                 group = GroupService.read(id);

@@ -3,6 +3,7 @@ package com.sergeev.studapp.controller;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
+import java.util.TimeZone;
 
 @WebFilter(filterName = "CharsetFilter", urlPatterns = "/*")
 public class CharsetFilter implements Filter {
@@ -13,7 +14,7 @@ public class CharsetFilter implements Filter {
             if (null == request.getCharacterEncoding()) {
                 request.setCharacterEncoding(encoding);
             }
-
+            TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
             response.setContentType("text/html; charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
             chain.doFilter(request, response);

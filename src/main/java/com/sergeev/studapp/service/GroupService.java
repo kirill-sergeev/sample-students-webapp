@@ -107,7 +107,7 @@ public class GroupService {
         if (title == null || title.isEmpty()) {
             return false;
         }
-        String expression = "(?u)^\\p{Lu}\\w+$";
+        String expression = "(?u)^\\p{Lu}.{1,29}$";
         return title.matches(expression);
     }
 }

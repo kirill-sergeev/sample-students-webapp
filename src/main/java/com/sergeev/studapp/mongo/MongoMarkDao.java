@@ -1,6 +1,6 @@
 package com.sergeev.studapp.mongo;
 
-import com.mongodb.DBRef;
+import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.MarkDao;
@@ -9,7 +9,11 @@ import com.sergeev.studapp.model.Mark;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
@@ -27,8 +31,8 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
     @Override
     protected Document getDocument(Mark object) throws PersistentException {
-        doc = new Document(LESSON, new DBRef("lessons", object.getLesson().getId()))
-                .append(STUDENT, new DBRef("users", object.getStudent().getId()))
+        doc = new Document(LESSON, object.getLesson().getId())
+                .append(STUDENT, object.getStudent().getId())
                 .append(VALUE, object.getValue());
         return doc;
     }
@@ -41,27 +45,39 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
         mark.setValue((Integer) doc.get(VALUE));
 
         MongoLessonDao mld = new MongoLessonDao();
-        DBRef lessonRef = (DBRef) doc.get(LESSON);
-        mark.setLesson(mld.getById(String.valueOf(lessonRef.getId())));
+        mark.setLesson(mld.getById(String.valueOf(doc.get(LESSON))));
 
         MongoUserDao mud = new MongoUserDao();
-        DBRef userRef = (DBRef) doc.get(STUDENT);
-        mark.setStudent(mud.getById(String.valueOf(userRef.getId())));
+        mark.setStudent(mud.getById(String.valueOf(doc.get(STUDENT))));
         return mark;
     }
 
     @Override
     public Double getAvgMark(String studentId, String disciplineId) throws PersistentException {
-        return null;
+        return 0.0;
     }
 
     @Override
     public List<Mark> getByLesson(String lessonId) throws PersistentException {
-        return null;
+        List<Mark> list = new ArrayList<>();
+        Block<Document> documents = doc -> {
+            Mark item = null;
+            try {
+                item = parseDocument(doc);
+            } catch (PersistentException e) {
+                e.printStackTrace();
+            }
+            list.add(item);
+        };
+        collection.find(eq(LESSON, lessonId)).forEach(documents);
+        if (list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
     public List<Mark> getByDisciplineAndStudent(String disciplineId, String studentId) throws PersistentException {
-        return null;
+        return Collections.emptyList();
     }
 }

@@ -1,5 +1,6 @@
 package com.sergeev.studapp.mongo;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -45,12 +46,10 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
         try {
             oid = new ObjectId(id);
         } catch (IllegalArgumentException e){
-            LOG.error("Bad ID {}", id);
             throw new PersistentException("Bad ID.");
         }
         doc = collection.find(eq(ID, oid)).first();
         if (doc == null){
-            LOG.error("Object with ID {} not found.", id);
             throw new PersistentException("Object not found.");
         }
         return parseDocument(doc);
@@ -88,7 +87,10 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
             }
             list.add(item);
         };
-        collection.find().forEach(documents);
+        collection.find().sort(new BasicDBObject("title", 1)).forEach(documents);
+        if (list.size() == 0) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 }

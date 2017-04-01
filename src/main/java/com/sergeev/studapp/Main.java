@@ -3,12 +3,14 @@ package com.sergeev.studapp;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.*;
 import com.sergeev.studapp.mongo.*;
+import com.sergeev.studapp.service.ApplicationException;
+import com.sergeev.studapp.service.LessonService;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws PersistentException {
+    public static void main1(String[] args) throws PersistentException {
 
         Group group = new Group();
         group.setTitle("AA-2017");
@@ -84,5 +86,18 @@ public class Main {
         List <Mark> marks;
         marks = mdao.getAll();
         System.out.println(marks);
+
+        System.out.println("courses");
+        List <Course>courses;
+        courses = cdao.getAll();
+        System.out.println(courses);
+
+       // System.out.println( ldao.getByGroup(group.getId()));
+    }
+
+    public static void main(String[] args) throws ApplicationException {
+        Lesson lesson = LessonService.create("58df7b84c6ff8e3dc3e212d4", "58df7d02c6ff8e40440af884", Lesson.Type.LAB.getId(), Lesson.Order.FIRST.getNumber().toString(), "2017-01-01");
+        System.out.println(lesson.getDate());
+
     }
 }

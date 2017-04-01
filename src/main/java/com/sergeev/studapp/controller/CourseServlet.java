@@ -108,7 +108,7 @@ public class CourseServlet extends HttpServlet {
             return;
         }
 
-        if (path.matches("^/course/\\p{Nd}+/change/?")) {
+        if (path.matches("^/course/[^/]+/change/?")) {
             String id = path.split("/")[2];
             try {
                 course = CourseService.read(id);
