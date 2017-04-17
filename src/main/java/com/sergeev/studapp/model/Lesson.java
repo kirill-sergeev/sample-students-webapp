@@ -7,50 +7,56 @@ import java.time.LocalTime;
 public class Lesson implements Identified {
 
     private String id;
-
     private Course course;
     private LocalDate date;
     private Order order;
     private Type type;
 
+    @Override
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    @Override
+    public Lesson setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Course getCourse() {
         return course;
     }
 
-    public void setCourse(Course course) {
+    public Lesson setCourse(Course course) {
         this.course = course;
+        return this;
     }
 
     public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public Lesson setDate(LocalDate date) {
         this.date = date;
+        return this;
     }
 
     public Order getOrder() {
         return order;
     }
 
-    public void setOrder(Order order) {
+    public Lesson setOrder(Order order) {
         this.order = order;
+        return this;
     }
 
     public Type getType() {
         return type;
     }
 
-    public void setType(Type type) {
+    public Lesson setType(Type type) {
         this.type = type;
+        return this;
     }
 
     @Override

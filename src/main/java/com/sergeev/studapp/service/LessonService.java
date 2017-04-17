@@ -15,7 +15,7 @@ import java.util.List;
 public class LessonService {
 
     private static final Logger LOG = LoggerFactory.getLogger(LessonService.class);
-    private static final LessonDao LESSON_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getLessonDao();
+    private static final LessonDao LESSON_DAO = DaoFactory.getDaoFactory().getLessonDao();
 
     private static Lesson lesson;
     private static List<Lesson> lessons;

@@ -3,42 +3,46 @@ package com.sergeev.studapp.model;
 public class Mark implements Identified {
 
     private String id;
-
     private Lesson lesson;
-
     private User student;
     private Integer value;
 
+    @Override
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    @Override
+    public Mark setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Lesson getLesson() {
         return lesson;
     }
 
-    public void setLesson(Lesson lesson) {
+    public Mark setLesson(Lesson lesson) {
         this.lesson = lesson;
+        return this;
     }
 
     public User getStudent() {
         return student;
     }
 
-    public void setStudent(User student) {
+    public Mark setStudent(User student) {
         this.student = student;
+        return this;
     }
 
     public Integer getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public Mark setValue(Integer value) {
         this.value = value;
+        return this;
     }
 
     @Override

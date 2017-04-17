@@ -25,7 +25,6 @@ public class LoginFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(true);
         final String path = req.getRequestURI().substring(req.getContextPath().length());
-
         User user = (User) session.getAttribute("user");
         Cookie loginCookie = null;
 
@@ -48,7 +47,6 @@ public class LoginFilter implements Filter {
                 } catch (ApplicationException e) {
                     LOG.info("Broken cookie.");
                 }
-                //datastore.updateTokenLastActivity(loginCookie.getValue());
                 req.getSession().setAttribute("user", user);
             }
         }

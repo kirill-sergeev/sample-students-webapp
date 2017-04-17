@@ -12,7 +12,7 @@ import java.util.*;
 public class GroupService {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupService.class);
-    private static final GroupDao GROUP_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getGroupDao();
+    private static final GroupDao GROUP_DAO = DaoFactory.getDaoFactory().getGroupDao();
 
     public static Group create(String title) throws ApplicationException {
         if (!checkTitle(title)){

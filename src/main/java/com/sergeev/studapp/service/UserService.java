@@ -17,7 +17,7 @@ import java.util.Map;
 public class UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
-    private static final UserDao USER_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getUserDao();
+    private static final UserDao USER_DAO = DaoFactory.getDaoFactory().getUserDao();
 
     public static User createStudent(String firstName, String lastName, String groupId) throws ApplicationException {
         User user = UserService.create(firstName, lastName);
@@ -41,6 +41,19 @@ public class UserService {
             user = USER_DAO.persist(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save teacher.", e);
+        }
+
+        return user;
+    }
+
+    public static User createAdmin(String firstName, String lastName) throws ApplicationException {
+        User user = UserService.create(firstName, lastName);
+        user.setType(User.Role.ADMIN);
+
+        try {
+            user = USER_DAO.persist(user);
+        } catch (PersistentException e) {
+            throw new ApplicationException("Cannot save admin.", e);
         }
 
         return user;

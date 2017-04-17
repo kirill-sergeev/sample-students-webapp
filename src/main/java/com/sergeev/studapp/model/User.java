@@ -3,9 +3,7 @@ package com.sergeev.studapp.model;
 public class User implements Identified {
 
     private String id;
-
     private Account account;
-
     private Group group;
     private String firstName;
     private String lastName;
@@ -17,48 +15,54 @@ public class User implements Identified {
     }
 
     @Override
-    public void setId(String id) {
+    public User setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Account getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public User setAccount(Account account) {
         this.account = account;
+        return this;
     }
 
     public Group getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public User setGroup(Group group) {
         this.group = group;
+        return this;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public User setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public User setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
     public Role getType() {
         return type;
     }
 
-    public void setType(Role type) {
+    public User setType(Role type) {
         this.type = type;
+        return this;
     }
 
     @Override
@@ -75,9 +79,9 @@ public class User implements Identified {
 
     public enum Role {
 
-        STUDENT("1", "Student"),
-        TEACHER("2", "Teacher"),
-        ADMIN("3", "Admin");
+        STUDENT("1", "student"),
+        TEACHER("2", "teacher"),
+        ADMIN("3", "admin");
 
         private String id;
         private String type;

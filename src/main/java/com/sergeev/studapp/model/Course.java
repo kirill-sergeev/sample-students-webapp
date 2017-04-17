@@ -6,43 +6,46 @@ package com.sergeev.studapp.model;
 public class Course implements Identified {
 
     private String id;
-
     private Discipline discipline;
-
     private Group group;
-
     private User teacher;
 
+    @Override
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
+    @Override
+    public Course setId(String id) {
         this.id = id;
+        return this;
     }
 
     public Discipline getDiscipline() {
         return discipline;
     }
 
-    public void setDiscipline(Discipline discipline) {
+    public Course setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+        return this;
     }
 
     public Group getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public Course setGroup(Group group) {
         this.group = group;
+        return this;
     }
 
     public User getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(User teacher) {
+    public Course setTeacher(User teacher) {
         this.teacher = teacher;
+        return this;
     }
 
     @Override

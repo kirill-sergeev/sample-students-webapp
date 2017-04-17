@@ -13,7 +13,7 @@ import java.util.List;
 public class DisciplineService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DisciplineService.class);
-    private static final DisciplineDao DISCIPLINE_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getDisciplineDao();
+    private static final DisciplineDao DISCIPLINE_DAO = DaoFactory.getDaoFactory().getDisciplineDao();
 
     private static Discipline discipline;
     private static List<Discipline> disciplines;

@@ -13,7 +13,7 @@ import java.util.List;
 public class MarkService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MarkService.class);
-    private static final MarkDao MARK_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getMarkDao();
+    private static final MarkDao MARK_DAO = DaoFactory.getDaoFactory().getMarkDao();
 
     private static Mark mark;
     private static List<Mark> marks;
@@ -58,6 +58,17 @@ public class MarkService {
 
         try {
             marks = MARK_DAO.getByLesson(lessonId);
+        } catch (PersistentException e) {
+            marks  = Collections.emptyList();
+        }
+
+        return marks;
+    }
+
+    public static List<Mark> readAll(){
+
+        try {
+            marks = MARK_DAO.getAll();
         } catch (PersistentException e) {
             marks  = Collections.emptyList();
         }

@@ -40,7 +40,7 @@ public class MongoDaoFactory extends DaoFactory {
         PASSWORD = PROPERTIES.getProperty("password");
     }
 
-    static MongoDatabase getConnection() {
+    public static MongoDatabase getConnection() {
         ServerAddress address = new ServerAddress(ADDRESS, PORT);
         MongoClientOptions options = MongoClientOptions.builder()
                 .writeConcern(WriteConcern.ACKNOWLEDGED).build();

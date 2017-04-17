@@ -10,16 +10,19 @@ public class Group implements Identified {
         return id;
     }
 
-    public void setId(String id) {
+    @Override
+    public Group setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public Group setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     @Override

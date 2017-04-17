@@ -16,7 +16,7 @@ import java.util.List;
 public class CourseService {
 
     private static final Logger LOG = LoggerFactory.getLogger(CourseService.class);
-    private static final CourseDao COURSE_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getCourseDao();
+    private static final CourseDao COURSE_DAO = DaoFactory.getDaoFactory().getCourseDao();
 
     public static Course create(String disciplineId, String groupId, String teacherId) throws ApplicationException {
         Discipline discipline = DisciplineService.read(disciplineId);

@@ -14,32 +14,36 @@ public class Account implements Identified {
     }
 
     @Override
-    public void setId(String id) {
+    public Account setId(String id) {
         this.id = id;
+        return this;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public Account setLogin(String login) {
         this.login = login;
+        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public Account setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     public String getToken() {
         return token;
     }
 
-    public void setToken(String token) {
+    public Account setToken(String token) {
         this.token = token;
+        return this;
     }
 
     @Override
@@ -49,5 +53,4 @@ public class Account implements Identified {
                 ", login='" + login + '\'' +
                 '}';
     }
-
 }

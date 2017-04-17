@@ -92,7 +92,6 @@ public class Main {
         courses = cdao.getAll();
         System.out.println(courses);
 
-       // System.out.println( ldao.getByGroup(group.getId()));
     }
 
     public static void main(String[] args) throws ApplicationException {

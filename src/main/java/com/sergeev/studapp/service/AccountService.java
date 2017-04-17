@@ -15,7 +15,7 @@ import java.util.Random;
 public class AccountService {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountService.class);
-    private static final AccountDao ACCOUNT_DAO = DaoFactory.getDaoFactory(DaoFactory.POSTGRES).getAccountDao();
+    private static final AccountDao ACCOUNT_DAO = DaoFactory.getDaoFactory().getAccountDao();
 
     public static Account create(User user) throws ApplicationException {
         String password = generatePassword();

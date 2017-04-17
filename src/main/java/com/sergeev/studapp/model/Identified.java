@@ -4,5 +4,5 @@ import java.io.Serializable;
 
 public interface Identified extends Serializable {
     String getId();
-    void setId(String id);
+    Identified setId(String id);
 }
