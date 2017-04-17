@@ -23,617 +23,477 @@
       <ObjectId>12119</ObjectId>
     </schema>
     <schema id="8" parent="2" name="public">
-      <ObjectId>53931</ObjectId>
-      <IntrospectionTimestamp>2017-04-17.14:52:43.796</IntrospectionTimestamp>
-      <IntrospectionStateNumber>2647</IntrospectionStateNumber>
+      <ObjectId>54517</ObjectId>
+      <IntrospectionTimestamp>2017-04-17.21:52:47.356</IntrospectionTimestamp>
+      <IntrospectionStateNumber>2816</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
     <sequence id="9" parent="8" name="accounts_account_id_seq">
-      <ObjectId>53932</ObjectId>
-      <StateNumber>2647</StateNumber>
+      <ObjectId>54518</ObjectId>
+      <StateNumber>2805</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
     <sequence id="10" parent="8" name="courses_course_id_seq">
-      <ObjectId>53981</ObjectId>
-      <StateNumber>2647</StateNumber>
+      <ObjectId>54566</ObjectId>
+      <StateNumber>2809</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
     <sequence id="11" parent="8" name="disciplines_discipline_id_seq">
-      <ObjectId>53971</ObjectId>
-      <StateNumber>2647</StateNumber>
+      <ObjectId>54556</ObjectId>
+      <StateNumber>2808</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
     <sequence id="12" parent="8" name="groups_group_id_seq">
-      <ObjectId>53941</ObjectId>
-      <StateNumber>2647</StateNumber>
+      <ObjectId>54527</ObjectId>
+      <StateNumber>2806</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
     <sequence id="13" parent="8" name="lessons_lesson_id_seq">
-      <ObjectId>54029</ObjectId>
-      <StateNumber>2647</StateNumber>
+      <ObjectId>54589</ObjectId>
+      <StateNumber>2810</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
-    <sequence id="14" parent="8" name="lessons_order_lesson_order_id_seq">
-      <ObjectId>54014</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <sequence id="14" parent="8" name="marks_mark_id_seq">
+      <ObjectId>54604</ObjectId>
+      <StateNumber>2811</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
-    <sequence id="15" parent="8" name="lessons_types_lesson_type_id_seq">
-      <ObjectId>54004</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <sequence id="15" parent="8" name="users_user_id_seq">
+      <ObjectId>54537</ObjectId>
+      <StateNumber>2807</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
     </sequence>
-    <sequence id="16" parent="8" name="marks_mark_id_seq">
-      <ObjectId>54053</ObjectId>
-      <StateNumber>2647</StateNumber>
-      <SequenceIdentity>1</SequenceIdentity>
-      <BelongsToColumn>1</BelongsToColumn>
-    </sequence>
-    <sequence id="17" parent="8" name="users_user_id_seq">
-      <ObjectId>53951</ObjectId>
-      <StateNumber>2647</StateNumber>
-      <SequenceIdentity>1</SequenceIdentity>
-      <BelongsToColumn>1</BelongsToColumn>
-    </sequence>
-    <table id="18" parent="8" name="accounts">
-      <ObjectId>53934</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="16" parent="8" name="accounts">
+      <ObjectId>54520</ObjectId>
+      <StateNumber>2807</StateNumber>
     </table>
-    <table id="19" parent="8" name="courses">
-      <ObjectId>53983</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="17" parent="8" name="courses">
+      <ObjectId>54568</ObjectId>
+      <StateNumber>2815</StateNumber>
     </table>
-    <table id="20" parent="8" name="disciplines">
-      <ObjectId>53973</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="18" parent="8" name="disciplines">
+      <ObjectId>54558</ObjectId>
+      <StateNumber>2809</StateNumber>
     </table>
-    <table id="21" parent="8" name="groups">
-      <ObjectId>53943</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="19" parent="8" name="groups">
+      <ObjectId>54529</ObjectId>
+      <StateNumber>2809</StateNumber>
     </table>
-    <table id="22" parent="8" name="lessons">
-      <ObjectId>54031</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="20" parent="8" name="lessons">
+      <ObjectId>54591</ObjectId>
+      <StateNumber>2811</StateNumber>
     </table>
-    <table id="23" parent="8" name="lessons_order">
-      <ObjectId>54016</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="21" parent="8" name="marks">
+      <ObjectId>54606</ObjectId>
+      <StateNumber>2813</StateNumber>
     </table>
-    <table id="24" parent="8" name="lessons_types">
-      <ObjectId>54006</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <table id="22" parent="8" name="users">
+      <ObjectId>54539</ObjectId>
+      <StateNumber>2811</StateNumber>
     </table>
-    <table id="25" parent="8" name="marks">
-      <ObjectId>54055</ObjectId>
-      <StateNumber>2647</StateNumber>
-    </table>
-    <table id="26" parent="8" name="users">
-      <ObjectId>53953</ObjectId>
-      <StateNumber>2647</StateNumber>
-    </table>
-    <routine id="27" parent="8" name="student_avg_mark_by_discipline">
-      <ObjectId>54076</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <routine id="23" parent="8" name="student_avg_mark_by_discipline">
+      <ObjectId>54627</ObjectId>
+      <StateNumber>2816</StateNumber>
       <ArgumentsDefinition>integer, integer</ArgumentsDefinition>
       <ResultsDefinition>numeric</ResultsDefinition>
       <LanguageName>sql</LanguageName>
       <RoutineKind>function</RoutineKind>
     </routine>
-    <routine id="28" parent="8" name="trigger_before_insert_on_courses">
-      <ObjectId>54074</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <routine id="24" parent="8" name="trigger_before_insert_on_courses">
+      <ObjectId>54625</ObjectId>
+      <StateNumber>2814</StateNumber>
       <ResultsDefinition>trigger</ResultsDefinition>
       <LanguageName>plpgsql</LanguageName>
       <RoutineKind>function</RoutineKind>
     </routine>
-    <routine id="29" parent="8" name="trigger_before_insert_on_marks">
-      <ObjectId>54072</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <routine id="25" parent="8" name="trigger_before_insert_on_marks">
+      <ObjectId>54623</ObjectId>
+      <StateNumber>2812</StateNumber>
       <ResultsDefinition>trigger</ResultsDefinition>
       <LanguageName>plpgsql</LanguageName>
       <RoutineKind>function</RoutineKind>
     </routine>
-    <column id="30" parent="18" name="account_id">
+    <column id="26" parent="16" name="account_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2805</StateNumber>
       <SequenceName>accounts_account_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;accounts_account_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="31" parent="18" name="login">
+    <column id="27" parent="16" name="login">
       <Position>2</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2805</StateNumber>
     </column>
-    <column id="32" parent="18" name="password">
+    <column id="28" parent="16" name="password">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2805</StateNumber>
     </column>
-    <column id="33" parent="18" name="token">
+    <column id="29" parent="16" name="token">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2805</StateNumber>
       <DefaultExpression>NULL::character varying</DefaultExpression>
     </column>
-    <index id="34" parent="18" name="accounts_pkey">
-      <ObjectId>53939</ObjectId>
+    <index id="30" parent="16" name="accounts_pkey">
+      <ObjectId>54525</ObjectId>
       <ColNames>account_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="35" parent="18" name="accounts_pkey">
-      <ObjectId>53940</ObjectId>
+    <key id="31" parent="16" name="accounts_pkey">
+      <ObjectId>54526</ObjectId>
       <ColNames>account_id</ColNames>
       <UnderlyingIndexName>accounts_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="36" parent="19" name="course_id">
+    <column id="32" parent="17" name="course_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2809</StateNumber>
       <SequenceName>courses_course_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;courses_course_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="37" parent="19" name="discipline_id">
+    <column id="33" parent="17" name="discipline_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2809</StateNumber>
     </column>
-    <column id="38" parent="19" name="group_id">
+    <column id="34" parent="17" name="group_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2809</StateNumber>
     </column>
-    <column id="39" parent="19" name="user_id">
+    <column id="35" parent="17" name="user_id">
       <Position>4</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2809</StateNumber>
     </column>
-    <index id="40" parent="19" name="courses_pkey">
-      <ObjectId>53987</ObjectId>
+    <index id="36" parent="17" name="courses_pkey">
+      <ObjectId>54572</ObjectId>
       <ColNames>course_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="41" parent="19" name="courses_pkey">
-      <ObjectId>53988</ObjectId>
+    <key id="37" parent="17" name="courses_pkey">
+      <ObjectId>54573</ObjectId>
       <ColNames>course_id</ColNames>
       <UnderlyingIndexName>courses_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="42" parent="19" name="courses_discipline_id_fkey">
-      <ObjectId>53989</ObjectId>
+    <foreign-key id="38" parent="17" name="courses_discipline_id_fkey">
+      <ObjectId>54574</ObjectId>
       <ColNames>discipline_id</ColNames>
       <RefTableName>disciplines</RefTableName>
       <RefKeyName>disciplines_pkey</RefKeyName>
       <RefColNames>discipline_id</RefColNames>
     </foreign-key>
-    <foreign-key id="43" parent="19" name="courses_group_id_fkey">
-      <ObjectId>53994</ObjectId>
+    <foreign-key id="39" parent="17" name="courses_group_id_fkey">
+      <ObjectId>54579</ObjectId>
       <ColNames>group_id</ColNames>
       <RefTableName>groups</RefTableName>
       <RefKeyName>groups_pkey</RefKeyName>
       <RefColNames>group_id</RefColNames>
     </foreign-key>
-    <foreign-key id="44" parent="19" name="courses_user_id_fkey">
-      <ObjectId>53999</ObjectId>
+    <foreign-key id="40" parent="17" name="courses_user_id_fkey">
+      <ObjectId>54584</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefKeyName>users_pkey</RefKeyName>
       <RefColNames>user_id</RefColNames>
     </foreign-key>
-    <trigger id="45" parent="19" name="check_disciplines_on_groups">
-      <ObjectId>54075</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <trigger id="41" parent="17" name="check_disciplines_on_groups">
+      <ObjectId>54626</ObjectId>
+      <StateNumber>2815</StateNumber>
       <Turn>before-row</Turn>
       <Events>I</Events>
       <FireMode>origin</FireMode>
-      <CallRoutineId>54074</CallRoutineId>
+      <CallRoutineId>54625</CallRoutineId>
     </trigger>
-    <column id="46" parent="20" name="discipline_id">
+    <column id="42" parent="18" name="discipline_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2808</StateNumber>
       <SequenceName>disciplines_discipline_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;disciplines_discipline_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="47" parent="20" name="title">
+    <column id="43" parent="18" name="title">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2808</StateNumber>
     </column>
-    <index id="48" parent="20" name="disciplines_pkey">
-      <ObjectId>53977</ObjectId>
+    <index id="44" parent="18" name="disciplines_pkey">
+      <ObjectId>54562</ObjectId>
       <ColNames>discipline_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="49" parent="20" name="disciplines_title_key">
-      <ObjectId>53979</ObjectId>
+    <index id="45" parent="18" name="disciplines_title_key">
+      <ObjectId>54564</ObjectId>
       <ColNames>title</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="50" parent="20" name="disciplines_pkey">
-      <ObjectId>53978</ObjectId>
+    <key id="46" parent="18" name="disciplines_pkey">
+      <ObjectId>54563</ObjectId>
       <ColNames>discipline_id</ColNames>
       <UnderlyingIndexName>disciplines_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="51" parent="20" name="disciplines_title_key">
-      <ObjectId>53980</ObjectId>
+    <key id="47" parent="18" name="disciplines_title_key">
+      <ObjectId>54565</ObjectId>
       <ColNames>title</ColNames>
       <UnderlyingIndexName>disciplines_title_key</UnderlyingIndexName>
     </key>
-    <column id="52" parent="21" name="group_id">
+    <column id="48" parent="19" name="group_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2806</StateNumber>
       <SequenceName>groups_group_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;groups_group_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="53" parent="21" name="title">
+    <column id="49" parent="19" name="title">
       <Position>2</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2806</StateNumber>
     </column>
-    <index id="54" parent="21" name="groups_pkey">
-      <ObjectId>53947</ObjectId>
+    <index id="50" parent="19" name="groups_pkey">
+      <ObjectId>54533</ObjectId>
       <ColNames>group_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="55" parent="21" name="groups_title_key">
-      <ObjectId>53949</ObjectId>
+    <index id="51" parent="19" name="groups_title_key">
+      <ObjectId>54535</ObjectId>
       <ColNames>title</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="56" parent="21" name="groups_pkey">
-      <ObjectId>53948</ObjectId>
+    <key id="52" parent="19" name="groups_pkey">
+      <ObjectId>54534</ObjectId>
       <ColNames>group_id</ColNames>
       <UnderlyingIndexName>groups_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="57" parent="21" name="groups_title_key">
-      <ObjectId>53950</ObjectId>
+    <key id="53" parent="19" name="groups_title_key">
+      <ObjectId>54536</ObjectId>
       <ColNames>title</ColNames>
       <UnderlyingIndexName>groups_title_key</UnderlyingIndexName>
     </key>
-    <column id="58" parent="22" name="lesson_id">
+    <column id="54" parent="20" name="lesson_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2810</StateNumber>
       <SequenceName>lessons_lesson_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;lessons_lesson_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="59" parent="22" name="lesson_type_id">
+    <column id="55" parent="20" name="course_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2810</StateNumber>
     </column>
-    <column id="60" parent="22" name="course_id">
+    <column id="56" parent="20" name="ordinal">
       <Position>3</Position>
-      <DataType>integer|0</DataType>
+      <DataType>smallint|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2810</StateNumber>
     </column>
-    <column id="61" parent="22" name="lesson_date">
+    <column id="57" parent="20" name="date">
       <Position>4</Position>
       <DataType>date|0</DataType>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2810</StateNumber>
     </column>
-    <column id="62" parent="22" name="lesson_order">
+    <column id="58" parent="20" name="type">
       <Position>5</Position>
-      <DataType>smallint|0</DataType>
-      <StateNumber>2647</StateNumber>
+      <DataType>varchar(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>2810</StateNumber>
     </column>
-    <index id="63" parent="22" name="lessons_pkey">
-      <ObjectId>54036</ObjectId>
+    <index id="59" parent="20" name="lessons_pkey">
+      <ObjectId>54597</ObjectId>
       <ColNames>lesson_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="64" parent="22" name="lessons_pkey">
-      <ObjectId>54037</ObjectId>
+    <key id="60" parent="20" name="lessons_pkey">
+      <ObjectId>54598</ObjectId>
       <ColNames>lesson_id</ColNames>
       <UnderlyingIndexName>lessons_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="65" parent="22" name="lessons_lesson_type_id_fkey">
-      <ObjectId>54038</ObjectId>
-      <ColNames>lesson_type_id</ColNames>
-      <RefTableName>lessons_types</RefTableName>
-      <RefKeyName>lessons_types_pkey</RefKeyName>
-      <RefColNames>lesson_type_id</RefColNames>
-    </foreign-key>
-    <foreign-key id="66" parent="22" name="lessons_course_id_fkey">
-      <ObjectId>54043</ObjectId>
+    <foreign-key id="61" parent="20" name="lessons_course_id_fkey">
+      <ObjectId>54599</ObjectId>
       <ColNames>course_id</ColNames>
       <RefTableName>courses</RefTableName>
       <RefKeyName>courses_pkey</RefKeyName>
       <RefColNames>course_id</RefColNames>
     </foreign-key>
-    <foreign-key id="67" parent="22" name="lessons_lesson_order_fkey">
-      <ObjectId>54048</ObjectId>
-      <ColNames>lesson_order</ColNames>
-      <RefTableName>lessons_order</RefTableName>
-      <RefKeyName>lessons_order_number_key</RefKeyName>
-      <RefColNames>number</RefColNames>
-    </foreign-key>
-    <check id="68" parent="22" name="lessons_lesson_date_check">
-      <ObjectId>54035</ObjectId>
-      <ColNames>lesson_date</ColNames>
-      <Predicate>(lesson_date &gt;= &apos;2017-01-01&apos;::date) AND (lesson_date &lt;= &apos;2050-01-01&apos;::date)</Predicate>
+    <check id="62" parent="20" name="lessons_ordinal_check">
+      <ObjectId>54595</ObjectId>
+      <ColNames>ordinal</ColNames>
+      <Predicate>(ordinal &gt;= 0) AND (ordinal &lt;= 10)</Predicate>
     </check>
-    <column id="69" parent="23" name="lesson_order_id">
-      <Position>1</Position>
-      <DataType>integer|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
-      <SequenceName>lessons_order_lesson_order_id_seq</SequenceName>
-      <DefaultExpression>nextval(&apos;lessons_order_lesson_order_id_seq&apos;::regclass)</DefaultExpression>
-    </column>
-    <column id="70" parent="23" name="number">
-      <Position>2</Position>
-      <DataType>smallint|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
-    </column>
-    <column id="71" parent="23" name="start_time">
-      <Position>3</Position>
-      <DataType>time|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
-    </column>
-    <column id="72" parent="23" name="end_time">
-      <Position>4</Position>
-      <DataType>time|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
-    </column>
-    <index id="73" parent="23" name="lessons_order_pkey">
-      <ObjectId>54021</ObjectId>
-      <ColNames>lesson_order_id</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="74" parent="23" name="lessons_order_number_key">
-      <ObjectId>54023</ObjectId>
-      <ColNames>number</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="75" parent="23" name="lessons_order_start_time_key">
-      <ObjectId>54025</ObjectId>
-      <ColNames>start_time</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="76" parent="23" name="lessons_order_end_time_key">
-      <ObjectId>54027</ObjectId>
-      <ColNames>end_time</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="77" parent="23" name="lessons_order_pkey">
-      <ObjectId>54022</ObjectId>
-      <ColNames>lesson_order_id</ColNames>
-      <UnderlyingIndexName>lessons_order_pkey</UnderlyingIndexName>
-      <Primary>1</Primary>
-    </key>
-    <key id="78" parent="23" name="lessons_order_number_key">
-      <ObjectId>54024</ObjectId>
-      <ColNames>number</ColNames>
-      <UnderlyingIndexName>lessons_order_number_key</UnderlyingIndexName>
-    </key>
-    <key id="79" parent="23" name="lessons_order_start_time_key">
-      <ObjectId>54026</ObjectId>
-      <ColNames>start_time</ColNames>
-      <UnderlyingIndexName>lessons_order_start_time_key</UnderlyingIndexName>
-    </key>
-    <key id="80" parent="23" name="lessons_order_end_time_key">
-      <ObjectId>54028</ObjectId>
-      <ColNames>end_time</ColNames>
-      <UnderlyingIndexName>lessons_order_end_time_key</UnderlyingIndexName>
-    </key>
-    <check id="81" parent="23" name="lessons_order_number_check">
-      <ObjectId>54020</ObjectId>
-      <ColNames>number</ColNames>
-      <Predicate>(number &gt;= 1) AND (number &lt;= 10)</Predicate>
+    <check id="63" parent="20" name="lessons_date_check">
+      <ObjectId>54596</ObjectId>
+      <ColNames>date</ColNames>
+      <Predicate>(date &gt;= &apos;2017-01-01&apos;::date) AND (date &lt;= &apos;2050-01-01&apos;::date)</Predicate>
     </check>
-    <column id="82" parent="24" name="lesson_type_id">
+    <column id="64" parent="21" name="mark_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
-      <SequenceName>lessons_types_lesson_type_id_seq</SequenceName>
-      <DefaultExpression>nextval(&apos;lessons_types_lesson_type_id_seq&apos;::regclass)</DefaultExpression>
-    </column>
-    <column id="83" parent="24" name="title">
-      <Position>2</Position>
-      <DataType>varchar(50)|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
-    </column>
-    <index id="84" parent="24" name="lessons_types_pkey">
-      <ObjectId>54010</ObjectId>
-      <ColNames>lesson_type_id</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <index id="85" parent="24" name="lessons_types_title_key">
-      <ObjectId>54012</ObjectId>
-      <ColNames>title</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="86" parent="24" name="lessons_types_pkey">
-      <ObjectId>54011</ObjectId>
-      <ColNames>lesson_type_id</ColNames>
-      <UnderlyingIndexName>lessons_types_pkey</UnderlyingIndexName>
-      <Primary>1</Primary>
-    </key>
-    <key id="87" parent="24" name="lessons_types_title_key">
-      <ObjectId>54013</ObjectId>
-      <ColNames>title</ColNames>
-      <UnderlyingIndexName>lessons_types_title_key</UnderlyingIndexName>
-    </key>
-    <column id="88" parent="25" name="mark_id">
-      <Position>1</Position>
-      <DataType>integer|0</DataType>
-      <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2811</StateNumber>
       <SequenceName>marks_mark_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;marks_mark_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="89" parent="25" name="lesson_id">
+    <column id="65" parent="21" name="lesson_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2811</StateNumber>
     </column>
-    <column id="90" parent="25" name="user_id">
+    <column id="66" parent="21" name="user_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2811</StateNumber>
     </column>
-    <column id="91" parent="25" name="mark">
+    <column id="67" parent="21" name="mark">
       <Position>4</Position>
       <DataType>smallint|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2811</StateNumber>
     </column>
-    <index id="92" parent="25" name="marks_pkey">
-      <ObjectId>54060</ObjectId>
+    <index id="68" parent="21" name="marks_pkey">
+      <ObjectId>54611</ObjectId>
       <ColNames>mark_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="93" parent="25" name="marks_pkey">
-      <ObjectId>54061</ObjectId>
+    <key id="69" parent="21" name="marks_pkey">
+      <ObjectId>54612</ObjectId>
       <ColNames>mark_id</ColNames>
       <UnderlyingIndexName>marks_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="94" parent="25" name="marks_lesson_id_fkey">
-      <ObjectId>54062</ObjectId>
+    <foreign-key id="70" parent="21" name="marks_lesson_id_fkey">
+      <ObjectId>54613</ObjectId>
       <ColNames>lesson_id</ColNames>
       <RefTableName>lessons</RefTableName>
       <RefKeyName>lessons_pkey</RefKeyName>
       <RefColNames>lesson_id</RefColNames>
     </foreign-key>
-    <foreign-key id="95" parent="25" name="marks_user_id_fkey">
-      <ObjectId>54067</ObjectId>
+    <foreign-key id="71" parent="21" name="marks_user_id_fkey">
+      <ObjectId>54618</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefKeyName>users_pkey</RefKeyName>
       <RefColNames>user_id</RefColNames>
     </foreign-key>
-    <check id="96" parent="25" name="marks_mark_check">
-      <ObjectId>54059</ObjectId>
+    <check id="72" parent="21" name="marks_mark_check">
+      <ObjectId>54610</ObjectId>
       <ColNames>mark</ColNames>
       <Predicate>(mark &gt;= 0) AND (mark &lt;= 100)</Predicate>
     </check>
-    <trigger id="97" parent="25" name="check_student_on_course">
-      <ObjectId>54073</ObjectId>
-      <StateNumber>2647</StateNumber>
+    <trigger id="73" parent="21" name="check_student_on_course">
+      <ObjectId>54624</ObjectId>
+      <StateNumber>2813</StateNumber>
       <Turn>before-row</Turn>
       <Events>I</Events>
       <FireMode>origin</FireMode>
-      <CallRoutineId>54072</CallRoutineId>
+      <CallRoutineId>54623</CallRoutineId>
     </trigger>
-    <column id="98" parent="26" name="user_id">
+    <column id="74" parent="22" name="user_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2807</StateNumber>
       <SequenceName>users_user_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;users_user_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="99" parent="26" name="first_name">
+    <column id="75" parent="22" name="first_name">
       <Position>2</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2807</StateNumber>
     </column>
-    <column id="100" parent="26" name="last_name">
+    <column id="76" parent="22" name="last_name">
       <Position>3</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2807</StateNumber>
     </column>
-    <column id="101" parent="26" name="account_id">
+    <column id="77" parent="22" name="account_id">
       <Position>4</Position>
       <DataType>integer|0</DataType>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2807</StateNumber>
     </column>
-    <column id="102" parent="26" name="group_id">
+    <column id="78" parent="22" name="group_id">
       <Position>5</Position>
       <DataType>integer|0</DataType>
-      <StateNumber>2647</StateNumber>
+      <StateNumber>2807</StateNumber>
     </column>
-    <column id="103" parent="26" name="type">
+    <column id="79" parent="22" name="role">
       <Position>6</Position>
-      <DataType>smallint|0</DataType>
-      <StateNumber>2647</StateNumber>
-      <DefaultExpression>1</DefaultExpression>
+      <DataType>varchar(10)|0</DataType>
+      <StateNumber>2807</StateNumber>
+      <DefaultExpression>&apos;STUDENT&apos;::character varying</DefaultExpression>
     </column>
-    <index id="104" parent="26" name="users_pkey">
-      <ObjectId>53959</ObjectId>
+    <index id="80" parent="22" name="users_pkey">
+      <ObjectId>54544</ObjectId>
       <ColNames>user_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="105" parent="26" name="users_pkey">
-      <ObjectId>53960</ObjectId>
+    <key id="81" parent="22" name="users_pkey">
+      <ObjectId>54545</ObjectId>
       <ColNames>user_id</ColNames>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="106" parent="26" name="users_account_id_fkey">
-      <ObjectId>53961</ObjectId>
+    <foreign-key id="82" parent="22" name="users_account_id_fkey">
+      <ObjectId>54546</ObjectId>
       <ColNames>account_id</ColNames>
       <RefTableName>accounts</RefTableName>
       <RefKeyName>accounts_pkey</RefKeyName>
       <RefColNames>account_id</RefColNames>
     </foreign-key>
-    <foreign-key id="107" parent="26" name="users_group_id_fkey">
-      <ObjectId>53966</ObjectId>
+    <foreign-key id="83" parent="22" name="users_group_id_fkey">
+      <ObjectId>54551</ObjectId>
       <ColNames>group_id</ColNames>
       <RefTableName>groups</RefTableName>
       <RefKeyName>groups_pkey</RefKeyName>
       <RefColNames>group_id</RefColNames>
     </foreign-key>
-    <check id="108" parent="26" name="users_type_check">
-      <ObjectId>53958</ObjectId>
-      <ColNames>type</ColNames>
-      <Predicate>(type &gt;= 1) AND (type &lt;= 10)</Predicate>
-    </check>
-    <argument id="109" parent="27">
+    <argument id="84" parent="23">
       <Position>1</Position>
       <DataType>integer|0</DataType>
     </argument>
-    <argument id="110" parent="27">
+    <argument id="85" parent="23">
       <Position>2</Position>
       <DataType>integer|0</DataType>
     </argument>
-    <argument id="111" parent="27">
+    <argument id="86" parent="23">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>numeric|0</DataType>
     </argument>
-    <argument id="112" parent="28">
+    <argument id="87" parent="24">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>trigger|0</DataType>
     </argument>
-    <argument id="113" parent="29">
+    <argument id="88" parent="25">
       <ArgumentDirection>R</ArgumentDirection>
       <DataType>trigger|0</DataType>
     </argument>

@@ -30,7 +30,7 @@
                     <label>Type
                         <select class="form-control" name="type">
                             <c:forEach items="${types}" var="type">
-                                <option value="${type.id}">${type.type}</option>
+                                <option value="${type.name()}">${type.name()}</option>
                             </c:forEach>
                         </select>
                     </label>
@@ -39,7 +39,7 @@
                     <label>Time
                         <select class="form-control" name="number">
                             <c:forEach items="${orders}" var="order">
-                                <option value="${order.number}">${order.startTime} - ${order.endTime}</option>
+                                <option value="${order.ordinal()}">${order.startTime} - ${order.endTime}</option>
                             </c:forEach>
                         </select>
                     </label>

@@ -21,7 +21,7 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
 
     protected static final String DATE = "date";
     protected static final String TYPE = "type";
-    protected static final String ORDER = "order";
+    protected static final String ORDINAL = "ordinal";
     protected static final String COURSE = "course";
 
     private Document doc;
@@ -34,7 +34,7 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
 
     @Override
     protected Document getDocument(Lesson object) throws PersistentException {
-        return doc = new Document(DATE, Date.valueOf(object.getDate())).append(TYPE, object.getType().getId()).append(ORDER, object.getOrder().getNumber()).append(COURSE, object.getCourse().getId());
+        return doc = new Document(DATE, Date.valueOf(object.getDate())).append(TYPE, object.getType().name()).append(ORDINAL, object.getOrder().ordinal() + 1).append(COURSE, object.getCourse().getId());
     }
 
     @Override
@@ -44,8 +44,8 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
         lesson.setId(String.valueOf(oid));
         LocalDate date = Instant.ofEpochMilli(doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneId.of("UTC")).toLocalDate();
         lesson.setDate(date);
-        lesson.setType(Lesson.Type.getById(String.valueOf(doc.get(TYPE))));
-        lesson.setOrder(Lesson.Order.getByNumber((Integer) doc.get(ORDER)));
+        lesson.setType(Lesson.Type.valueOf(String.valueOf(doc.get(TYPE))));
+        lesson.setOrder(Lesson.Order.values()[(int) doc.get(ORDINAL) - 1]);
         MongoCourseDao mcd = new MongoCourseDao();
         lesson.setCourse(mcd.getById(String.valueOf(doc.get(COURSE))));
         return lesson;
@@ -67,7 +67,10 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
         filters.add(sort);
         AggregateIterable<Document> it = collection.aggregate(filters);
         for (Document row : it) {
-            list.add(parseDocument(row));
+            Lesson lesson = parseDocument(row);
+            if (groupId.equals(lesson.getCourse().getGroup().getId())) {
+                list.add(lesson);
+            }
         }
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");

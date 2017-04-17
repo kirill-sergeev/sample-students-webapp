@@ -27,21 +27,13 @@ public class TransferService {
 
     private static void exportFrom(int database) throws PersistentException {
         DaoFactory dao = DaoFactory.getDaoFactory(database);
-        AccountDao accountDao = dao.getAccountDao();
-        CourseDao courseDao = dao.getCourseDao();
-        DisciplineDao disciplineDao = dao.getDisciplineDao();
-        GroupDao groupDao = dao.getGroupDao();
-        LessonDao lessonDao = dao.getLessonDao();
-        MarkDao markDao = dao.getMarkDao();
-        UserDao userDao = dao.getUserDao();
-
-        accounts = accountDao.getAll();
-        courses = courseDao.getAll();
-        disciplines = disciplineDao.getAll();
-        groups = groupDao.getAll();
-        lessons = lessonDao.getAll();
-        marks = markDao.getAll();
-        users = userDao.getAll();
+        accounts = dao.getAccountDao().getAll();
+        courses = dao.getCourseDao().getAll();
+        disciplines = dao.getDisciplineDao().getAll();
+        groups = dao.getGroupDao().getAll();
+        lessons = dao.getLessonDao().getAll();
+        marks = dao.getMarkDao().getAll();
+        users = dao.getUserDao().getAll();
     }
 
     private static void importTo(int database) throws PersistentException, IOException {
@@ -76,7 +68,7 @@ public class TransferService {
         for (User user : users) {
             oldId = user.getId();
             user.setAccount(new Account().setId(accountIDs.get(user.getAccount().getId())));
-            if (user.getType() == User.Role.STUDENT) {
+            if (user.getRole() == User.Role.STUDENT) {
                 user.setGroup(new Group().setId(groupIDs.get(user.getGroup().getId())));
             }
             user = dao.getUserDao().persist(user);
@@ -119,7 +111,7 @@ public class TransferService {
     private static void prepareSchema(int database) throws IOException {
         if (database == DaoFactory.POSTGRES) {
             String schema = new String(Files.readAllBytes(Paths.get("pg_schema.sql")), Charset.forName("UTF8"));
-            String data = new String(Files.readAllBytes(Paths.get("pg_data_default.sql")), Charset.forName("UTF8"));
+            String data = new String(Files.readAllBytes(Paths.get("pg_data.sql")), Charset.forName("UTF8"));
             String sql = schema + data;
             try (Connection connection = PgDaoFactory.getConnection();
                  Statement statement = connection.createStatement()) {

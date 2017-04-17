@@ -41,7 +41,7 @@
                                 <td>
                                     <a href="${pageContext.request.contextPath}/teacher/${lesson.course.teacher.id}">${lesson.course.teacher.firstName} ${lesson.course.teacher.lastName}</a>
                                 </td>
-                                <td>${lesson.type}</td>
+                                <td>${lesson.type.name().toLowerCase()}</td>
                                 <td>${lesson.date}</td>
                                 <td>${lesson.order.startTime}</td>
                                 <td>${lesson.order.endTime}</td>
@@ -57,14 +57,16 @@
                                                 onclick="location.href='${pageContext.request.contextPath}/lesson/${lesson.id}'">
                                             Info
                                         </button>
-                                        <c:if test="${lesson.date>=dateNow}">
-                                            <button class="btn btn-info btn-secondary" type="button"
-                                                    onclick="location.href='${pageContext.request.contextPath}/lesson/${lesson.id}/change'">
-                                                Change
-                                            </button>
-                                            <button class="btn btn-danger btn-secondary" type="submit"
-                                                    form="delete${lesson.id}">Delete
-                                            </button>
+                                        <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                            <c:if test="${lesson.date>=dateNow}">
+                                                <button class="btn btn-info btn-secondary" type="button"
+                                                        onclick="location.href='${pageContext.request.contextPath}/lesson/${lesson.id}/change'">
+                                                    Change
+                                                </button>
+                                                <button class="btn btn-danger btn-secondary" type="submit"
+                                                        form="delete${lesson.id}">Delete
+                                                </button>
+                                            </c:if>
                                         </c:if>
                                     </div>
                                 </td>
@@ -74,10 +76,12 @@
                     </table>
                 </c:otherwise>
             </c:choose>
-            <button class="btn btn-info btn-secondary" type="button"
-                    onclick="location.href='${pageContext.request.contextPath}/lesson/new/group/${group.id}'">
-                Add a new lesson
-            </button>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <button class="btn btn-info btn-secondary" type="button"
+                        onclick="location.href='${pageContext.request.contextPath}/lesson/new/group/${group.id}'">
+                    Add a new lesson
+                </button>
+            </c:if>
         </div>
     </div>
 </div>

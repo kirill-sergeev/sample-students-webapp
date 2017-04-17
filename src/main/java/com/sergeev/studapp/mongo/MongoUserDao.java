@@ -26,7 +26,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     protected static final String LAST_NAME = "last_name";
     protected static final String ACCOUNT = "account";
     protected static final String GROUP = "group";
-    protected static final String TYPE = "type";
+    protected static final String ROLE = "role";
 
     private Document doc;
     private MongoCollection<Document> collection;
@@ -39,8 +39,8 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     protected Document getDocument(User object) throws PersistentException{
         doc = new Document(FIRST_NAME, object.getFirstName()).append(LAST_NAME, object.getLastName())
-                .append(TYPE, object.getType().getId()).append(ACCOUNT, object.getAccount().getId());
-        if (object.getType() == User.Role.STUDENT) {
+                .append(ROLE, object.getRole().name()).append(ACCOUNT, object.getAccount().getId());
+        if (object.getRole() == User.Role.STUDENT) {
             doc.append(GROUP, object.getGroup().getId());
         }
 
@@ -57,10 +57,10 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         user.setId(String.valueOf(oid));
         user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));
         user.setLastName(String.valueOf(doc.get(LAST_NAME)));
-        user.setType(User.Role.getById(String.valueOf(doc.get(TYPE))));
+        user.setRole(User.Role.valueOf(String.valueOf(doc.get(ROLE))));
         MongoAccountDao mad = new MongoAccountDao();
         user.setAccount(mad.getById(String.valueOf(doc.get(ACCOUNT))));
-        if (user.getType() == User.Role.STUDENT) {
+        if (user.getRole() == User.Role.STUDENT) {
             MongoGroupDao mgd = new MongoGroupDao();
             user.setGroup(mgd.getById(String.valueOf(doc.get(GROUP))));
         }
@@ -68,11 +68,11 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getByName(String name, User.Role type) throws PersistentException {
+    public List<User> getByName(String name, User.Role role) throws PersistentException {
         List<User> list = new ArrayList<>();
         Pattern pattern = Pattern.compile(name, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
-        DBObject query1 = QueryBuilder.start(FIRST_NAME).regex(pattern).and(TYPE).is(type.getId()).get();
-        DBObject query2 = QueryBuilder.start(LAST_NAME).regex(pattern).and(TYPE).is(type.getId()).get();
+        DBObject query1 = QueryBuilder.start(FIRST_NAME).regex(pattern).and(ROLE).is(role.name()).get();
+        DBObject query2 = QueryBuilder.start(LAST_NAME).regex(pattern).and(ROLE).is(role.name()).get();
         BasicDBList or = new BasicDBList();
         or.add(query1);
         or.add(query2);
@@ -87,7 +87,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             }
             list.add(item);
         };
-        collection.find(query).sort(new BasicDBObject("first_name", 1).append("last_name", 1)).forEach(documents);
+        collection.find(query).sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }
@@ -106,7 +106,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             }
             list.add(item);
         };
-        collection.find(eq(GROUP, groupId)).sort(new BasicDBObject("first_name", 1).append("last_name", 1)).forEach(documents);
+        collection.find(eq(GROUP, groupId)).sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }
@@ -114,7 +114,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getAll(User.Role type) throws PersistentException {
+    public List<User> getAll(User.Role role) throws PersistentException {
         List<User> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             User item = null;
@@ -125,7 +125,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
             }
             list.add(item);
         };
-        collection.find(eq(TYPE, type.getId())).sort(new BasicDBObject("first_name", 1).append("last_name", 1)).forEach(documents);
+        collection.find(eq(ROLE, role.name())).sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }

@@ -23,7 +23,9 @@
                         <thead>
                         <tr>
                             <th>Title</th>
-                            <th>Actions</th>
+                            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                <th>Actions</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,35 +34,39 @@
                                 <td>
                                     <a href="${pageContext.request.contextPath}/discipline/${discipline.id}">${discipline.title}</a>
                                 </td>
-                                <td>
-                                    <form id="delete${discipline.id}"
-                                          action="${pageContext.request.contextPath}/discipline" method="POST">
-                                        <input type="hidden" name="id" value="${discipline.id}">
-                                        <input type="hidden" name="action" value="delete">
-                                    </form>
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-info btn-secondary" type="button"
-                                                onclick="location.href='${pageContext.request.contextPath}/discipline/${discipline.id}/change'">
-                                            Change
-                                        </button>
-                                        <button class="btn btn-danger btn-secondary" type="submit"
-                                                form="delete${discipline.id}"
-                                                <c:forEach var="course" items="${courses}">
-                                                    <c:if test="${discipline.id == course.discipline.id}">disabled</c:if>
-                                                </c:forEach>>Delete
-                                        </button>
-                                    </div>
-                                </td>
+                                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                    <td>
+                                        <form id="delete${discipline.id}"
+                                              action="${pageContext.request.contextPath}/discipline" method="POST">
+                                            <input type="hidden" name="id" value="${discipline.id}">
+                                            <input type="hidden" name="action" value="delete">
+                                        </form>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button class="btn btn-info btn-secondary" type="button"
+                                                    onclick="location.href='${pageContext.request.contextPath}/discipline/${discipline.id}/change'">
+                                                Change
+                                            </button>
+                                            <button class="btn btn-danger btn-secondary" type="submit"
+                                                    form="delete${discipline.id}"
+                                                    <c:forEach var="course" items="${courses}">
+                                                        <c:if test="${discipline.id == course.discipline.id}">disabled</c:if>
+                                                    </c:forEach>>Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
-            <button class="btn btn-info btn-secondary" type="button"
-                    onclick="location.href='${pageContext.request.contextPath}/discipline/new'">
-                Add a new discipline
-            </button>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <button class="btn btn-info btn-secondary" type="button"
+                        onclick="location.href='${pageContext.request.contextPath}/discipline/new'">
+                    Add a new discipline
+                </button>
+            </c:if>
         </div>
     </div>
 </div>

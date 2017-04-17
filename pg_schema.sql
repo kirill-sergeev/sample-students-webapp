@@ -1,6 +1,6 @@
 DROP SCHEMA public CASCADE;
 CREATE SCHEMA public;
--- DROP TABLE IF EXISTS marks, lessons, lessons_order, courses, disciplines, lessons_types, teachers, students, groups;
+-- DROP TABLE IF EXISTS marks, lessons, courses, disciplines, teachers, students, groups;
 ------------------------------------------------
 ------------------structure---------------------
 ------------------------------------------------
@@ -9,7 +9,7 @@ CREATE TABLE accounts (
   account_id SERIAL PRIMARY KEY,
   login      VARCHAR(60)  NOT NULL,
   password   VARCHAR(100) NOT NULL,
-  token   VARCHAR(100) DEFAULT NULL
+  token      VARCHAR(100) DEFAULT NULL
 );
 
 CREATE TABLE groups (
@@ -23,7 +23,7 @@ CREATE TABLE users (
   last_name  VARCHAR(30) NOT NULL,
   account_id INTEGER REFERENCES accounts (account_id),
   group_id   INTEGER REFERENCES groups (group_id) DEFAULT NULL,
-  type       SMALLINT                             DEFAULT 1 CHECK (type BETWEEN 1 AND 10)
+  role       VARCHAR(10)                          DEFAULT 'STUDENT'
 );
 
 CREATE TABLE disciplines (
@@ -38,24 +38,12 @@ CREATE TABLE courses (
   user_id       INTEGER REFERENCES users (user_id)             NOT NULL
 );
 
-CREATE TABLE lessons_types (
-  lesson_type_id SERIAL PRIMARY KEY,
-  title          VARCHAR(50) NOT NULL UNIQUE
-);
-
-CREATE TABLE lessons_order (
-  lesson_order_id SERIAL PRIMARY KEY,
-  number          SMALLINT NOT NULL UNIQUE CHECK (number BETWEEN 1 AND 10),
-  start_time      TIME     NOT NULL UNIQUE,
-  end_time        TIME     NOT NULL UNIQUE
-);
-
 CREATE TABLE lessons (
-  lesson_id      SERIAL PRIMARY KEY,
-  lesson_type_id INTEGER REFERENCES lessons_types (lesson_type_id) NOT NULL,
-  course_id      INTEGER REFERENCES courses (course_id)            NOT NULL,
-  lesson_date    DATE CHECK (lesson_date BETWEEN '2017-01-01' AND '2050-01-01'),
-  lesson_order   SMALLINT REFERENCES lessons_order (number)
+  lesson_id SERIAL PRIMARY KEY,
+  course_id INTEGER REFERENCES courses (course_id)            NOT NULL,
+  ordinal  SMALLINT                                          NOT NULL CHECK (ordinal BETWEEN 0 AND 10),
+  date      DATE CHECK (date BETWEEN '2017-01-01' AND '2050-01-01'),
+  type      VARCHAR(10)                                       NOT NULL
 );
 
 CREATE TABLE marks (
@@ -86,7 +74,7 @@ BEGIN
     RAISE EXCEPTION 'This student is not a member of this course!';
   ELSEIF new.lesson_id NOT IN (SELECT lesson_id
                                FROM lessons
-                               WHERE lesson_date <= now())
+                               WHERE date <= now())
     THEN
       RAISE EXCEPTION 'This lesson was not been yet!';
   END IF;

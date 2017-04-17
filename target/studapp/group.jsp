@@ -57,7 +57,9 @@
                         <tr>
                             <th>Discipline</th>
                             <th>Teacher</th>
-                            <th>Action</th>
+                            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                <th>Action</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -69,26 +71,28 @@
                                 <td>
                                     <a href="${pageContext.request.contextPath}/teacher/${course.teacher.id}">${course.teacher.firstName} ${course.teacher.lastName}</a>
                                 </td>
-                                <td>
-                                    <form id="delete${course.id}" action="${pageContext.request.contextPath}/course"
-                                          method="POST">
-                                        <input type="hidden" name="id" value="${course.id}">
-                                        <input type="hidden" name="action" value="delete">
-                                    </form>
+                                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                    <td>
+                                        <form id="delete${course.id}" action="${pageContext.request.contextPath}/course"
+                                              method="POST">
+                                            <input type="hidden" name="id" value="${course.id}">
+                                            <input type="hidden" name="action" value="delete">
+                                        </form>
 
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-info btn-secondary" type="button"
-                                                onclick="location.href='${pageContext.request.contextPath}/course/${course.id}/change'">
-                                            Change
-                                        </button>
-                                        <button class="btn btn-danger btn-secondary" type="submit"
-                                                <c:forEach var="lesson" items="${lessons}">
-                                                    <c:if test="${course.id == lesson.course.id}">disabled</c:if>
-                                                </c:forEach>
-                                                form="delete${course.id}">Delete
-                                        </button>
-                                    </div>
-                                </td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button class="btn btn-info btn-secondary" type="button"
+                                                    onclick="location.href='${pageContext.request.contextPath}/course/${course.id}/change'">
+                                                Change
+                                            </button>
+                                            <button class="btn btn-danger btn-secondary" type="submit"
+                                                    <c:forEach var="lesson" items="${lessons}">
+                                                        <c:if test="${course.id == lesson.course.id}">disabled</c:if>
+                                                    </c:forEach>
+                                                    form="delete${course.id}">Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         </tbody>

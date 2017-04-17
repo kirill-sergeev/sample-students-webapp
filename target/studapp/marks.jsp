@@ -12,9 +12,8 @@
     <div class="row justify-content-md-center">
         <div class="col-8">
             <h3>
-                <a href="${pageContext.request.contextPath}/student/${student.id}">${student.firstName} ${student.lastName}'s</a>
-                marks in <a
-                    href="${pageContext.request.contextPath}/discipline/${discipline.id}">${discipline.title}</a>
+                <a href="${pageContext.request.contextPath}/student/${student.id}">${student.firstName} ${student.lastName}'s</a>marks in
+                <a href="${pageContext.request.contextPath}/discipline/${discipline.id}">${discipline.title}</a>
             </h3>
             <c:choose>
                 <c:when test="${empty marks}">

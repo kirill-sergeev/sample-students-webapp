@@ -5,7 +5,8 @@
 <jsp:useBean id="dateNow" scope="request" type="java.time.LocalDate"/>
 <jsp:useBean id="marks" scope="request" type="java.util.List<com.sergeev.studapp.model.Mark>"/>
 
-<c:set var="title" scope="request" value="Lesson in group ${lesson.course.group.title} - ${lesson.course.discipline.title} - ${lesson.date}"/>
+<c:set var="title" scope="request"
+       value="Lesson in group ${lesson.course.group.title} - ${lesson.course.discipline.title} - ${lesson.date}"/>
 <jsp:include flush="true" page="partial/header.jsp"/>
 
 <div class="container">
@@ -34,7 +35,7 @@
                     <td>
                         <a href="${pageContext.request.contextPath}/teacher/${lesson.course.teacher.id}">${lesson.course.teacher.firstName} ${lesson.course.teacher.lastName}</a>
                     </td>
-                    <td>${lesson.type}</td>
+                    <td>${lesson.type.name().toLowerCase()}</td>
                     <td>${lesson.date}</td>
                     <td>${lesson.order.startTime}</td>
                     <td>${lesson.order.endTime}</td>
@@ -56,7 +57,9 @@
                             <tr>
                                 <th>Student</th>
                                 <th>Mark</th>
-                                <th>Actions</th>
+                                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                    <th>Actions</th>
+                                </c:if>
                             </tr>
                             </thead>
                             <tbody>
@@ -66,41 +69,47 @@
                                         <a href="${pageContext.request.contextPath}/student/${mark.student.id}">${mark.student.firstName} ${mark.student.lastName}</a>
                                     </td>
                                     <td>${mark.value}</td>
-                                    <td>
-                                        <form action="${pageContext.request.contextPath}/mark"
-                                              method="POST">
-                                            <input type="hidden" name="action" value="delete">
-                                            <input type="hidden" name="id" value="${mark.id}">
-                                            <button class="btn btn-danger btn-sm btn-secondary" type="submit">Delete
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                        <td>
+                                            <form action="${pageContext.request.contextPath}/mark"
+                                                  method="POST">
+                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="id" value="${mark.id}">
+                                                <button class="btn btn-danger btn-sm btn-secondary" type="submit">Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:forEach>
                             </tbody>
                         </table>
                     </c:otherwise>
                 </c:choose>
-                <button class="btn btn-info btn-secondary" type="button"
-                        onclick="location.href='${pageContext.request.contextPath}/mark/new/group/${lesson.course.group.id}/lesson/${lesson.id}'">
-                    Add a new mark
-                </button>
-            </c:if>
-            <c:if test="${lesson.date>=dateNow}">
-                <form id="delete${lesson.id}" action="${pageContext.request.contextPath}/lesson"
-                      method="POST">
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="id" value="${lesson.id}">
-                </form>
-                <div class="btn-group btn-group-sm" role="group">
+                <c:if test="${sessionScope.user.role == 'ADMIN'}">
                     <button class="btn btn-info btn-secondary" type="button"
-                            onclick="location.href='${pageContext.request.contextPath}/lesson/${lesson.id}/change'">
-                        Change
+                            onclick="location.href='${pageContext.request.contextPath}/mark/new/group/${lesson.course.group.id}/lesson/${lesson.id}'">
+                        Add a new mark
                     </button>
-                    <button class="btn btn-danger btn-secondary" type="submit"
-                            form="delete${lesson.id}">Delete
-                    </button>
-                </div>
+                </c:if>
+            </c:if>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <c:if test="${lesson.date>=dateNow}">
+                    <form id="delete${lesson.id}" action="${pageContext.request.contextPath}/lesson"
+                          method="POST">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="id" value="${lesson.id}">
+                    </form>
+                    <div class="btn-group btn-group-sm" role="group">
+                        <button class="btn btn-info btn-secondary" type="button"
+                                onclick="location.href='${pageContext.request.contextPath}/lesson/${lesson.id}/change'">
+                            Change
+                        </button>
+                        <button class="btn btn-danger btn-secondary" type="submit"
+                                form="delete${lesson.id}">Delete
+                        </button>
+                    </div>
+                </c:if>
             </c:if>
         </div>
     </div>

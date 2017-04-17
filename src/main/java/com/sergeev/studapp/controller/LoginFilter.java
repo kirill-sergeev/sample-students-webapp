@@ -60,6 +60,11 @@ public class LoginFilter implements Filter {
             return;
         }
 
+        if(path.contains(".css") || path.contains(".js")){
+            chain.doFilter(request, response);
+            return;
+        }
+
         if (user == null) {
             resp.sendRedirect("/login");
         } else {

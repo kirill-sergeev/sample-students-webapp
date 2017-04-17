@@ -23,7 +23,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     protected static final String USER_ID = "user_id";
     protected static final String FIRST_NAME = "first_name";
     protected static final String LAST_NAME = "last_name";
-    protected static final String USER_TYPE = "type";
+    protected static final String USER_ROLE = "role";
 
     @Override
     protected String getSelectQuery() {
@@ -35,7 +35,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO users (first_name, last_name, type, account_id, group_id) VALUES (?, ?, ?, ?, ?);";
+        return "INSERT INTO users (first_name, last_name, role, account_id, group_id) VALUES (?, ?, ?, ?, ?);";
     }
     @Override
     protected String getUpdateQuery() {
@@ -57,8 +57,8 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
                 user.setFirstName(rs.getString(FIRST_NAME));
                 user.setLastName(rs.getString(LAST_NAME));
                 user.setAccount(pad.getById(rs.getString(ACCOUNT_ID)));
-                user.setType(User.Role.getById(rs.getString(USER_TYPE)));
-                if (user.getType() == User.Role.STUDENT) {
+                user.setRole(User.Role.valueOf(rs.getString(USER_ROLE)));
+                if (user.getRole() == User.Role.STUDENT) {
                     PgGroupDao pgd = new PgGroupDao();
                     user.setGroup(pgd.getById(rs.getString(GROUP_ID)));
                 }
@@ -75,9 +75,9 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
-            statement.setInt(3, Integer.parseInt(object.getType().getId()));
+            statement.setString(3, object.getRole().name());
             statement.setInt(4, Integer.parseInt(object.getAccount().getId()));
-            if (object.getType() == User.Role.STUDENT) {
+            if (object.getRole() == User.Role.STUDENT) {
                 statement.setInt(5, Integer.parseInt(object.getGroup().getId()));
             } else {
                 statement.setNull(5, NULL);
@@ -92,7 +92,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         try {
             statement.setString(1, object.getFirstName());
             statement.setString(2, object.getLastName());
-            if (object.getType() == User.Role.STUDENT) {
+            if (object.getRole() == User.Role.STUDENT) {
                 statement.setInt(3, Integer.parseInt(object.getGroup().getId()));
             } else {
                 statement.setNull(3, NULL);
@@ -104,13 +104,13 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getByName(String name, User.Role type) throws PersistentException {
+    public List<User> getByName(String name, User.Role role) throws PersistentException {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND type= ?;";
+        String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role= ?;";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + name + "%");
-            statement.setInt(2, Integer.parseInt(type.getId()));
+            statement.setString(2, role.name());
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (SQLException e) {
@@ -125,7 +125,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     public List<User> getByGroup(String groupId) throws PersistentException {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE group_id= ? AND type= 1;";
+        String sql = "SELECT * FROM users WHERE group_id= ? AND role='STUDENT';";;
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, Integer.parseInt(groupId));
@@ -141,12 +141,12 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getAll(User.Role type) throws PersistentException {
+    public List<User> getAll(User.Role role) throws PersistentException {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE type= ? ORDER BY first_name, last_name;";
+        String sql = "SELECT * FROM users WHERE role= ? ORDER BY first_name, last_name;";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, Integer.parseInt(type.getId()));
+            statement.setString(1, role.name());
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (SQLException e) {

@@ -22,7 +22,9 @@
                         <tr>
                             <th>Full Name</th>
                             <th>Group</th>
-                            <th>Actions</th>
+                            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                <th>Actions</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,32 +36,37 @@
                                 <td>
                                     <a href="${pageContext.request.contextPath}/group/${student.group.id}">${student.group.title}</a>
                                 </td>
-                                <td>
-                                    <form id="delete${student.id}" action="${pageContext.request.contextPath}/teacher"
-                                          method="POST">
-                                        <input type="hidden" name="id" value="${student.id}">
-                                        <input type="hidden" name="action" value="delete">
-                                    </form>
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-info btn-secondary" type="button"
-                                                onclick="location.href='${pageContext.request.contextPath}/student/${student.id}/change'">
-                                            Change
-                                        </button>
-                                        <button class="btn btn-danger btn-secondary" type="submit"
-                                                form="delete${student.id}">Delete
-                                        </button>
-                                    </div>
-                                </td>
+                                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                    <td>
+                                        <form id="delete${student.id}"
+                                              action="${pageContext.request.contextPath}/teacher"
+                                              method="POST">
+                                            <input type="hidden" name="id" value="${student.id}">
+                                            <input type="hidden" name="action" value="delete">
+                                        </form>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button class="btn btn-info btn-secondary" type="button"
+                                                    onclick="location.href='${pageContext.request.contextPath}/student/${student.id}/change'">
+                                                Change
+                                            </button>
+                                            <button class="btn btn-danger btn-secondary" type="submit"
+                                                    form="delete${student.id}">Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
-            <button class="btn btn-info btn-secondary" type="button"
-                    onclick="location.href='${pageContext.request.contextPath}/student/new'">
-                Add a new student
-            </button>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <button class="btn btn-info btn-secondary" type="button"
+                        onclick="location.href='${pageContext.request.contextPath}/student/new'">
+                    Add a new student
+                </button>
+            </c:if>
         </div>
     </div>
 </div>

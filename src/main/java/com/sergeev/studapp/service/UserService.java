@@ -21,7 +21,7 @@ public class UserService {
 
     public static User createStudent(String firstName, String lastName, String groupId) throws ApplicationException {
         User user = UserService.create(firstName, lastName);
-        user.setType(User.Role.STUDENT);
+        user.setRole(User.Role.STUDENT);
         user.setGroup(GroupService.read(groupId));
 
         try {
@@ -35,7 +35,7 @@ public class UserService {
 
     public static User createTeacher(String firstName, String lastName) throws ApplicationException {
         User user = UserService.create(firstName, lastName);
-        user.setType(User.Role.TEACHER);
+        user.setRole(User.Role.TEACHER);
 
         try {
             user = USER_DAO.persist(user);
@@ -48,7 +48,7 @@ public class UserService {
 
     public static User createAdmin(String firstName, String lastName) throws ApplicationException {
         User user = UserService.create(firstName, lastName);
-        user.setType(User.Role.ADMIN);
+        user.setRole(User.Role.ADMIN);
 
         try {
             user = USER_DAO.persist(user);
@@ -104,11 +104,11 @@ public class UserService {
         return user;
     }
 
-    public static List<User> readAll(User.Role type) {
+    public static List<User> readAll(User.Role role) {
 
         List<User> users;
         try {
-            users = USER_DAO.getAll(type);
+            users = USER_DAO.getAll(role);
         } catch (PersistentException e) {
             users = Collections.emptyList();
         }
@@ -133,7 +133,7 @@ public class UserService {
 
     public static User updateStudent(String firstName, String lastName, String groupId, String userId) throws ApplicationException {
         User user = UserService.update(firstName, lastName, userId);
-        user.setType(User.Role.STUDENT);
+        user.setRole(User.Role.STUDENT);
         user.setGroup(GroupService.read(groupId));
 
         try {
@@ -147,7 +147,7 @@ public class UserService {
 
     public static User updateTeacher(String firstName, String lastName, String userId) throws ApplicationException {
         User user = UserService.update(firstName, lastName, userId);
-        user.setType(User.Role.TEACHER);
+        user.setRole(User.Role.TEACHER);
 
         try {
             USER_DAO.update(user);
@@ -164,7 +164,7 @@ public class UserService {
         }
 
         User user = UserService.read(id);
-        User.Role type = user.getType();
+        User.Role role = user.getRole();
         String accountId = user.getAccount().getId();
 
         try {
@@ -174,10 +174,10 @@ public class UserService {
             throw new ApplicationException("Cannot delete user, because user not found.", e);
         }
 
-        return type;
+        return role;
     }
 
-    public static List<User> find(User.Role type, String name) throws ApplicationException {
+    public static List<User> find(User.Role role, String name) throws ApplicationException {
         if (name == null || name.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
@@ -185,7 +185,7 @@ public class UserService {
         List<User> users;
 
         try {
-            users = USER_DAO.getByName(name, type);
+            users = USER_DAO.getByName(name, role);
         } catch (PersistentException e) {
             users = Collections.emptyList();
         }

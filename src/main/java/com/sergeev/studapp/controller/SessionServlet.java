@@ -68,13 +68,13 @@ public class SessionServlet extends HttpServlet {
                     loginCookie.setMaxAge(24 * 60 * 60);
                     response.addCookie(loginCookie);
                 }
-                if (user.getType() == User.Role.STUDENT) {
+                if (user.getRole() == User.Role.STUDENT) {
                     response.sendRedirect("/student/"+user.getId());
                     return;
-                }else if (user.getType() == User.Role.TEACHER) {
+                }else if (user.getRole() == User.Role.TEACHER) {
                     response.sendRedirect("/teacher/"+user.getId());
                     return;
-                }else if (user.getType() == User.Role.ADMIN) {
+                }else if (user.getRole() == User.Role.ADMIN) {
                     response.sendRedirect("/admin/");
                     return;
                 }

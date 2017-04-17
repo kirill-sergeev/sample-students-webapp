@@ -25,7 +25,9 @@
                         <tr>
                             <th>Group Title</th>
                             <th>Number of students</th>
-                            <th>Actions</th>
+                            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                <th>Actions</th>
+                            </c:if>
                         </tr>
                         </thead>
                         <tbody>
@@ -35,42 +37,47 @@
                                     <a href="${pageContext.request.contextPath}/group/${item.key.id}">${item.key.title}</a>
                                 </td>
                                 <td>${item.value}</td>
-                                <td>
-                                    <form id="delete${item.key.id}" action="${pageContext.request.contextPath}/group"
-                                          method="POST">
-                                        <input type="hidden" name="id" value="${item.key.id}">
-                                        <input type="hidden" name="action" value="delete">
-                                    </form>
+                                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                    <td>
+                                        <form id="delete${item.key.id}"
+                                              action="${pageContext.request.contextPath}/group"
+                                              method="POST">
+                                            <input type="hidden" name="id" value="${item.key.id}">
+                                            <input type="hidden" name="action" value="delete">
+                                        </form>
 
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-info btn-secondary" type="button"
-                                                onclick="location.href='${pageContext.request.contextPath}/group/${item.key.id}/change'">
-                                            Change
-                                        </button>
-                                        <button class="btn btn-danger btn-secondary" type="submit"
-                                                form="delete${item.key.id}"
-                                                <c:forEach var="course" items="${courses}">
-                                                    <c:if test="${item.key.id == course.group.id}">disabled</c:if>
-                                                </c:forEach>
-                                                <c:if test="${item.value!=0}">disabled</c:if>>
-                                            Delete
-                                        </button>
-                                    </div>
-                                </td>
+                                        <div class="btn-group btn-group-sm" role="group">
+                                            <button class="btn btn-info btn-secondary" type="button"
+                                                    onclick="location.href='${pageContext.request.contextPath}/group/${item.key.id}/change'">
+                                                Change
+                                            </button>
+                                            <button class="btn btn-danger btn-secondary" type="submit"
+                                                    form="delete${item.key.id}"
+                                                    <c:forEach var="course" items="${courses}">
+                                                        <c:if test="${item.key.id == course.group.id}">disabled</c:if>
+                                                    </c:forEach>
+                                                    <c:if test="${item.value!=0}">disabled</c:if>>
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </c:if>
                             </tr>
                         </c:forEach>
                         </tbody>
                     </table>
                 </c:otherwise>
             </c:choose>
-            <button class="btn btn-info btn-secondary" type="button"
-                    onclick="location.href='${pageContext.request.contextPath}/group/new'">
-                Add a new group
-            </button>
-            <button class="btn btn-info btn-secondary" type="button"
-                    onclick="location.href='${pageContext.request.contextPath}/course/new'">
-                Add a new course
-            </button>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <button class="btn btn-info btn-secondary" type="button"
+                        onclick="location.href='${pageContext.request.contextPath}/group/new'">
+                    Add a new group
+                </button>
+                <button class="btn btn-info btn-secondary" type="button"
+                        onclick="location.href='${pageContext.request.contextPath}/course/new'">
+                    Add a new course
+                </button>
+            </c:if>
         </div>
     </div>
 </div>

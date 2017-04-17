@@ -7,7 +7,7 @@ public class User implements Identified {
     private Group group;
     private String firstName;
     private String lastName;
-    private Role type;
+    private Role role;
 
     @Override
     public String getId() {
@@ -56,12 +56,12 @@ public class User implements Identified {
         return this;
     }
 
-    public Role getType() {
-        return type;
+    public Role getRole() {
+        return role;
     }
 
-    public User setType(Role type) {
-        this.type = type;
+    public User setRole(Role role) {
+        this.role = role;
         return this;
     }
 
@@ -73,45 +73,11 @@ public class User implements Identified {
                 ", group=" + group +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", type=" + type +
+                ", role=" + role +
                 '}';
     }
 
     public enum Role {
-
-        STUDENT("1", "student"),
-        TEACHER("2", "teacher"),
-        ADMIN("3", "admin");
-
-        private String id;
-        private String type;
-
-        Role(String id, String type) {
-            this.id = id;
-            this.type = type;
-        }
-
-        public static Role getById(String id) {
-            for (Role type : values()) {
-                if (type.id.equals(id)) return type;
-            }
-            return null;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        @Override
-        public String toString() {
-            return "Role{" +
-                    "id=" + id +
-                    ", type='" + type +
-                    '}';
-        }
+        STUDENT, TEACHER, ADMIN
     }
 }

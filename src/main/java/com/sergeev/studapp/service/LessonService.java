@@ -20,16 +20,16 @@ public class LessonService {
     private static Lesson lesson;
     private static List<Lesson> lessons;
 
-    public static Lesson create(String groupId, String disciplineId, String typeId, String order, String date) throws ApplicationException {
-        if (date == null || date.isEmpty() || !checkOrder(order) || !checkType(typeId)){
+    public static Lesson create(String groupId, String disciplineId, String type, String order, String date) throws ApplicationException {
+        if (date == null || date.isEmpty()){
             throw new ApplicationException("Bad parameters.");
         }
 
         Course course = CourseService.readByDisciplineAndGroup(disciplineId, groupId);
 
         lesson = new Lesson();
-        lesson.setType(Lesson.Type.getById(typeId));
-        lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
+        lesson.setType(Lesson.Type.valueOf(type));
+        lesson.setOrder(Lesson.Order.values()[Integer.valueOf(order)]);
         lesson.setDate(LocalDate.parse(date));
         lesson.setCourse(course);
 
@@ -67,8 +67,8 @@ public class LessonService {
         return lessons;
     }
 
-    public static Lesson update(String groupId, String disciplineId, String typeId, String order, String date, String id) throws ApplicationException {
-        if (id == null || id.isEmpty() || date == null || date.isEmpty() || !checkOrder(order) || !checkType(typeId)){
+    public static Lesson update(String groupId, String disciplineId, String type, String order, String date, String id) throws ApplicationException {
+        if (id == null || id.isEmpty() || date == null || date.isEmpty()){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -76,8 +76,8 @@ public class LessonService {
 
         lesson = new Lesson();
         lesson.setId(id);
-        lesson.setType(Lesson.Type.getById(typeId));
-        lesson.setOrder(Lesson.Order.getByNumber(Integer.valueOf(order)));
+        lesson.setType(Lesson.Type.valueOf(type));
+        lesson.setOrder(Lesson.Order.values()[Integer.valueOf(order)]);
         lesson.setDate(LocalDate.parse(date));
         lesson.setCourse(course);
 
@@ -96,23 +96,5 @@ public class LessonService {
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot delete lesson, because lesson not found.", e);
         }
-    }
-
-    private static boolean checkType(String typeId){
-        for(Lesson.Type value: Lesson.Type.values()){
-            if (typeId.equals(value.getId())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean checkOrder(String order){
-        for(Lesson.Order value: Lesson.Order.values()){
-            if (order.equals(value.getNumber().toString())){
-                return true;
-            }
-        }
-        return false;
     }
 }
