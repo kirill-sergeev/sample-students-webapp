@@ -6,10 +6,7 @@ import com.sergeev.studapp.model.Identified;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 public abstract class PgGenericDao<T extends Identified> implements GenericDao<T>{
@@ -110,88 +107,149 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
         return list;
     }
 
-//    static {
-//        String sql = "DROP TABLE IF EXISTS marks, lessons, lessons_order, courses, disciplines, lessons_types, teachers, students, groups;" +
-//                "CREATE TABLE groups (\n" +
-//                "  group_id SERIAL PRIMARY KEY,\n" +
-//                "  title    VARCHAR(30) NOT NULL UNIQUE\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE students (\n" +
-//                "  student_id SERIAL PRIMARY KEY,\n" +
-//                "  group_id   INTEGER REFERENCES groups (group_id),\n" +
-//                "  first_name VARCHAR(30) NOT NULL,\n" +
-//                "  last_name  VARCHAR(30) NOT NULL\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE teachers (\n" +
-//                "  teacher_id SERIAL PRIMARY KEY,\n" +
-//                "  first_name VARCHAR(30) NOT NULL,\n" +
-//                "  last_name  VARCHAR(30) NOT NULL\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE lessons_types (\n" +
-//                "  lesson_type_id SERIAL PRIMARY KEY,\n" +
-//                "  title          VARCHAR(50) NOT NULL UNIQUE\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE disciplines (\n" +
-//                "  discipline_id SERIAL PRIMARY KEY,\n" +
-//                "  title         VARCHAR(50) NOT NULL UNIQUE\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE courses (\n" +
-//                "  course_id     SERIAL PRIMARY KEY,\n" +
-//                "  discipline_id INTEGER REFERENCES disciplines (discipline_id) NOT NULL,\n" +
-//                "  group_id      INTEGER REFERENCES groups (group_id)           NOT NULL,\n" +
-//                "  teacher_id    INTEGER REFERENCES teachers (teacher_id)       NOT NULL\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE lessons_order (\n" +
-//                "  order_id          SERIAL PRIMARY KEY,\n" +
-//                "  lesson_order      INTEGER NOT NULL UNIQUE CHECK (lesson_order BETWEEN 1 AND 10),\n" +
-//                "  lesson_start_time TIME     NOT NULL UNIQUE,\n" +
-//                "  lesson_end_time   TIME     NOT NULL UNIQUE\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE lessons (\n" +
-//                "  lesson_id      SERIAL PRIMARY KEY,\n" +
-//                "  lesson_type_id INTEGER REFERENCES lessons_types (lesson_type_id) NOT NULL,\n" +
-//                "  course_id      INTEGER REFERENCES courses (course_id)           NOT NULL,\n" +
-//                "  lesson_date    DATE CHECK (lesson_date BETWEEN '2000-01-01' AND '2050-01-01'),\n" +
-//                "  lesson_order   INTEGER REFERENCES lessons_order (order_id)\n" +
-//                ");\n" +
-//                "\n" +
-//                "CREATE TABLE marks (\n" +
-//                "  mark_id    SERIAL PRIMARY KEY,\n" +
-//                "  lesson_id  INTEGER REFERENCES lessons (lesson_id),\n" +
-//                "  student_id INTEGER REFERENCES students (student_id) NOT NULL,\n" +
-//                "  mark       INTEGER                                 NOT NULL CHECK (mark BETWEEN 0 AND 100)\n" +
-//                ");" +
-//                "\n" +
-//                "INSERT INTO \"lessons_order\" (lesson_order, lesson_start_time, lesson_end_time)\n" +
-//                "VALUES (1, '7:45:00', '9:20:00'), (2, '9:30:00', '11:05:00'), (3, '11:15:00', '12:50:00'), (4, '13:10:00', '14:45:00'),\n" +
-//                "  (5, '14:55:00', '16:30:00'), (6, '16:45:00', '18:15:00');\n" +
-//                "INSERT INTO \"disciplines\" (title)\n" +
-//                "VALUES ('algebra'), ('biology'), ('chemistry'), ('economics'), ('history'), ('english'), ('physics');\n" +
-//                "INSERT INTO \"lessons_types\" (title) VALUES ('lecture'), ('practice'), ('lab');\n" +
-//                "INSERT INTO \"groups\" (title) VALUES ('AA-2017'), ('AB-2017'), ('AC-2017');\n" +
-//                "INSERT INTO \"students\" (group_id, first_name, last_name)\n" +
-//                "VALUES (3, 'Branden', 'Sanders'), (2, 'Brian', 'Sargent'), (3, 'Macon', 'Price'), (3, 'Charles', 'Jennings'),\n" +
-//                "  (2, 'Arden', 'Bullock'), (3, 'Emerson', 'Cochran'), (2, 'Tanek', 'Salazar'), (2, 'Quinlan', 'Huffman'),\n" +
-//                "  (2, 'Cody', 'Townsend'), (2, 'Lev', 'Anderson'), (3, 'Victor', 'Eaton'), (2, 'Victor', 'Berg'), (2, 'Isaac', 'Curry'),\n" +
-//                "  (3, 'Kasimir', 'Berry'), (1, 'Phillip', 'Fowler'), (2, 'Brian', 'Holmes'), (3, 'Harper', 'Kirk'),\n" +
-//                "  (1, 'Fuller', 'Conway'), (2, 'Hu', 'Cooley'), (3, 'Charles', 'Serrano'), (2, 'Jonah', 'Burke'),\n" +
-//                "  (3, 'Castor', 'Roberson'), (3, 'Micah', 'Crane'), (2, 'Colby', 'Rosa'), (3, 'Hiram', 'Potter'), (2, 'Brent', 'Hall'),\n" +
-//                "  (2, 'Ulric', 'Perkins'), (3, 'Sebastian', 'Barnett'), (1, 'Carlos', 'Gonzales'), (2, 'Xenos', 'Fuller');\n" +
-//                "INSERT INTO \"teachers\" (first_name, last_name)\n" +
-//                "VALUES ('Barrett', 'Clements'), ('Sean', 'Hopper'), ('Cedric', 'Serrano'), ('Cody', 'Riddle'), ('Aidan', 'King'),\n" +
-//                "  ('Neville', 'Harrison'), ('Ian', 'Cash'), ('Sean', 'Cleveland'), ('Stewart', 'Lamb'), ('Trevor', 'Frazier');";
-//        try (Connection connection = PgDaoFactory.getConnection();
-//             Statement statement = connection.createStatement()) {
-//            statement.execute(sql);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//      }
-//    }
+    static {
+        String sql = "DROP TABLE IF EXISTS marks, lessons, courses, disciplines, groups, accounts, users CASCADE;\n" +
+                "------------------------------------------------\n" +
+                "------------------structure---------------------\n" +
+                "------------------------------------------------\n" +
+                "\n" +
+                "CREATE TABLE accounts (\n" +
+                "  account_id SERIAL PRIMARY KEY,\n" +
+                "  login      VARCHAR(60)  NOT NULL,\n" +
+                "  password   VARCHAR(100) NOT NULL,\n" +
+                "  token      VARCHAR(100) DEFAULT NULL\n" +
+                ");\n" +
+                "\n" +
+                "CREATE TABLE groups (\n" +
+                "  group_id SERIAL PRIMARY KEY,\n" +
+                "  title    VARCHAR(30) NOT NULL UNIQUE\n" +
+                ");\n" +
+                "\n" +
+                "CREATE TABLE users (\n" +
+                "  user_id    SERIAL PRIMARY KEY,\n" +
+                "  first_name VARCHAR(30) NOT NULL,\n" +
+                "  last_name  VARCHAR(30) NOT NULL,\n" +
+                "  account_id INTEGER REFERENCES accounts (account_id),\n" +
+                "  group_id   INTEGER REFERENCES groups (group_id) DEFAULT NULL,\n" +
+                "  role       VARCHAR(10)                          DEFAULT 'STUDENT'\n" +
+                ");\n" +
+                "\n" +
+                "CREATE TABLE disciplines (\n" +
+                "  discipline_id SERIAL PRIMARY KEY,\n" +
+                "  title         VARCHAR(50) NOT NULL UNIQUE\n" +
+                ");\n" +
+                "\n" +
+                "CREATE TABLE courses (\n" +
+                "  course_id     SERIAL PRIMARY KEY,\n" +
+                "  discipline_id INTEGER REFERENCES disciplines (discipline_id) NOT NULL,\n" +
+                "  group_id      INTEGER REFERENCES groups (group_id)           NOT NULL,\n" +
+                "  user_id       INTEGER REFERENCES users (user_id)             NOT NULL\n" +
+                ");\n" +
+                "\n" +
+                "CREATE TABLE lessons (\n" +
+                "  lesson_id SERIAL PRIMARY KEY,\n" +
+                "  course_id INTEGER REFERENCES courses (course_id)            NOT NULL,\n" +
+                "  ordinal  SMALLINT                                          NOT NULL CHECK (ordinal BETWEEN 0 AND 10),\n" +
+                "  date      DATE CHECK (date BETWEEN '2017-01-01' AND '2050-01-01'),\n" +
+                "  type      VARCHAR(10)                                       NOT NULL\n" +
+                ");\n" +
+                "\n" +
+                "CREATE TABLE marks (\n" +
+                "  mark_id   SERIAL PRIMARY KEY,\n" +
+                "  lesson_id INTEGER REFERENCES lessons (lesson_id),\n" +
+                "  user_id   INTEGER REFERENCES users (user_id) NOT NULL,\n" +
+                "  mark      SMALLINT                           NOT NULL CHECK (mark BETWEEN 0 AND 100)\n" +
+                ");\n" +
+                "\n" +
+                "------------------------------------------------\n" +
+                "------------------functions---------------------\n" +
+                "------------------------------------------------\n" +
+                "\n" +
+                "DROP FUNCTION IF EXISTS trigger_before_insert_on_marks();\n" +
+                "CREATE FUNCTION trigger_before_insert_on_marks()\n" +
+                "  RETURNS TRIGGER AS $marks_check$\n" +
+                "BEGIN\n" +
+                "  IF NEW.user_id NOT IN (SELECT user_id\n" +
+                "                         FROM users\n" +
+                "                         WHERE users.group_id IN (SELECT courses.group_id\n" +
+                "                                                  FROM courses\n" +
+                "                                                  WHERE courses.course_id IN (SELECT lessons.course_id\n" +
+                "                                                                              FROM lessons\n" +
+                "                                                                              WHERE lessons.lesson_id =\n" +
+                "                                                                                    new.lesson_id))\n" +
+                "  )\n" +
+                "  THEN\n" +
+                "    RAISE EXCEPTION 'This student is not a member of this course!';\n" +
+                "  ELSEIF new.lesson_id NOT IN (SELECT lesson_id\n" +
+                "                               FROM lessons\n" +
+                "                               WHERE date <= now())\n" +
+                "    THEN\n" +
+                "      RAISE EXCEPTION 'This lesson was not been yet!';\n" +
+                "  END IF;\n" +
+                "  RETURN NEW;\n" +
+                "END;\n" +
+                "$marks_check$ LANGUAGE plpgsql;\n" +
+                "\n" +
+                "DROP TRIGGER IF EXISTS check_student_on_course\n" +
+                "ON marks;\n" +
+                "CREATE TRIGGER check_student_on_course\n" +
+                "BEFORE INSERT ON marks\n" +
+                "FOR EACH ROW\n" +
+                "EXECUTE PROCEDURE trigger_before_insert_on_marks();\n" +
+                "\n" +
+                "DROP FUNCTION IF EXISTS trigger_before_insert_on_courses();\n" +
+                "CREATE FUNCTION trigger_before_insert_on_courses()\n" +
+                "  RETURNS TRIGGER AS $courses_check$\n" +
+                "BEGIN\n" +
+                "  IF new.discipline_id IN (SELECT discipline_id\n" +
+                "                           FROM courses\n" +
+                "                           WHERE group_id = new.group_id)\n" +
+                "  THEN\n" +
+                "    RAISE EXCEPTION 'This group already have this discipline!';\n" +
+                "  END IF;\n" +
+                "  RETURN new;\n" +
+                "END;\n" +
+                "$courses_check$ LANGUAGE plpgsql;\n" +
+                "\n" +
+                "DROP TRIGGER IF EXISTS check_disciplines_on_groups\n" +
+                "ON courses;\n" +
+                "CREATE TRIGGER check_disciplines_on_groups\n" +
+                "BEFORE INSERT ON courses\n" +
+                "FOR EACH ROW\n" +
+                "EXECUTE PROCEDURE trigger_before_insert_on_courses();\n" +
+                "\n" +
+                "DROP FUNCTION IF EXISTS student_avg_mark_by_discipline( INTEGER, INTEGER );\n" +
+                "CREATE FUNCTION student_avg_mark_by_discipline(INTEGER, INTEGER)\n" +
+                "  RETURNS NUMERIC\n" +
+                "AS 'SELECT avg(marks.mark)\n" +
+                "    FROM users, disciplines, courses, lessons, marks, groups\n" +
+                "    WHERE users.group_id = groups.group_id AND groups.group_id = courses.group_id AND\n" +
+                "          courses.discipline_id = disciplines.discipline_id AND courses.course_id = lessons.course_id AND\n" +
+                "          lessons.lesson_id = marks.lesson_id AND marks.user_id = users.user_id AND users.user_id = $1 AND\n" +
+                "          disciplines.discipline_id = $2\n" +
+                "    GROUP BY users.user_id, disciplines.discipline_id;'\n" +
+                "LANGUAGE SQL\n" +
+                "IMMUTABLE\n" +
+                "RETURNS NULL ON NULL INPUT;\n"+
+                "INSERT INTO \"disciplines\" (title)\n" +
+                "VALUES ('Algebra'), ('Biology'), ('Chemistry'), ('Economics'), ('History'), ('English'), ('Physics');\n" +
+                "\n" +
+                "INSERT INTO \"groups\" (title)\n" +
+                "VALUES ('AA-2017'), ('AB-2017'), ('AC-2017');\n" +
+                "\n" +
+                "INSERT INTO \"accounts\" (login, password)\n" +
+                "VALUES ('kirill_sergeev', 111111), ('test_student', 123456), ('test_teacher', 123456), ('test_admin', 123456);\n" +
+                "\n" +
+                "INSERT INTO \"users\" (first_name, last_name, account_id, \"role\", group_id)\n" +
+                "VALUES ('Kirill', 'Sergeev', 1, 'ADMIN', NULL),\n" +
+                "  ('Test', 'Student', 2, 'STUDENT', 1),\n" +
+                "  ('Test', 'Teacher', 3, 'TEACHER', NULL),\n" +
+                "  ('Test', 'Admin', 4, 'ADMIN', NULL);\n";
+        try (Connection connection = PgDaoFactory.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.execute(sql);
+        } catch (Exception e) {
+            e.printStackTrace();
+      }
+    }
 }

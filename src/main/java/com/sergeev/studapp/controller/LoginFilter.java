@@ -28,6 +28,19 @@ public class LoginFilter implements Filter {
         User user = (User) session.getAttribute("user");
         Cookie loginCookie = null;
 
+        if (user != null && (path.contains("new") || path.contains("change") || path.contains("admin"))) {
+            if (user.getRole() == User.Role.ADMIN) {
+                chain.doFilter(request, response);
+                return;
+            } else if (user.getRole() == User.Role.TEACHER && path.contains("mark")) {
+                chain.doFilter(request, response);
+                return;
+            } else {
+                resp.sendRedirect("/");
+                return;
+            }
+        }
+
         if (req.getCookies() == null) {
             resp.sendRedirect("/login");
             return;
@@ -60,7 +73,7 @@ public class LoginFilter implements Filter {
             return;
         }
 
-        if(path.contains(".css") || path.contains(".js")){
+        if (path.contains(".css") || path.contains(".js")) {
             chain.doFilter(request, response);
             return;
         }

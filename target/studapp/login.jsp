@@ -12,7 +12,8 @@
         <div class="col-4">
             <form class="form-signin" action="login" method="POST">
                 <h2 class="form-signin-heading">Please sign in</h2>
-
+                <br>
+                <br>
                 <label for="inputLogin" class="sr-only">Login</label>
                 <input type="text" name="login"
                 <c:if test="${login != null}"> value="${login}"</c:if>
@@ -30,6 +31,18 @@
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <h4>test accounts:</h4>
+            <p>for student - test_student:123456</p>
+            <p>for teacher - test_teacher:123456</p>
+            <p>for admin - test_admin:123456</p>
         </div>
     </div>
 </div>

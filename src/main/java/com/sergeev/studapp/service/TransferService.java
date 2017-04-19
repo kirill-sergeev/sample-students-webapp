@@ -1,6 +1,7 @@
 package com.sergeev.studapp.service;
 
-import com.sergeev.studapp.dao.*;
+import com.sergeev.studapp.dao.DaoFactory;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.*;
 import com.sergeev.studapp.mongo.MongoDaoFactory;
 import com.sergeev.studapp.postgres.PgDaoFactory;
@@ -36,7 +37,7 @@ public class TransferService {
         users = dao.getUserDao().getAll();
     }
 
-    private static void importTo(int database) throws PersistentException, IOException {
+    private static void importTo(int database) throws PersistentException {
         prepareSchema(database);
         DaoFactory dao = DaoFactory.getDaoFactory(database);
         String oldId;
@@ -108,10 +109,19 @@ public class TransferService {
         }
     }
 
-    private static void prepareSchema(int database) throws IOException {
+    public static void prepareSchema(int database) {
         if (database == DaoFactory.POSTGRES) {
-            String schema = new String(Files.readAllBytes(Paths.get("pg_schema.sql")), Charset.forName("UTF8"));
-            String data = new String(Files.readAllBytes(Paths.get("pg_data.sql")), Charset.forName("UTF8"));
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            String schema = null;
+            String data = null;
+            try {
+                schema = new String(Files.readAllBytes(Paths.get("pg_schema.sql")), Charset.forName("UTF8"));
+                data = new String(Files.readAllBytes(Paths.get("pg_data_default.sql")), Charset.forName("UTF8"));
+//                schema = new String(Files.readAllBytes(Paths.get(classLoader.getResource("pg_schema.sql").toString())), Charset.forName("UTF8"));
+//                data = new String(Files.readAllBytes(Paths.get(classLoader.getResource("pg_data_default.sql").toString())), Charset.forName("UTF8"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             String sql = schema + data;
             try (Connection connection = PgDaoFactory.getConnection();
                  Statement statement = connection.createStatement()) {
@@ -125,8 +135,9 @@ public class TransferService {
         }
     }
 
-    public static void main(String[] args) throws PersistentException, IOException {
-        exportFrom(DaoFactory.MONGO);
-        importTo(DaoFactory.POSTGRES);
+    public static void main(String[] args) throws PersistentException {
+        prepareSchema(DaoFactory.POSTGRES);
+//        exportFrom(DaoFactory.MONGO);
+//        importTo(DaoFactory.POSTGRES);
     }
 }

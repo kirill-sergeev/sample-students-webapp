@@ -3,6 +3,4 @@
 <c:set var="title" scope="request" value="Admin page"/>
 <jsp:include flush="true" page="partial/header.jsp"/>
 
-Admin page
-
 <jsp:include flush="true" page="partial/footer.jsp"/>

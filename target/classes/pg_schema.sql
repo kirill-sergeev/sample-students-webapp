@@ -1,6 +1,6 @@
-DROP SCHEMA public CASCADE;
-CREATE SCHEMA public;
--- DROP TABLE IF EXISTS marks, lessons, courses, disciplines, teachers, students, groups;
+-- DROP SCHEMA public CASCADE;
+-- CREATE SCHEMA public;
+DROP TABLE IF EXISTS marks, lessons, courses, disciplines, groups, accounts, users CASCADE;
 ------------------------------------------------
 ------------------structure---------------------
 ------------------------------------------------

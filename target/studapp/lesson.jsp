@@ -57,7 +57,7 @@
                             <tr>
                                 <th>Student</th>
                                 <th>Mark</th>
-                                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                <c:if test="${(sessionScope.user.role == 'TEACHER' && sessionScope.user.id == lesson.course.teacher.id) || sessionScope.user.role == 'ADMIN'}">
                                     <th>Actions</th>
                                 </c:if>
                             </tr>
@@ -69,7 +69,7 @@
                                         <a href="${pageContext.request.contextPath}/student/${mark.student.id}">${mark.student.firstName} ${mark.student.lastName}</a>
                                     </td>
                                     <td>${mark.value}</td>
-                                    <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                                    <c:if test="${(sessionScope.user.role == 'TEACHER' && sessionScope.user.id == lesson.course.teacher.id) || sessionScope.user.role == 'ADMIN'}">
                                         <td>
                                             <form action="${pageContext.request.contextPath}/mark"
                                                   method="POST">
@@ -86,7 +86,7 @@
                         </table>
                     </c:otherwise>
                 </c:choose>
-                <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <c:if test="${(sessionScope.user.role == 'TEACHER' && sessionScope.user.id == lesson.course.teacher.id) || sessionScope.user.role == 'ADMIN'}">
                     <button class="btn btn-info btn-secondary" type="button"
                             onclick="location.href='${pageContext.request.contextPath}/mark/new/group/${lesson.course.group.id}/lesson/${lesson.id}'">
                         Add a new mark

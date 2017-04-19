@@ -29,7 +29,7 @@ public class LessonService {
 
         lesson = new Lesson();
         lesson.setType(Lesson.Type.valueOf(type));
-        lesson.setOrder(Lesson.Order.values()[Integer.valueOf(order)]);
+        lesson.setOrder(Lesson.Order.values()[Integer.parseInt(order)]);
         lesson.setDate(LocalDate.parse(date));
         lesson.setCourse(course);
 
@@ -77,7 +77,7 @@ public class LessonService {
         lesson = new Lesson();
         lesson.setId(id);
         lesson.setType(Lesson.Type.valueOf(type));
-        lesson.setOrder(Lesson.Order.values()[Integer.valueOf(order)]);
+        lesson.setOrder(Lesson.Order.values()[Integer.parseInt(order)]);
         lesson.setDate(LocalDate.parse(date));
         lesson.setCourse(course);
 
