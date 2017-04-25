@@ -7,7 +7,6 @@ import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,7 +30,8 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
     @Override
     protected Document getDocument(Mark object) throws PersistentException {
-        doc = new Document(LESSON, object.getLesson().getId())
+        doc = new Document(ID, getNextId())
+                .append(LESSON, object.getLesson().getId())
                 .append(STUDENT, object.getStudent().getId())
                 .append(VALUE, object.getValue());
         return doc;
@@ -40,25 +40,24 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     @Override
     protected Mark parseDocument(Document doc) throws PersistentException {
         Mark mark = new Mark();
-        ObjectId oid = (ObjectId) doc.get(ID);
-        mark.setId(String.valueOf(oid));
+        mark.setId(doc.getInteger(ID));
         mark.setValue((Integer) doc.get(VALUE));
 
         MongoLessonDao mld = new MongoLessonDao();
-        mark.setLesson(mld.getById(String.valueOf(doc.get(LESSON))));
+        mark.setLesson(mld.getById(doc.getInteger(LESSON)));
 
         MongoUserDao mud = new MongoUserDao();
-        mark.setStudent(mud.getById(String.valueOf(doc.get(STUDENT))));
+        mark.setStudent(mud.getById(doc.getInteger(STUDENT)));
         return mark;
     }
 
     @Override
-    public Double getAvgMark(String studentId, String disciplineId) throws PersistentException {
+    public Double getAvgMark(Integer studentId, Integer disciplineId) throws PersistentException {
         return 0.0;
     }
 
     @Override
-    public List<Mark> getByLesson(String lessonId) throws PersistentException {
+    public List<Mark> getByLesson(Integer lessonId) throws PersistentException {
         List<Mark> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Mark item = null;
@@ -77,7 +76,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    public List<Mark> getByDisciplineAndStudent(String disciplineId, String studentId) throws PersistentException {
+    public List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) throws PersistentException {
         return Collections.emptyList();
     }
 }

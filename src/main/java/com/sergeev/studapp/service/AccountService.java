@@ -26,14 +26,14 @@ public class AccountService {
         account.setPassword(password);
 
         try {
-            account = ACCOUNT_DAO.persist(account);
+            account = ACCOUNT_DAO.save(account);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot create account.", e);
         }
         return account;
     }
 
-    public static Account read(String id) throws ApplicationException {
+    public static Account read(Integer id) throws ApplicationException {
         Account account;
         try {
             account = ACCOUNT_DAO.getById(id);
@@ -58,7 +58,7 @@ public class AccountService {
 
     public static Account update(User user) throws ApplicationException {
         Account account = new Account();
-        String accountId = UserService.read(user.getId()).getAccount().getId();
+        Integer accountId = UserService.read(user.getId()).getAccount().getId();
         account.setId(accountId);
         account.setLogin(generateLogin(user.getFirstName(), user.getLastName()));
         account.setPassword(AccountService.read(accountId).getPassword());
@@ -76,7 +76,7 @@ public class AccountService {
         return account;
     }
 
-    public static void delete(String id) throws ApplicationException {
+    public static void delete(Integer id) throws ApplicationException {
         try {
             ACCOUNT_DAO.delete(id);
         } catch (PersistentException e) {

@@ -2,16 +2,16 @@ package com.sergeev.studapp.model;
 
 public class Group implements Identified {
 
-    private String id;
+    private Integer id;
     private String title;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public Group setId(String id) {
+    public Group setId(Integer id) {
         this.id = id;
         return this;
     }

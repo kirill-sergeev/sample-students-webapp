@@ -19,13 +19,13 @@ public class UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
     private static final UserDao USER_DAO = DaoFactory.getDaoFactory().getUserDao();
 
-    public static User createStudent(String firstName, String lastName, String groupId) throws ApplicationException {
+    public static User createStudent(String firstName, String lastName, Integer groupId) throws ApplicationException {
         User user = UserService.create(firstName, lastName);
         user.setRole(User.Role.STUDENT);
         user.setGroup(GroupService.read(groupId));
 
         try {
-            user = USER_DAO.persist(user);
+            user = USER_DAO.save(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save student.", e);
         }
@@ -38,7 +38,7 @@ public class UserService {
         user.setRole(User.Role.TEACHER);
 
         try {
-            user = USER_DAO.persist(user);
+            user = USER_DAO.save(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save teacher.", e);
         }
@@ -51,7 +51,7 @@ public class UserService {
         user.setRole(User.Role.ADMIN);
 
         try {
-            user = USER_DAO.persist(user);
+            user = USER_DAO.save(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save admin.", e);
         }
@@ -59,8 +59,8 @@ public class UserService {
         return user;
     }
 
-    public static User read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()) {
+    public static User read(Integer id) throws ApplicationException {
+        if (id == null) {
             throw new ApplicationException("Bad parameters.");
         }
         User user;
@@ -116,8 +116,8 @@ public class UserService {
         return users;
     }
 
-    public static List<User> readByGroup(String groupId) throws ApplicationException {
-        if (groupId == null || groupId.isEmpty()) {
+    public static List<User> readByGroup(Integer groupId) throws ApplicationException {
+        if (groupId == null) {
             throw new ApplicationException("Bad parameters.");
         }
         List<User> users;
@@ -131,7 +131,7 @@ public class UserService {
         return users;
     }
 
-    public static User updateStudent(String firstName, String lastName, String groupId, String userId) throws ApplicationException {
+    public static User updateStudent(String firstName, String lastName, Integer groupId, Integer userId) throws ApplicationException {
         User user = UserService.update(firstName, lastName, userId);
         user.setRole(User.Role.STUDENT);
         user.setGroup(GroupService.read(groupId));
@@ -145,7 +145,7 @@ public class UserService {
         return user;
     }
 
-    public static User updateTeacher(String firstName, String lastName, String userId) throws ApplicationException {
+    public static User updateTeacher(String firstName, String lastName, Integer userId) throws ApplicationException {
         User user = UserService.update(firstName, lastName, userId);
         user.setRole(User.Role.TEACHER);
 
@@ -158,14 +158,14 @@ public class UserService {
         return user;
     }
 
-    public static User.Role delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()) {
+    public static User.Role delete(Integer id) throws ApplicationException {
+        if (id == null) {
             throw new ApplicationException("Bad parameters.");
         }
 
         User user = UserService.read(id);
         User.Role role = user.getRole();
-        String accountId = user.getAccount().getId();
+        Integer accountId = user.getAccount().getId();
 
         try {
             USER_DAO.delete(id);
@@ -193,7 +193,7 @@ public class UserService {
         return users;
     }
 
-    public static Map<Course, Double> studentAvgMarks(String id) throws ApplicationException {
+    public static Map<Course, Double> studentAvgMarks(Integer id) throws ApplicationException {
         User user = UserService.read(id);
         List<Course> courses = CourseService.readByGroup(user.getGroup().getId());
         Map<Course, Double> coursesMarks = new LinkedHashMap<>();
@@ -219,8 +219,8 @@ public class UserService {
         return user;
     }
 
-    private static User update(String firstName, String lastName, String userId) throws ApplicationException {
-        if (userId == null || userId.isEmpty() || !checkName(firstName, lastName)) {
+    private static User update(String firstName, String lastName, Integer userId) throws ApplicationException {
+        if (userId == null || !checkName(firstName, lastName)) {
             throw new ApplicationException("Bad parameters.");
         }
 

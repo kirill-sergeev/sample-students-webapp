@@ -6,19 +6,19 @@ import java.time.LocalTime;
 
 public class Lesson implements Identified {
 
-    private String id;
+    private Integer id;
     private Course course;
     private LocalDate date;
     private Order order;
     private Type type;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public Lesson setId(String id) {
+    public Lesson setId(Integer id) {
         this.id = id;
         return this;
     }

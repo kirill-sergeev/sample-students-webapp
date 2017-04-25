@@ -40,19 +40,19 @@ public class TransferService {
     private static void importTo(int database) throws PersistentException {
         prepareSchema(database);
         DaoFactory dao = DaoFactory.getDaoFactory(database);
-        String oldId;
-        String newId;
-        Map<String, String> accountIDs = new HashMap<>();
-        Map<String, String> courseIDs = new HashMap<>();
-        Map<String, String> disciplineIDs = new HashMap<>();
-        Map<String, String> groupIDs = new HashMap<>();
-        Map<String, String> lessonIDs = new HashMap<>();
-        Map<String, String> userIDs = new HashMap<>();
+        Integer oldId;
+        Integer newId;
+        Map<Integer, Integer> accountIDs = new HashMap<>();
+        Map<Integer, Integer> courseIDs = new HashMap<>();
+        Map<Integer, Integer> disciplineIDs = new HashMap<>();
+        Map<Integer, Integer> groupIDs = new HashMap<>();
+        Map<Integer, Integer> lessonIDs = new HashMap<>();
+        Map<Integer, Integer> userIDs = new HashMap<>();
 
         for (Account account : accounts) {
             oldId = account.getId();
             String token = account.getToken();
-            account = dao.getAccountDao().persist(account);
+            account = dao.getAccountDao().save(account);
             account.setToken(token);
             dao.getAccountDao().update(account);
             newId = account.getId();
@@ -61,7 +61,7 @@ public class TransferService {
 
         for (Group group : groups) {
             oldId = group.getId();
-            group = dao.getGroupDao().persist(group);
+            group = dao.getGroupDao().save(group);
             newId = group.getId();
             groupIDs.put(oldId, newId);
         }
@@ -72,14 +72,14 @@ public class TransferService {
             if (user.getRole() == User.Role.STUDENT) {
                 user.setGroup(new Group().setId(groupIDs.get(user.getGroup().getId())));
             }
-            user = dao.getUserDao().persist(user);
+            user = dao.getUserDao().save(user);
             newId = user.getId();
             userIDs.put(oldId, newId);
         }
 
         for (Discipline discipline : disciplines) {
             oldId = discipline.getId();
-            discipline = dao.getDisciplineDao().persist(discipline);
+            discipline = dao.getDisciplineDao().save(discipline);
             newId = discipline.getId();
             disciplineIDs.put(oldId, newId);
         }
@@ -89,7 +89,7 @@ public class TransferService {
             course.setDiscipline(new Discipline().setId(disciplineIDs.get(course.getDiscipline().getId())));
             course.setGroup(new Group().setId(groupIDs.get(course.getGroup().getId())));
             course.setTeacher(new User().setId(userIDs.get(course.getTeacher().getId())));
-            course = dao.getCourseDao().persist(course);
+            course = dao.getCourseDao().save(course);
             newId = course.getId();
             courseIDs.put(oldId, newId);
         }
@@ -97,7 +97,7 @@ public class TransferService {
         for (Lesson lesson : lessons) {
             oldId = lesson.getId();
             lesson.setCourse(new Course().setId(courseIDs.get(lesson.getCourse().getId())));
-            lesson = dao.getLessonDao().persist(lesson);
+            lesson = dao.getLessonDao().save(lesson);
             newId = lesson.getId();
             lessonIDs.put(oldId, newId);
         }
@@ -105,20 +105,19 @@ public class TransferService {
         for (Mark mark : marks) {
             mark.setLesson(new Lesson().setId(lessonIDs.get(mark.getLesson().getId())));
             mark.setStudent(new User().setId(userIDs.get(mark.getStudent().getId())));
-            dao.getMarkDao().persist(mark);
+            dao.getMarkDao().save(mark);
         }
     }
 
     public static void prepareSchema(int database) {
         if (database == DaoFactory.POSTGRES) {
-            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
             String schema = null;
             String data = null;
             try {
                 schema = new String(Files.readAllBytes(Paths.get("pg_schema.sql")), Charset.forName("UTF8"));
-                data = new String(Files.readAllBytes(Paths.get("pg_data_default.sql")), Charset.forName("UTF8"));
-//                schema = new String(Files.readAllBytes(Paths.get(classLoader.getResource("pg_schema.sql").toString())), Charset.forName("UTF8"));
-//                data = new String(Files.readAllBytes(Paths.get(classLoader.getResource("pg_data_default.sql").toString())), Charset.forName("UTF8"));
+                data = new String(Files.readAllBytes(Paths.get("pg_data.sql")), Charset.forName("UTF8"));
+//                schema = new String(Files.readAllBytes(Paths.get(classLoader.getResource("src/pg_schema.sql").toString())), Charset.forName("UTF8"));
+//                data = new String(Files.readAllBytes(Paths.get(classLoader.getResource("src/pg_data.sql").toString())), Charset.forName("UTF8"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -136,8 +135,7 @@ public class TransferService {
     }
 
     public static void main(String[] args) throws PersistentException {
-        prepareSchema(DaoFactory.POSTGRES);
-//        exportFrom(DaoFactory.MONGO);
-//        importTo(DaoFactory.POSTGRES);
+        exportFrom(DaoFactory.MONGO);
+        importTo(DaoFactory.POSTGRES);
     }
 }

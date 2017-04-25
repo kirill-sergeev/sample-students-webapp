@@ -27,7 +27,7 @@ public class DisciplineService {
         discipline.setTitle(title);
 
         try {
-            discipline = DISCIPLINE_DAO.persist(discipline);
+            discipline = DISCIPLINE_DAO.save(discipline);
         } catch (PersistentException e) {
             e.printStackTrace();
         }
@@ -35,8 +35,7 @@ public class DisciplineService {
         return discipline;
     }
 
-    public static Discipline read(String id) throws ApplicationException {
-
+    public static Discipline read(Integer id) throws ApplicationException {
         try {
             discipline = DISCIPLINE_DAO.getById(id);
         } catch (PersistentException e) {
@@ -57,8 +56,8 @@ public class DisciplineService {
         return disciplines;
     }
 
-    public static Discipline update(String title, String id) throws ApplicationException {
-        if (id == null || id.isEmpty() || !checkTitle(title)) {
+    public static Discipline update(String title, Integer id) throws ApplicationException {
+        if (id == null || !checkTitle(title)) {
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -75,8 +74,8 @@ public class DisciplineService {
         return discipline;
     }
 
-    public static void delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+    public static void delete(Integer id) throws ApplicationException {
+        if (id == null){
             throw new ApplicationException("Bad parameters.");
         }
 

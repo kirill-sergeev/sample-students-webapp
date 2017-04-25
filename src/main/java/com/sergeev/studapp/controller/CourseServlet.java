@@ -25,17 +25,17 @@ public class CourseServlet extends HttpServlet {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String action = request.getParameter("action");
 
-        String id;
-        String disciplineId;
-        String groupId;
-        String teacherId;
+        Integer id;
+        Integer disciplineId;
+        Integer groupId;
+        Integer teacherId;
 
         if (path.matches("^/course/?")) {
 
             if ("create".equals(action)) {
-                disciplineId = request.getParameter("discipline");
-                groupId = request.getParameter("group");
-                teacherId = request.getParameter("teacher");
+                disciplineId = Integer.valueOf(request.getParameter("discipline"));
+                groupId = Integer.valueOf(request.getParameter("group"));
+                teacherId = Integer.valueOf(request.getParameter("teacher"));
 
                 try {
                     CourseService.create(disciplineId, groupId, teacherId);
@@ -49,10 +49,10 @@ public class CourseServlet extends HttpServlet {
                 return;
 
             } else if ("update".equals(action)) {
-                id = request.getParameter("id");
-                disciplineId = request.getParameter("discipline");
-                groupId = request.getParameter("group");
-                teacherId = request.getParameter("teacher");
+                id = Integer.valueOf(request.getParameter("id"));
+                disciplineId = Integer.valueOf(request.getParameter("discipline"));
+                groupId = Integer.valueOf(request.getParameter("group"));
+                teacherId = Integer.valueOf(request.getParameter("teacher"));
                 try {
                     CourseService.update(disciplineId, groupId, teacherId, id);
                 } catch (ApplicationException e) {
@@ -65,7 +65,7 @@ public class CourseServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     groupId = CourseService.read(id).getGroup().getId();
                 } catch (ApplicationException e) {
@@ -109,7 +109,7 @@ public class CourseServlet extends HttpServlet {
         }
 
         if (path.matches("^/course/[^/]+/change/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 course = CourseService.read(id);
             } catch (ApplicationException e) {

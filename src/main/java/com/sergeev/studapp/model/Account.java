@@ -3,18 +3,18 @@ package com.sergeev.studapp.model;
 
 public class Account implements Identified {
 
-    private String id;
+    private Integer id;
     private String login;
     private String password;
     private String token;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public Account setId(String id) {
+    public Account setId(Integer id) {
         this.id = id;
         return this;
     }

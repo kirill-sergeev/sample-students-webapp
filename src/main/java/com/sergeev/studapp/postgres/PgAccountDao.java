@@ -12,18 +12,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.postgres.PgConstants.*;
+
 public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgAccountDao.class);
-    protected static final String ACCOUNT_ID = "account_id";
-    protected static final String LOGIN = "login";
-    protected static final String PASSWORD = "password";
-    protected static final String TOKEN = "token";
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM accounts WHERE account_id= ?;";
+        return String.format("SELECT * FROM %s WHERE %s= ?", ACCOUNTS, ACCOUNT_ID);
     }
+
     @Override
     protected String getSelectAllQuery() {
         return "SELECT * FROM accounts";
@@ -47,7 +46,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
         try {
             while (rs.next()) {
                 Account account = new Account();
-                account.setId(rs.getString(ACCOUNT_ID));
+                account.setId(rs.getInt(ACCOUNT_ID));
                 account.setLogin(rs.getString(LOGIN));
                 account.setPassword(rs.getString(PASSWORD));
                 account.setToken(rs.getString(TOKEN));
@@ -75,7 +74,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());
             statement.setString(3, object.getToken());
-            statement.setInt(4, Integer.parseInt(object.getId()));
+            statement.setInt(4, object.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

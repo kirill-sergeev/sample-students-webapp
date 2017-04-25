@@ -28,10 +28,10 @@ public class StudentServlet extends HttpServlet {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String action = request.getParameter("action");
 
-        String id;
+        Integer id;
         String firstName;
         String lastName;
-        String groupId;
+        Integer groupId;
         List<User> students;
 
         if (path.matches("^/student/?")) {
@@ -39,7 +39,7 @@ public class StudentServlet extends HttpServlet {
             if ("create".equals(action)) {
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
-                groupId = request.getParameter("group");
+                groupId = Integer.valueOf(request.getParameter("group"));
                 try {
                     UserService.createStudent(firstName, lastName, groupId);
                 } catch (ApplicationException e) {
@@ -52,10 +52,10 @@ public class StudentServlet extends HttpServlet {
                 return;
 
             } else if ("update".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
-                groupId = request.getParameter("group");
+                groupId = Integer.valueOf(request.getParameter("group"));
                 try {
                     UserService.updateStudent(firstName, lastName, groupId, id);
                 } catch (ApplicationException e) {
@@ -69,7 +69,7 @@ public class StudentServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     UserService.delete(id);
                 } catch (ApplicationException e) {
@@ -120,7 +120,7 @@ public class StudentServlet extends HttpServlet {
         }
 
         if (path.matches("^/student/[^/]+/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 student = UserService.read(id);
                 coursesMarks = UserService.studentAvgMarks(id);
@@ -136,7 +136,7 @@ public class StudentServlet extends HttpServlet {
         }
 
         if (path.matches("^/student/[^/]+/change/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 student = UserService.read(id);
             } catch (ApplicationException e) {

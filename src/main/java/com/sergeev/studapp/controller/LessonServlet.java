@@ -27,23 +27,23 @@ public class LessonServlet extends HttpServlet {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String action = request.getParameter("action");
 
-        String id;
-        String date;
-        String order;
-        String disciplineId;
-        String groupId;
-        String typeId;
+        Integer id;
+        LocalDate date;
+        Integer order;
+        Integer disciplineId;
+        Integer groupId;
+        String type;
 
         if (path.matches("^/lesson/?")) {
 
             if ("create".equals(action)) {
-                groupId = request.getParameter("group");
-                disciplineId = request.getParameter("discipline");
-                typeId = request.getParameter("type");
-                order = request.getParameter("number");
-                date = request.getParameter("date");
+                groupId = Integer.valueOf(request.getParameter("group"));
+                disciplineId = Integer.valueOf(request.getParameter("discipline"));
+                type = request.getParameter("type");
+                order = Integer.valueOf(request.getParameter("number"));
+                date = LocalDate.parse(request.getParameter("date"));
                 try {
-                    LessonService.create(groupId, disciplineId, typeId, order, date);
+                    LessonService.create(groupId, disciplineId, type, order, date);
                 } catch (ApplicationException e) {
                     LOG.info("Lesson cannot be created.");
                     e.printStackTrace();
@@ -55,14 +55,14 @@ public class LessonServlet extends HttpServlet {
                 return;
 
             } else if ("update".equals(action)) {
-                id = request.getParameter("id");
-                groupId = request.getParameter("group");
-                disciplineId = request.getParameter("discipline");
-                typeId = request.getParameter("type");
-                order = request.getParameter("number");
-                date = request.getParameter("date");
+                id = Integer.valueOf(request.getParameter("id"));
+                groupId = Integer.valueOf(request.getParameter("group"));
+                disciplineId = Integer.valueOf(request.getParameter("discipline"));
+                type = request.getParameter("type");
+                order = Integer.valueOf(request.getParameter("number"));
+                date = LocalDate.parse(request.getParameter("date"));
                 try {
-                    LessonService.update(groupId, disciplineId, typeId, order, date, id);
+                    LessonService.update(groupId, disciplineId, type, order, date, id);
                 } catch (ApplicationException e) {
                     LOG.info("Lesson cannot be updated.");
                     response.sendRedirect("/lesson/" + id + "/change");
@@ -73,7 +73,7 @@ public class LessonServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     groupId = LessonService.read(id).getCourse().getGroup().getId();
                     LessonService.delete(id);
@@ -93,7 +93,7 @@ public class LessonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
 
-        String groupId;
+        Integer groupId;
         Group group;
         Lesson lesson;
         List<Course> courses;
@@ -104,7 +104,7 @@ public class LessonServlet extends HttpServlet {
         List<Mark> marks;
 
         if (path.matches("^/lesson/group/[^/]+/?")) {
-            groupId= path.split("/")[3];
+            groupId= Integer.valueOf(path.split("/")[3]);
             try {
                 group = GroupService.read(groupId);
                 lessons = LessonService.readAll(groupId);
@@ -121,7 +121,7 @@ public class LessonServlet extends HttpServlet {
         }
 
         if (path.matches("^/lesson/new/group/[^/]+/?")) {
-            groupId= path.split("/")[4];
+            groupId= Integer.valueOf(path.split("/")[4]);
             types = Lesson.Type.values();
             orders = Lesson.Order.values();
             try {
@@ -140,7 +140,7 @@ public class LessonServlet extends HttpServlet {
             return;
         }
         if (path.matches("^/lesson/[^/]+/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 lesson = LessonService.read(id);
                 marks = MarkService.readByLesson(id);
@@ -158,7 +158,7 @@ public class LessonServlet extends HttpServlet {
 
 
         if (path.matches("^/lesson/[^/]+/change/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 lesson = LessonService.read(id);
             } catch (ApplicationException e) {

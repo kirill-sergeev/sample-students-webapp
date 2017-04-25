@@ -10,9 +10,9 @@ import com.sergeev.studapp.dao.GenericDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Identified;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,55 +21,51 @@ import static com.mongodb.client.model.Filters.eq;
 public abstract class MongoGenericDao<T extends Identified> implements GenericDao<T> {
 
     private static final Logger LOG = LoggerFactory.getLogger(MongoGenericDao.class);
+
     private static MongoDatabase db = MongoDaoFactory.getConnection();
+    private static MongoCollection<Document> counters = db.getCollection("counters");
     private MongoCollection<Document> collection = getCollection(db);
-    private String id;
+
     private Document doc;
-    private ObjectId oid;
 
     protected static final String ID = "_id";
+
     protected abstract MongoCollection<Document> getCollection(MongoDatabase db);
+
     protected abstract Document getDocument(T object) throws PersistentException;
+
     protected abstract T parseDocument(Document doc) throws PersistentException;
 
     @Override
-    public T persist(T object) throws PersistentException {
+    public T save(T object) throws PersistentException {
         doc = getDocument(object);
         collection.insertOne(doc);
-        ObjectId id = (ObjectId) doc.get(ID);
-        object.setId(String.valueOf(id));
+        object.setId((Integer) doc.get(ID));
         return object;
     }
 
     @Override
-    public T getById(String id) throws PersistentException {
-        try {
-            oid = new ObjectId(id);
-        } catch (IllegalArgumentException e){
-            throw new PersistentException("Bad ID.");
-        }
-        doc = collection.find(eq(ID, oid)).first();
-        if (doc == null){
+    public T getById(Integer id) throws PersistentException {
+        doc = collection.find(eq(ID, id)).first();
+        if (doc == null) {
             throw new PersistentException("Object not found.");
         }
         return parseDocument(doc);
     }
 
     @Override
-    public void update(T object) throws PersistentException {
-        id = object.getId();
-        oid = new ObjectId(id);
+    public T update(T object) throws PersistentException {
         doc = getDocument(object);
-        UpdateResult updateResult = collection.replaceOne(eq(ID, oid), doc);
+        UpdateResult updateResult = collection.replaceOne(eq(ID, object.getId()), doc);
         if (updateResult.getModifiedCount() == 0) {
             throw new PersistentException("Nothing updated!");
         }
+        return  object;
     }
 
     @Override
-    public void delete(String id) throws PersistentException {
-        oid = new ObjectId(id);
-        DeleteResult deleteResult = collection.deleteOne(eq(ID, oid));
+    public void delete(Integer id) throws PersistentException {
+        DeleteResult deleteResult = collection.deleteOne(eq(ID, id));
         if (deleteResult.getDeletedCount() == 0) {
             throw new PersistentException("Nothing deleted!");
         }
@@ -92,5 +88,24 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
             throw new PersistentException("Record not found.");
         }
         return list;
+    }
+
+    protected Integer getNextId() {
+        String name = this.getClass().getSimpleName().toLowerCase()
+                .replace("mongo", "")
+                .replace("dao", "");
+        Document searchQuery = new Document("_id", name);
+        Document increase = new Document("seq", 1);
+        Document updateQuery = new Document("$inc", increase);
+
+        Document result = counters.findOneAndUpdate(searchQuery, updateQuery);
+        if (result == null) {
+            Document document = new Document()
+                    .append("_id", name)
+                    .append("seq", 2);
+            counters.insertOne(document);
+            return 1;
+        }
+        return result.getInteger("seq");
     }
 }

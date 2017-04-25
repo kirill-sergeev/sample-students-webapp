@@ -25,15 +25,15 @@ public class MarkServlet extends HttpServlet {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String action = request.getParameter("action");
 
-        String id;
-        String lessonId;
-        String studentId;
+        Integer id;
+        Integer lessonId;
+        Integer studentId;
 
         if (path.matches("^/mark/?")) {
             if ("create".equals(action)) {
-                lessonId = request.getParameter("lesson");
-                studentId = request.getParameter("student");
-                String value = (request.getParameter("value"));
+                lessonId = Integer.valueOf(request.getParameter("lesson"));
+                studentId = Integer.valueOf(request.getParameter("student"));
+                Integer value = Integer.valueOf((request.getParameter("value")));
                 try {
                     MarkService.create(lessonId, studentId, value);
                 } catch (ApplicationException e) {
@@ -46,7 +46,7 @@ public class MarkServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     lessonId = MarkService.read(id).getLesson().getId();
                     MarkService.delete(id);
@@ -66,19 +66,19 @@ public class MarkServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
 
-        String disciplineId;
-        String groupId;
-        String studentId;
+        Integer disciplineId;
+        Integer groupId;
+        Integer studentId;
         Discipline discipline;
         User student;
-        String lessonId;
+        Integer lessonId;
         Lesson lesson;
         List<Mark> marks;
         List<User> students;
 
         if (path.matches("^/mark/student/[^/]+/discipline/[^/]+/?")) {
-            studentId = path.split("/")[3];
-            disciplineId = path.split("/")[5];
+            studentId = Integer.valueOf(path.split("/")[3]);
+            disciplineId = Integer.valueOf(path.split("/")[5]);
             try {
                 marks = MarkService.readByDisciplineAndStudent(disciplineId, studentId);
                 student = UserService.read(studentId);
@@ -96,8 +96,8 @@ public class MarkServlet extends HttpServlet {
         }
 
         if (path.matches("^/mark/new/group/[^/]+/lesson/[^/]+/?")) {
-            groupId = path.split("/")[4];
-            lessonId = path.split("/")[6];
+            groupId = Integer.valueOf(path.split("/")[4]);
+            lessonId = Integer.valueOf(path.split("/")[6]);
 
             try {
                 lesson = LessonService.read(lessonId);

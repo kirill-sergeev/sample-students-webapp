@@ -27,7 +27,7 @@ public class GroupServlet extends HttpServlet {
         final String action = request.getParameter("action");
 
         String title;
-        String id;
+        Integer id;
 
         if (path.matches("^/group/?")) {
 
@@ -45,7 +45,7 @@ public class GroupServlet extends HttpServlet {
                 return;
 
             } else if ("update".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 title = request.getParameter("title");
                 try {
                     GroupService.update(title, id);
@@ -59,7 +59,7 @@ public class GroupServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     GroupService.delete(id);
                 } catch (ApplicationException e) {
@@ -99,7 +99,7 @@ public class GroupServlet extends HttpServlet {
         }
 
         if (path.matches("^/group/[^/]+/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 group = GroupService.read(id);
                 lessons = LessonService.readAll(id);
@@ -119,7 +119,7 @@ public class GroupServlet extends HttpServlet {
         }
 
         if (path.matches("^/group/[^/]+/change/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 group = GroupService.read(id);
             } catch (ApplicationException e) {

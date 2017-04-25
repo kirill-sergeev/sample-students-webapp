@@ -18,7 +18,7 @@ public class CourseService {
     private static final Logger LOG = LoggerFactory.getLogger(CourseService.class);
     private static final CourseDao COURSE_DAO = DaoFactory.getDaoFactory().getCourseDao();
 
-    public static Course create(String disciplineId, String groupId, String teacherId) throws ApplicationException {
+    public static Course create(Integer disciplineId, Integer groupId, Integer teacherId) throws ApplicationException {
         Discipline discipline = DisciplineService.read(disciplineId);
         Group group = GroupService.read(groupId);
         User teacher = UserService.read(teacherId);
@@ -29,7 +29,7 @@ public class CourseService {
         course.setTeacher(teacher);
 
         try {
-            course = COURSE_DAO.persist(course);
+            course = COURSE_DAO.save(course);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save course.", e);
         }
@@ -37,8 +37,8 @@ public class CourseService {
         return course;
     }
 
-    public static Course read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()) {
+    public static Course read(Integer id) throws ApplicationException {
+        if (id == null) {
             throw new ApplicationException("Bad parameters.");
         }
         Course course;
@@ -61,8 +61,8 @@ public class CourseService {
         return courses;
     }
 
-    public static List<Course> readByGroup(String groupId) throws ApplicationException {
-        if (groupId == null || groupId.isEmpty()) {
+    public static List<Course> readByGroup(Integer groupId) throws ApplicationException {
+        if (groupId == null) {
             throw new ApplicationException("Bad parameters.");
         }
         List<Course> courses;
@@ -75,8 +75,8 @@ public class CourseService {
         return courses;
     }
 
-    public static List<Course> readByTeacher(String teacherId) throws ApplicationException {
-        if (teacherId == null || teacherId.isEmpty()) {
+    public static List<Course> readByTeacher(Integer teacherId) throws ApplicationException {
+        if (teacherId == null) {
             throw new ApplicationException("Bad parameters.");
         }
         List<Course> courses;
@@ -89,8 +89,8 @@ public class CourseService {
         return courses;
     }
 
-    public static List<Course> readByDiscipline(String disciplineId) throws ApplicationException {
-        if (disciplineId == null || disciplineId.isEmpty()) {
+    public static List<Course> readByDiscipline(Integer disciplineId) throws ApplicationException {
+        if (disciplineId == null) {
             throw new ApplicationException("Bad parameters.");
         }
         List<Course> courses;
@@ -103,8 +103,8 @@ public class CourseService {
         return courses;
     }
 
-    public static Course update(String disciplineId, String groupId, String teacherId, String id) throws ApplicationException {
-        if (id == null || id.isEmpty()) {
+    public static Course update(Integer disciplineId, Integer groupId, Integer teacherId, Integer id) throws ApplicationException {
+        if (id == null) {
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -127,8 +127,8 @@ public class CourseService {
         return course;
     }
 
-    public static void delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()) {
+    public static void delete(Integer id) throws ApplicationException {
+        if (id == null) {
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -139,8 +139,8 @@ public class CourseService {
         }
     }
 
-    protected static Course readByDisciplineAndGroup(String disciplineId, String groupId) throws ApplicationException {
-        if (disciplineId == null || groupId == null || disciplineId.isEmpty() || groupId.isEmpty()) {
+    protected static Course readByDisciplineAndGroup(Integer disciplineId, Integer groupId) throws ApplicationException {
+        if (disciplineId == null || groupId == null) {
             throw new ApplicationException("Bad parameters.");
         }
         Course course;

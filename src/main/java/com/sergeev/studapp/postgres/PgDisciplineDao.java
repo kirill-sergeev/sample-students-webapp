@@ -12,11 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.postgres.PgConstants.*;
+
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgDisciplineDao.class);
-    protected static final String DISCIPLINE_ID = "discipline_id";
-    protected static final String DISCIPLINE_TITLE = "title";
 
     @Override
     protected String getSelectQuery() {
@@ -45,8 +45,8 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
         try {
             while (rs.next()) {
                 Discipline discipline = new Discipline();
-                discipline.setId(rs.getString(DISCIPLINE_ID));
-                discipline.setTitle(rs.getString(DISCIPLINE_TITLE));
+                discipline.setId(rs.getInt(DISCIPLINE_ID));
+                discipline.setTitle(rs.getString(TITLE));
                 result.add(discipline);
             }
         } catch (SQLException e) {
@@ -68,7 +68,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
-            statement.setInt(2, Integer.parseInt(object.getId()));
+            statement.setInt(2, object.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

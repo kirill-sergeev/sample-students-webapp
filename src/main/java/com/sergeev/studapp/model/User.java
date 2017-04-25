@@ -2,7 +2,7 @@ package com.sergeev.studapp.model;
 
 public class User implements Identified {
 
-    private String id;
+    private Integer id;
     private Account account;
     private Group group;
     private String firstName;
@@ -10,12 +10,12 @@ public class User implements Identified {
     private Role role;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public User setId(String id) {
+    public User setId(Integer id) {
         this.id = id;
         return this;
     }

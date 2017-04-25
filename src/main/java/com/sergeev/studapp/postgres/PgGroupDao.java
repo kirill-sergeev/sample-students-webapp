@@ -12,11 +12,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sergeev.studapp.postgres.PgConstants.*;
+
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgGroupDao.class);
-    protected static final String GROUP_ID = "group_id";
-    protected static final String GROUP_TITLE = "title";
 
     @Override
     protected String getSelectQuery() {
@@ -45,8 +45,8 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
         try {
             while (rs.next()) {
                 Group group = new Group();
-                group.setId(rs.getString(GROUP_ID));
-                group.setTitle(rs.getString(GROUP_TITLE));
+                group.setId(rs.getInt(GROUP_ID));
+                group.setTitle(rs.getString(TITLE));
                 result.add(group);
             }
         } catch (SQLException e) {
@@ -68,7 +68,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     protected void prepareStatementForUpdate(PreparedStatement statement, Group object) throws PersistentException {
         try {
             statement.setString(1, object.getTitle());
-            statement.setInt(2, Integer.parseInt(object.getId()));
+            statement.setInt(2, object.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

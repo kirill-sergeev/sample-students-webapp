@@ -8,7 +8,6 @@ import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.User;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,8 +37,11 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     protected Document getDocument(User object) throws PersistentException{
-        doc = new Document(FIRST_NAME, object.getFirstName()).append(LAST_NAME, object.getLastName())
-                .append(ROLE, object.getRole().name()).append(ACCOUNT, object.getAccount().getId());
+        doc = new Document(ID, getNextId())
+                .append(FIRST_NAME, object.getFirstName())
+                .append(LAST_NAME, object.getLastName())
+                .append(ROLE, object.getRole().name())
+                .append(ACCOUNT, object.getAccount().getId());
         if (object.getRole() == User.Role.STUDENT) {
             doc.append(GROUP, object.getGroup().getId());
         }
@@ -53,16 +55,15 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     protected User parseDocument(Document doc) throws PersistentException {
         User user = new User();
-        ObjectId oid = (ObjectId) doc.get(ID);
-        user.setId(String.valueOf(oid));
+        user.setId(doc.getInteger(ID));
         user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));
         user.setLastName(String.valueOf(doc.get(LAST_NAME)));
         user.setRole(User.Role.valueOf(String.valueOf(doc.get(ROLE))));
         MongoAccountDao mad = new MongoAccountDao();
-        user.setAccount(mad.getById(String.valueOf(doc.get(ACCOUNT))));
+        user.setAccount(mad.getById(doc.getInteger(ACCOUNT)));
         if (user.getRole() == User.Role.STUDENT) {
             MongoGroupDao mgd = new MongoGroupDao();
-            user.setGroup(mgd.getById(String.valueOf(doc.get(GROUP))));
+            user.setGroup(mgd.getById(doc.getInteger(GROUP)));
         }
         return user;
     }
@@ -95,7 +96,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getByGroup(String groupId) throws PersistentException {
+    public List<User> getByGroup(Integer groupId) throws PersistentException {
         List<User> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             User item = null;

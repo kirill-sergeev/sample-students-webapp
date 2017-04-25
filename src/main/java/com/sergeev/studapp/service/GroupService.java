@@ -23,7 +23,7 @@ public class GroupService {
         group.setTitle(title);
 
         try {
-            group = GROUP_DAO.persist(group);
+            group = GROUP_DAO.save(group);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save group.", e);
         }
@@ -31,12 +31,11 @@ public class GroupService {
         return group;
     }
 
-    public static Group read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+    public static Group read(Integer id) throws ApplicationException {
+        if (id == null){
             throw new ApplicationException("Bad parameters.");
         }
         Group group;
-
         try {
             group = GROUP_DAO.getById(id);
         } catch (PersistentException e) {
@@ -57,8 +56,8 @@ public class GroupService {
         return groups;
     }
 
-    public static Group update(String title, String id) throws ApplicationException {
-        if (id == null || id.isEmpty() || !checkTitle(title)) {
+    public static Group update(String title, Integer id) throws ApplicationException {
+        if (id == null || !checkTitle(title)) {
             throw new ApplicationException("Bad parameters.");
         }
         Group group = new Group();
@@ -74,8 +73,8 @@ public class GroupService {
         return group;
     }
 
-    public static void delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+    public static void delete(Integer id) throws ApplicationException {
+        if (id == null){
             throw new ApplicationException("Bad parameters.");
         }
 

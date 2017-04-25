@@ -5,18 +5,18 @@ package com.sergeev.studapp.model;
 
 public class Course implements Identified {
 
-    private String id;
+    private Integer id;
     private Discipline discipline;
     private Group group;
     private User teacher;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public Course setId(String id) {
+    public Course setId(Integer id) {
         this.id = id;
         return this;
     }

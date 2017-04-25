@@ -18,18 +18,18 @@ public class MarkService {
     private static Mark mark;
     private static List<Mark> marks;
 
-    public static Mark create(String lessonId, String studentId, String value) throws ApplicationException {
-        if (!checkValue(value)){
+    public static Mark create(Integer lessonId, Integer studentId, Integer value) throws ApplicationException {
+        if (value < 0 || value > 100){
             throw new ApplicationException("Bad parameters.");
         }
 
         mark = new Mark();
-        mark.setValue(Integer.valueOf(value));
+        mark.setValue(value);
         mark.setLesson(LessonService.read(lessonId));
         mark.setStudent(UserService.read(studentId));
 
         try {
-            mark = MARK_DAO.persist(mark);
+            mark = MARK_DAO.save(mark);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save mark.", e);
         }
@@ -37,8 +37,8 @@ public class MarkService {
         return mark;
     }
 
-    public static Mark read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+    public static Mark read(Integer id) throws ApplicationException {
+        if (id == null){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -51,8 +51,8 @@ public class MarkService {
         return mark;
     }
 
-    public static List<Mark> readByLesson(String lessonId) throws ApplicationException {
-        if (lessonId == null || lessonId.isEmpty()){
+    public static List<Mark> readByLesson(Integer lessonId) throws ApplicationException {
+        if (lessonId == null){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -76,8 +76,8 @@ public class MarkService {
         return marks;
     }
 
-    public static List<Mark> readByDisciplineAndStudent(String disciplineId, String studentId) throws ApplicationException {
-        if (disciplineId == null || studentId == null || disciplineId.isEmpty() || studentId.isEmpty()){
+    public static List<Mark> readByDisciplineAndStudent(Integer disciplineId, Integer studentId) throws ApplicationException {
+        if (disciplineId == null || studentId == null){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -89,8 +89,8 @@ public class MarkService {
         return marks;
     }
 
-    public static void delete(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()) {
+    public static void delete(Integer id) throws ApplicationException {
+        if (id == null) {
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -101,7 +101,7 @@ public class MarkService {
         }
     }
 
-    protected static Double calculateAvgMark(String studentId, String disciplineId) throws ApplicationException {
+    protected static Double calculateAvgMark(Integer studentId, Integer disciplineId) throws ApplicationException {
         Double avgMark;
 
         try {
@@ -111,14 +111,6 @@ public class MarkService {
         }
 
         return avgMark;
-    }
-
-    private static boolean checkValue(String value) {
-        if (value == null || value.isEmpty() || !value.matches("^\\d{1,3}$")) {
-            return false;
-        }
-        int mark = Integer.parseInt(value);
-        return mark >= 0 && mark <= 100;
     }
 
 }

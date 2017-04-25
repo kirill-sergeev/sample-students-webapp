@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface MarkDao extends GenericDao<Mark> {
 
-    Double getAvgMark(String studentId, String disciplineId) throws PersistentException;
+    Double getAvgMark(Integer studentId, Integer disciplineId) throws PersistentException;
 
-    List<Mark> getByLesson(String lessonId) throws PersistentException;
+    List<Mark> getByLesson(Integer lessonId) throws PersistentException;
 
-    List<Mark> getByDisciplineAndStudent(String disciplineId, String studentId) throws PersistentException;
+    List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) throws PersistentException;
 
 }

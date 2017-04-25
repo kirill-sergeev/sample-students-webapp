@@ -8,7 +8,6 @@ import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.bson.types.ObjectId;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -34,25 +33,28 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
 
     @Override
     protected Document getDocument(Lesson object) throws PersistentException {
-        return doc = new Document(DATE, Date.valueOf(object.getDate())).append(TYPE, object.getType().name()).append(ORDINAL, object.getOrder().ordinal() + 1).append(COURSE, object.getCourse().getId());
+        return doc = new Document(ID, getNextId())
+                .append(DATE, Date.valueOf(object.getDate()))
+                .append(TYPE, object.getType().name())
+                .append(ORDINAL, object.getOrder().ordinal() + 1)
+                .append(COURSE, object.getCourse().getId());
     }
 
     @Override
     protected Lesson parseDocument(Document doc) throws PersistentException {
         Lesson lesson = new Lesson();
-        ObjectId oid = (ObjectId) doc.get(ID);
-        lesson.setId(String.valueOf(oid));
+        lesson.setId(doc.getInteger(ID));
         LocalDate date = Instant.ofEpochMilli(doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneId.of("UTC")).toLocalDate();
         lesson.setDate(date);
         lesson.setType(Lesson.Type.valueOf(String.valueOf(doc.get(TYPE))));
         lesson.setOrder(Lesson.Order.values()[(int) doc.get(ORDINAL) - 1]);
         MongoCourseDao mcd = new MongoCourseDao();
-        lesson.setCourse(mcd.getById(String.valueOf(doc.get(COURSE))));
+        lesson.setCourse(mcd.getById(doc.getInteger(COURSE)));
         return lesson;
     }
 
     @Override
-    public List<Lesson> getByGroup(String groupId) throws PersistentException {
+    public List<Lesson> getByGroup(Integer groupId) throws PersistentException {
         List<Lesson> list = new ArrayList<>();
                 Bson lookup = new Document("$lookup",
                 new Document("from", "courses")

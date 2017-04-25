@@ -22,7 +22,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     protected abstract void prepareStatementForUpdate(PreparedStatement statement, T object) throws PersistentException;
 
     @Override
-    public T persist(T object) throws PersistentException {
+    public T save(T object) throws PersistentException {
         String sql = getCreateQuery();
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -30,7 +30,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                object.setId(resultSet.getString(1));
+                object.setId(resultSet.getInt(1));
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
@@ -39,19 +39,19 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     }
 
     @Override
-    public T getById(String key) throws PersistentException {
+    public T getById(Integer id) throws PersistentException {
         String sql = getSelectQuery();
         List<T> list;
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, Integer.parseInt(key));
+            statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
         if (list == null || list.size() == 0) {
-            throw new PersistentException("Record with PK = " + key + " not found.");
+            throw new PersistentException("Record with PK = " + id + " not found.");
         }
         if (list.size() > 1) {
             throw new PersistentException("Received more than one record.");
@@ -60,7 +60,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
     }
 
     @Override
-    public void update(T object) throws PersistentException {
+    public T update(T object) throws PersistentException {
         String sql = getUpdateQuery();
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -72,15 +72,16 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
+        return object;
     }
 
     @Override
-    public void delete(String key) throws PersistentException {
+    public void delete(Integer id) throws PersistentException {
         String sql = getDeleteQuery();
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             try {
-                statement.setInt(1, Integer.parseInt(key));
+                statement.setInt(1, id);
             } catch (Exception e) {
                 throw new PersistentException(e);
             }
@@ -107,7 +108,7 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
         return list;
     }
 
-    static {
+   /* static {
         String sql = "DROP TABLE IF EXISTS marks, lessons, courses, disciplines, groups, accounts, users CASCADE;\n" +
                 "------------------------------------------------\n" +
                 "------------------structure---------------------\n" +
@@ -251,5 +252,5 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
         } catch (Exception e) {
             e.printStackTrace();
       }
-    }
+    }*/
 }

@@ -26,7 +26,7 @@ public class DisciplineServlet extends HttpServlet {
         final String action = request.getParameter("action");
 
         String title;
-        String id;
+        Integer id;
 
         if (path.matches("^/discipline/?")) {
 
@@ -44,7 +44,7 @@ public class DisciplineServlet extends HttpServlet {
                 return;
 
             } else if ("update".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 title = request.getParameter("title");
                 try {
                     DisciplineService.update(title, id);
@@ -58,7 +58,7 @@ public class DisciplineServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     DisciplineService.delete(id);
                 } catch (ApplicationException e) {
@@ -97,7 +97,7 @@ public class DisciplineServlet extends HttpServlet {
         }
 
         if (path.matches("^/discipline/[^/]+/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 discipline = DisciplineService.read(id);
                 courses = CourseService.readByDiscipline(id);
@@ -113,7 +113,7 @@ public class DisciplineServlet extends HttpServlet {
         }
 
         if (path.matches("^/discipline/[^/]+/change/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 discipline = DisciplineService.read(id);
             } catch (ApplicationException e) {

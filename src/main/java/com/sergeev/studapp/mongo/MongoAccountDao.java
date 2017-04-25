@@ -7,7 +7,6 @@ import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +15,8 @@ import java.util.regex.Pattern;
 import static com.mongodb.client.model.Filters.eq;
 
 public class MongoAccountDao extends MongoGenericDao<Account> implements AccountDao {
+
+    private static final String COLLECTION = "accounts";
 
     protected static final String LOGIN = "login";
     protected static final String PASSWORD = "password";
@@ -26,19 +27,21 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection("accounts");
+        return collection = db.getCollection(COLLECTION);
     }
 
     @Override
     protected Document getDocument(Account object) {
-        return doc = new Document(LOGIN, object.getLogin()).append(PASSWORD, object.getPassword()).append(TOKEN, object.getToken());
+        return doc = new Document(ID, getNextId())
+                .append(LOGIN, object.getLogin())
+                .append(PASSWORD, object.getPassword())
+                .append(TOKEN, object.getToken());
     }
 
     @Override
     protected Account parseDocument(Document doc) throws PersistentException{
         Account account = new Account();
-        ObjectId oid = (ObjectId) doc.get(ID);
-        account.setId(oid.toString());
+        account.setId(doc.getInteger(ID));
         account.setLogin(String.valueOf(doc.get(LOGIN)));
         account.setPassword(String.valueOf(doc.get(PASSWORD)));
         account.setToken(String.valueOf(doc.get(TOKEN)));

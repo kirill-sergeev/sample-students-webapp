@@ -25,7 +25,7 @@ public class TeacherServlet extends HttpServlet {
         final String path = request.getRequestURI().substring(request.getContextPath().length());
         final String action = request.getParameter("action");
 
-        String id;
+        Integer id;
         String firstName;
         String lastName;
 
@@ -46,7 +46,7 @@ public class TeacherServlet extends HttpServlet {
                 return;
 
             } else if ("update".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
                 try {
@@ -62,7 +62,7 @@ public class TeacherServlet extends HttpServlet {
                 return;
 
             } else if ("delete".equals(action)) {
-                id = request.getParameter("id");
+                id = Integer.valueOf(request.getParameter("id"));
                 try {
                     UserService.delete(id);
                 } catch (ApplicationException e) {
@@ -100,7 +100,7 @@ public class TeacherServlet extends HttpServlet {
         }
 
         if (path.matches("^/teacher/[^/]+/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 teacher = UserService.read(id);
                 courses = CourseService.readByTeacher(id);
@@ -116,7 +116,7 @@ public class TeacherServlet extends HttpServlet {
         }
 
         if (path.matches("^/teacher/[^/]+/change/?")) {
-            String id = path.split("/")[2];
+            Integer id = Integer.valueOf(path.split("/")[2]);
             try {
                 teacher = UserService.read(id);
             } catch (ApplicationException e) {

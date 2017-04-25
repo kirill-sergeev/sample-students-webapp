@@ -20,8 +20,8 @@ public class LessonService {
     private static Lesson lesson;
     private static List<Lesson> lessons;
 
-    public static Lesson create(String groupId, String disciplineId, String type, String order, String date) throws ApplicationException {
-        if (date == null || date.isEmpty()){
+    public static Lesson create(Integer groupId, Integer disciplineId, String type, Integer order, LocalDate date) throws ApplicationException {
+        if (date == null){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -29,12 +29,12 @@ public class LessonService {
 
         lesson = new Lesson();
         lesson.setType(Lesson.Type.valueOf(type));
-        lesson.setOrder(Lesson.Order.values()[Integer.parseInt(order)]);
-        lesson.setDate(LocalDate.parse(date));
+        lesson.setOrder(Lesson.Order.values()[order]);
+        lesson.setDate(date);
         lesson.setCourse(course);
 
         try {
-            lesson = LESSON_DAO.persist(lesson);
+            lesson = LESSON_DAO.save(lesson);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save lesson.", e);
         }
@@ -42,8 +42,8 @@ public class LessonService {
         return lesson;
     }
 
-    public static Lesson read(String id) throws ApplicationException {
-        if (id == null || id.isEmpty()){
+    public static Lesson read(Integer id) throws ApplicationException {
+        if (id == null){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -56,7 +56,7 @@ public class LessonService {
         return lesson;
     }
 
-    public static List<Lesson> readAll(String groupId){
+    public static List<Lesson> readAll(Integer groupId){
 
         try {
             lessons = LESSON_DAO.getByGroup(groupId);
@@ -67,8 +67,8 @@ public class LessonService {
         return lessons;
     }
 
-    public static Lesson update(String groupId, String disciplineId, String type, String order, String date, String id) throws ApplicationException {
-        if (id == null || id.isEmpty() || date == null || date.isEmpty()){
+    public static Lesson update(Integer groupId, Integer disciplineId, String type, Integer order, LocalDate date, Integer id) throws ApplicationException {
+        if (id == null|| date == null){
             throw new ApplicationException("Bad parameters.");
         }
 
@@ -77,8 +77,8 @@ public class LessonService {
         lesson = new Lesson();
         lesson.setId(id);
         lesson.setType(Lesson.Type.valueOf(type));
-        lesson.setOrder(Lesson.Order.values()[Integer.parseInt(order)]);
-        lesson.setDate(LocalDate.parse(date));
+        lesson.setOrder(Lesson.Order.values()[order]);
+        lesson.setDate(date);
         lesson.setCourse(course);
 
         try {
@@ -90,7 +90,7 @@ public class LessonService {
         return lesson;
     }
 
-    public static void delete(String id) throws ApplicationException {
+    public static void delete(Integer id) throws ApplicationException {
         try {
             LESSON_DAO.delete(id);
         } catch (PersistentException e) {

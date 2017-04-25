@@ -6,7 +6,6 @@ import com.sergeev.studapp.dao.DisciplineDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements DisciplineDao {
 
@@ -22,14 +21,14 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
 
     @Override
     protected Document getDocument(Discipline object) throws PersistentException {
-        return doc = new Document(DISCIPLINE_TITLE, object.getTitle());
+        return doc = new Document(ID, getNextId())
+                .append(DISCIPLINE_TITLE, object.getTitle());
     }
 
     @Override
     protected Discipline parseDocument(Document doc) {
         Discipline discipline = new Discipline();
-        ObjectId oid = (ObjectId) doc.get(ID);
-        discipline.setId(String.valueOf(oid));
+        discipline.setId(doc.getInteger(ID));
         discipline.setTitle(String.valueOf(doc.get(DISCIPLINE_TITLE)));
         return discipline;
     }

@@ -3,16 +3,16 @@ package com.sergeev.studapp.model;
 
 public class Discipline implements Identified {
 
-    private String id;
+    private Integer id;
     private String title;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public Discipline setId(String id) {
+    public Discipline setId(Integer id) {
         this.id = id;
         return this;
     }

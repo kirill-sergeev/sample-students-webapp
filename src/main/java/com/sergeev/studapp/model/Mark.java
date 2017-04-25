@@ -2,18 +2,18 @@ package com.sergeev.studapp.model;
 
 public class Mark implements Identified {
 
-    private String id;
+    private Integer id;
     private Lesson lesson;
     private User student;
     private Integer value;
 
     @Override
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
     @Override
-    public Mark setId(String id) {
+    public Mark setId(Integer id) {
         this.id = id;
         return this;
     }
