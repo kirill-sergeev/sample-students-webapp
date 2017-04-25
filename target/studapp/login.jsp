@@ -9,40 +9,30 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-4">
+        <div class="col-3">
             <form class="form-signin" action="login" method="POST">
-                <h2 class="form-signin-heading">Please sign in</h2>
                 <br>
+                <h2 class="form-signin-heading text-center">Please Sign In</h2>
                 <br>
                 <label for="inputLogin" class="sr-only">Login</label>
                 <input type="text" name="login"
                 <c:if test="${login != null}"> value="${login}"</c:if>
                        id="inputLogin" class="form-control" placeholder="Login"
                        <c:if test="${login == null}">autofocus</c:if> required>
-
+                <br>
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password"
                        required <c:if test="${login != null}">autofocus</c:if>>
-
+                <br>
+                <button class="btn btn-primary btn-block" type="submit">Sign in</button>
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="remember" value="remember"> Remember me
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" name="remember" value="remember"  class="custom-control-input">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Remember me</span>
                     </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
             </form>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <h4>test accounts:</h4>
-            <p>for student - test_student:123456</p>
-            <p>for teacher - test_teacher:123456</p>
-            <p>for admin - test_admin:123456</p>
         </div>
     </div>
 </div>

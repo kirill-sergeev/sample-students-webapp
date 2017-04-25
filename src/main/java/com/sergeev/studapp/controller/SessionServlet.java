@@ -75,7 +75,7 @@ public class SessionServlet extends HttpServlet {
                     response.sendRedirect("/teacher/"+user.getId());
                     return;
                 }else if (user.getRole() == User.Role.ADMIN) {
-                    response.sendRedirect("/admin/");
+                    response.sendRedirect("/group/");
                     return;
                 }
             case "/logout":

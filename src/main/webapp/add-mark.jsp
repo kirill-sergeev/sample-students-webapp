@@ -9,25 +9,26 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-4">
+        <div class="col-3">
             <form action="${pageContext.request.contextPath}/mark" method="POST">
+                <br>
+                <label>Add a new mark</label>
                 <div class="form-group">
                     <input type="hidden" name="action" value="create">
                     <input type="hidden" name="lesson" class="form-control" value="${lesson.id}">
                 </div>
                 <div class="form-group">
-                    <label>Student
+                    <label>Student</label>
                         <select class="form-control" name="student">
                             <c:forEach var="student" items="${students}">
                                 <option value="${student.id}">${student.firstName} ${student.lastName}</option>
                             </c:forEach>
                         </select>
-                    </label>
                 </div>
                 <div class="form-group">
                     <input type="text" name="value" class="form-control" placeholder="Value...">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-block btn-primary">Submit</button>
             </form>
         </div>
     </div>

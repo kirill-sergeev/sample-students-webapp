@@ -9,7 +9,7 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-8">
+        <div class="col-5">
             <h3>Teachers List</h3>
             <c:choose>
                 <c:when test="${empty teachers}">
@@ -65,7 +65,7 @@
             <c:if test="${sessionScope.user.role == 'ADMIN'}">
                 <button class="btn btn-info btn-secondary" type="button"
                         onclick="location.href='${pageContext.request.contextPath}/teacher/new'">
-                    Add a new teacher
+                    New Teacher
                 </button>
             </c:if>
         </div>

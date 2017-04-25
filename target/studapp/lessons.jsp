@@ -79,7 +79,7 @@
             <c:if test="${sessionScope.user.role == 'ADMIN'}">
                 <button class="btn btn-info btn-secondary" type="button"
                         onclick="location.href='${pageContext.request.contextPath}/lesson/new/group/${group.id}'">
-                    Add a new lesson
+                    New Lesson
                 </button>
             </c:if>
         </div>

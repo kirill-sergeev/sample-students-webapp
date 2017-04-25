@@ -6,10 +6,12 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="col-4">
+        <div class="col-3">
             <form action="${pageContext.request.contextPath}/teacher" method="POST">
                 <div class="form-group">
                     <input type="hidden" name="action" value="create">
+                    <br>
+                    <label>Add a new teacher</label>
                     <input type="text" name="first-name" class="form-control" placeholder="First name...">
                 </div>
                 <div class="form-group">
@@ -18,7 +20,7 @@
                 <div class="form-group">
                     <input type="hidden" name="type" class="form-control" value="${2}">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-block btn-primary">Submit</button>
             </form>
         </div>
     </div>

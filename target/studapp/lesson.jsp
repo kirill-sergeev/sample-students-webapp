@@ -89,7 +89,7 @@
                 <c:if test="${(sessionScope.user.role == 'TEACHER' && sessionScope.user.id == lesson.course.teacher.id) || sessionScope.user.role == 'ADMIN'}">
                     <button class="btn btn-info btn-secondary" type="button"
                             onclick="location.href='${pageContext.request.contextPath}/mark/new/group/${lesson.course.group.id}/lesson/${lesson.id}'">
-                        Add a new mark
+                        New Mark
                     </button>
                 </c:if>
             </c:if>
