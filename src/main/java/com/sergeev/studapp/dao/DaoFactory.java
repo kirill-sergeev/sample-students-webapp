@@ -32,6 +32,6 @@ public abstract class DaoFactory {
     }
 
     public static DaoFactory getDaoFactory() {
-       return getDaoFactory(MONGO);
+       return getDaoFactory(POSTGRES);
     }
 }

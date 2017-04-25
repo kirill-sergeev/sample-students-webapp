@@ -33,11 +33,16 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
 
     @Override
     protected Document getDocument(Lesson object) throws PersistentException {
-        return doc = new Document(ID, getNextId())
-                .append(DATE, Date.valueOf(object.getDate()))
+        doc = new Document(DATE, Date.valueOf(object.getDate()))
                 .append(TYPE, object.getType().name())
                 .append(ORDINAL, object.getOrder().ordinal() + 1)
                 .append(COURSE, object.getCourse().getId());
+        if (object.getId() == null){
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
+        }
+        return doc;
     }
 
     @Override

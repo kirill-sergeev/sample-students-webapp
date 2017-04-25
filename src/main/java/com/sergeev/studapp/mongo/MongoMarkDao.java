@@ -30,10 +30,14 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
     @Override
     protected Document getDocument(Mark object) throws PersistentException {
-        doc = new Document(ID, getNextId())
-                .append(LESSON, object.getLesson().getId())
+        doc = new Document(LESSON, object.getLesson().getId())
                 .append(STUDENT, object.getStudent().getId())
                 .append(VALUE, object.getValue());
+        if (object.getId() == null){
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
+        }
         return doc;
     }
 

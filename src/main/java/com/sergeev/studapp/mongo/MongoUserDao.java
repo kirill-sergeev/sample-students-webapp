@@ -37,17 +37,17 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     protected Document getDocument(User object) throws PersistentException{
-        doc = new Document(ID, getNextId())
-                .append(FIRST_NAME, object.getFirstName())
+        doc = new Document(FIRST_NAME, object.getFirstName())
                 .append(LAST_NAME, object.getLastName())
                 .append(ROLE, object.getRole().name())
                 .append(ACCOUNT, object.getAccount().getId());
         if (object.getRole() == User.Role.STUDENT) {
             doc.append(GROUP, object.getGroup().getId());
         }
-
-        if(doc == null || doc.isEmpty()){
-            throw new PersistentException("Bad fields for entity " + object.getClass().getName());
+        if (object.getId() == null){
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
         }
         return doc;
     }

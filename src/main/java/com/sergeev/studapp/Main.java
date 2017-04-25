@@ -9,8 +9,8 @@ public class Main {
       public static void main(String[] args) throws PersistentException {
           Account account = new Account();
           account.setLogin("kirill_sergeev");
-          account.setPassword("123456");
+          account.setPassword("111111");
           AccountDao accountDao = DaoFactory.getDaoFactory(DaoFactory.MONGO).getAccountDao();
-          System.out.println(accountDao.save(account));
+          accountDao.save(account);
     }
 }

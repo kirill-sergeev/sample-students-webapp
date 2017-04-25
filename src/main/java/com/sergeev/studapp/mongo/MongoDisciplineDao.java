@@ -21,8 +21,13 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
 
     @Override
     protected Document getDocument(Discipline object) throws PersistentException {
-        return doc = new Document(ID, getNextId())
-                .append(DISCIPLINE_TITLE, object.getTitle());
+        doc = new Document(DISCIPLINE_TITLE, object.getTitle());
+        if (object.getId() == null){
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
+        }
+        return doc;
     }
 
     @Override

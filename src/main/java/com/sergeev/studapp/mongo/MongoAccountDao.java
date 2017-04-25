@@ -32,14 +32,19 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
 
     @Override
     protected Document getDocument(Account object) {
-        return doc = new Document(ID, getNextId())
-                .append(LOGIN, object.getLogin())
+        doc = new Document(LOGIN, object.getLogin())
                 .append(PASSWORD, object.getPassword())
                 .append(TOKEN, object.getToken());
+        if (object.getId() == null) {
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
+        }
+        return doc;
     }
 
     @Override
-    protected Account parseDocument(Document doc) throws PersistentException{
+    protected Account parseDocument(Document doc) throws PersistentException {
         Account account = new Account();
         account.setId(doc.getInteger(ID));
         account.setLogin(String.valueOf(doc.get(LOGIN)));

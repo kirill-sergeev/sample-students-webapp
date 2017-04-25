@@ -21,8 +21,13 @@ public class MongoGroupDao extends MongoGenericDao<Group> implements GroupDao {
 
     @Override
     protected Document getDocument(Group object) throws PersistentException {
-        return doc = new Document(ID, getNextId())
-                .append(GROUP_TITLE, object.getTitle());
+        doc = new Document(GROUP_TITLE, object.getTitle());
+        if (object.getId() == null){
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
+        }
+        return doc;
     }
 
     @Override

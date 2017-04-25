@@ -30,10 +30,14 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
 
     @Override
     protected Document getDocument(Course object) throws PersistentException {
-        doc = new Document(ID, getNextId())
-                .append(DISCIPLINE, object.getDiscipline().getId())
+        doc = new Document(DISCIPLINE, object.getDiscipline().getId())
                 .append(GROUP, object.getGroup().getId())
                 .append(TEACHER, object.getTeacher().getId());
+        if (object.getId() == null){
+            doc.append(ID, getNextId());
+        } else {
+            doc.append(ID, object.getId());
+        }
         return doc;
     }
 

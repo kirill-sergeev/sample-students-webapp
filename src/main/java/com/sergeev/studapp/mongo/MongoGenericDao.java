@@ -2,6 +2,7 @@ package com.sergeev.studapp.mongo;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.Block;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
@@ -40,7 +41,7 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
     public T save(T object) throws PersistentException {
         doc = getDocument(object);
         collection.insertOne(doc);
-        object.setId((Integer) doc.get(ID));
+        object.setId(doc.getInteger(ID));
         return object;
     }
 
@@ -60,7 +61,7 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
         if (updateResult.getModifiedCount() == 0) {
             throw new PersistentException("Nothing updated!");
         }
-        return  object;
+        return object;
     }
 
     @Override
@@ -100,11 +101,14 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
 
         Document result = counters.findOneAndUpdate(searchQuery, updateQuery);
         if (result == null) {
+            FindIterable<Document> cursor = collection.find()
+                    .sort(new BasicDBObject(ID, -1)).limit(1);
+            Integer number = cursor.first().getInteger(ID);
             Document document = new Document()
                     .append("_id", name)
-                    .append("seq", 2);
+                    .append("seq", number + 2);
             counters.insertOne(document);
-            return 1;
+            return number + 1;
         }
         return result.getInteger("seq");
     }
