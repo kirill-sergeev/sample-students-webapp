@@ -7,21 +7,21 @@ import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import org.bson.Document;
 
-public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements DisciplineDao {
+import static com.sergeev.studapp.model.Constants.*;
 
-    protected static final String DISCIPLINE_TITLE = "title";
+public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements DisciplineDao {
 
     private Document doc;
     private MongoCollection<Document> collection;
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection("disciplines");
+        return collection = db.getCollection(DISCIPLINES);
     }
 
     @Override
     protected Document getDocument(Discipline object) throws PersistentException {
-        doc = new Document(DISCIPLINE_TITLE, object.getTitle());
+        doc = new Document(TITLE, object.getTitle());
         if (object.getId() == null){
             doc.append(ID, getNextId());
         } else {
@@ -34,7 +34,7 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
     protected Discipline parseDocument(Document doc) {
         Discipline discipline = new Discipline();
         discipline.setId(doc.getInteger(ID));
-        discipline.setTitle(String.valueOf(doc.get(DISCIPLINE_TITLE)));
+        discipline.setTitle(String.valueOf(doc.get(TITLE)));
         return discipline;
     }
 }

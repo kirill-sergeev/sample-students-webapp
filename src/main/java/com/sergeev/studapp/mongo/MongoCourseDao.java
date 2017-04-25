@@ -14,25 +14,23 @@ import java.util.List;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
-public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao {
+import static com.sergeev.studapp.model.Constants.*;
 
-    protected static final String DISCIPLINE = "discipline";
-    protected static final String GROUP = "group";
-    protected static final String TEACHER = "teacher";
+public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao {
 
     private Document doc;
     private MongoCollection<Document> collection;
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection("courses");
+        return collection = db.getCollection(COURSES);
     }
 
     @Override
     protected Document getDocument(Course object) throws PersistentException {
-        doc = new Document(DISCIPLINE, object.getDiscipline().getId())
-                .append(GROUP, object.getGroup().getId())
-                .append(TEACHER, object.getTeacher().getId());
+        doc = new Document(DISCIPLINE_ID, object.getDiscipline().getId())
+                .append(GROUP_ID, object.getGroup().getId())
+                .append(USER_ID, object.getTeacher().getId());
         if (object.getId() == null){
             doc.append(ID, getNextId());
         } else {
@@ -47,13 +45,13 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
         course.setId(doc.getInteger(ID));
 
         MongoDisciplineDao mdd = new MongoDisciplineDao();
-        course.setDiscipline(mdd.getById(doc.getInteger(DISCIPLINE)));
+        course.setDiscipline(mdd.getById(doc.getInteger(DISCIPLINE_ID)));
 
         MongoGroupDao mgd = new MongoGroupDao();
-        course.setGroup(mgd.getById(doc.getInteger(GROUP)));
+        course.setGroup(mgd.getById(doc.getInteger(GROUP_ID)));
 
         MongoUserDao mud = new MongoUserDao();
-        course.setTeacher(mud.getById(doc.getInteger(TEACHER)));
+        course.setTeacher(mud.getById(doc.getInteger(USER_ID)));
         return course;
     }
 
@@ -69,7 +67,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
             }
             list.add(item);
         };
-        collection.find(eq(DISCIPLINE, disciplineId)).forEach(documents);
+        collection.find(eq(DISCIPLINE_ID, disciplineId)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }
@@ -88,7 +86,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
             }
             list.add(item);
         };
-        collection.find(eq(GROUP, groupId)).forEach(documents);
+        collection.find(eq(GROUP_ID, groupId)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }
@@ -107,7 +105,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
             }
             list.add(item);
         };
-        collection.find(eq(TEACHER,  userId)).forEach(documents);
+        collection.find(eq(USER_ID,  userId)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }
@@ -126,7 +124,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
             }
             list.add(item);
         };
-        collection.find(and(eq(DISCIPLINE, disciplineId), eq(GROUP, groupId))).forEach(documents);
+        collection.find(and(eq(DISCIPLINE_ID, disciplineId), eq(GROUP_ID, groupId))).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }

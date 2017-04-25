@@ -10,15 +10,11 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.postgres.PgConstants.*;
+import static com.sergeev.studapp.model.Constants.*;
 
 public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgLessonDao.class);
-    protected static final String LESSON_ID = "lesson_id";
-    protected static final String LESSON_DATE = "date";
-    protected static final String LESSON_ORDER = "ordinal";
-    protected static final String LESSON_TYPE = "type";
 
     @Override
     protected String getSelectQuery() {
@@ -50,9 +46,9 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
                 PgCourseDao pcd = new PgCourseDao();
                 lesson.setId(rs.getInt(LESSON_ID));
                 lesson.setCourse(pcd.getById(rs.getInt(COURSE_ID)));
-                lesson.setDate(rs.getDate(LESSON_DATE).toLocalDate());
-                lesson.setOrder(Lesson.Order.values()[rs.getInt(LESSON_ORDER) - 1]);
-                lesson.setType(Lesson.Type.valueOf(rs.getString(LESSON_TYPE)));
+                lesson.setDate(rs.getDate(DATE).toLocalDate());
+                lesson.setOrder(Lesson.Order.values()[rs.getInt(ORDER) - 1]);
+                lesson.setType(Lesson.Type.valueOf(rs.getString(TYPE)));
                 result.add(lesson);
             }
         } catch (SQLException e) {

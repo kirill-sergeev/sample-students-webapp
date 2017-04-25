@@ -14,24 +14,22 @@ import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
-public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
+import static com.sergeev.studapp.model.Constants.*;
 
-    protected static final String LESSON = "lesson";
-    protected static final String STUDENT = "student";
-    protected static final String VALUE = "value";
+public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
     private Document doc;
     private MongoCollection<Document> collection;
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection("marks");
+        return collection = db.getCollection(MARKS);
     }
 
     @Override
     protected Document getDocument(Mark object) throws PersistentException {
-        doc = new Document(LESSON, object.getLesson().getId())
-                .append(STUDENT, object.getStudent().getId())
+        doc = new Document(LESSON_ID, object.getLesson().getId())
+                .append(USER_ID, object.getStudent().getId())
                 .append(VALUE, object.getValue());
         if (object.getId() == null){
             doc.append(ID, getNextId());
@@ -48,10 +46,10 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
         mark.setValue((Integer) doc.get(VALUE));
 
         MongoLessonDao mld = new MongoLessonDao();
-        mark.setLesson(mld.getById(doc.getInteger(LESSON)));
+        mark.setLesson(mld.getById(doc.getInteger(LESSON_ID)));
 
         MongoUserDao mud = new MongoUserDao();
-        mark.setStudent(mud.getById(doc.getInteger(STUDENT)));
+        mark.setStudent(mud.getById(doc.getInteger(USER_ID)));
         return mark;
     }
 
@@ -72,7 +70,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
             }
             list.add(item);
         };
-        collection.find(eq(LESSON, lessonId)).forEach(documents);
+        collection.find(eq(LESSON_ID, lessonId)).forEach(documents);
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }

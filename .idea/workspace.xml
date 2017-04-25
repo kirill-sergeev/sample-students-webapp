@@ -2,20 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="493ee518-63f3-478d-8ad0-66231030171e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/40d33d41-b531-475c-ab1c-2bc6d6130f8a/_metadata_/metadata" afterPath="$PROJECT_DIR$/.idea/dataSources/40d33d41-b531-475c-ab1c-2bc6d6130f8a/_metadata_/metadata" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/40d33d41-b531-475c-ab1c-2bc6d6130f8a/_metadata_/metadata.values.at" afterPath="$PROJECT_DIR$/.idea/dataSources/40d33d41-b531-475c-ab1c-2bc6d6130f8a/_metadata_/metadata.values.at" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/log.2017-04-25.0.txt" afterPath="$PROJECT_DIR$/log.2017-04-25.0.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/dao/DaoFactory.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoAccountDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoAccountDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoCourseDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDisciplineDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoDisciplineDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGenericDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoGroupDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoLessonDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoMarkDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoMarkDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoUserDao.java" afterPath="$PROJECT_DIR$/src/main/java/com/sergeev/studapp/mongo/MongoUserDao.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -111,7 +98,7 @@
       <file leaf-file-name="TransferService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/TransferService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="569">
+            <state relative-caret-position="743">
               <caret line="138" column="36" lean-forward="false" selection-start-line="138" selection-start-column="36" selection-end-line="138" selection-end-column="36" />
               <folding />
             </state>
@@ -1383,12 +1370,12 @@
       <workItem from="1492962711830" duration="4733000" />
       <workItem from="1492970054664" duration="478000" />
       <workItem from="1493115662929" duration="13945000" />
-      <workItem from="1493135424783" duration="2945000" />
+      <workItem from="1493135424783" duration="3038000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="527392000" />
+    <option name="totallyTimeSpent" value="527485000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1401,7 +1388,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="2560" height="1050" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1412,10 +1398,10 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="JRebel Executor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.27982646" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21583514" sideWeight="0.4984089" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21583514" sideWeight="0.4984089" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1141607" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.49681783" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2426869" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24186552" sideWeight="0.5" order="17" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1662689" sideWeight="0.549195" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.49602228" order="11" side_tool="false" content_ui="tabs" />
@@ -1926,7 +1912,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sergeev/studapp/service/TransferService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="569">
+        <state relative-caret-position="743">
           <caret line="138" column="36" lean-forward="false" selection-start-line="138" selection-start-column="36" selection-end-line="138" selection-end-column="36" />
           <folding />
         </state>

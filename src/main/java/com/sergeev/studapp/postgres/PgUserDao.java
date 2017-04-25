@@ -13,8 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.postgres.PgConstants.*;
-import static java.sql.Types.NULL;
+import static com.sergeev.studapp.model.Constants.*;
 
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
@@ -75,7 +74,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             if (object.getRole() == User.Role.STUDENT) {
                 statement.setInt(5,object.getGroup().getId());
             } else {
-                statement.setNull(5, NULL);
+                statement.setNull(5, java.sql.Types.NULL);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
@@ -90,7 +89,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             if (object.getRole() == User.Role.STUDENT) {
                 statement.setInt(3, object.getGroup().getId());
             } else {
-                statement.setNull(3, NULL);
+                statement.setNull(3, java.sql.Types.NULL);
             }
             statement.setInt(4, object.getId());
         } catch (SQLException e) {

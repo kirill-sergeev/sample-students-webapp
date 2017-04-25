@@ -16,27 +16,24 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao {
+import static com.sergeev.studapp.model.Constants.*;
 
-    protected static final String DATE = "date";
-    protected static final String TYPE = "type";
-    protected static final String ORDINAL = "ordinal";
-    protected static final String COURSE = "course";
+public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao {
 
     private Document doc;
     private MongoCollection<Document> collection;
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection("lessons");
+        return collection = db.getCollection(LESSONS);
     }
 
     @Override
     protected Document getDocument(Lesson object) throws PersistentException {
         doc = new Document(DATE, Date.valueOf(object.getDate()))
                 .append(TYPE, object.getType().name())
-                .append(ORDINAL, object.getOrder().ordinal() + 1)
-                .append(COURSE, object.getCourse().getId());
+                .append(ORDER, object.getOrder().ordinal() + 1)
+                .append(COURSE_ID, object.getCourse().getId());
         if (object.getId() == null){
             doc.append(ID, getNextId());
         } else {
@@ -52,9 +49,9 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
         LocalDate date = Instant.ofEpochMilli(doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneId.of("UTC")).toLocalDate();
         lesson.setDate(date);
         lesson.setType(Lesson.Type.valueOf(String.valueOf(doc.get(TYPE))));
-        lesson.setOrder(Lesson.Order.values()[(int) doc.get(ORDINAL) - 1]);
+        lesson.setOrder(Lesson.Order.values()[(int) doc.get(ORDER) - 1]);
         MongoCourseDao mcd = new MongoCourseDao();
-        lesson.setCourse(mcd.getById(doc.getInteger(COURSE)));
+        lesson.setCourse(mcd.getById(doc.getInteger(COURSE_ID)));
         return lesson;
     }
 

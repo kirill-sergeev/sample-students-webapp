@@ -21,15 +21,13 @@ import static com.mongodb.client.model.Filters.eq;
 
 public abstract class MongoGenericDao<T extends Identified> implements GenericDao<T> {
 
+    protected static final String ID = "_id";
     private static final Logger LOG = LoggerFactory.getLogger(MongoGenericDao.class);
-
     private static MongoDatabase db = MongoDaoFactory.getConnection();
     private static MongoCollection<Document> counters = db.getCollection("counters");
     private MongoCollection<Document> collection = getCollection(db);
 
     private Document doc;
-
-    protected static final String ID = "_id";
 
     protected abstract MongoCollection<Document> getCollection(MongoDatabase db);
 

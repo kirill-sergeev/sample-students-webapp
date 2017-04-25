@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.postgres.PgConstants.*;
+import static com.sergeev.studapp.model.Constants.*;
 
 public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
 

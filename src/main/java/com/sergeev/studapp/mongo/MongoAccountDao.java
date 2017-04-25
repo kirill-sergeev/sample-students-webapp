@@ -14,20 +14,16 @@ import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import static com.sergeev.studapp.model.Constants.*;
+
 public class MongoAccountDao extends MongoGenericDao<Account> implements AccountDao {
-
-    private static final String COLLECTION = "accounts";
-
-    protected static final String LOGIN = "login";
-    protected static final String PASSWORD = "password";
-    protected static final String TOKEN = "token";
 
     private Document doc;
     private MongoCollection<Document> collection;
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection(COLLECTION);
+        return collection = db.getCollection(ACCOUNTS);
     }
 
     @Override
