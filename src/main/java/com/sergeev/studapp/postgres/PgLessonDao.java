@@ -15,6 +15,9 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgLessonDao.class);
+    private static final String SQL_SELECT_LESSON_BY_GROUP =
+            "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id " +
+                    "AND courses.group_id = ? ORDER BY lessons.date, lessons.ordinal";
 
     @Override
     protected String getSelectQuery() {
@@ -38,45 +41,48 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
 
     @Override
-    protected List<Lesson> parseResultSet(ResultSet rs) {
-        List<Lesson> result = new ArrayList<>();
+    protected List<Lesson> parseResultSet(ResultSet rs, Connection con) {
+        List<Lesson> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                Lesson lesson = new Lesson();
-                PgCourseDao pcd = new PgCourseDao();
-                lesson.setId(rs.getInt(LESSON_ID));
-                lesson.setCourse(pcd.getById(rs.getInt(COURSE_ID)));
-                lesson.setDate(rs.getDate(DATE).toLocalDate());
-                lesson.setOrder(Lesson.Order.values()[rs.getInt(ORDER) - 1]);
-                lesson.setType(Lesson.Type.valueOf(rs.getString(TYPE)));
-                result.add(lesson);
+                PgCourseDao courseDao = new PgCourseDao();
+                Lesson lesson = new Lesson()
+                        .setId(rs.getInt(LESSON_ID))
+                        .setCourse(courseDao.getById(rs.getInt(COURSE_ID), con))
+                        .setDate(rs.getDate(DATE).toLocalDate())
+                        .setOrder(Lesson.Order.values()[rs.getInt(ORDER) - 1])
+                        .setType(Lesson.Type.valueOf(rs.getString(TYPE)));
+                list.add(lesson);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Lesson object) {
+    protected void prepareStatementForInsert(PreparedStatement st, Lesson lesson) {
         try {
-            statement.setString(1, object.getType().name());
-            statement.setInt(2, object.getCourse().getId());
-            statement.setDate(3, Date.valueOf(object.getDate()));
-            statement.setInt(4, object.getOrder().ordinal() + 1);
+            st.setString(1, lesson.getType().name());
+            st.setInt(2, lesson.getCourse().getId());
+            st.setDate(3, Date.valueOf(lesson.getDate()));
+            st.setInt(4, lesson.getOrder().ordinal() + 1);
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, Lesson lesson) {
         try {
-            statement.setString(1, object.getType().name());
-            statement.setInt(2, object.getCourse().getId());
-            statement.setDate(3, Date.valueOf(object.getDate()));
-            statement.setInt(4, object.getOrder().ordinal() + 1);
-            statement.setInt(5, object.getId());
+            st.setString(1, lesson.getType().name());
+            st.setInt(2, lesson.getCourse().getId());
+            st.setDate(3, Date.valueOf(lesson.getDate()));
+            st.setInt(4, lesson.getOrder().ordinal() + 1);
+            st.setInt(5, lesson.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
@@ -84,20 +90,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
     @Override
     public List<Lesson> getByGroup(Integer groupId) {
-        List<Lesson> list;
-        String sql = "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id AND courses.group_id = ? ORDER BY lessons.date, lessons.ordinal";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, groupId);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_LESSON_BY_GROUP, groupId);
     }
 
 }

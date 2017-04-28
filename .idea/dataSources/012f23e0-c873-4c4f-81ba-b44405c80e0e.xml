@@ -9,8 +9,8 @@
     </database>
     <schema id="3" parent="2" name="public">
       <ObjectId>2200</ObjectId>
-      <IntrospectionTimestamp>2017-04-27.22:09:59.353</IntrospectionTimestamp>
-      <IntrospectionStateNumber>3593</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2017-04-28.22:03:13.470</IntrospectionTimestamp>
+      <IntrospectionStateNumber>4492</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -99,7 +99,15 @@
       <ObjectId>73963</ObjectId>
       <StateNumber>3593</StateNumber>
     </table>
-    <column id="23" parent="16" name="account_id">
+    <routine id="23" parent="3" name="student_avg_mark_by_discipline">
+      <ObjectId>82956</ObjectId>
+      <StateNumber>4492</StateNumber>
+      <ArgumentsDefinition>integer, integer, OUT numeric</ArgumentsDefinition>
+      <ResultsDefinition>numeric</ResultsDefinition>
+      <LanguageName>sql</LanguageName>
+      <RoutineKind>function</RoutineKind>
+    </routine>
+    <column id="24" parent="16" name="account_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -107,36 +115,36 @@
       <SequenceName>accounts_account_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;accounts_account_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="24" parent="16" name="login">
+    <column id="25" parent="16" name="login">
       <Position>2</Position>
       <DataType>varchar(60)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3587</StateNumber>
     </column>
-    <column id="25" parent="16" name="password">
+    <column id="26" parent="16" name="password">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3587</StateNumber>
     </column>
-    <column id="26" parent="16" name="token">
+    <column id="27" parent="16" name="token">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <StateNumber>3587</StateNumber>
       <DefaultExpression>NULL::character varying</DefaultExpression>
     </column>
-    <index id="27" parent="16" name="accounts_pkey">
+    <index id="28" parent="16" name="accounts_pkey">
       <ObjectId>73949</ObjectId>
       <ColNames>account_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="28" parent="16" name="accounts_pkey">
+    <key id="29" parent="16" name="accounts_pkey">
       <ObjectId>73950</ObjectId>
       <ColNames>account_id</ColNames>
       <UnderlyingIndexName>accounts_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="29" parent="17" name="course_id">
+    <column id="30" parent="17" name="course_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -144,57 +152,57 @@
       <SequenceName>courses_course_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;courses_course_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="30" parent="17" name="discipline_id">
+    <column id="31" parent="17" name="discipline_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3591</StateNumber>
     </column>
-    <column id="31" parent="17" name="group_id">
+    <column id="32" parent="17" name="group_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3591</StateNumber>
     </column>
-    <column id="32" parent="17" name="user_id">
+    <column id="33" parent="17" name="user_id">
       <Position>4</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3591</StateNumber>
     </column>
-    <index id="33" parent="17" name="courses_pkey">
+    <index id="34" parent="17" name="courses_pkey">
       <ObjectId>73996</ObjectId>
       <ColNames>course_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="34" parent="17" name="courses_pkey">
+    <key id="35" parent="17" name="courses_pkey">
       <ObjectId>73997</ObjectId>
       <ColNames>course_id</ColNames>
       <UnderlyingIndexName>courses_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="35" parent="17" name="courses_discipline_id_fkey">
+    <foreign-key id="36" parent="17" name="courses_discipline_id_fkey">
       <ObjectId>73998</ObjectId>
       <ColNames>discipline_id</ColNames>
       <RefTableName>disciplines</RefTableName>
       <RefKeyName>disciplines_pkey</RefKeyName>
       <RefColNames>discipline_id</RefColNames>
     </foreign-key>
-    <foreign-key id="36" parent="17" name="courses_group_id_fkey">
+    <foreign-key id="37" parent="17" name="courses_group_id_fkey">
       <ObjectId>74003</ObjectId>
       <ColNames>group_id</ColNames>
       <RefTableName>groups</RefTableName>
       <RefKeyName>groups_pkey</RefKeyName>
       <RefColNames>group_id</RefColNames>
     </foreign-key>
-    <foreign-key id="37" parent="17" name="courses_user_id_fkey">
+    <foreign-key id="38" parent="17" name="courses_user_id_fkey">
       <ObjectId>74008</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefKeyName>users_pkey</RefKeyName>
       <RefColNames>user_id</RefColNames>
     </foreign-key>
-    <column id="38" parent="18" name="discipline_id">
+    <column id="39" parent="18" name="discipline_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -202,34 +210,34 @@
       <SequenceName>disciplines_discipline_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;disciplines_discipline_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="39" parent="18" name="title">
+    <column id="40" parent="18" name="title">
       <Position>2</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3590</StateNumber>
     </column>
-    <index id="40" parent="18" name="disciplines_pkey">
+    <index id="41" parent="18" name="disciplines_pkey">
       <ObjectId>73986</ObjectId>
       <ColNames>discipline_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="41" parent="18" name="disciplines_title_key">
+    <index id="42" parent="18" name="disciplines_title_key">
       <ObjectId>73988</ObjectId>
       <ColNames>title</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="42" parent="18" name="disciplines_pkey">
+    <key id="43" parent="18" name="disciplines_pkey">
       <ObjectId>73987</ObjectId>
       <ColNames>discipline_id</ColNames>
       <UnderlyingIndexName>disciplines_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="43" parent="18" name="disciplines_title_key">
+    <key id="44" parent="18" name="disciplines_title_key">
       <ObjectId>73989</ObjectId>
       <ColNames>title</ColNames>
       <UnderlyingIndexName>disciplines_title_key</UnderlyingIndexName>
     </key>
-    <column id="44" parent="19" name="group_id">
+    <column id="45" parent="19" name="group_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -237,34 +245,34 @@
       <SequenceName>groups_group_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;groups_group_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="45" parent="19" name="title">
+    <column id="46" parent="19" name="title">
       <Position>2</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3588</StateNumber>
     </column>
-    <index id="46" parent="19" name="groups_pkey">
+    <index id="47" parent="19" name="groups_pkey">
       <ObjectId>73957</ObjectId>
       <ColNames>group_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="47" parent="19" name="groups_title_key">
+    <index id="48" parent="19" name="groups_title_key">
       <ObjectId>73959</ObjectId>
       <ColNames>title</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="48" parent="19" name="groups_pkey">
+    <key id="49" parent="19" name="groups_pkey">
       <ObjectId>73958</ObjectId>
       <ColNames>group_id</ColNames>
       <UnderlyingIndexName>groups_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="49" parent="19" name="groups_title_key">
+    <key id="50" parent="19" name="groups_title_key">
       <ObjectId>73960</ObjectId>
       <ColNames>title</ColNames>
       <UnderlyingIndexName>groups_title_key</UnderlyingIndexName>
     </key>
-    <column id="50" parent="20" name="lesson_id">
+    <column id="51" parent="20" name="lesson_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -272,58 +280,58 @@
       <SequenceName>lessons_lesson_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;lessons_lesson_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="51" parent="20" name="course_id">
+    <column id="52" parent="20" name="course_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3592</StateNumber>
     </column>
-    <column id="52" parent="20" name="ordinal">
+    <column id="53" parent="20" name="ordinal">
       <Position>3</Position>
       <DataType>smallint|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3592</StateNumber>
     </column>
-    <column id="53" parent="20" name="date">
+    <column id="54" parent="20" name="date">
       <Position>4</Position>
       <DataType>date|0</DataType>
       <StateNumber>3592</StateNumber>
     </column>
-    <column id="54" parent="20" name="type">
+    <column id="55" parent="20" name="type">
       <Position>5</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3592</StateNumber>
     </column>
-    <index id="55" parent="20" name="lessons_pkey">
+    <index id="56" parent="20" name="lessons_pkey">
       <ObjectId>74021</ObjectId>
       <ColNames>lesson_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="56" parent="20" name="lessons_pkey">
+    <key id="57" parent="20" name="lessons_pkey">
       <ObjectId>74022</ObjectId>
       <ColNames>lesson_id</ColNames>
       <UnderlyingIndexName>lessons_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="57" parent="20" name="lessons_course_id_fkey">
+    <foreign-key id="58" parent="20" name="lessons_course_id_fkey">
       <ObjectId>74023</ObjectId>
       <ColNames>course_id</ColNames>
       <RefTableName>courses</RefTableName>
       <RefKeyName>courses_pkey</RefKeyName>
       <RefColNames>course_id</RefColNames>
     </foreign-key>
-    <check id="58" parent="20" name="lessons_ordinal_check">
+    <check id="59" parent="20" name="lessons_ordinal_check">
       <ObjectId>74019</ObjectId>
       <ColNames>ordinal</ColNames>
       <Predicate>(ordinal &gt;= 0) AND (ordinal &lt;= 10)</Predicate>
     </check>
-    <check id="59" parent="20" name="lessons_date_check">
+    <check id="60" parent="20" name="lessons_date_check">
       <ObjectId>74020</ObjectId>
       <ColNames>date</ColNames>
       <Predicate>(date &gt;= &apos;2017-01-01&apos;::date) AND (date &lt;= &apos;2050-01-01&apos;::date)</Predicate>
     </check>
-    <column id="60" parent="21" name="mark_id">
+    <column id="61" parent="21" name="mark_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -331,54 +339,54 @@
       <SequenceName>marks_mark_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;marks_mark_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="61" parent="21" name="lesson_id">
+    <column id="62" parent="21" name="lesson_id">
       <Position>2</Position>
       <DataType>integer|0</DataType>
       <StateNumber>3593</StateNumber>
     </column>
-    <column id="62" parent="21" name="user_id">
+    <column id="63" parent="21" name="user_id">
       <Position>3</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3593</StateNumber>
     </column>
-    <column id="63" parent="21" name="mark">
+    <column id="64" parent="21" name="mark">
       <Position>4</Position>
       <DataType>smallint|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3593</StateNumber>
     </column>
-    <index id="64" parent="21" name="marks_pkey">
+    <index id="65" parent="21" name="marks_pkey">
       <ObjectId>74035</ObjectId>
       <ColNames>mark_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="65" parent="21" name="marks_pkey">
+    <key id="66" parent="21" name="marks_pkey">
       <ObjectId>74036</ObjectId>
       <ColNames>mark_id</ColNames>
       <UnderlyingIndexName>marks_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="66" parent="21" name="marks_lesson_id_fkey">
+    <foreign-key id="67" parent="21" name="marks_lesson_id_fkey">
       <ObjectId>74037</ObjectId>
       <ColNames>lesson_id</ColNames>
       <RefTableName>lessons</RefTableName>
       <RefKeyName>lessons_pkey</RefKeyName>
       <RefColNames>lesson_id</RefColNames>
     </foreign-key>
-    <foreign-key id="67" parent="21" name="marks_user_id_fkey">
+    <foreign-key id="68" parent="21" name="marks_user_id_fkey">
       <ObjectId>74042</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableName>users</RefTableName>
       <RefKeyName>users_pkey</RefKeyName>
       <RefColNames>user_id</RefColNames>
     </foreign-key>
-    <check id="68" parent="21" name="marks_mark_check">
+    <check id="69" parent="21" name="marks_mark_check">
       <ObjectId>74034</ObjectId>
       <ColNames>mark</ColNames>
       <Predicate>(mark &gt;= 0) AND (mark &lt;= 100)</Predicate>
     </check>
-    <column id="69" parent="22" name="user_id">
+    <column id="70" parent="22" name="user_id">
       <Position>1</Position>
       <DataType>integer|0</DataType>
       <NotNull>1</NotNull>
@@ -386,58 +394,75 @@
       <SequenceName>users_user_id_seq</SequenceName>
       <DefaultExpression>nextval(&apos;users_user_id_seq&apos;::regclass)</DefaultExpression>
     </column>
-    <column id="70" parent="22" name="first_name">
+    <column id="71" parent="22" name="first_name">
       <Position>2</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3589</StateNumber>
     </column>
-    <column id="71" parent="22" name="last_name">
+    <column id="72" parent="22" name="last_name">
       <Position>3</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3589</StateNumber>
     </column>
-    <column id="72" parent="22" name="account_id">
+    <column id="73" parent="22" name="account_id">
       <Position>4</Position>
       <DataType>integer|0</DataType>
       <StateNumber>3589</StateNumber>
     </column>
-    <column id="73" parent="22" name="group_id">
+    <column id="74" parent="22" name="group_id">
       <Position>5</Position>
       <DataType>integer|0</DataType>
       <StateNumber>3589</StateNumber>
     </column>
-    <column id="74" parent="22" name="role">
+    <column id="75" parent="22" name="role">
       <Position>6</Position>
       <DataType>varchar(10)|0</DataType>
       <StateNumber>3589</StateNumber>
       <DefaultExpression>&apos;STUDENT&apos;::character varying</DefaultExpression>
     </column>
-    <index id="75" parent="22" name="users_pkey">
+    <index id="76" parent="22" name="users_pkey">
       <ObjectId>73968</ObjectId>
       <ColNames>user_id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="76" parent="22" name="users_pkey">
+    <key id="77" parent="22" name="users_pkey">
       <ObjectId>73969</ObjectId>
       <ColNames>user_id</ColNames>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="77" parent="22" name="users_account_id_fkey">
+    <foreign-key id="78" parent="22" name="users_account_id_fkey">
       <ObjectId>73970</ObjectId>
       <ColNames>account_id</ColNames>
       <RefTableName>accounts</RefTableName>
       <RefKeyName>accounts_pkey</RefKeyName>
       <RefColNames>account_id</RefColNames>
     </foreign-key>
-    <foreign-key id="78" parent="22" name="users_group_id_fkey">
+    <foreign-key id="79" parent="22" name="users_group_id_fkey">
       <ObjectId>73975</ObjectId>
       <ColNames>group_id</ColNames>
       <RefTableName>groups</RefTableName>
       <RefKeyName>groups_pkey</RefKeyName>
       <RefColNames>group_id</RefColNames>
     </foreign-key>
+    <argument id="80" parent="23">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+    </argument>
+    <argument id="81" parent="23">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+    </argument>
+    <argument id="82" parent="23">
+      <Position>3</Position>
+      <ArgumentDirection>O</ArgumentDirection>
+      <DataType>numeric|0</DataType>
+    </argument>
+    <argument id="83" parent="23">
+      <ArgumentDirection>R</ArgumentDirection>
+      <DataType>numeric|0</DataType>
+    </argument>
   </database-model>
 </dataSource>

@@ -6,13 +6,15 @@ import com.sergeev.studapp.model.Discipline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.model.Constants.*;
+import static com.sergeev.studapp.model.Constants.DISCIPLINE_ID;
+import static com.sergeev.studapp.model.Constants.TITLE;
 
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
 
@@ -40,35 +42,38 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     }
 
     @Override
-    protected List<Discipline> parseResultSet(ResultSet rs) {
-        List<Discipline> result = new ArrayList<>();
+    protected List<Discipline> parseResultSet(ResultSet rs, Connection con) {
+        List<Discipline> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                Discipline discipline = new Discipline();
-                discipline.setId(rs.getInt(DISCIPLINE_ID));
-                discipline.setTitle(rs.getString(TITLE));
-                result.add(discipline);
+                Discipline discipline = new Discipline()
+                        .setId(rs.getInt(DISCIPLINE_ID))
+                        .setTitle(rs.getString(TITLE));
+                list.add(discipline);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Discipline object) {
+    protected void prepareStatementForInsert(PreparedStatement st, Discipline discipline) {
         try {
-            statement.setString(1, object.getTitle());
+            st.setString(1, discipline.getTitle());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, Discipline discipline) {
         try {
-            statement.setString(1, object.getTitle());
-            statement.setInt(2, object.getId());
+            st.setString(1, discipline.getTitle());
+            st.setInt(2, discipline.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

@@ -14,7 +14,7 @@ public class PgDaoFactory extends DaoFactory {
 
     private static final PgDaoFactory PG_DAO_FACTORY = new PgDaoFactory();
     private static DataSource dataSource;
-
+    static int count = 0;
     static{
         try {
             dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/postgresql");
@@ -37,6 +37,7 @@ public class PgDaoFactory extends DaoFactory {
             }
             ////////////////////////////////
             connection = dataSource.getConnection();
+            System.out.println(++count);
         } catch (SQLException e) {
             e.printStackTrace();
         }

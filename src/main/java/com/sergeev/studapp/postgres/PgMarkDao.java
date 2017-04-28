@@ -6,10 +6,8 @@ import com.sergeev.studapp.model.Mark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.math.BigDecimal;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,66 +16,80 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgMarkDao.class);
+    private static final String SQL_SELECT_MARK_BY_LESSON =
+            "SELECT * FROM marks WHERE lesson_id = ?";
+    private static final String SQL_SELECT_AVG_MARK_BY_DISCIPLINE_AND_STUDENT =
+            "{call student_avg_mark_by_discipline(? , ?, ?)}";
+    private static final String SQL_SELECT_MARK_BY_DISCIPLINE_AND_STUDENT =
+            "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id " +
+                    "AND l.course_id = c.course_id AND m.user_id = ? AND c.discipline_id = ?";
 
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM marks WHERE mark_id = ?";
     }
+
     @Override
     protected String getSelectAllQuery() {
         return "SELECT * FROM marks";
     }
+
     @Override
     protected String getCreateQuery() {
         return "INSERT INTO marks (lesson_id, user_id, mark) VALUES (?, ?, ?)";
     }
+
     @Override
     protected String getUpdateQuery() {
         return "UPDATE marks SET lesson_id = ?, user_id = ?, mark= ? WHERE mark_id = ?";
     }
+
     @Override
     protected String getDeleteQuery() {
         return "DELETE FROM marks WHERE mark_id = ?";
     }
 
     @Override
-    protected List<Mark> parseResultSet(ResultSet rs) {
-        List<Mark> result = new ArrayList<>();
+    protected List<Mark> parseResultSet(ResultSet rs, Connection con) {
+        List<Mark> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                Mark mark = new Mark();
-                PgLessonDao pld = new PgLessonDao();
-                PgUserDao pud = new PgUserDao();
-                mark.setId(rs.getInt(MARK_ID));
-                mark.setLesson(pld.getById(rs.getInt(LESSON_ID)));
-                mark.setStudent(pud.getById(rs.getInt(USER_ID)));
-                mark.setValue(rs.getInt(VALUE));
-                result.add(mark);
+                PgLessonDao lessonDao = new PgLessonDao();
+                PgUserDao userDao = new PgUserDao();
+                Mark mark = new Mark()
+                        .setId(rs.getInt(MARK_ID))
+                        .setLesson(lessonDao.getById(rs.getInt(LESSON_ID), con))
+                        .setStudent(userDao.getById(rs.getInt(USER_ID), con))
+                        .setValue(rs.getInt(VALUE));
+                list.add(mark);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Mark object) {
+    protected void prepareStatementForInsert(PreparedStatement st, Mark mark) {
         try {
-            statement.setInt(1, object.getLesson().getId());
-            statement.setInt(2, object.getStudent().getId());
-            statement.setInt(3, object.getValue());
+            st.setInt(1, mark.getLesson().getId());
+            st.setInt(2, mark.getStudent().getId());
+            st.setInt(3, mark.getValue());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Mark object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, Mark mark) {
         try {
-            statement.setInt(1, object.getLesson().getId());
-            statement.setInt(2, object.getStudent().getId());
-            statement.setInt(3, object.getValue());
-            statement.setInt(4, object.getId());
+            st.setInt(1, mark.getLesson().getId());
+            st.setInt(2, mark.getStudent().getId());
+            st.setInt(3, mark.getValue());
+            st.setInt(4, mark.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
@@ -85,15 +97,16 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     public Double getAvgMark(Integer studentId, Integer disciplineId) {
-        Double avgMark;
-        String sql = "SELECT student_avg_mark_by_discipline(? , ?)";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, studentId);
-            statement.setInt(2, disciplineId);
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            avgMark = rs.getDouble(1);
+        double avgMark;
+        try (Connection con = PgDaoFactory.getConnection();
+             CallableStatement st = con.prepareCall(
+                     SQL_SELECT_AVG_MARK_BY_DISCIPLINE_AND_STUDENT)) {
+            st.setInt(1, studentId);
+            st.setInt(2, disciplineId);
+            st.registerOutParameter(3, Types.NUMERIC);
+            st.execute();
+            BigDecimal decimal = st.getBigDecimal(3);
+            avgMark = decimal == null ? 0: decimal.doubleValue();
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
@@ -102,39 +115,12 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     public List<Mark> getByLesson(Integer lessonId) {
-        List<Mark> list;
-        String sql = "SELECT * FROM marks WHERE lesson_id = ?";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, lessonId);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_MARK_BY_LESSON, lessonId);
     }
 
     @Override
     public List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) {
-        List<Mark> list;
-        String sql = "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id AND l.course_id = c.course_id AND m.user_id = ? AND c.discipline_id = ?";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, studentId);
-            statement.setInt(2,disciplineId);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_MARK_BY_DISCIPLINE_AND_STUDENT, disciplineId, studentId);
     }
 
 }

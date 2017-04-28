@@ -18,63 +18,80 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgUserDao.class);
+    private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
+            "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login = ? AND accounts.password = ?";
+    private static final String SQL_SELECT_USER_BY_TOKEN =
+            "SELECT * FROM users, accounts WHERE accounts.account_id = users.account_id AND token = ?";
+    private static final String SQL_SELECT_USER_BY_ROLE =
+            "SELECT * FROM users WHERE role = ? ORDER BY first_name, last_name";
+    private static final String SQL_SELECT_USER_BY_GROUP =
+            "SELECT * FROM users WHERE group_id = ? AND role = 'STUDENT'";
+    private static final String SQL_SELECT_USER_BY_NAME_AND_ROLE =
+            "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role = ?";
 
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM users WHERE user_id = ? ORDER BY first_name, last_name";
     }
+
     @Override
     protected String getSelectAllQuery() {
         return "SELECT * FROM users ORDER BY first_name, last_name";
     }
+
     @Override
     protected String getCreateQuery() {
         return "INSERT INTO users (first_name, last_name, role, account_id, group_id) VALUES (?, ?, ?, ?, ?)";
     }
+
     @Override
     protected String getUpdateQuery() {
         return "UPDATE users SET first_name = ?, last_name = ?, group_id = ? WHERE user_id = ?";
     }
+
     @Override
     protected String getDeleteQuery() {
         return "DELETE FROM users WHERE user_id = ?";
     }
 
     @Override
-    protected List<User> parseResultSet(ResultSet rs) {
-        List<User> result = new ArrayList<>();
+    protected List<User> parseResultSet(ResultSet rs, Connection con) {
+        List<User> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                User user = new User();
-                PgAccountDao pad = new PgAccountDao();
-                user.setId(rs.getInt(USER_ID));
-                user.setFirstName(rs.getString(FIRST_NAME));
-                user.setLastName(rs.getString(LAST_NAME));
-                user.setAccount(pad.getById(rs.getInt(ACCOUNT_ID)));
-                user.setRole(User.Role.valueOf(rs.getString(ROLE)));
+                PgAccountDao accountDao = new PgAccountDao();
+                User user = new User()
+                        .setId(rs.getInt(USER_ID))
+                        .setFirstName(rs.getString(FIRST_NAME))
+                        .setLastName(rs.getString(LAST_NAME))
+                        .setAccount(accountDao.getById(rs.getInt(ACCOUNT_ID), con))
+                        .setRole(User.Role.valueOf(rs.getString(ROLE)));
                 if (user.getRole() == User.Role.STUDENT) {
-                    PgGroupDao pgd = new PgGroupDao();
-                    user.setGroup(pgd.getById(rs.getInt(GROUP_ID)));
+                    PgGroupDao groupDao = new PgGroupDao();
+                    user.setGroup(groupDao.getById(rs.getInt(GROUP_ID), con));
                 }
-                result.add(user);
+                list.add(user);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, User object) {
+    protected void prepareStatementForInsert(PreparedStatement st, User user) {
         try {
-            statement.setString(1, object.getFirstName());
-            statement.setString(2, object.getLastName());
-            statement.setString(3, object.getRole().name());
-            statement.setInt(4,object.getAccount().getId());
-            if (object.getRole() == User.Role.STUDENT) {
-                statement.setInt(5,object.getGroup().getId());
+            st.setString(1, user.getFirstName());
+            st.setString(2, user.getLastName());
+            st.setString(3, user.getRole().name());
+            st.setInt(4, user.getAccount().getId());
+            if (user.getRole() == User.Role.STUDENT) {
+                st.setInt(5, user.getGroup().getId());
             } else {
-                statement.setNull(5, java.sql.Types.NULL);
+                st.setNull(5, java.sql.Types.NULL);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
@@ -82,16 +99,16 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, User object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, User user) {
         try {
-            statement.setString(1, object.getFirstName());
-            statement.setString(2, object.getLastName());
-            if (object.getRole() == User.Role.STUDENT) {
-                statement.setInt(3, object.getGroup().getId());
+            st.setString(1, user.getFirstName());
+            st.setString(2, user.getLastName());
+            if (user.getRole() == User.Role.STUDENT) {
+                st.setInt(3, user.getGroup().getId());
             } else {
-                statement.setNull(3, java.sql.Types.NULL);
+                st.setNull(3, java.sql.Types.NULL);
             }
-            statement.setInt(4, object.getId());
+            st.setInt(4, user.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
@@ -99,100 +116,27 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     @Override
     public List<User> getByName(String name, User.Role role) {
-        List<User> list;
-        String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role = ?;";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, "%" + name.toLowerCase() + "%");
-            statement.setString(2, role.name());
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_USER_BY_NAME_AND_ROLE, "%" + name.toLowerCase() + "%", role.name());
     }
 
     @Override
     public List<User> getByGroup(Integer groupId) {
-        List<User> list;
-        String sql = "SELECT * FROM users WHERE group_id = ? AND role = 'STUDENT'";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, groupId);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_USER_BY_GROUP, groupId);
     }
 
     @Override
     public List<User> getAll(User.Role role) {
-        List<User> list;
-        String sql = "SELECT * FROM users WHERE role = ? ORDER BY first_name, last_name";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, role.name());
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_USER_BY_ROLE, role.name());
     }
 
     @Override
     public User getByToken(String token) {
-        List<User> list;
-        String sql = "SELECT * FROM users, accounts WHERE accounts.account_id = users.account_id AND token = ?";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, token);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        if (list.size() > 1) {
-            throw new PersistentException("Received more than one record.");
-        }
-        return list.iterator().next();
+        return getBy(SQL_SELECT_USER_BY_TOKEN, token).get(0);
     }
 
     @Override
     public User getByLogin(String login, String password) {
-        List<User> list;
-        String sql = "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login = ? AND accounts.password = ?";
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, login);
-            statement.setString(2, password);
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        if (list.size() > 1) {
-            throw new PersistentException("Received more than one record.");
-        }
-        return list.iterator().next();
+        return getBy(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD, login, password).get(0);
     }
 
 }

@@ -6,6 +6,7 @@ import com.sergeev.studapp.model.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,40 +41,43 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
     }
 
     @Override
-    protected List<Account> parseResultSet(ResultSet rs) {
-        List<Account> result = new ArrayList<>();
+    protected List<Account> parseResultSet(ResultSet rs, Connection con) {
+        List<Account> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                Account account = new Account();
-                account.setId(rs.getInt(ACCOUNT_ID));
-                account.setLogin(rs.getString(LOGIN));
-                account.setPassword(rs.getString(PASSWORD));
-                account.setToken(rs.getString(TOKEN));
-                result.add(account);
+                Account account = new Account()
+                        .setId(rs.getInt(ACCOUNT_ID))
+                        .setLogin(rs.getString(LOGIN))
+                        .setPassword(rs.getString(PASSWORD))
+                        .setToken(rs.getString(TOKEN));
+                list.add(account);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Account object) {
+    protected void prepareStatementForInsert(PreparedStatement st, Account account) {
         try {
-            statement.setString(1, object.getLogin());
-            statement.setString(2, object.getPassword());
+            st.setString(1, account.getLogin());
+            st.setString(2, account.getPassword());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Account object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, Account account) {
         try {
-            statement.setString(1, object.getLogin());
-            statement.setString(2, object.getPassword());
-            statement.setString(3, object.getToken());
-            statement.setInt(4, object.getId());
+            st.setString(1, account.getLogin());
+            st.setString(2, account.getPassword());
+            st.setString(3, account.getToken());
+            st.setInt(4, account.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

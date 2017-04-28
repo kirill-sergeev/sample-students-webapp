@@ -18,10 +18,14 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgCourseDao.class);
-    private static final String DISCIPLINE = "discipline";
-    private static final String GROUP = "group";
-    private static final String TEACHER = "teacher";
-    private static final String DISCIPLINE_GROUP = "discipline_group";
+    private static final String SQL_SELECT_COURSE_BY_DISCIPLINE =
+            "SELECT * FROM courses WHERE discipline_id = ?";
+    private static final String SQL_SELECT_COURSE_BY_GROUP =
+            "SELECT * FROM courses WHERE group_id = ?";
+    private static final String SQL_SELECT_COURSE_BY_TEACHER =
+            "SELECT * FROM courses WHERE user_id = ?";
+    private static final String SQL_SELECT_COURSE_BY_DISCIPLINE_AND_GROUP =
+            "SELECT * FROM courses WHERE discipline_id = ? AND group_id = ?";
 
     @Override
     protected String getSelectQuery() {
@@ -49,44 +53,47 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    protected List<Course> parseResultSet(ResultSet rs) {
-        List<Course> result = new ArrayList<>();
+    protected List<Course> parseResultSet(ResultSet rs, Connection con) {
+        List<Course> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                Course course = new Course();
-                PgDisciplineDao pdd = new PgDisciplineDao();
-                PgGroupDao pgd = new PgGroupDao();
-                PgUserDao ptd = new PgUserDao();
-                course.setId(rs.getInt(COURSE_ID));
-                course.setGroup(pgd.getById(rs.getInt(GROUP_ID)));
-                course.setDiscipline(pdd.getById(rs.getInt(DISCIPLINE_ID)));
-                course.setTeacher(ptd.getById(rs.getInt(USER_ID)));
-                result.add(course);
+                PgDisciplineDao disciplineDao = new PgDisciplineDao();
+                PgGroupDao groupDao = new PgGroupDao();
+                PgUserDao userDao = new PgUserDao();
+                Course course = new Course()
+                        .setId(rs.getInt(COURSE_ID))
+                        .setGroup(groupDao.getById(rs.getInt(GROUP_ID), con))
+                        .setDiscipline(disciplineDao.getById(rs.getInt(DISCIPLINE_ID), con))
+                        .setTeacher(userDao.getById(rs.getInt(USER_ID), con));
+                list.add(course);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Course object) {
+    protected void prepareStatementForInsert(PreparedStatement st, Course course) {
         try {
-            statement.setInt(1, object.getDiscipline().getId());
-            statement.setInt(2, object.getGroup().getId());
-            statement.setInt(3, object.getTeacher().getId());
+            st.setInt(1, course.getDiscipline().getId());
+            st.setInt(2, course.getGroup().getId());
+            st.setInt(3, course.getTeacher().getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Course object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, Course course) {
         try {
-            statement.setInt(1, object.getDiscipline().getId());
-            statement.setInt(2, object.getGroup().getId());
-            statement.setInt(3, object.getTeacher().getId());
-            statement.setInt(4, object.getId());
+            st.setInt(1, course.getDiscipline().getId());
+            st.setInt(2, course.getGroup().getId());
+            st.setInt(3, course.getTeacher().getId());
+            st.setInt(4, course.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
@@ -94,59 +101,22 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     public List<Course> getByDiscipline(Integer disciplineId) {
-        return getBy(DISCIPLINE, disciplineId);
+        return getBy(SQL_SELECT_COURSE_BY_DISCIPLINE, disciplineId);
     }
 
     @Override
     public List<Course> getByGroup(Integer groupId) {
-        return getBy(GROUP, groupId);
+        return getBy(SQL_SELECT_COURSE_BY_GROUP, groupId);
     }
 
     @Override
     public List<Course> getByTeacher(Integer userId) {
-        return getBy(TEACHER, userId);
+        return getBy(SQL_SELECT_COURSE_BY_TEACHER, userId);
     }
 
     @Override
     public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) {
-        return getBy(DISCIPLINE_GROUP, disciplineId, groupId).listIterator().next();
-    }
-
-    private List<Course> getBy(String type, Integer param, Integer... params) {
-        List<Course> list;
-        String sql;
-        switch (type) {
-            case DISCIPLINE:
-                sql = "SELECT * FROM courses WHERE discipline_id = ?";
-                break;
-            case GROUP:
-                sql = "SELECT * FROM courses WHERE group_id = ?";
-                break;
-            case TEACHER:
-                sql = "SELECT * FROM courses WHERE user_id = ?";
-                break;
-            case DISCIPLINE_GROUP:
-                sql = "SELECT * FROM courses WHERE discipline_id = ? AND group_id = ?";
-                break;
-            default:
-                throw new IllegalArgumentException();
-        }
-
-        try (Connection connection = PgDaoFactory.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, param);
-            if (params.length == 1) {
-                statement.setInt(2, params[0]);
-            }
-            ResultSet rs = statement.executeQuery();
-            list = parseResultSet(rs);
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-        if (list == null || list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return getBy(SQL_SELECT_COURSE_BY_DISCIPLINE_AND_GROUP, disciplineId, groupId).get(0);
     }
 
 }

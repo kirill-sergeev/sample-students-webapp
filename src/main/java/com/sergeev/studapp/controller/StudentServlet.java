@@ -125,7 +125,7 @@ public class StudentServlet extends HttpServlet {
                 student = UserService.read(id);
                 coursesMarks = UserService.studentAvgMarks(id);
             } catch (ApplicationException e) {
-                LOG.info("Student not found.");
+                LOG.info("Student not found.", e);
                 response.sendRedirect("/student");
                 return;
             }

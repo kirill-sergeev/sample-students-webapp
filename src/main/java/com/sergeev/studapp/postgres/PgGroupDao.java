@@ -6,13 +6,15 @@ import com.sergeev.studapp.model.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.model.Constants.*;
+import static com.sergeev.studapp.model.Constants.GROUP_ID;
+import static com.sergeev.studapp.model.Constants.TITLE;
 
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
@@ -40,35 +42,38 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
 
     @Override
-    protected List<Group> parseResultSet(ResultSet rs) {
-        List<Group> result = new ArrayList<>();
+    protected List<Group> parseResultSet(ResultSet rs, Connection con) {
+        List<Group> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                Group group = new Group();
-                group.setId(rs.getInt(GROUP_ID));
-                group.setTitle(rs.getString(TITLE));
-                result.add(group);
+                Group group = new Group()
+                        .setId(rs.getInt(GROUP_ID))
+                        .setTitle(rs.getString(TITLE));
+                list.add(group);
             }
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
-        return result;
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
+        return list;
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Group object) {
+    protected void prepareStatementForInsert(PreparedStatement st, Group group) {
         try {
-            statement.setString(1, object.getTitle());
+            st.setString(1, group.getTitle());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Group object) {
+    protected void prepareStatementForUpdate(PreparedStatement st, Group group) {
         try {
-            statement.setString(1, object.getTitle());
-            statement.setInt(2, object.getId());
+            st.setString(1, group.getTitle());
+            st.setInt(2, group.getId());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
