@@ -29,7 +29,7 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
     }
 
     @Override
-    protected Document getDocument(Lesson object) throws PersistentException {
+    protected Document getDocument(Lesson object) {
         doc = new Document(DATE, Date.valueOf(object.getDate()))
                 .append(TYPE, object.getType().name())
                 .append(ORDER, object.getOrder().ordinal() + 1)
@@ -43,7 +43,7 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
     }
 
     @Override
-    protected Lesson parseDocument(Document doc) throws PersistentException {
+    protected Lesson parseDocument(Document doc) {
         Lesson lesson = new Lesson();
         lesson.setId(doc.getInteger(ID));
         LocalDate date = Instant.ofEpochMilli(doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneId.of("UTC")).toLocalDate();
@@ -56,7 +56,7 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
     }
 
     @Override
-    public List<Lesson> getByGroup(Integer groupId) throws PersistentException {
+    public List<Lesson> getByGroup(Integer groupId) {
         List<Lesson> list = new ArrayList<>();
                 Bson lookup = new Document("$lookup",
                 new Document("from", "courses")

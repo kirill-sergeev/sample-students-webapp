@@ -27,7 +27,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    protected Document getDocument(Course object) throws PersistentException {
+    protected Document getDocument(Course object) {
         doc = new Document(DISCIPLINE_ID, object.getDiscipline().getId())
                 .append(GROUP_ID, object.getGroup().getId())
                 .append(USER_ID, object.getTeacher().getId());
@@ -40,7 +40,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    protected Course parseDocument(Document doc) throws PersistentException {
+    protected Course parseDocument(Document doc) {
         Course course = new Course();
         course.setId(doc.getInteger(ID));
 
@@ -56,7 +56,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    public List<Course> getByDiscipline(Integer disciplineId) throws PersistentException {
+    public List<Course> getByDiscipline(Integer disciplineId) {
         List<Course> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Course item = null;
@@ -75,7 +75,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    public List<Course> getByGroup(Integer groupId) throws PersistentException {
+    public List<Course> getByGroup(Integer groupId) {
         List<Course> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Course item = null;
@@ -94,7 +94,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    public List<Course> getByTeacher(Integer userId) throws PersistentException {
+    public List<Course> getByTeacher(Integer userId) {
         List<Course> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Course item = null;
@@ -113,7 +113,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) throws PersistentException {
+    public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) {
         List<Course> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Course item = null;
@@ -135,7 +135,7 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     }
 
     @Override
-    public List<Course> getAll() throws PersistentException {
+    public List<Course> getAll() {
         List<Course> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Course item = null;

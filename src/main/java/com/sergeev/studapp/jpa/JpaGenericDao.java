@@ -1,7 +1,6 @@
 package com.sergeev.studapp.jpa;
 
 import com.sergeev.studapp.dao.GenericDao;
-import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Identified;
 
 import javax.persistence.EntityManager;
@@ -20,33 +19,26 @@ public abstract class JpaGenericDao <T extends Identified> implements GenericDao
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
         this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
     }
-
+    
     @Override
-    public T save(T object) throws PersistentException {
+    public void save(T object) {
         transaction = entityManager.getTransaction();
         transaction.begin();
         System.out.println(object);
         entityManager.persist(object);
         transaction.commit();
-        return object;
     }
 
     @Override
-    public T getById(Integer id) throws PersistentException {
-        return entityManager.find(entityClass, id);
-    }
-
-    @Override
-    public T update(T object) throws PersistentException {
+    public void update(T object) {
         transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.merge(object);
         transaction.commit();
-        return object;
     }
 
     @Override
-    public void delete(Integer id) throws PersistentException {
+    public void remove(Integer id) {
         transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.remove(getById(id));
@@ -54,9 +46,15 @@ public abstract class JpaGenericDao <T extends Identified> implements GenericDao
     }
 
     @Override
-    public List<T> getAll() throws PersistentException {
+    public T getById(Integer id) {
+        return entityManager.find(entityClass, id);
+    }
+    
+    @Override
+    public List<T> getAll() {
         String select = String.format("SELECT e FROM %s e", entityClass.getSimpleName());
         TypedQuery<T> query = entityManager.createQuery(select, entityClass);
         return  query.getResultList();
     }
+    
 }

@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface CourseDao extends GenericDao<Course> {
 
-    List<Course> getByDiscipline(Integer disciplineId) throws PersistentException;
+    Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId);
 
-    List<Course> getByGroup(Integer groupId) throws PersistentException;
+    List<Course> getByDiscipline(Integer disciplineId);
 
-    List<Course> getByTeacher(Integer userId) throws PersistentException;
+    List<Course> getByGroup(Integer groupId);
 
-    Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) throws PersistentException;
+    List<Course> getByTeacher(Integer userId);
 
 }

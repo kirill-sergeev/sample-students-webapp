@@ -58,7 +58,7 @@ public class GroupServlet extends HttpServlet {
                 response.sendRedirect("/group");
                 return;
 
-            } else if ("delete".equals(action)) {
+            } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
                     GroupService.delete(id);

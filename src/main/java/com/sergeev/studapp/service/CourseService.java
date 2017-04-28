@@ -133,9 +133,9 @@ public class CourseService {
         }
 
         try {
-            COURSE_DAO.delete(id);
+            COURSE_DAO.remove(id);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete course, because course not found.", e);
+            throw new ApplicationException("Cannot remove course, because course not found.", e);
         }
     }
 

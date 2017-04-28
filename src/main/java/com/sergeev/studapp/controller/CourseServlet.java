@@ -64,7 +64,7 @@ public class CourseServlet extends HttpServlet {
                 response.sendRedirect("/group/" + groupId);
                 return;
 
-            } else if ("delete".equals(action)) {
+            } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
                     groupId = CourseService.read(id).getGroup().getId();

@@ -40,7 +40,7 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
     }
 
     @Override
-    protected Account parseDocument(Document doc) throws PersistentException {
+    protected Account parseDocument(Document doc) {
         Account account = new Account();
         account.setId(doc.getInteger(ID));
         account.setLogin(String.valueOf(doc.get(LOGIN)));
@@ -49,7 +49,7 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
         return account;
     }
 
-    protected Account getByToken(String token) throws PersistentException {
+    protected Account getByToken(String token) {
         doc = collection.find(eq(TOKEN, token)).first();
         if (doc == null) {
             throw new PersistentException("Record not found.");
@@ -57,7 +57,7 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
         return parseDocument(doc);
     }
 
-    protected Account getByLogin(String login, String password) throws PersistentException {
+    protected Account getByLogin(String login, String password) {
         List<Account> list = new ArrayList<>();
         Pattern patternLogin = Pattern.compile(login, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
         Pattern patternPassword = Pattern.compile(password, Pattern.UNICODE_CHARACTER_CLASS);

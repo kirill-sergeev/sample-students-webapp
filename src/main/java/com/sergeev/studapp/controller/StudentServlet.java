@@ -68,7 +68,7 @@ public class StudentServlet extends HttpServlet {
                 response.sendRedirect("/student");
                 return;
 
-            } else if ("delete".equals(action)) {
+            } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
                     UserService.delete(id);

@@ -72,7 +72,7 @@ public class LessonServlet extends HttpServlet {
                 response.sendRedirect("lesson/group/"+groupId);
                 return;
 
-            } else if ("delete".equals(action)) {
+            } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
                     groupId = LessonService.read(id).getCourse().getGroup().getId();

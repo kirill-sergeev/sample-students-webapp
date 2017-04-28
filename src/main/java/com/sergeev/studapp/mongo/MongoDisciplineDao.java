@@ -3,11 +3,11 @@ package com.sergeev.studapp.mongo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.DisciplineDao;
-import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import org.bson.Document;
 
-import static com.sergeev.studapp.model.Constants.*;
+import static com.sergeev.studapp.model.Constants.DISCIPLINES;
+import static com.sergeev.studapp.model.Constants.TITLE;
 
 public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements DisciplineDao {
 
@@ -20,7 +20,7 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
     }
 
     @Override
-    protected Document getDocument(Discipline object) throws PersistentException {
+    protected Document getDocument(Discipline object) {
         doc = new Document(TITLE, object.getTitle());
         if (object.getId() == null){
             doc.append(ID, getNextId());

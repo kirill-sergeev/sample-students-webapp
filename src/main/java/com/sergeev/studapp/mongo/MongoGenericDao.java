@@ -11,8 +11,6 @@ import com.sergeev.studapp.dao.GenericDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Identified;
 import org.bson.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,48 +20,36 @@ import static com.mongodb.client.model.Filters.eq;
 public abstract class MongoGenericDao<T extends Identified> implements GenericDao<T> {
 
     protected static final String ID = "_id";
-    private static final Logger LOG = LoggerFactory.getLogger(MongoGenericDao.class);
     private static MongoDatabase db = MongoDaoFactory.getConnection();
     private static MongoCollection<Document> counters = db.getCollection("counters");
+    
     private MongoCollection<Document> collection = getCollection(db);
-
     private Document doc;
 
     protected abstract MongoCollection<Document> getCollection(MongoDatabase db);
 
-    protected abstract Document getDocument(T object) throws PersistentException;
+    protected abstract Document getDocument(T object);
 
-    protected abstract T parseDocument(Document doc) throws PersistentException;
+    protected abstract T parseDocument(Document doc);
 
     @Override
-    public T save(T object) throws PersistentException {
+    public void save(T object) {
         doc = getDocument(object);
         collection.insertOne(doc);
         object.setId(doc.getInteger(ID));
-        return object;
     }
 
     @Override
-    public T getById(Integer id) throws PersistentException {
-        doc = collection.find(eq(ID, id)).first();
-        if (doc == null) {
-            throw new PersistentException("Object not found.");
-        }
-        return parseDocument(doc);
-    }
-
-    @Override
-    public T update(T object) throws PersistentException {
+    public void update(T object) {
         doc = getDocument(object);
         UpdateResult updateResult = collection.replaceOne(eq(ID, object.getId()), doc);
         if (updateResult.getModifiedCount() == 0) {
             throw new PersistentException("Nothing updated!");
         }
-        return object;
     }
 
     @Override
-    public void delete(Integer id) throws PersistentException {
+    public void remove(Integer id) {
         DeleteResult deleteResult = collection.deleteOne(eq(ID, id));
         if (deleteResult.getDeletedCount() == 0) {
             throw new PersistentException("Nothing deleted!");
@@ -71,7 +57,16 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
     }
 
     @Override
-    public List<T> getAll() throws PersistentException {
+    public T getById(Integer id) {
+        doc = collection.find(eq(ID, id)).first();
+        if (doc == null) {
+            throw new PersistentException("Object not found.");
+        }
+        return parseDocument(doc);
+    }
+    
+    @Override
+    public List<T> getAll() {
         List<T> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             T item = null;

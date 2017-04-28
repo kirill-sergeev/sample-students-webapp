@@ -26,7 +26,7 @@ public class AccountService {
         account.setPassword(password);
 
         try {
-            account = ACCOUNT_DAO.save(account);
+            ACCOUNT_DAO.save(account);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot create account.", e);
         }
@@ -78,9 +78,9 @@ public class AccountService {
 
     public static void delete(Integer id) throws ApplicationException {
         try {
-            ACCOUNT_DAO.delete(id);
+            ACCOUNT_DAO.remove(id);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete account, because account not found.", e);
+            throw new ApplicationException("Cannot remove account, because account not found.", e);
         }
     }
 

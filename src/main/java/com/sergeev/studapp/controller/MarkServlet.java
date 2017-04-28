@@ -45,7 +45,7 @@ public class MarkServlet extends HttpServlet {
                 response.sendRedirect("/lesson/" + lessonId);
                 return;
 
-            } else if ("delete".equals(action)) {
+            } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
                     lessonId = MarkService.read(id).getLesson().getId();

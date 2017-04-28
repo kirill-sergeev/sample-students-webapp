@@ -32,7 +32,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    protected Document getDocument(User object) throws PersistentException{
+    protected Document getDocument(User object){
         doc = new Document(FIRST_NAME, object.getFirstName())
                 .append(LAST_NAME, object.getLastName())
                 .append(ROLE, object.getRole().name())
@@ -49,7 +49,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    protected User parseDocument(Document doc) throws PersistentException {
+    protected User parseDocument(Document doc) {
         User user = new User();
         user.setId(doc.getInteger(ID));
         user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));
@@ -65,7 +65,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getByName(String name, User.Role role) throws PersistentException {
+    public List<User> getByName(String name, User.Role role) {
         List<User> list = new ArrayList<>();
         Pattern pattern = Pattern.compile(name, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
         DBObject query1 = QueryBuilder.start(FIRST_NAME).regex(pattern).and(ROLE).is(role.name()).get();
@@ -92,7 +92,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getByGroup(Integer groupId) throws PersistentException {
+    public List<User> getByGroup(Integer groupId) {
         List<User> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             User item = null;
@@ -111,7 +111,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getAll(User.Role role) throws PersistentException {
+    public List<User> getAll(User.Role role) {
         List<User> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             User item = null;
@@ -130,7 +130,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public User getByToken(String token) throws PersistentException {
+    public User getByToken(String token) {
         Account account = new MongoAccountDao().getByToken(token);
         doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
         if(doc == null || doc.isEmpty()){
@@ -140,7 +140,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     }
 
     @Override
-    public User getByLogin(String login, String password) throws PersistentException {
+    public User getByLogin(String login, String password) {
         Account account = new MongoAccountDao().getByLogin(login, password);
         doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
         if(doc == null || doc.isEmpty()){

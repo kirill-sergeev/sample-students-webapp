@@ -57,7 +57,7 @@ public class DisciplineServlet extends HttpServlet {
                 response.sendRedirect("/discipline");
                 return;
 
-            } else if ("delete".equals(action)) {
+            } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
                     DisciplineService.delete(id);

@@ -3,11 +3,11 @@ package com.sergeev.studapp.mongo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.GroupDao;
-import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
 import org.bson.Document;
 
-import static com.sergeev.studapp.model.Constants.*;
+import static com.sergeev.studapp.model.Constants.GROUPS;
+import static com.sergeev.studapp.model.Constants.TITLE;
 
 public class MongoGroupDao extends MongoGenericDao<Group> implements GroupDao {
 
@@ -20,7 +20,7 @@ public class MongoGroupDao extends MongoGenericDao<Group> implements GroupDao {
     }
 
     @Override
-    protected Document getDocument(Group object) throws PersistentException {
+    protected Document getDocument(Group object) {
         doc = new Document(TITLE, object.getTitle());
         if (object.getId() == null){
             doc.append(ID, getNextId());

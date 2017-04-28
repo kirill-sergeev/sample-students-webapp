@@ -1,6 +1,6 @@
 package com.sergeev.studapp.service;
 
-public class ApplicationException extends Exception {
+public class ApplicationException extends RuntimeException {
 
     public ApplicationException() {
     }

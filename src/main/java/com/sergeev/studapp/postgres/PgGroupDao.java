@@ -40,7 +40,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
 
     @Override
-    protected List<Group> parseResultSet(ResultSet rs) throws PersistentException {
+    protected List<Group> parseResultSet(ResultSet rs) {
         List<Group> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -56,7 +56,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Group object) throws PersistentException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Group object) {
         try {
             statement.setString(1, object.getTitle());
         } catch (SQLException e) {
@@ -65,7 +65,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Group object) throws PersistentException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Group object) {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getId());

@@ -40,7 +40,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     }
 
     @Override
-    protected List<Discipline> parseResultSet(ResultSet rs) throws PersistentException {
+    protected List<Discipline> parseResultSet(ResultSet rs) {
         List<Discipline> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -56,7 +56,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Discipline object) throws PersistentException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Discipline object) {
         try {
             statement.setString(1, object.getTitle());
         } catch (SQLException e) {
@@ -65,7 +65,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) throws PersistentException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Discipline object) {
         try {
             statement.setString(1, object.getTitle());
             statement.setInt(2, object.getId());

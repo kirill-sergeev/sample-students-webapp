@@ -104,7 +104,7 @@ public class Main {
         group.setId(2);
         OrmGroupDao dao = new OrmGroupDao();
         dao.openCurrentSessionwithTransaction();
-        dao.delete(group.getId());
+        dao.remove(group.getId());
         dao.closeCurrentSessionwithTransaction();
     }
 
@@ -122,8 +122,8 @@ public class Main {
 
         System.out.println("byid: "+dao.getById(group.getId()));
         System.out.println("all: "+dao.getAll());
-        dao.delete(group.getId());
-        System.out.println("delete, all: "+dao.getAll());
+        dao.remove(group.getId());
+        System.out.println("remove, all: "+dao.getAll());
     }
 
     public static void main(String[] args) throws PersistentException {

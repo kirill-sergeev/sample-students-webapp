@@ -41,7 +41,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
     }
 
     @Override
-    protected List<Account> parseResultSet(ResultSet rs) throws PersistentException {
+    protected List<Account> parseResultSet(ResultSet rs) {
         List<Account> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -59,7 +59,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Account object) throws PersistentException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Account object) {
         try {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());
@@ -69,7 +69,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Account object) throws PersistentException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Account object) {
         try {
             statement.setString(1, object.getLogin());
             statement.setString(2, object.getPassword());

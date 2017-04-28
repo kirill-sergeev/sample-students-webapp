@@ -168,10 +168,10 @@ public class UserService {
         Integer accountId = user.getAccount().getId();
 
         try {
-            USER_DAO.delete(id);
+            USER_DAO.remove(id);
             AccountService.delete(accountId);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete user, because user not found.", e);
+            throw new ApplicationException("Cannot remove user, because user not found.", e);
         }
 
         return role;

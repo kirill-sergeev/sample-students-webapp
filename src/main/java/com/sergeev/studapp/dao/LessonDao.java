@@ -5,5 +5,7 @@ import com.sergeev.studapp.model.Lesson;
 import java.util.List;
 
 public interface LessonDao extends GenericDao<Lesson> {
-    List<Lesson> getByGroup(Integer groupId) throws PersistentException;
+
+    List<Lesson> getByGroup(Integer groupId);
+
 }

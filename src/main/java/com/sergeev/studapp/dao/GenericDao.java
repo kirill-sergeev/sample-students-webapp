@@ -6,13 +6,14 @@ import java.util.List;
 
 public interface GenericDao<T extends Identified> {
 
-    T save(T object) throws PersistentException;
+    T getById(Integer id);
 
-    T getById(Integer id) throws PersistentException;
+    void remove(Integer id);
 
-    T update(T object) throws PersistentException;
+    void save(T object);
 
-    void delete(Integer id) throws PersistentException;
+    void update(T object);
 
-    List<T> getAll() throws PersistentException;
+    List<T> getAll();
+
 }

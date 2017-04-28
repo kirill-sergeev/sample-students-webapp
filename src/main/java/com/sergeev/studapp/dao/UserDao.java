@@ -6,13 +6,14 @@ import java.util.List;
 
 public interface UserDao extends GenericDao<User>{
 
-    List<User> getByName(String name, User.Role type) throws PersistentException;
+    User getByLogin(String login, String password);
 
-    List<User> getByGroup(Integer groupId) throws PersistentException;
+    User getByToken(String token);
 
-    List<User> getAll(User.Role type) throws PersistentException;
+    List<User> getAll(User.Role type);
 
-    User getByToken(String token) throws PersistentException;
+    List<User> getByGroup(Integer groupId);
 
-    User getByLogin(String login, String password) throws PersistentException;
+    List<User> getByName(String name, User.Role type);
+
 }

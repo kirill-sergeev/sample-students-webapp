@@ -92,9 +92,9 @@ public class LessonService {
 
     public static void delete(Integer id) throws ApplicationException {
         try {
-            LESSON_DAO.delete(id);
+            LESSON_DAO.remove(id);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete lesson, because lesson not found.", e);
+            throw new ApplicationException("Cannot remove lesson, because lesson not found.", e);
         }
     }
 }

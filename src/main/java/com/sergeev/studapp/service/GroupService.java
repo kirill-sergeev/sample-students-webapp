@@ -79,9 +79,9 @@ public class GroupService {
         }
 
         try {
-            GROUP_DAO.delete(id);
+            GROUP_DAO.remove(id);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete group, because group not found.", e);
+            throw new ApplicationException("Cannot remove group, because group not found.", e);
         }
     }
 

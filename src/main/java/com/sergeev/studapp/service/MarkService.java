@@ -95,9 +95,9 @@ public class MarkService {
         }
 
         try {
-            MARK_DAO.delete(id);
+            MARK_DAO.remove(id);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete mark, because mark not found.", e);
+            throw new ApplicationException("Cannot remove mark, because mark not found.", e);
         }
     }
 

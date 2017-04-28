@@ -2,7 +2,6 @@ package com.sergeev.studapp.dao;
 
 import com.sergeev.studapp.jpa.JpaDaoFactory;
 import com.sergeev.studapp.mongo.MongoDaoFactory;
-import com.sergeev.studapp.orm.OrmDaoFactory;
 import com.sergeev.studapp.postgres.PgDaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ public abstract class DaoFactory {
     public static final int POSTGRESQL = 1;
     public static final int MONGODB = 2;
     public static final int JPA = 3;
-    public static final int ORM = 4;
 
     public static DaoFactory getDaoFactory(int whichFactory) {
         switch (whichFactory) {
@@ -23,8 +21,6 @@ public abstract class DaoFactory {
             case MONGODB:
                 return MongoDaoFactory.getInstance();
             case JPA:
-                return OrmDaoFactory.getInstance();
-            case ORM:
                 return JpaDaoFactory.getInstance();
             default:
                 throw new IllegalArgumentException();

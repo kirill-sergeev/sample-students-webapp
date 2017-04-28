@@ -80,9 +80,9 @@ public class DisciplineService {
         }
 
         try {
-            DISCIPLINE_DAO.delete(id);
+            DISCIPLINE_DAO.remove(id);
         } catch (PersistentException e) {
-            throw new ApplicationException("Cannot delete group, because group not found.", e);
+            throw new ApplicationException("Cannot remove group, because group not found.", e);
         }
     }
 

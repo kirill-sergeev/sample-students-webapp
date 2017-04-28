@@ -27,7 +27,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    protected Document getDocument(Mark object) throws PersistentException {
+    protected Document getDocument(Mark object) {
         doc = new Document(LESSON_ID, object.getLesson().getId())
                 .append(USER_ID, object.getStudent().getId())
                 .append(VALUE, object.getValue());
@@ -40,7 +40,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    protected Mark parseDocument(Document doc) throws PersistentException {
+    protected Mark parseDocument(Document doc) {
         Mark mark = new Mark();
         mark.setId(doc.getInteger(ID));
         mark.setValue((Integer) doc.get(VALUE));
@@ -54,12 +54,12 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    public Double getAvgMark(Integer studentId, Integer disciplineId) throws PersistentException {
+    public Double getAvgMark(Integer studentId, Integer disciplineId) {
         return 0.0;
     }
 
     @Override
-    public List<Mark> getByLesson(Integer lessonId) throws PersistentException {
+    public List<Mark> getByLesson(Integer lessonId) {
         List<Mark> list = new ArrayList<>();
         Block<Document> documents = doc -> {
             Mark item = null;
@@ -78,7 +78,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    public List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) throws PersistentException {
+    public List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) {
         return Collections.emptyList();
     }
 }

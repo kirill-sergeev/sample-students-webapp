@@ -38,7 +38,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
 
     @Override
-    protected List<Lesson> parseResultSet(ResultSet rs) throws PersistentException {
+    protected List<Lesson> parseResultSet(ResultSet rs) {
         List<Lesson> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -58,7 +58,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Lesson object) throws PersistentException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Lesson object) {
         try {
             statement.setString(1, object.getType().name());
             statement.setInt(2, object.getCourse().getId());
@@ -70,7 +70,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) throws PersistentException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Lesson object) {
         try {
             statement.setString(1, object.getType().name());
             statement.setInt(2, object.getCourse().getId());
@@ -83,7 +83,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
 
     @Override
-    public List<Lesson> getByGroup(Integer groupId) throws PersistentException {
+    public List<Lesson> getByGroup(Integer groupId) {
         List<Lesson> list;
         String sql = "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id AND courses.group_id= ? ORDER BY lessons.date, lessons.ordinal;";
         try (Connection connection = PgDaoFactory.getConnection();

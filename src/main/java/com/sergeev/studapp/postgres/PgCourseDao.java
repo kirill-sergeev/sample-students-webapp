@@ -50,7 +50,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    protected List<Course> parseResultSet(ResultSet rs) throws PersistentException {
+    protected List<Course> parseResultSet(ResultSet rs) {
         List<Course> result = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -71,7 +71,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    protected void prepareStatementForInsert(PreparedStatement statement, Course object) throws PersistentException {
+    protected void prepareStatementForInsert(PreparedStatement statement, Course object) {
         try {
             statement.setInt(1, object.getDiscipline().getId());
             statement.setInt(2, object.getGroup().getId());
@@ -82,7 +82,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    protected void prepareStatementForUpdate(PreparedStatement statement, Course object) throws PersistentException {
+    protected void prepareStatementForUpdate(PreparedStatement statement, Course object) {
         try {
             statement.setInt(1, object.getDiscipline().getId());
             statement.setInt(2, object.getGroup().getId());
@@ -94,26 +94,26 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    public List<Course> getByDiscipline(Integer disciplineId) throws PersistentException {
+    public List<Course> getByDiscipline(Integer disciplineId) {
         return getBy(DISCIPLINE, disciplineId);
     }
 
     @Override
-    public List<Course> getByGroup(Integer groupId) throws PersistentException {
+    public List<Course> getByGroup(Integer groupId) {
         return getBy(GROUP, groupId);
     }
 
     @Override
-    public List<Course> getByTeacher(Integer userId) throws PersistentException {
+    public List<Course> getByTeacher(Integer userId) {
         return getBy(TEACHER, userId);
     }
 
     @Override
-    public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) throws PersistentException {
+    public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) {
         return getBy(DISCIPLINE_GROUP, disciplineId, groupId).listIterator().next();
     }
 
-    private List<Course> getBy(String type, Integer param, Integer... params) throws PersistentException, IllegalArgumentException {
+    private List<Course> getBy(String type, Integer param, Integer... params) {
         List<Course> list;
         String sql;
         switch (type) {
