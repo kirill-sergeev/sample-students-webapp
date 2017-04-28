@@ -1,63 +1,41 @@
 package com.sergeev.studapp.postgres;
 
 import com.sergeev.studapp.dao.*;
-import org.apache.commons.dbcp.BasicDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+
 
 public class PgDaoFactory extends DaoFactory {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PgDaoFactory.class);
-    private static final String DRIVER;
-    private static final String URL;
-    private static final String USER;
-    private static final String PASSWORD;
-    private static final String PROPERTIES_FILE = "db_postgres_local.properties";
-    private static final PgDaoFactory DAO_FACTORY = new PgDaoFactory();
-    private static final Properties PROPERTIES = new Properties();
-    private static BasicDataSource dataSource;
+    private static final PgDaoFactory PG_DAO_FACTORY = new PgDaoFactory();
+    private static DataSource dataSource;
 
-    static {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
-        try (InputStream resourceStream = classLoader.getResourceAsStream(PROPERTIES_FILE)) {
-            PROPERTIES.load(resourceStream);
-        } catch (IOException e) {
-            e.printStackTrace();
+    static{
+        try {
+            dataSource = (DataSource) new InitialContext().lookup("java:comp/env/jdbc/postgresql");
+        } catch (NamingException e) {
+            //Off while dev.
+            //throw new IllegalStateException("Missing JNDI!", e);
         }
-        DRIVER = PROPERTIES.getProperty("driver");
-        URL = PROPERTIES.getProperty("url");
-        USER = PROPERTIES.getProperty("username");
-        PASSWORD = PROPERTIES.getProperty("password");
     }
 
-    private PgDaoFactory(){}
-
-    private static synchronized BasicDataSource getDataSource() {
-        if (dataSource == null) {
-            BasicDataSource ds = new BasicDataSource();
-            ds.setUrl(URL);
-            ds.setUsername(USER);
-            ds.setPassword(PASSWORD);
-            ds.setDriverClassName(DRIVER);
-            ds.setMinIdle(5);
-            ds.setMaxIdle(10);
-            ds.setMaxOpenPreparedStatements(5);
-            dataSource = ds;
-        }
-        return dataSource;
+    private PgDaoFactory(){
     }
 
     public static Connection getConnection() {
         Connection connection = null;
-        BasicDataSource dataSource = getDataSource();
-        try {
+        try{
+            /////Only for development!///////
+            if (dataSource == null){
+                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/students?user=root&password=root");
+                return connection;
+            }
+            ////////////////////////////////
             connection = dataSource.getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +44,7 @@ public class PgDaoFactory extends DaoFactory {
     }
 
     public static PgDaoFactory getInstance(){
-        return DAO_FACTORY;
+        return PG_DAO_FACTORY;
     }
 
     @Override

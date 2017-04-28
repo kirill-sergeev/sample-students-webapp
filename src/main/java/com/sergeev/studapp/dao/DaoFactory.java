@@ -11,24 +11,16 @@ public abstract class DaoFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(DaoFactory.class);
 
-    public static final int POSTGRES = 1;
-    public static final int MONGO = 2;
+    public static final int POSTGRESQL = 1;
+    public static final int MONGODB = 2;
     public static final int JPA = 3;
     public static final int ORM = 4;
 
-    public abstract AccountDao getAccountDao();
-    public abstract CourseDao getCourseDao();
-    public abstract DisciplineDao getDisciplineDao();
-    public abstract GroupDao getGroupDao();
-    public abstract LessonDao getLessonDao();
-    public abstract MarkDao getMarkDao();
-    public abstract UserDao getUserDao();
-
     public static DaoFactory getDaoFactory(int whichFactory) {
         switch (whichFactory) {
-            case POSTGRES:
+            case POSTGRESQL:
                 return PgDaoFactory.getInstance();
-            case MONGO:
+            case MONGODB:
                 return MongoDaoFactory.getInstance();
             case JPA:
                 return OrmDaoFactory.getInstance();
@@ -40,6 +32,15 @@ public abstract class DaoFactory {
     }
 
     public static DaoFactory getDaoFactory() {
-       return getDaoFactory(MONGO);
+        return getDaoFactory(JPA);
     }
+
+    public abstract AccountDao getAccountDao();
+    public abstract CourseDao getCourseDao();
+    public abstract DisciplineDao getDisciplineDao();
+    public abstract GroupDao getGroupDao();
+    public abstract LessonDao getLessonDao();
+    public abstract MarkDao getMarkDao();
+    public abstract UserDao getUserDao();
+
 }

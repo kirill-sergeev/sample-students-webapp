@@ -2,6 +2,7 @@ package com.sergeev.studapp;
 
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.jpa.JpaGroupDao;
+import com.sergeev.studapp.jpa.JpaUserDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.User;
@@ -126,8 +127,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws PersistentException {
-//        JpaUserDao dao = new JpaUserDao();
-//        System.out.println(dao.getAll());
-        System.out.println(double.class);
+        JpaUserDao dao = new JpaUserDao();
+
+        System.out.println(dao.getAll());
     }
 }

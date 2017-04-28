@@ -121,7 +121,7 @@ public class TransferService {
     }
 
     private static void prepareSchema(int database) {
-        if (database == DaoFactory.POSTGRES) {
+        if (database == DaoFactory.POSTGRESQL) {
             String schema = null;
             String data = null;
             try {
@@ -138,13 +138,13 @@ public class TransferService {
                 e.printStackTrace();
             }
         }
-        if (database == DaoFactory.MONGO) {
+        if (database == DaoFactory.MONGODB) {
             MongoDaoFactory.getConnection().drop();
         }
     }
 
     public static void main(String[] args) throws PersistentException {
-        exportFrom(DaoFactory.POSTGRES);
-        importTo(DaoFactory.MONGO);
+        exportFrom(DaoFactory.POSTGRESQL);
+        importTo(DaoFactory.MONGODB);
     }
 }

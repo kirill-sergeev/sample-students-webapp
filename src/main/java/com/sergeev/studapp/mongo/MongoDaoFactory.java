@@ -1,6 +1,9 @@
 package com.sergeev.studapp.mongo;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.ServerAddress;
+import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.*;
 import com.sergeev.studapp.model.Constants;
@@ -19,13 +22,23 @@ public class MongoDaoFactory extends DaoFactory {
         try {
             mongoClient = (MongoClient) new InitialContext().lookup("java:comp/env/mongodb");
         } catch (NamingException e) {
-            throw new IllegalStateException("Missing in JNDI!", e);
+            //Off while dev.
+            //throw new IllegalStateException("Missing JNDI!", e);
         }
     }
 
     private MongoDaoFactory(){}
 
     public static MongoDatabase getConnection() {
+        /////Only for development!///////
+        if (mongoClient == null){
+            ServerAddress address = new ServerAddress("localhost", 27017);
+            MongoClientOptions options = MongoClientOptions.builder()
+                    .writeConcern(WriteConcern.ACKNOWLEDGED).build();
+            mongoClient = new MongoClient(address, options);
+            return mongoClient.getDatabase(Constants.DB);
+        }
+        ////////////////////////////////
         return mongoClient.getDatabase(Constants.DB);
     }
 

@@ -1,6 +1,8 @@
 package com.sergeev.studapp.dao;
 
-public class PersistentException extends Exception {
+import com.sergeev.studapp.service.ApplicationException;
+
+public class PersistentException extends ApplicationException {
 
     public PersistentException() {
     }

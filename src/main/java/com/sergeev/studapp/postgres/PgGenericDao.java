@@ -101,7 +101,6 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
              ResultSet rs = statement.executeQuery()) {
-            System.out.println(connection);
             list = parseResultSet(rs);
         } catch (SQLException e) {
             e.printStackTrace();
