@@ -27,7 +27,7 @@ public class DisciplineService {
         discipline.setTitle(title);
 
         try {
-            discipline = DISCIPLINE_DAO.save(discipline);
+            DISCIPLINE_DAO.save(discipline);
         } catch (PersistentException e) {
             e.printStackTrace();
         }

@@ -29,7 +29,7 @@ public class CourseService {
         course.setTeacher(teacher);
 
         try {
-            course = COURSE_DAO.save(course);
+            COURSE_DAO.save(course);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save course.", e);
         }

@@ -18,7 +18,6 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(PgCourseDao.class);
-
     private static final String DISCIPLINE = "discipline";
     private static final String GROUP = "group";
     private static final String TEACHER = "teacher";
@@ -26,27 +25,27 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM courses WHERE course_id= ?;";
+        return "SELECT * FROM courses WHERE course_id = ?";
     }
 
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT * FROM courses;";
+        return "SELECT * FROM courses";
     }
 
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO courses (discipline_id, group_id, user_id) VALUES (?, ?, ?);";
+        return "INSERT INTO courses (discipline_id, group_id, user_id) VALUES (?, ?, ?)";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE courses SET discipline_id= ?, group_id= ?, user_id= ? WHERE course_id= ?;";
+        return "UPDATE courses SET discipline_id = ?, group_id = ?, user_id = ? WHERE course_id = ?";
     }
 
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM courses WHERE course_id= ?;";
+        return "DELETE FROM courses WHERE course_id = ?";
     }
 
     @Override
@@ -118,16 +117,16 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
         String sql;
         switch (type) {
             case DISCIPLINE:
-                sql = "SELECT * FROM courses WHERE discipline_id= ?;";
+                sql = "SELECT * FROM courses WHERE discipline_id = ?";
                 break;
             case GROUP:
-                sql = "SELECT * FROM courses WHERE group_id= ?;";
+                sql = "SELECT * FROM courses WHERE group_id = ?";
                 break;
             case TEACHER:
-                sql = "SELECT * FROM courses WHERE user_id= ?;";
+                sql = "SELECT * FROM courses WHERE user_id = ?";
                 break;
             case DISCIPLINE_GROUP:
-                sql = "SELECT * FROM courses WHERE discipline_id= ? AND group_id= ?";
+                sql = "SELECT * FROM courses WHERE discipline_id = ? AND group_id = ?";
                 break;
             default:
                 throw new IllegalArgumentException();
@@ -149,4 +148,5 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
         }
         return list;
     }
+
 }

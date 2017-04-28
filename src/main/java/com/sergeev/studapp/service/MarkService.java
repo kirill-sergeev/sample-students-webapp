@@ -29,7 +29,7 @@ public class MarkService {
         mark.setStudent(UserService.read(studentId));
 
         try {
-            mark = MARK_DAO.save(mark);
+            MARK_DAO.save(mark);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save mark.", e);
         }

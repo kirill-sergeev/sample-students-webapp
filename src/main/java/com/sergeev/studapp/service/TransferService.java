@@ -57,7 +57,7 @@ public class TransferService {
             oldId = account.getId();
             account.setId(null);
             String token = account.getToken();
-            account = dao.getAccountDao().save(account);
+            dao.getAccountDao().save(account);
             account.setToken(token);
             dao.getAccountDao().update(account);
             newId = account.getId();
@@ -67,7 +67,7 @@ public class TransferService {
         for (Group group : groups) {
             oldId = group.getId();
             group.setId(null);
-            group = dao.getGroupDao().save(group);
+            dao.getGroupDao().save(group);
             newId = group.getId();
             groupIDs.put(oldId, newId);
         }
@@ -79,7 +79,7 @@ public class TransferService {
             if (user.getRole() == User.Role.STUDENT) {
                 user.setGroup(new Group().setId(groupIDs.get(user.getGroup().getId())));
             }
-            user = dao.getUserDao().save(user);
+            dao.getUserDao().save(user);
             newId = user.getId();
             userIDs.put(oldId, newId);
         }
@@ -87,7 +87,7 @@ public class TransferService {
         for (Discipline discipline : disciplines) {
             oldId = discipline.getId();
             discipline.setId(null);
-            discipline = dao.getDisciplineDao().save(discipline);
+            dao.getDisciplineDao().save(discipline);
             newId = discipline.getId();
             disciplineIDs.put(oldId, newId);
         }
@@ -98,7 +98,7 @@ public class TransferService {
             course.setDiscipline(new Discipline().setId(disciplineIDs.get(course.getDiscipline().getId())));
             course.setGroup(new Group().setId(groupIDs.get(course.getGroup().getId())));
             course.setTeacher(new User().setId(userIDs.get(course.getTeacher().getId())));
-            course = dao.getCourseDao().save(course);
+            dao.getCourseDao().save(course);
             newId = course.getId();
             courseIDs.put(oldId, newId);
         }
@@ -107,7 +107,7 @@ public class TransferService {
             oldId = lesson.getId();
             lesson.setId(null);
             lesson.setCourse(new Course().setId(courseIDs.get(lesson.getCourse().getId())));
-            lesson = dao.getLessonDao().save(lesson);
+            dao.getLessonDao().save(lesson);
             newId = lesson.getId();
             lessonIDs.put(oldId, newId);
         }

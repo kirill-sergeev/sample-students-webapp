@@ -34,7 +34,7 @@ public class LessonService {
         lesson.setCourse(course);
 
         try {
-            lesson = LESSON_DAO.save(lesson);
+            LESSON_DAO.save(lesson);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save lesson.", e);
         }

@@ -18,7 +18,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM lessons WHERE lesson_id= ?;";
+        return "SELECT * FROM lessons WHERE lesson_id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
@@ -26,15 +26,15 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO lessons (type, course_id, date, ordinal) VALUES (?, ?, ?, ?);";
+        return "INSERT INTO lessons (type, course_id, date, ordinal) VALUES (?, ?, ?, ?)";
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE lessons SET type= ?, course_id= ?, date= ?, ordinal= ? WHERE lesson_id= ?;";
+        return "UPDATE lessons SET type = ?, course_id = ?, date = ?, ordinal = ? WHERE lesson_id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM lessons WHERE lesson_id= ?;";
+        return "DELETE FROM lessons WHERE lesson_id = ?";
     }
 
     @Override
@@ -85,7 +85,7 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     @Override
     public List<Lesson> getByGroup(Integer groupId) {
         List<Lesson> list;
-        String sql = "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id AND courses.group_id= ? ORDER BY lessons.date, lessons.ordinal;";
+        String sql = "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id AND courses.group_id = ? ORDER BY lessons.date, lessons.ordinal";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, groupId);
@@ -99,4 +99,5 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
         }
         return list;
     }
+
 }

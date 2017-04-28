@@ -25,7 +25,7 @@ public class UserService {
         user.setGroup(GroupService.read(groupId));
 
         try {
-            user = USER_DAO.save(user);
+            USER_DAO.save(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save student.", e);
         }
@@ -38,7 +38,7 @@ public class UserService {
         user.setRole(User.Role.TEACHER);
 
         try {
-            user = USER_DAO.save(user);
+            USER_DAO.save(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save teacher.", e);
         }
@@ -51,7 +51,7 @@ public class UserService {
         user.setRole(User.Role.ADMIN);
 
         try {
-            user = USER_DAO.save(user);
+            USER_DAO.save(user);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save admin.", e);
         }

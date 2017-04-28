@@ -21,23 +21,23 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM users WHERE user_id= ? ORDER BY first_name, last_name;";
+        return "SELECT * FROM users WHERE user_id = ? ORDER BY first_name, last_name";
     }
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT * FROM users ORDER BY first_name, last_name;";
+        return "SELECT * FROM users ORDER BY first_name, last_name";
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO users (first_name, last_name, role, account_id, group_id) VALUES (?, ?, ?, ?, ?);";
+        return "INSERT INTO users (first_name, last_name, role, account_id, group_id) VALUES (?, ?, ?, ?, ?)";
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE users SET first_name=?, last_name=?, group_id=? WHERE user_id=?;";
+        return "UPDATE users SET first_name = ?, last_name = ?, group_id = ? WHERE user_id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM users WHERE user_id=?;";
+        return "DELETE FROM users WHERE user_id = ?";
     }
 
     @Override
@@ -100,7 +100,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     public List<User> getByName(String name, User.Role role) {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role= ?;";
+        String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role = ?;";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, "%" + name.toLowerCase() + "%");
@@ -119,7 +119,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     public List<User> getByGroup(Integer groupId) {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE group_id= ? AND role='STUDENT';";;
+        String sql = "SELECT * FROM users WHERE group_id = ? AND role = 'STUDENT'";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, groupId);
@@ -137,7 +137,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     public List<User> getAll(User.Role role) {
         List<User> list;
-        String sql = "SELECT * FROM users WHERE role= ? ORDER BY first_name, last_name;";
+        String sql = "SELECT * FROM users WHERE role = ? ORDER BY first_name, last_name";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, role.name());
@@ -155,7 +155,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     public User getByToken(String token) {
         List<User> list;
-        String sql = "SELECT * FROM users, accounts WHERE accounts.account_id=users.account_id AND token= ?";
+        String sql = "SELECT * FROM users, accounts WHERE accounts.account_id = users.account_id AND token = ?";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, token);
@@ -176,7 +176,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     @Override
     public User getByLogin(String login, String password) {
         List<User> list;
-        String sql = "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login=? AND accounts.password=?";
+        String sql = "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login = ? AND accounts.password = ?";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, login);

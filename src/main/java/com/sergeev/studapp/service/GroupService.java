@@ -23,7 +23,7 @@ public class GroupService {
         group.setTitle(title);
 
         try {
-            group = GROUP_DAO.save(group);
+            GROUP_DAO.save(group);
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot save group.", e);
         }

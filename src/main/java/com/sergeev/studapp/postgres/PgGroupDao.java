@@ -20,7 +20,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM groups Where group_id= ?;";
+        return "SELECT * FROM groups Where group_id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
@@ -28,15 +28,15 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO groups (title) VALUES (?);";
+        return "INSERT INTO groups (title) VALUES (?)";
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE groups SET title= ? WHERE group_id= ?;";
+        return "UPDATE groups SET title= ? WHERE group_id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM groups WHERE group_id= ?;";
+        return "DELETE FROM groups WHERE group_id = ?";
     }
 
     @Override
@@ -73,4 +73,5 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
             throw new PersistentException(e);
         }
     }
+
 }

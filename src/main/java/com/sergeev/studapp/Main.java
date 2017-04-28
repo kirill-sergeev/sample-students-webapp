@@ -6,7 +6,6 @@ import com.sergeev.studapp.jpa.JpaUserDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.User;
-import com.sergeev.studapp.orm.OrmGroupDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -96,16 +95,6 @@ public class Main {
         System.out.println(users.get(1).getGroup().getStudents().size());
         em.close();
         emf.close();
-    }
-
-
-    public static void main3(String[] args) throws PersistentException {
-        Group group = new Group();
-        group.setId(2);
-        OrmGroupDao dao = new OrmGroupDao();
-        dao.openCurrentSessionwithTransaction();
-        dao.remove(group.getId());
-        dao.closeCurrentSessionwithTransaction();
     }
 
     public static void main4(String[] args) throws PersistentException {

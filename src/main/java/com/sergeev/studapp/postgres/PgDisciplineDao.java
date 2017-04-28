@@ -20,23 +20,23 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM disciplines WHERE discipline_id= ?;";
+        return "SELECT * FROM disciplines WHERE discipline_id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT * FROM disciplines ORDER BY title;";
+        return "SELECT * FROM disciplines ORDER BY title";
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO disciplines (title) VALUES (?);";
+        return "INSERT INTO disciplines (title) VALUES (?)";
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE disciplines SET title= ? WHERE discipline_id= ?;";
+        return "UPDATE disciplines SET title = ? WHERE discipline_id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM disciplines WHERE discipline_id= ?;";
+        return "DELETE FROM disciplines WHERE discipline_id = ?";
     }
 
     @Override
@@ -73,4 +73,5 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
             throw new PersistentException(e);
         }
     }
+
 }

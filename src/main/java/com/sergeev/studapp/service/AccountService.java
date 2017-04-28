@@ -72,7 +72,6 @@ public class AccountService {
         } catch (PersistentException e) {
             throw new ApplicationException("Cannot update account.", e);
         }
-
         return account;
     }
 

@@ -20,24 +20,23 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
 
     @Override
     protected String getSelectQuery() {
-        return String.format("SELECT * FROM %s WHERE %s= ?", ACCOUNTS, ACCOUNT_ID);
+        return "SELECT * FROM accounts WHERE account_id = ?";
     }
-
     @Override
     protected String getSelectAllQuery() {
         return "SELECT * FROM accounts";
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO accounts (login, password) VALUES (?, ?);";
+        return "INSERT INTO accounts (login, password) VALUES (?, ?)";
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE accounts SET login= ?, password= ?, token= ? WHERE account_id= ?;";
+        return "UPDATE accounts SET login = ?, password = ?, token = ? WHERE account_id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM accounts WHERE account_id= ?;";
+        return "DELETE FROM accounts WHERE account_id = ?";
     }
 
     @Override
@@ -79,4 +78,5 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
             throw new PersistentException(e);
         }
     }
+
 }

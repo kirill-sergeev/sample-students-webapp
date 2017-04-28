@@ -21,23 +21,23 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM marks WHERE mark_id= ?;";
+        return "SELECT * FROM marks WHERE mark_id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT * FROM marks;";
+        return "SELECT * FROM marks";
     }
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO marks (lesson_id, user_id, mark) VALUES (?, ?, ?);";
+        return "INSERT INTO marks (lesson_id, user_id, mark) VALUES (?, ?, ?)";
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE marks SET lesson_id= ?, user_id= ?, mark= ? WHERE mark_id= ?;";
+        return "UPDATE marks SET lesson_id = ?, user_id = ?, mark= ? WHERE mark_id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM marks WHERE mark_id= ?;";
+        return "DELETE FROM marks WHERE mark_id = ?";
     }
 
     @Override
@@ -86,7 +86,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     @Override
     public Double getAvgMark(Integer studentId, Integer disciplineId) {
         Double avgMark;
-        String sql = "SELECT student_avg_mark_by_discipline(?,?);";
+        String sql = "SELECT student_avg_mark_by_discipline(? , ?)";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, studentId);
@@ -103,7 +103,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     @Override
     public List<Mark> getByLesson(Integer lessonId) {
         List<Mark> list;
-        String sql = "SELECT * FROM marks WHERE lesson_id= ?;";
+        String sql = "SELECT * FROM marks WHERE lesson_id = ?";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, lessonId);
