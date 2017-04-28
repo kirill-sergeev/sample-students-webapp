@@ -1,9 +1,14 @@
 package com.sergeev.studapp.model;
 
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
+@Entity
+@Table(name = Constants.LESSONS)
 public class Lesson implements Identified {
 
     private Integer id;
@@ -11,8 +16,11 @@ public class Lesson implements Identified {
     private LocalDate date;
     private Order order;
     private Type type;
+    private Set<Mark> marks = new HashSet<>();
 
     @Override
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -23,6 +31,8 @@ public class Lesson implements Identified {
         return this;
     }
 
+    @ManyToOne
+    @JoinColumn
     public Course getCourse() {
         return course;
     }
@@ -32,6 +42,7 @@ public class Lesson implements Identified {
         return this;
     }
 
+    @Column(nullable = false)
     public LocalDate getDate() {
         return date;
     }
@@ -41,6 +52,7 @@ public class Lesson implements Identified {
         return this;
     }
 
+    @Column(name = Constants.ORDER, nullable = false)
     public Order getOrder() {
         return order;
     }
@@ -50,12 +62,23 @@ public class Lesson implements Identified {
         return this;
     }
 
+    @Column(name = Constants.TYPE, nullable = false)
     public Type getType() {
         return type;
     }
 
     public Lesson setType(Type type) {
         this.type = type;
+        return this;
+    }
+
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL)
+    public Set<Mark> getMarks() {
+        return marks;
+    }
+
+    public Lesson setMarks(Set<Mark> marks) {
+        this.marks = marks;
         return this;
     }
 

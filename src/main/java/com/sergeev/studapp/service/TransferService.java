@@ -27,6 +27,7 @@ public class TransferService {
     private static List<User> users;
 
     private static void exportFrom(int database) throws PersistentException {
+
         DaoFactory dao = DaoFactory.getDaoFactory(database);
         accounts = dao.getAccountDao().getAll();
         courses = dao.getCourseDao().getAll();
@@ -35,10 +36,11 @@ public class TransferService {
         lessons = dao.getLessonDao().getAll();
         marks = dao.getMarkDao().getAll();
         users = dao.getUserDao().getAll();
+
     }
 
     private static void importTo(int database) throws PersistentException {
-        prepareSchema(database);
+
         DaoFactory dao = DaoFactory.getDaoFactory(database);
         Integer oldId;
         Integer newId;
@@ -49,8 +51,11 @@ public class TransferService {
         Map<Integer, Integer> lessonIDs = new HashMap<>();
         Map<Integer, Integer> userIDs = new HashMap<>();
 
+        prepareSchema(database);
+
         for (Account account : accounts) {
             oldId = account.getId();
+            account.setId(null);
             String token = account.getToken();
             account = dao.getAccountDao().save(account);
             account.setToken(token);
@@ -61,6 +66,7 @@ public class TransferService {
 
         for (Group group : groups) {
             oldId = group.getId();
+            group.setId(null);
             group = dao.getGroupDao().save(group);
             newId = group.getId();
             groupIDs.put(oldId, newId);
@@ -68,6 +74,7 @@ public class TransferService {
 
         for (User user : users) {
             oldId = user.getId();
+            user.setId(null);
             user.setAccount(new Account().setId(accountIDs.get(user.getAccount().getId())));
             if (user.getRole() == User.Role.STUDENT) {
                 user.setGroup(new Group().setId(groupIDs.get(user.getGroup().getId())));
@@ -79,6 +86,7 @@ public class TransferService {
 
         for (Discipline discipline : disciplines) {
             oldId = discipline.getId();
+            discipline.setId(null);
             discipline = dao.getDisciplineDao().save(discipline);
             newId = discipline.getId();
             disciplineIDs.put(oldId, newId);
@@ -86,6 +94,7 @@ public class TransferService {
 
         for (Course course : courses) {
             oldId = course.getId();
+            course.setId(null);
             course.setDiscipline(new Discipline().setId(disciplineIDs.get(course.getDiscipline().getId())));
             course.setGroup(new Group().setId(groupIDs.get(course.getGroup().getId())));
             course.setTeacher(new User().setId(userIDs.get(course.getTeacher().getId())));
@@ -96,6 +105,7 @@ public class TransferService {
 
         for (Lesson lesson : lessons) {
             oldId = lesson.getId();
+            lesson.setId(null);
             lesson.setCourse(new Course().setId(courseIDs.get(lesson.getCourse().getId())));
             lesson = dao.getLessonDao().save(lesson);
             newId = lesson.getId();
@@ -103,21 +113,20 @@ public class TransferService {
         }
 
         for (Mark mark : marks) {
+            mark.setId(null);
             mark.setLesson(new Lesson().setId(lessonIDs.get(mark.getLesson().getId())));
             mark.setStudent(new User().setId(userIDs.get(mark.getStudent().getId())));
             dao.getMarkDao().save(mark);
         }
     }
 
-    public static void prepareSchema(int database) {
+    private static void prepareSchema(int database) {
         if (database == DaoFactory.POSTGRES) {
             String schema = null;
             String data = null;
             try {
                 schema = new String(Files.readAllBytes(Paths.get("pg_schema.sql")), Charset.forName("UTF8"));
                 data = new String(Files.readAllBytes(Paths.get("pg_data.sql")), Charset.forName("UTF8"));
-//                schema = new String(Files.readAllBytes(Paths.get(classLoader.getResource("src/pg_schema.sql").toString())), Charset.forName("UTF8"));
-//                data = new String(Files.readAllBytes(Paths.get(classLoader.getResource("src/pg_data.sql").toString())), Charset.forName("UTF8"));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -135,7 +144,7 @@ public class TransferService {
     }
 
     public static void main(String[] args) throws PersistentException {
-        exportFrom(DaoFactory.MONGO);
-        importTo(DaoFactory.POSTGRES);
+        exportFrom(DaoFactory.POSTGRES);
+        importTo(DaoFactory.MONGO);
     }
 }

@@ -3,6 +3,11 @@ package com.sergeev.studapp.model;
 public interface Constants {
 
     /**
+     * Database names.
+     */
+    String DB = "students";
+    String TEST_DB = "students_test";
+    /**
      * Table names.
      */
     String ACCOUNTS = "accounts";

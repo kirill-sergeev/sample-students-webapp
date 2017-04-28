@@ -1,11 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="postgres_test@localhost" uuid="40d33d41-b531-475c-ab1c-2bc6d6130f8a">
+    <data-source source="LOCAL" name="postgres_test@localhost" uuid="c1b947ef-87ac-42a5-8d51-78921819e2f2">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/postgres_test</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="students@localhost" uuid="012f23e0-c873-4c4f-81ba-b44405c80e0e">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/students</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="students_jpa@localhost" uuid="969ba746-a9d8-4ee0-8395-1aefbc3cacd5">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/students_jpa</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="mysql_test@localhost" uuid="d22c8012-60b8-4955-a90b-58e3f3e3c80f">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:6603/mysql_test</jdbc-url>
+      <driver-properties>
+        <property name="autoReconnect" value="true" />
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+        <property name="characterEncoding" value="utf8" />
+        <property name="characterSetResults" value="utf8" />
+        <property name="yearIsDateType" value="false" />
+      </driver-properties>
     </data-source>
   </component>
 </project>

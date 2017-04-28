@@ -1,6 +1,9 @@
 package com.sergeev.studapp.model;
 
+import javax.persistence.*;
 
+@Entity
+@Table(name = Constants.ACCOUNTS)
 public class Account implements Identified {
 
     private Integer id;
@@ -9,6 +12,8 @@ public class Account implements Identified {
     private String token;
 
     @Override
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -19,6 +24,7 @@ public class Account implements Identified {
         return this;
     }
 
+    @Column(length = 61, nullable = false)
     public String getLogin() {
         return login;
     }
@@ -28,6 +34,7 @@ public class Account implements Identified {
         return this;
     }
 
+    @Column(nullable = false)
     public String getPassword() {
         return password;
     }

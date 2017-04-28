@@ -1,6 +1,8 @@
 package com.sergeev.studapp.dao;
 
+import com.sergeev.studapp.jpa.JpaDaoFactory;
 import com.sergeev.studapp.mongo.MongoDaoFactory;
+import com.sergeev.studapp.orm.OrmDaoFactory;
 import com.sergeev.studapp.postgres.PgDaoFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ public abstract class DaoFactory {
 
     public static final int POSTGRES = 1;
     public static final int MONGO = 2;
+    public static final int JPA = 3;
+    public static final int ORM = 4;
 
     public abstract AccountDao getAccountDao();
     public abstract CourseDao getCourseDao();
@@ -26,12 +30,16 @@ public abstract class DaoFactory {
                 return PgDaoFactory.getInstance();
             case MONGO:
                 return MongoDaoFactory.getInstance();
+            case JPA:
+                return OrmDaoFactory.getInstance();
+            case ORM:
+                return JpaDaoFactory.getInstance();
             default:
                 throw new IllegalArgumentException();
         }
     }
 
     public static DaoFactory getDaoFactory() {
-       return getDaoFactory(POSTGRES);
+       return getDaoFactory(MONGO);
     }
 }

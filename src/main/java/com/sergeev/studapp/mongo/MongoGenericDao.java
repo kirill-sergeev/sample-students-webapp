@@ -101,7 +101,13 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
         if (result == null) {
             FindIterable<Document> cursor = collection.find()
                     .sort(new BasicDBObject(ID, -1)).limit(1);
-            Integer number = cursor.first().getInteger(ID);
+            Integer number;
+            if (cursor.first() == null || cursor.first().isEmpty()) {
+                number = 0;
+            } else {
+                number = cursor.first().getInteger(ID);
+            }
+
             Document document = new Document()
                     .append("_id", name)
                     .append("seq", number + 2);

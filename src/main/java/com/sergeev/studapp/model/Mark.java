@@ -1,5 +1,10 @@
 package com.sergeev.studapp.model;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = Constants.MARKS)
 public class Mark implements Identified {
 
     private Integer id;
@@ -8,6 +13,8 @@ public class Mark implements Identified {
     private Integer value;
 
     @Override
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -18,6 +25,8 @@ public class Mark implements Identified {
         return this;
     }
 
+    @ManyToOne
+    @JoinColumn
     public Lesson getLesson() {
         return lesson;
     }
@@ -27,6 +36,8 @@ public class Mark implements Identified {
         return this;
     }
 
+    @ManyToOne
+    @JoinColumn
     public User getStudent() {
         return student;
     }
@@ -36,6 +47,7 @@ public class Mark implements Identified {
         return this;
     }
 
+    @Column(name = Constants.VALUE, nullable = false)
     public Integer getValue() {
         return value;
     }

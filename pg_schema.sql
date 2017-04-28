@@ -58,7 +58,7 @@ CREATE TABLE marks (
 ------------------------------------------------
 
 DROP FUNCTION IF EXISTS trigger_before_insert_on_marks();
-CREATE FUNCTION trigger_before_insert_on_marks()
+CREATE OR REPLACE FUNCTION trigger_before_insert_on_marks()
   RETURNS TRIGGER AS $marks_check$
 BEGIN
   IF NEW.user_id NOT IN (SELECT user_id
@@ -90,7 +90,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_before_insert_on_marks();
 
 DROP FUNCTION IF EXISTS trigger_before_insert_on_courses();
-CREATE FUNCTION trigger_before_insert_on_courses()
+CREATE OR REPLACE FUNCTION trigger_before_insert_on_courses()
   RETURNS TRIGGER AS $courses_check$
 BEGIN
   IF new.discipline_id IN (SELECT discipline_id
@@ -110,8 +110,8 @@ BEFORE INSERT ON courses
 FOR EACH ROW
 EXECUTE PROCEDURE trigger_before_insert_on_courses();
 
-DROP FUNCTION IF EXISTS student_avg_mark_by_discipline( INTEGER, INTEGER );
-CREATE FUNCTION student_avg_mark_by_discipline(INTEGER, INTEGER)
+DROP FUNCTION IF EXISTS student_avg_mark_by_discipline(INTEGER, INTEGER);
+CREATE OR REPLACE FUNCTION student_avg_mark_by_discipline(INTEGER, INTEGER)
   RETURNS NUMERIC
 AS 'SELECT avg(marks.mark)
     FROM users, disciplines, courses, lessons, marks, groups
@@ -120,6 +120,21 @@ AS 'SELECT avg(marks.mark)
           lessons.lesson_id = marks.lesson_id AND marks.user_id = users.user_id AND users.user_id = $1 AND
           disciplines.discipline_id = $2
     GROUP BY users.user_id, disciplines.discipline_id;'
+LANGUAGE SQL
+IMMUTABLE
+RETURNS NULL ON NULL INPUT;
+
+
+DROP FUNCTION IF EXISTS student_avg_mark_by_discipline(INTEGER, INTEGER);
+CREATE OR REPLACE FUNCTION student_avg_mark_by_discipline(INTEGER, INTEGER)
+  RETURNS NUMERIC
+AS 'SELECT avg(m.mark)
+    FROM users u, disciplines d, courses c, lessons l, marks m, groups g
+    WHERE u.group_id = g.id AND g.id = c.group_id AND
+          c.discipline_id = d.id AND c.id = l.course_id AND
+          l.id = m.lesson_id AND m.student_id = u.id AND u.id = $1 AND
+          d.id = $2
+    GROUP BY u.id, d.id;'
 LANGUAGE SQL
 IMMUTABLE
 RETURNS NULL ON NULL INPUT;

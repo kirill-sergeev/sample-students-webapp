@@ -103,7 +103,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         String sql = "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role= ?;";
         try (Connection connection = PgDaoFactory.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, "%" + name + "%");
+            statement.setString(1, "%" + name.toLowerCase() + "%");
             statement.setString(2, role.name());
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
