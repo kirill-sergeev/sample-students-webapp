@@ -18,17 +18,14 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao {
 
-    private Document doc;
-    private MongoCollection<Document> collection;
-
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection(COURSES);
+        return db.getCollection(COURSES);
     }
 
     @Override
-    protected Document getDocument(Course object) {
-        doc = new Document(DISCIPLINE_ID, object.getDiscipline().getId())
+    protected Document createDocument(Course object) {
+        Document doc = new Document(DISCIPLINE_ID, object.getDiscipline().getId())
                 .append(GROUP_ID, object.getGroup().getId())
                 .append(USER_ID, object.getTeacher().getId());
         if (object.getId() == null){
@@ -41,18 +38,18 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
 
     @Override
     protected Course parseDocument(Document doc) {
-        Course course = new Course();
-        course.setId(doc.getInteger(ID));
+        if (doc == null || doc.isEmpty()) {
+            throw new PersistentException("Empty document.");
+        }
 
-        MongoDisciplineDao mdd = new MongoDisciplineDao();
-        course.setDiscipline(mdd.getById(doc.getInteger(DISCIPLINE_ID)));
+        MongoDisciplineDao disciplineDao = new MongoDisciplineDao();
+        MongoGroupDao groupDao = new MongoGroupDao();
+        MongoUserDao userDao = new MongoUserDao();
 
-        MongoGroupDao mgd = new MongoGroupDao();
-        course.setGroup(mgd.getById(doc.getInteger(GROUP_ID)));
-
-        MongoUserDao mud = new MongoUserDao();
-        course.setTeacher(mud.getById(doc.getInteger(USER_ID)));
-        return course;
+        return new Course().setId(doc.getInteger(ID))
+                .setDiscipline(disciplineDao.getById(doc.getInteger(DISCIPLINE_ID)))
+                .setGroup(groupDao.getById(doc.getInteger(GROUP_ID)))
+                .setTeacher(userDao.getById(doc.getInteger(USER_ID)));
     }
 
     @Override

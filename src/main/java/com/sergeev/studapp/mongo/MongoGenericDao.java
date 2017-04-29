@@ -1,9 +1,9 @@
 package com.sergeev.studapp.mongo;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.Block;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
@@ -22,26 +22,26 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
     protected static final String ID = "_id";
     private static MongoDatabase db = MongoDaoFactory.getConnection();
     private static MongoCollection<Document> counters = db.getCollection("counters");
-    
-    private MongoCollection<Document> collection = getCollection(db);
+
+    protected MongoCollection<Document> collection = getCollection(db);
     private Document doc;
 
     protected abstract MongoCollection<Document> getCollection(MongoDatabase db);
 
-    protected abstract Document getDocument(T object);
+    protected abstract Document createDocument(T object);
 
     protected abstract T parseDocument(Document doc);
 
     @Override
     public void save(T object) {
-        doc = getDocument(object);
+        doc = createDocument(object);
         collection.insertOne(doc);
         object.setId(doc.getInteger(ID));
     }
 
     @Override
     public void update(T object) {
-        doc = getDocument(object);
+        doc = createDocument(object);
         UpdateResult updateResult = collection.replaceOne(eq(ID, object.getId()), doc);
         if (updateResult.getModifiedCount() == 0) {
             throw new PersistentException("Nothing updated!");
@@ -59,25 +59,20 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
     @Override
     public T getById(Integer id) {
         doc = collection.find(eq(ID, id)).first();
-        if (doc == null) {
-            throw new PersistentException("Object not found.");
-        }
         return parseDocument(doc);
     }
-    
+
     @Override
     public List<T> getAll() {
         List<T> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            T item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection.find()
+                .sort(new BasicDBObject("title", 1))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                T item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find().sort(new BasicDBObject("title", 1)).forEach(documents);
+        }
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }

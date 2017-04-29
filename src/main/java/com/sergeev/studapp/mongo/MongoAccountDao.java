@@ -2,6 +2,7 @@ package com.sergeev.studapp.mongo;
 
 import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
@@ -18,42 +19,38 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoAccountDao extends MongoGenericDao<Account> implements AccountDao {
 
-    private Document doc;
-    private MongoCollection<Document> collection;
-
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection(ACCOUNTS);
+        return db.getCollection(ACCOUNTS);
     }
 
     @Override
-    protected Document getDocument(Account object) {
-        doc = new Document(LOGIN, object.getLogin())
-                .append(PASSWORD, object.getPassword())
-                .append(TOKEN, object.getToken());
-        if (object.getId() == null) {
+    protected Document createDocument(Account account) {
+        Document doc = new Document(LOGIN, account.getLogin())
+                .append(PASSWORD, account.getPassword())
+                .append(TOKEN, account.getToken());
+        if (account.getId() == null) {
             doc.append(ID, getNextId());
         } else {
-            doc.append(ID, object.getId());
+            doc.append(ID, account.getId());
         }
         return doc;
     }
 
     @Override
     protected Account parseDocument(Document doc) {
-        Account account = new Account();
-        account.setId(doc.getInteger(ID));
-        account.setLogin(String.valueOf(doc.get(LOGIN)));
-        account.setPassword(String.valueOf(doc.get(PASSWORD)));
-        account.setToken(String.valueOf(doc.get(TOKEN)));
-        return account;
+        if (doc == null || doc.isEmpty()) {
+            throw new PersistentException("Empty document.");
+        }
+        return new Account()
+                .setId(doc.getInteger(ID))
+                .setLogin(String.valueOf(doc.get(LOGIN)))
+                .setPassword(String.valueOf(doc.get(PASSWORD)))
+                .setToken(String.valueOf(doc.get(TOKEN)));
     }
 
     protected Account getByToken(String token) {
-        doc = collection.find(eq(TOKEN, token)).first();
-        if (doc == null) {
-            throw new PersistentException("Record not found.");
-        }
+        Document doc = collection.find(eq(TOKEN, token)).first();
         return parseDocument(doc);
     }
 
@@ -65,17 +62,12 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
         BasicDBList or = new BasicDBList();
         or.add(query1);
         BasicDBObject query = new BasicDBObject("$or", or);
-
-        Block<Document> documents = doc -> {
-            Account item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection.find(query).iterator()) {
+            while (cursor.hasNext()) {
+                Account item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(query).forEach(documents);
+        }
         if (list.size() == 0) {
             throw new PersistentException("Record not found.");
         }

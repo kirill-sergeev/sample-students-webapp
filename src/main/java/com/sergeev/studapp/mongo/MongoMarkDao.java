@@ -18,17 +18,14 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
-    private Document doc;
-    private MongoCollection<Document> collection;
-
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
         return collection = db.getCollection(MARKS);
     }
 
     @Override
-    protected Document getDocument(Mark object) {
-        doc = new Document(LESSON_ID, object.getLesson().getId())
+    protected Document createDocument(Mark object) {
+        Document doc = new Document(LESSON_ID, object.getLesson().getId())
                 .append(USER_ID, object.getStudent().getId())
                 .append(VALUE, object.getValue());
         if (object.getId() == null){
@@ -41,16 +38,16 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
     @Override
     protected Mark parseDocument(Document doc) {
-        Mark mark = new Mark();
-        mark.setId(doc.getInteger(ID));
-        mark.setValue((Integer) doc.get(VALUE));
-
-        MongoLessonDao mld = new MongoLessonDao();
-        mark.setLesson(mld.getById(doc.getInteger(LESSON_ID)));
-
-        MongoUserDao mud = new MongoUserDao();
-        mark.setStudent(mud.getById(doc.getInteger(USER_ID)));
-        return mark;
+        if (doc == null || doc.isEmpty()) {
+            throw new PersistentException("Empty document.");
+        }
+        MongoLessonDao lessonDao = new MongoLessonDao();
+        MongoUserDao userDao = new MongoUserDao();
+        return new Mark()
+                .setId(doc.getInteger(ID))
+                .setValue((Integer) doc.get(VALUE))
+                .setLesson(lessonDao.getById(doc.getInteger(LESSON_ID)))
+                .setStudent(userDao.getById(doc.getInteger(USER_ID)));
     }
 
     @Override

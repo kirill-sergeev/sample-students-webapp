@@ -20,17 +20,14 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao {
 
-    private Document doc;
-    private MongoCollection<Document> collection;
-
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
         return collection = db.getCollection(LESSONS);
     }
 
     @Override
-    protected Document getDocument(Lesson object) {
-        doc = new Document(DATE, Date.valueOf(object.getDate()))
+    protected Document createDocument(Lesson object) {
+        Document doc = new Document(DATE, Date.valueOf(object.getDate()))
                 .append(TYPE, object.getType().name())
                 .append(ORDER, object.getOrder().ordinal() + 1)
                 .append(COURSE_ID, object.getCourse().getId());
@@ -44,15 +41,18 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
 
     @Override
     protected Lesson parseDocument(Document doc) {
-        Lesson lesson = new Lesson();
-        lesson.setId(doc.getInteger(ID));
-        LocalDate date = Instant.ofEpochMilli(doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneId.of("UTC")).toLocalDate();
-        lesson.setDate(date);
-        lesson.setType(Lesson.Type.valueOf(String.valueOf(doc.get(TYPE))));
-        lesson.setOrder(Lesson.Order.values()[(int) doc.get(ORDER) - 1]);
-        MongoCourseDao mcd = new MongoCourseDao();
-        lesson.setCourse(mcd.getById(doc.getInteger(COURSE_ID)));
-        return lesson;
+        if (doc == null || doc.isEmpty()) {
+            throw new PersistentException("Empty document.");
+        }
+        LocalDate date = Instant.ofEpochMilli(
+                doc.getDate(DATE).toInstant().toEpochMilli()).atZone(ZoneId.of("UTC")).toLocalDate();
+        MongoCourseDao courseDao = new MongoCourseDao();
+        return new Lesson()
+                .setId(doc.getInteger(ID))
+                .setDate(date)
+                .setType(Lesson.Type.valueOf(String.valueOf(doc.get(TYPE))))
+                .setOrder(Lesson.Order.values()[(int) doc.get(ORDER) - 1])
+                .setCourse(courseDao.getById(doc.getInteger(COURSE_ID)));
     }
 
     @Override

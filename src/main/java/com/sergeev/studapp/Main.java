@@ -2,10 +2,10 @@ package com.sergeev.studapp;
 
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.jpa.JpaGroupDao;
-import com.sergeev.studapp.jpa.JpaUserDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.User;
+import com.sergeev.studapp.mongo.MongoUserDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -116,8 +116,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws PersistentException {
-        JpaUserDao dao = new JpaUserDao();
+        MongoUserDao dao = new MongoUserDao();
 
-        System.out.println(dao.getAll());
+        System.out.println(dao.getByLogin("kirill_sergeev", "111111"));
     }
 }

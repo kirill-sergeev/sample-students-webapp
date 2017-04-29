@@ -28,7 +28,7 @@ public abstract class DaoFactory {
     }
 
     public static DaoFactory getDaoFactory() {
-        return getDaoFactory(POSTGRESQL);
+        return getDaoFactory(MONGODB);
     }
 
     public abstract AccountDao getAccountDao();

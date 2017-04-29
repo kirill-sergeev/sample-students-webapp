@@ -23,17 +23,14 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     private static final Logger LOG = LoggerFactory.getLogger(MongoUserDao.class);
 
-    private Document doc;
-    private MongoCollection<Document> collection;
-
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
         return collection = db.getCollection(USERS);
     }
 
     @Override
-    protected Document getDocument(User object){
-        doc = new Document(FIRST_NAME, object.getFirstName())
+    protected Document createDocument(User object){
+        Document doc = new Document(FIRST_NAME, object.getFirstName())
                 .append(LAST_NAME, object.getLastName())
                 .append(ROLE, object.getRole().name())
                 .append(ACCOUNT_ID, object.getAccount().getId());
@@ -50,16 +47,20 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     protected User parseDocument(Document doc) {
-        User user = new User();
-        user.setId(doc.getInteger(ID));
-        user.setFirstName(String.valueOf(doc.get(FIRST_NAME)));
-        user.setLastName(String.valueOf(doc.get(LAST_NAME)));
-        user.setRole(User.Role.valueOf(String.valueOf(doc.get(ROLE))));
-        MongoAccountDao mad = new MongoAccountDao();
-        user.setAccount(mad.getById(doc.getInteger(ACCOUNT_ID)));
+        if (doc == null || doc.isEmpty()) {
+            throw new PersistentException("Empty document.");
+        }
+        MongoAccountDao accountDao = new MongoAccountDao();
+        User user = new User()
+                .setId(doc.getInteger(ID))
+                .setFirstName(String.valueOf(doc.get(FIRST_NAME)))
+                .setLastName(String.valueOf(doc.get(LAST_NAME)))
+                .setRole(User.Role.valueOf(String.valueOf(doc.get(ROLE))))
+                .setAccount(accountDao.getById(doc.getInteger(ACCOUNT_ID)));
+
         if (user.getRole() == User.Role.STUDENT) {
-            MongoGroupDao mgd = new MongoGroupDao();
-            user.setGroup(mgd.getById(doc.getInteger(GROUP_ID)));
+            MongoGroupDao groupDao = new MongoGroupDao();
+            user.setGroup(groupDao.getById(doc.getInteger(GROUP_ID)));
         }
         return user;
     }
@@ -132,7 +133,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     public User getByToken(String token) {
         Account account = new MongoAccountDao().getByToken(token);
-        doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
+        Document doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
         if(doc == null || doc.isEmpty()){
             throw new PersistentException("Record not found.");
         }
@@ -142,7 +143,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     public User getByLogin(String login, String password) {
         Account account = new MongoAccountDao().getByLogin(login, password);
-        doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
+        Document doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
         if(doc == null || doc.isEmpty()){
             throw new PersistentException("Record not found.");
         }
