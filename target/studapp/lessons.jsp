@@ -49,7 +49,7 @@
 
                                     <form id="delete${lesson.id}" action="${pageContext.request.contextPath}/lesson"
                                           method="POST">
-                                        <input type="hidden" name="action" value="delete">
+                                        <input type="hidden" name="action" value="remove">
                                         <input type="hidden" name="id" value="${lesson.id}">
                                     </form>
                                     <div class="btn-group btn-group-sm" role="group">

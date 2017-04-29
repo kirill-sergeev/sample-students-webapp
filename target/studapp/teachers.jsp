@@ -39,7 +39,7 @@
                                               action="${pageContext.request.contextPath}/teacher"
                                               method="POST">
                                             <input type="hidden" name="id" value="${teacher.id}">
-                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="action" value="remove">
                                         </form>
                                         <div class="btn-group btn-group-sm" role="group">
                                             <button class="btn btn-info btn-secondary" type="button"

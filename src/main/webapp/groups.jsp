@@ -43,7 +43,7 @@
                                                   action="${pageContext.request.contextPath}/group"
                                                   method="POST">
                                                 <input type="hidden" name="id" value="${item.key.id}">
-                                                <input type="hidden" name="action" value="delete">
+                                                <input type="hidden" name="action" value="remove">
                                             </form>
 
                                             <div class="btn-group btn-group-sm" role="group">

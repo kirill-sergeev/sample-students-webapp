@@ -76,7 +76,7 @@
                                         <form id="delete${course.id}" action="${pageContext.request.contextPath}/course"
                                               method="POST">
                                             <input type="hidden" name="id" value="${course.id}">
-                                            <input type="hidden" name="action" value="delete">
+                                            <input type="hidden" name="action" value="remove">
                                         </form>
 
                                         <div class="btn-group btn-group-sm" role="group">
