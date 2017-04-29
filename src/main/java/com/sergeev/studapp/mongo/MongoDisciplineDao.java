@@ -37,4 +37,5 @@ public class MongoDisciplineDao extends MongoGenericDao<Discipline> implements D
                 .setId(doc.getInteger(ID))
                 .setTitle(String.valueOf(doc.get(TITLE)));
     }
+
 }

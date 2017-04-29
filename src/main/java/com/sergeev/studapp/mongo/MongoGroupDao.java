@@ -37,4 +37,5 @@ public class MongoGroupDao extends MongoGenericDao<Group> implements GroupDao {
                 .setId(doc.getInteger(ID))
                 .setTitle(String.valueOf(doc.get(TITLE)));
     }
+
 }

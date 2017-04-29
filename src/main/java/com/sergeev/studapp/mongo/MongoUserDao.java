@@ -1,7 +1,11 @@
 package com.sergeev.studapp.mongo;
 
-import com.mongodb.*;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
@@ -16,7 +20,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
-
 import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
@@ -76,18 +79,14 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         or.add(query2);
         BasicDBObject query = new BasicDBObject("$or", or);
 
-        Block<Document> documents = doc -> {
-            User item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(query)
+                .sort((new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                User item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(query).sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -95,18 +94,14 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     public List<User> getByGroup(Integer groupId) {
         List<User> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            User item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(eq(GROUP_ID, groupId))
+                .sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                User item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(eq(GROUP_ID, groupId)).sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -114,18 +109,14 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     @Override
     public List<User> getAll(User.Role role) {
         List<User> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            User item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(eq(ROLE, role.name()))
+                .sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                User item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(eq(ROLE, role.name())).sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -134,9 +125,6 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     public User getByToken(String token) {
         Account account = new MongoAccountDao().getByToken(token);
         Document doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
-        if(doc == null || doc.isEmpty()){
-            throw new PersistentException("Record not found.");
-        }
         return parseDocument(doc);
     }
 
@@ -144,10 +132,8 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     public User getByLogin(String login, String password) {
         Account account = new MongoAccountDao().getByLogin(login, password);
         Document doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
-        if(doc == null || doc.isEmpty()){
-            throw new PersistentException("Record not found.");
-        }
         return parseDocument(doc);
     }
+
 }
 

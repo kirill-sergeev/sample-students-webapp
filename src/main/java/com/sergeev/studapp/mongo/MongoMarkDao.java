@@ -1,7 +1,7 @@
 package com.sergeev.studapp.mongo;
 
-import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
-
 import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
@@ -58,18 +57,13 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     @Override
     public List<Mark> getByLesson(Integer lessonId) {
         List<Mark> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            Mark item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(eq(LESSON_ID, lessonId))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                Mark item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(eq(LESSON_ID, lessonId)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -78,4 +72,5 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
     public List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) {
         return Collections.emptyList();
     }
+
 }

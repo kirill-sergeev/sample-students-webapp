@@ -11,6 +11,7 @@ import com.sergeev.studapp.dao.GenericDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Identified;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,4 +107,19 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
         }
         return result.getInteger("seq");
     }
+
+    protected List<T> getBy(Bson filter, Bson sort){
+        List<T> list = new ArrayList<>();
+        try (MongoCursor<Document> cursor = collection
+                .find(filter)
+                .sort(sort)
+                .iterator()) {
+            while (cursor.hasNext()) {
+                T item = parseDocument(cursor.next());
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
 }

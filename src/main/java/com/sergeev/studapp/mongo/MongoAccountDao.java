@@ -76,4 +76,5 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
         }
         return list.listIterator().next();
     }
+
 }

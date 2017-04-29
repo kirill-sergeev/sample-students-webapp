@@ -1,7 +1,7 @@
 package com.sergeev.studapp.mongo;
 
-import com.mongodb.Block;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.sergeev.studapp.dao.CourseDao;
 import com.sergeev.studapp.dao.PersistentException;
@@ -13,7 +13,6 @@ import java.util.List;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
-
 import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao {
@@ -55,18 +54,13 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     @Override
     public List<Course> getByDiscipline(Integer disciplineId) {
         List<Course> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            Course item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(eq(DISCIPLINE_ID, disciplineId))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                Course item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(eq(DISCIPLINE_ID, disciplineId)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -74,18 +68,13 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     @Override
     public List<Course> getByGroup(Integer groupId) {
         List<Course> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            Course item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(eq(GROUP_ID, groupId))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                Course item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(eq(GROUP_ID, groupId)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -93,18 +82,13 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     @Override
     public List<Course> getByTeacher(Integer userId) {
         List<Course> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            Course item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(eq(USER_ID, userId))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                Course item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(eq(USER_ID,  userId)).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
         return list;
     }
@@ -112,42 +96,15 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
     @Override
     public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) {
         List<Course> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            Course item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
+        try (MongoCursor<Document> cursor = collection
+                .find(and(eq(DISCIPLINE_ID, disciplineId), eq(GROUP_ID, groupId)))
+                .iterator()) {
+            while (cursor.hasNext()) {
+                Course item = parseDocument(cursor.next());
+                list.add(item);
             }
-            list.add(item);
-        };
-        collection.find(and(eq(DISCIPLINE_ID, disciplineId), eq(GROUP_ID, groupId))).forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
         }
-        if (list.size() > 1) {
-            throw new PersistentException("Received more than one record.");
-        }
-        return list.listIterator().next();
-    }
-
-    @Override
-    public List<Course> getAll() {
-        List<Course> list = new ArrayList<>();
-        Block<Document> documents = doc -> {
-            Course item = null;
-            try {
-                item = parseDocument(doc);
-            } catch (PersistentException e) {
-                e.printStackTrace();
-            }
-            list.add(item);
-        };
-        collection.find().forEach(documents);
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
+        return list.get(0);
     }
 
 }

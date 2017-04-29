@@ -74,4 +74,5 @@ public class MongoDaoFactory extends DaoFactory {
     public UserDao getUserDao() {
         return new MongoUserDao();
     }
+
 }
