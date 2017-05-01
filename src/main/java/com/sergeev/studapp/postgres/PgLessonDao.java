@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.LessonDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PgLessonDao.class);
     private static final String SQL_SELECT_LESSON_BY_GROUP =
             "SELECT * FROM lessons, courses WHERE lessons.course_id = courses.course_id " +
                     "AND courses.group_id = ? ORDER BY lessons.date, lessons.ordinal";

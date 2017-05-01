@@ -3,6 +3,8 @@ package com.sergeev.studapp.mongo;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Sorts;
 import com.sergeev.studapp.dao.LessonDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Lesson;
@@ -16,13 +18,14 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.eq;
 import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao {
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection(LESSONS);
+        return db.getCollection(LESSONS);
     }
 
     @Override
@@ -58,17 +61,15 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
     @Override
     public List<Lesson> getByGroup(Integer groupId) {
         List<Lesson> list = new ArrayList<>();
-                Bson lookup = new Document("$lookup",
-                new Document("from", "courses")
-                        .append("localField", "id")
-                        .append("foreignField", "course")
-                        .append("as", "look_coll"));
-        Bson match = new Document("$match", new Document("look_coll.group", groupId));
-        Bson sort = new Document("$sort", new Document("date", 1));
+        Bson lookup = Aggregates.lookup(COURSES, "id", COURSE_ID, "course");
+        Bson match = Aggregates.match(eq("course." + GROUP_ID, groupId));
+        Bson sort = Aggregates.sort(Sorts.ascending(DATE));
+
         List<Bson> filters = new ArrayList<>();
         filters.add(lookup);
         filters.add(match);
         filters.add(sort);
+
         AggregateIterable<Document> it = collection.aggregate(filters);
         for (Document row : it) {
             Lesson lesson = parseDocument(row);
@@ -76,10 +77,6 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
                 list.add(lesson);
             }
         }
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
         return list;
     }
-
 }

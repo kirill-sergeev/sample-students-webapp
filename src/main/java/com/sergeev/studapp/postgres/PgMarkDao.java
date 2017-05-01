@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -15,7 +13,6 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PgMarkDao.class);
     private static final String SQL_SELECT_MARK_BY_LESSON =
             "SELECT * FROM marks WHERE lesson_id = ?";
     private static final String SQL_SELECT_AVG_MARK_BY_DISCIPLINE_AND_STUDENT =

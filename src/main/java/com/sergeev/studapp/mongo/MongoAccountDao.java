@@ -1,23 +1,30 @@
 package com.sergeev.studapp.mongo;
 
-import com.mongodb.*;
+import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Indexes;
 import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
-
 import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoAccountDao extends MongoGenericDao<Account> implements AccountDao {
+
+    public MongoAccountDao() {
+        IndexOptions options = new IndexOptions().background(true).sparse(true);
+        collection.createIndex(Indexes.ascending(LOGIN, PASSWORD), options);
+        collection.createIndex(Indexes.ascending(TOKEN), options);
+    }
 
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
@@ -55,26 +62,13 @@ public class MongoAccountDao extends MongoGenericDao<Account> implements Account
     }
 
     protected Account getByLogin(String login, String password) {
-        List<Account> list = new ArrayList<>();
         Pattern patternLogin = Pattern.compile(login, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
         Pattern patternPassword = Pattern.compile(password, Pattern.UNICODE_CHARACTER_CLASS);
         DBObject query1 = QueryBuilder.start(LOGIN).regex(patternLogin).and(PASSWORD).regex(patternPassword).get();
         BasicDBList or = new BasicDBList();
         or.add(query1);
         BasicDBObject query = new BasicDBObject("$or", or);
-        try (MongoCursor<Document> cursor = collection.find(query).iterator()) {
-            while (cursor.hasNext()) {
-                Account item = parseDocument(cursor.next());
-                list.add(item);
-            }
-        }
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        if (list.size() > 1) {
-            throw new PersistentException("Received more than one record.");
-        }
-        return list.listIterator().next();
+        return getBy(query, null).get(0);
     }
 
 }

@@ -15,7 +15,6 @@ import javax.naming.NamingException;
 public class MongoDaoFactory extends DaoFactory {
 
     private static final MongoDaoFactory MONGO_DAO_FACTORY = new MongoDaoFactory();
-
     private static MongoClient mongoClient;
 
     static{
@@ -36,10 +35,10 @@ public class MongoDaoFactory extends DaoFactory {
             MongoClientOptions options = MongoClientOptions.builder()
                     .writeConcern(WriteConcern.ACKNOWLEDGED).build();
             mongoClient = new MongoClient(address, options);
-            return mongoClient.getDatabase(Constants.DB);
+            return mongoClient.getDatabase(Constants.DATABASE);
         }
         ////////////////////////////////
-        return mongoClient.getDatabase(Constants.DB);
+        return mongoClient.getDatabase(Constants.DATABASE);
     }
 
     public static MongoDaoFactory getInstance(){

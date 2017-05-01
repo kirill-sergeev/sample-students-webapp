@@ -5,7 +5,7 @@ import com.sergeev.studapp.jpa.JpaGroupDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.Group;
 import com.sergeev.studapp.model.User;
-import com.sergeev.studapp.mongo.MongoUserDao;
+import com.sergeev.studapp.mongo.MongoAccountDao;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -116,8 +116,8 @@ public class Main {
     }
 
     public static void main(String[] args) throws PersistentException {
-        MongoUserDao dao = new MongoUserDao();
+        MongoAccountDao dao = new MongoAccountDao();
+        System.out.println(dao.getAll());
 
-        System.out.println(dao.getByLogin("kirill_sergeev", "111111"));
     }
 }

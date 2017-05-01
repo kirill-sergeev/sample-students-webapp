@@ -1,7 +1,5 @@
 package com.sergeev.studapp.mongo;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -17,15 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Updates.inc;
+import static com.sergeev.studapp.model.Constants.TITLE;
 
 public abstract class MongoGenericDao<T extends Identified> implements GenericDao<T> {
 
+    private static final MongoDatabase DB = MongoDaoFactory.getConnection();
+    private static final MongoCollection<Document> COUNTERS = DB.getCollection("counters");
     protected static final String ID = "_id";
-    private static MongoDatabase db = MongoDaoFactory.getConnection();
-    private static MongoCollection<Document> counters = db.getCollection("counters");
-
-    protected MongoCollection<Document> collection = getCollection(db);
-    private Document doc;
+    protected MongoCollection<Document> collection = getCollection(DB);
 
     protected abstract MongoCollection<Document> getCollection(MongoDatabase db);
 
@@ -35,14 +34,14 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
 
     @Override
     public void save(T object) {
-        doc = createDocument(object);
+        Document doc = createDocument(object);
         collection.insertOne(doc);
         object.setId(doc.getInteger(ID));
     }
 
     @Override
     public void update(T object) {
-        doc = createDocument(object);
+        Document doc = createDocument(object);
         UpdateResult updateResult = collection.replaceOne(eq(ID, object.getId()), doc);
         if (updateResult.getModifiedCount() == 0) {
             throw new PersistentException("Nothing updated!");
@@ -59,53 +58,13 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
 
     @Override
     public T getById(Integer id) {
-        doc = collection.find(eq(ID, id)).first();
+        Document doc = collection.find(eq(ID, id)).first();
         return parseDocument(doc);
     }
 
     @Override
     public List<T> getAll() {
-        List<T> list = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection.find()
-                .sort(new BasicDBObject("title", 1))
-                .iterator()) {
-            while (cursor.hasNext()) {
-                T item = parseDocument(cursor.next());
-                list.add(item);
-            }
-        }
-        if (list.size() == 0) {
-            throw new PersistentException("Record not found.");
-        }
-        return list;
-    }
-
-    protected Integer getNextId() {
-        String name = this.getClass().getSimpleName().toLowerCase()
-                .replace("mongo", "")
-                .replace("dao", "");
-        Document searchQuery = new Document("_id", name);
-        Document increase = new Document("seq", 1);
-        Document updateQuery = new Document("$inc", increase);
-
-        Document result = counters.findOneAndUpdate(searchQuery, updateQuery);
-        if (result == null) {
-            FindIterable<Document> cursor = collection.find()
-                    .sort(new BasicDBObject(ID, -1)).limit(1);
-            Integer number;
-            if (cursor.first() == null || cursor.first().isEmpty()) {
-                number = 0;
-            } else {
-                number = cursor.first().getInteger(ID);
-            }
-
-            Document document = new Document()
-                    .append("_id", name)
-                    .append("seq", number + 2);
-            counters.insertOne(document);
-            return number + 1;
-        }
-        return result.getInteger("seq");
+        return getBy(new Document(), ascending(TITLE));
     }
 
     protected List<T> getBy(Bson filter, Bson sort){
@@ -120,6 +79,28 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
             }
         }
         return list;
+    }
+
+    protected Integer getNextId() {
+        String attribute = "seq";
+        String value = collection.getNamespace().getCollectionName();
+        Document current = COUNTERS.findOneAndUpdate(eq(ID, value), inc(attribute, 1));
+
+        if (current == null) {
+            current = collection.find().sort(ascending(ID)).first();
+            Integer number;
+            if (current == null || current.isEmpty()) {
+                number = 1;
+            } else {
+                number = current.getInteger(ID);
+            }
+            Document document = new Document()
+                    .append(ID, value)
+                    .append(attribute, number + 1);
+            COUNTERS.insertOne(document);
+            return number;
+        }
+        return current.getInteger(attribute);
     }
 
 }

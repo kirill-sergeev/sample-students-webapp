@@ -71,7 +71,6 @@ public class CourseService {
         } catch (PersistentException e) {
             courses = Collections.emptyList();
         }
-
         return courses;
     }
 

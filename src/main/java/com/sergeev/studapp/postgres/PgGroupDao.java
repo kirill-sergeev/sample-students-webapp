@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.GroupDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Group;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +15,6 @@ import static com.sergeev.studapp.model.Constants.GROUP_ID;
 import static com.sergeev.studapp.model.Constants.TITLE;
 
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
-
-    private static final Logger LOG = LoggerFactory.getLogger(PgGroupDao.class);
 
     @Override
     protected String getSelectQuery() {

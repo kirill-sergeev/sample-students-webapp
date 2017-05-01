@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.CourseDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +15,6 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PgCourseDao.class);
     private static final String SQL_SELECT_COURSE_BY_DISCIPLINE =
             "SELECT * FROM courses WHERE discipline_id = ?";
     private static final String SQL_SELECT_COURSE_BY_GROUP =

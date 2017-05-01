@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +15,6 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PgUserDao.class);
     private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
             "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login = ? AND accounts.password = ?";
     private static final String SQL_SELECT_USER_BY_TOKEN =

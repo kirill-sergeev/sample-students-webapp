@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.DisciplineDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,8 +15,6 @@ import static com.sergeev.studapp.model.Constants.DISCIPLINE_ID;
 import static com.sergeev.studapp.model.Constants.TITLE;
 
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
-
-    private static final Logger LOG = LoggerFactory.getLogger(PgDisciplineDao.class);
 
     @Override
     protected String getSelectQuery() {

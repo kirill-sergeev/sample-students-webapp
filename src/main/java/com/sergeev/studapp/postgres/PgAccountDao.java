@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.AccountDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Account;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,8 +14,6 @@ import java.util.List;
 import static com.sergeev.studapp.model.Constants.*;
 
 public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
-
-    private static final Logger LOG = LoggerFactory.getLogger(PgAccountDao.class);
 
     @Override
     protected String getSelectQuery() {

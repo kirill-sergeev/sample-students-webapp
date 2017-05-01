@@ -57,10 +57,10 @@ public class LessonService {
     }
 
     public static List<Lesson> readAll(Integer groupId){
-
         try {
             lessons = LESSON_DAO.getByGroup(groupId);
         } catch (PersistentException e) {
+            e.printStackTrace();
             lessons  = Collections.emptyList();
         }
 

@@ -5,17 +5,16 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.QueryBuilder;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.Sorts;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.User;
 import org.bson.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -24,15 +23,22 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MongoUserDao.class);
-
-    @Override
-    protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection(USERS);
+    public MongoUserDao() {
+            IndexOptions options = new IndexOptions().background(true).sparse(true);
+            collection.createIndex(Indexes.ascending(FIRST_NAME), options);
+            collection.createIndex(Indexes.ascending(LAST_NAME), options);
+            collection.createIndex(Indexes.ascending(GROUP_ID), options);
+            collection.createIndex(Indexes.ascending(ACCOUNT_ID), options);
+            collection.createIndex(Indexes.ascending(ROLE), options);
     }
 
     @Override
-    protected Document createDocument(User object){
+    protected MongoCollection<Document> getCollection(MongoDatabase db) {
+        return db.getCollection(USERS);
+    }
+
+    @Override
+    protected Document createDocument(User object) {
         Document doc = new Document(FIRST_NAME, object.getFirstName())
                 .append(LAST_NAME, object.getLastName())
                 .append(ROLE, object.getRole().name())
@@ -40,7 +46,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         if (object.getRole() == User.Role.STUDENT) {
             doc.append(GROUP_ID, object.getGroup().getId());
         }
-        if (object.getId() == null){
+        if (object.getId() == null) {
             doc.append(ID, getNextId());
         } else {
             doc.append(ID, object.getId());
@@ -70,7 +76,6 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     public List<User> getByName(String name, User.Role role) {
-        List<User> list = new ArrayList<>();
         Pattern pattern = Pattern.compile(name, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CHARACTER_CLASS);
         DBObject query1 = QueryBuilder.start(FIRST_NAME).regex(pattern).and(ROLE).is(role.name()).get();
         DBObject query2 = QueryBuilder.start(LAST_NAME).regex(pattern).and(ROLE).is(role.name()).get();
@@ -78,47 +83,17 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         or.add(query1);
         or.add(query2);
         BasicDBObject query = new BasicDBObject("$or", or);
-
-        try (MongoCursor<Document> cursor = collection
-                .find(query)
-                .sort((new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1)))
-                .iterator()) {
-            while (cursor.hasNext()) {
-                User item = parseDocument(cursor.next());
-                list.add(item);
-            }
-        }
-        return list;
+        return getBy(query, Sorts.ascending(FIRST_NAME, LAST_NAME));
     }
 
     @Override
     public List<User> getByGroup(Integer groupId) {
-        List<User> list = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection
-                .find(eq(GROUP_ID, groupId))
-                .sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1))
-                .iterator()) {
-            while (cursor.hasNext()) {
-                User item = parseDocument(cursor.next());
-                list.add(item);
-            }
-        }
-        return list;
+        return getBy((eq(GROUP_ID, groupId)), Sorts.ascending(FIRST_NAME, LAST_NAME));
     }
 
     @Override
     public List<User> getAll(User.Role role) {
-        List<User> list = new ArrayList<>();
-        try (MongoCursor<Document> cursor = collection
-                .find(eq(ROLE, role.name()))
-                .sort(new BasicDBObject(FIRST_NAME, 1).append(LAST_NAME, 1))
-                .iterator()) {
-            while (cursor.hasNext()) {
-                User item = parseDocument(cursor.next());
-                list.add(item);
-            }
-        }
-        return list;
+        return getBy((eq(ROLE, role.name())), Sorts.ascending(FIRST_NAME, LAST_NAME));
     }
 
     @Override

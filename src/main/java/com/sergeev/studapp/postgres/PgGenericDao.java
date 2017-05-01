@@ -3,8 +3,6 @@ package com.sergeev.studapp.postgres;
 import com.sergeev.studapp.dao.GenericDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Identified;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +12,6 @@ import java.util.List;
 
 public abstract class PgGenericDao<T extends Identified> implements GenericDao<T>{
 
-    private static final Logger LOG = LoggerFactory.getLogger(PgGenericDao.class);
     protected abstract String getSelectQuery();
     protected abstract String getSelectAllQuery();
     protected abstract String getCreateQuery();
@@ -128,4 +125,5 @@ public abstract class PgGenericDao<T extends Identified> implements GenericDao<T
         }
         return list;
     }
+
 }

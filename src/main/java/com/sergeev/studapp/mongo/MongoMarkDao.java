@@ -3,6 +3,8 @@ package com.sergeev.studapp.mongo;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Indexes;
 import com.sergeev.studapp.dao.MarkDao;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
@@ -17,9 +19,14 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
 
+    public MongoMarkDao() {
+        IndexOptions options = new IndexOptions().background(true);
+        collection.createIndex(Indexes.ascending(LESSON_ID), options);
+    }
+
     @Override
     protected MongoCollection<Document> getCollection(MongoDatabase db) {
-        return collection = db.getCollection(MARKS);
+        return db.getCollection(MARKS);
     }
 
     @Override
@@ -27,7 +34,7 @@ public class MongoMarkDao extends MongoGenericDao<Mark> implements MarkDao {
         Document doc = new Document(LESSON_ID, object.getLesson().getId())
                 .append(USER_ID, object.getStudent().getId())
                 .append(VALUE, object.getValue());
-        if (object.getId() == null){
+        if (object.getId() == null) {
             doc.append(ID, getNextId());
         } else {
             doc.append(ID, object.getId());

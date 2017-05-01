@@ -5,7 +5,7 @@ public interface Constants {
     /**
      * Database names.
      */
-    String DB = "students";
+    String DATABASE = "students";
     String TEST_DB = "students_test";
     /**
      * Table names.
