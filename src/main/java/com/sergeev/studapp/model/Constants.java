@@ -7,6 +7,7 @@ public interface Constants {
      */
     String DATABASE = "students";
     String TEST_DB = "students_test";
+
     /**
      * Table names.
      */
@@ -19,14 +20,18 @@ public interface Constants {
     String USERS = "users";
 
     /**
-     * ID names.
+     * PK names.
+     */
+    String ID = "id";
+
+    /**
+     * FK names.
      */
     String ACCOUNT_ID = "account_id";
     String COURSE_ID = "course_id";
     String DISCIPLINE_ID = "discipline_id";
     String GROUP_ID = "group_id";
     String LESSON_ID = "lesson_id";
-    String MARK_ID = "mark_id";
     String USER_ID = "user_id";
 
     /**
@@ -38,10 +43,10 @@ public interface Constants {
     String LOGIN = "login";
     String ORDER = "ordinal";
     String PASSWORD = "password";
-    String ROLE = "role";
+    String ROLE = "role_id";
     String TITLE = "title";
     String TOKEN = "token";
-    String TYPE = "type";
+    String TYPE = "type_id";
     String VALUE = "mark";
 
 }

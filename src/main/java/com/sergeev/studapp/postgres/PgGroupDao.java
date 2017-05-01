@@ -11,14 +11,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.model.Constants.GROUP_ID;
-import static com.sergeev.studapp.model.Constants.TITLE;
+import static com.sergeev.studapp.model.Constants.*;
 
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM groups Where group_id = ?";
+        return "SELECT * FROM groups WHERE id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
@@ -30,11 +29,11 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE groups SET title= ? WHERE group_id = ?";
+        return "UPDATE groups SET title= ? WHERE id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM groups WHERE group_id = ?";
+        return "DELETE FROM groups WHERE id = ?";
     }
 
     @Override
@@ -43,7 +42,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
         try {
             while (rs.next()) {
                 Group group = new Group()
-                        .setId(rs.getInt(GROUP_ID))
+                        .setId(rs.getInt(ID))
                         .setTitle(rs.getString(TITLE));
                 list.add(group);
             }

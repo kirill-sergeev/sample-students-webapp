@@ -113,6 +113,7 @@ public class User implements Identified {
     }
 
     public enum Role {
-        STUDENT, TEACHER, ADMIN
+        GUEST, STUDENT, TEACHER, ADMIN
     }
+
 }

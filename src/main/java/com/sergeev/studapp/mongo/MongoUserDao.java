@@ -41,7 +41,7 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     protected Document createDocument(User object) {
         Document doc = new Document(FIRST_NAME, object.getFirstName())
                 .append(LAST_NAME, object.getLastName())
-                .append(ROLE, object.getRole().name())
+                .append(ROLE, object.getRole().name().toLowerCase())
                 .append(ACCOUNT_ID, object.getAccount().getId());
         if (object.getRole() == User.Role.STUDENT) {
             doc.append(GROUP_ID, object.getGroup().getId());

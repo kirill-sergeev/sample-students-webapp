@@ -18,12 +18,12 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     private static final String SQL_SELECT_AVG_MARK_BY_DISCIPLINE_AND_STUDENT =
             "{call student_avg_mark_by_discipline(? , ?, ?)}";
     private static final String SQL_SELECT_MARK_BY_DISCIPLINE_AND_STUDENT =
-            "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.lesson_id " +
-                    "AND l.course_id = c.course_id AND m.user_id = ? AND c.discipline_id = ?";
+            "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.id " +
+                    "AND l.course_id = c.id AND c.discipline_id = ? AND m.user_id = ?";
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM marks WHERE mark_id = ?";
+        return "SELECT * FROM marks WHERE id = ?";
     }
 
     @Override
@@ -38,12 +38,12 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE marks SET lesson_id = ?, user_id = ?, mark= ? WHERE mark_id = ?";
+        return "UPDATE marks SET lesson_id = ?, user_id = ?, mark= ? WHERE id = ?";
     }
 
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM marks WHERE mark_id = ?";
+        return "DELETE FROM marks WHERE id = ?";
     }
 
     @Override
@@ -54,7 +54,7 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
                 PgLessonDao lessonDao = new PgLessonDao();
                 PgUserDao userDao = new PgUserDao();
                 Mark mark = new Mark()
-                        .setId(rs.getInt(MARK_ID))
+                        .setId(rs.getInt(ID))
                         .setLesson(lessonDao.getById(rs.getInt(LESSON_ID), con))
                         .setStudent(userDao.getById(rs.getInt(USER_ID), con))
                         .setValue(rs.getInt(VALUE));
@@ -112,12 +112,12 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
 
     @Override
     public List<Mark> getByLesson(Integer lessonId) {
-        return getBy(SQL_SELECT_MARK_BY_LESSON, lessonId);
+        return getByParams(SQL_SELECT_MARK_BY_LESSON, lessonId);
     }
 
     @Override
     public List<Mark> getByDisciplineAndStudent(Integer disciplineId, Integer studentId) {
-        return getBy(SQL_SELECT_MARK_BY_DISCIPLINE_AND_STUDENT, disciplineId, studentId);
+        return getByParams(SQL_SELECT_MARK_BY_DISCIPLINE_AND_STUDENT, disciplineId, studentId);
     }
 
 }

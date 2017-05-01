@@ -31,7 +31,7 @@ public class MongoLessonDao extends MongoGenericDao<Lesson> implements LessonDao
     @Override
     protected Document createDocument(Lesson object) {
         Document doc = new Document(DATE, Date.valueOf(object.getDate()))
-                .append(TYPE, object.getType().name())
+                .append(TYPE, object.getType().name().toLowerCase())
                 .append(ORDER, object.getOrder().ordinal() + 1)
                 .append(COURSE_ID, object.getCourse().getId());
         if (object.getId() == null){

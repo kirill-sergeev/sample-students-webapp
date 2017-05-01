@@ -17,7 +17,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM accounts WHERE account_id = ?";
+        return "SELECT * FROM accounts WHERE id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
@@ -29,11 +29,11 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE accounts SET login = ?, password = ?, token = ? WHERE account_id = ?";
+        return "UPDATE accounts SET login = ?, password = ?, token = ? WHERE id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM accounts WHERE account_id = ?";
+        return "DELETE FROM accounts WHERE id = ?";
     }
 
     @Override
@@ -42,7 +42,7 @@ public class PgAccountDao extends PgGenericDao<Account> implements AccountDao {
         try {
             while (rs.next()) {
                 Account account = new Account()
-                        .setId(rs.getInt(ACCOUNT_ID))
+                        .setId(rs.getInt(ID))
                         .setLogin(rs.getString(LOGIN))
                         .setPassword(rs.getString(PASSWORD))
                         .setToken(rs.getString(TOKEN));

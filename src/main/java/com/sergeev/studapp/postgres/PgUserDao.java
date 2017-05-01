@@ -16,19 +16,19 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
-            "SELECT * FROM accounts, users WHERE accounts.account_id = users.account_id AND accounts.login = ? AND accounts.password = ?";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.account_id AND a.login = ? AND a.password = ?";
     private static final String SQL_SELECT_USER_BY_TOKEN =
-            "SELECT * FROM users, accounts WHERE accounts.account_id = users.account_id AND token = ?";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.account_id AND token = ?";
     private static final String SQL_SELECT_USER_BY_ROLE =
-            "SELECT * FROM users WHERE role = ? ORDER BY first_name, last_name";
+            "SELECT * FROM users WHERE role_id = ? ORDER BY first_name, last_name";
     private static final String SQL_SELECT_USER_BY_GROUP =
-            "SELECT * FROM users WHERE group_id = ? AND role = 'STUDENT'";
+            "SELECT * FROM users WHERE group_id = ?";
     private static final String SQL_SELECT_USER_BY_NAME_AND_ROLE =
-            "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role = ?";
+            "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role_id = ?";
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM users WHERE user_id = ? ORDER BY first_name, last_name";
+        return "SELECT * FROM users WHERE id = ? ORDER BY first_name, last_name";
     }
 
     @Override
@@ -38,17 +38,17 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO users (first_name, last_name, role, account_id, group_id) VALUES (?, ?, ?, ?, ?)";
+        return "INSERT INTO users (first_name, last_name, role_id, account_id, group_id) VALUES (?, ?, ?, ?, ?)";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE users SET first_name = ?, last_name = ?, group_id = ? WHERE user_id = ?";
+        return "UPDATE users SET first_name = ?, last_name = ?, group_id = ? WHERE id = ?";
     }
 
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM users WHERE user_id = ?";
+        return "DELETE FROM users WHERE id = ?";
     }
 
     @Override
@@ -58,11 +58,11 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             while (rs.next()) {
                 PgAccountDao accountDao = new PgAccountDao();
                 User user = new User()
-                        .setId(rs.getInt(USER_ID))
+                        .setId(rs.getInt(ID))
                         .setFirstName(rs.getString(FIRST_NAME))
                         .setLastName(rs.getString(LAST_NAME))
                         .setAccount(accountDao.getById(rs.getInt(ACCOUNT_ID), con))
-                        .setRole(User.Role.valueOf(rs.getString(ROLE)));
+                        .setRole(User.Role.values()[rs.getInt(ROLE)]);
                 if (user.getRole() == User.Role.STUDENT) {
                     PgGroupDao groupDao = new PgGroupDao();
                     user.setGroup(groupDao.getById(rs.getInt(GROUP_ID), con));
@@ -83,7 +83,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         try {
             st.setString(1, user.getFirstName());
             st.setString(2, user.getLastName());
-            st.setString(3, user.getRole().name());
+            st.setInt(3, user.getRole().ordinal());
             st.setInt(4, user.getAccount().getId());
             if (user.getRole() == User.Role.STUDENT) {
                 st.setInt(5, user.getGroup().getId());
@@ -113,27 +113,27 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     @Override
     public List<User> getByName(String name, User.Role role) {
-        return getBy(SQL_SELECT_USER_BY_NAME_AND_ROLE, "%" + name.toLowerCase() + "%", role.name());
+        return getByParams(SQL_SELECT_USER_BY_NAME_AND_ROLE, "%" + name.toLowerCase() + "%", role.ordinal());
     }
 
     @Override
     public List<User> getByGroup(Integer groupId) {
-        return getBy(SQL_SELECT_USER_BY_GROUP, groupId);
+        return getByParams(SQL_SELECT_USER_BY_GROUP, groupId);
     }
 
     @Override
     public List<User> getAll(User.Role role) {
-        return getBy(SQL_SELECT_USER_BY_ROLE, role.name());
+        return getByParams(SQL_SELECT_USER_BY_ROLE, role.ordinal());
     }
 
     @Override
     public User getByToken(String token) {
-        return getBy(SQL_SELECT_USER_BY_TOKEN, token).get(0);
+        return getByParams(SQL_SELECT_USER_BY_TOKEN, token).get(0);
     }
 
     @Override
     public User getByLogin(String login, String password) {
-        return getBy(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD, login, password).get(0);
+        return getByParams(SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD, login, password).get(0);
     }
 
 }

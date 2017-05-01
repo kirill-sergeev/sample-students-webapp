@@ -11,14 +11,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.sergeev.studapp.model.Constants.DISCIPLINE_ID;
-import static com.sergeev.studapp.model.Constants.TITLE;
+import static com.sergeev.studapp.model.Constants.*;
+
 
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM disciplines WHERE discipline_id = ?";
+        return "SELECT * FROM disciplines WHERE id = ?";
     }
     @Override
     protected String getSelectAllQuery() {
@@ -30,11 +30,11 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE disciplines SET title = ? WHERE discipline_id = ?";
+        return "UPDATE disciplines SET title = ? WHERE id = ?";
     }
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM disciplines WHERE discipline_id = ?";
+        return "DELETE FROM disciplines WHERE id = ?";
     }
 
     @Override
@@ -43,7 +43,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
         try {
             while (rs.next()) {
                 Discipline discipline = new Discipline()
-                        .setId(rs.getInt(DISCIPLINE_ID))
+                        .setId(rs.getInt(ID))
                         .setTitle(rs.getString(TITLE));
                 list.add(discipline);
             }

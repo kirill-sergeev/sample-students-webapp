@@ -26,7 +26,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM courses WHERE course_id = ?";
+        return "SELECT * FROM courses WHERE id = ?";
     }
 
     @Override
@@ -41,12 +41,12 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE courses SET discipline_id = ?, group_id = ?, user_id = ? WHERE course_id = ?";
+        return "UPDATE courses SET discipline_id = ?, group_id = ?, user_id = ? WHERE id = ?";
     }
 
     @Override
     protected String getDeleteQuery() {
-        return "DELETE FROM courses WHERE course_id = ?";
+        return "DELETE FROM courses WHERE id = ?";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
                 PgGroupDao groupDao = new PgGroupDao();
                 PgUserDao userDao = new PgUserDao();
                 Course course = new Course()
-                        .setId(rs.getInt(COURSE_ID))
+                        .setId(rs.getInt(ID))
                         .setGroup(groupDao.getById(rs.getInt(GROUP_ID), con))
                         .setDiscipline(disciplineDao.getById(rs.getInt(DISCIPLINE_ID), con))
                         .setTeacher(userDao.getById(rs.getInt(USER_ID), con));
@@ -98,22 +98,22 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
 
     @Override
     public List<Course> getByDiscipline(Integer disciplineId) {
-        return getBy(SQL_SELECT_COURSE_BY_DISCIPLINE, disciplineId);
+        return getByParams(SQL_SELECT_COURSE_BY_DISCIPLINE, disciplineId);
     }
 
     @Override
     public List<Course> getByGroup(Integer groupId) {
-        return getBy(SQL_SELECT_COURSE_BY_GROUP, groupId);
+        return getByParams(SQL_SELECT_COURSE_BY_GROUP, groupId);
     }
 
     @Override
     public List<Course> getByTeacher(Integer userId) {
-        return getBy(SQL_SELECT_COURSE_BY_TEACHER, userId);
+        return getByParams(SQL_SELECT_COURSE_BY_TEACHER, userId);
     }
 
     @Override
     public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) {
-        return getBy(SQL_SELECT_COURSE_BY_DISCIPLINE_AND_GROUP, disciplineId, groupId).get(0);
+        return getByParams(SQL_SELECT_COURSE_BY_DISCIPLINE_AND_GROUP, disciplineId, groupId).get(0);
     }
 
 }
