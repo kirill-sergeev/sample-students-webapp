@@ -18,7 +18,6 @@ import java.util.Map;
 
 public class TransferService {
 
-    private static List<Account> accounts;
     private static List<Course> courses;
     private static List<Discipline> disciplines;
     private static List<Group> groups;
@@ -29,7 +28,6 @@ public class TransferService {
     private static void exportFrom(int database) throws PersistentException {
 
         DaoFactory dao = DaoFactory.getDaoFactory(database);
-        accounts = dao.getAccountDao().getAll();
         courses = dao.getCourseDao().getAll();
         disciplines = dao.getDisciplineDao().getAll();
         groups = dao.getGroupDao().getAll();
@@ -44,7 +42,6 @@ public class TransferService {
         DaoFactory dao = DaoFactory.getDaoFactory(database);
         Integer oldId;
         Integer newId;
-        Map<Integer, Integer> accountIDs = new HashMap<>();
         Map<Integer, Integer> courseIDs = new HashMap<>();
         Map<Integer, Integer> disciplineIDs = new HashMap<>();
         Map<Integer, Integer> groupIDs = new HashMap<>();
@@ -53,16 +50,6 @@ public class TransferService {
 
         prepareSchema(database);
 
-        for (Account account : accounts) {
-            oldId = account.getId();
-            account.setId(null);
-            String token = account.getToken();
-            dao.getAccountDao().save(account);
-            account.setToken(token);
-            dao.getAccountDao().update(account);
-            newId = account.getId();
-            accountIDs.put(oldId, newId);
-        }
 
         for (Group group : groups) {
             oldId = group.getId();
@@ -75,7 +62,6 @@ public class TransferService {
         for (User user : users) {
             oldId = user.getId();
             user.setId(null);
-            user.setAccount(new Account().setId(accountIDs.get(user.getAccount().getId())));
             if (user.getRole() == User.Role.STUDENT) {
                 user.setGroup(new Group().setId(groupIDs.get(user.getGroup().getId())));
             }
@@ -145,6 +131,6 @@ public class TransferService {
 
     public static void main(String[] args) throws PersistentException {
         exportFrom(DaoFactory.POSTGRESQL);
-        importTo(DaoFactory.MONGODB);
+        importTo(DaoFactory.JPA);
     }
 }

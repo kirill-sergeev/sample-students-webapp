@@ -11,25 +11,26 @@ import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.Sorts;
 import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
-import com.sergeev.studapp.model.Account;
 import com.sergeev.studapp.model.User;
 import org.bson.Document;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.sergeev.studapp.model.Constants.*;
 
 public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     public MongoUserDao() {
-            IndexOptions options = new IndexOptions().background(true).sparse(true);
-            collection.createIndex(Indexes.ascending(FIRST_NAME), options);
-            collection.createIndex(Indexes.ascending(LAST_NAME), options);
-            collection.createIndex(Indexes.ascending(GROUP_ID), options);
-            collection.createIndex(Indexes.ascending(ACCOUNT_ID), options);
-            collection.createIndex(Indexes.ascending(ROLE), options);
+        IndexOptions options = new IndexOptions().background(true).sparse(true);
+        collection.createIndex(Indexes.ascending(FIRST_NAME), options);
+        collection.createIndex(Indexes.ascending(LAST_NAME), options);
+        collection.createIndex(Indexes.ascending(GROUP_ID), options);
+        collection.createIndex(Indexes.ascending(ROLE), options);
+        collection.createIndex(Indexes.ascending(LOGIN, PASSWORD), options);
+        collection.createIndex(Indexes.ascending(TOKEN), options);
     }
 
     @Override
@@ -41,13 +42,15 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
     protected Document createDocument(User object) {
         Document doc = new Document(FIRST_NAME, object.getFirstName())
                 .append(LAST_NAME, object.getLastName())
-                .append(ROLE, object.getRole().name().toLowerCase())
-                .append(ACCOUNT_ID, object.getAccount().getId());
+                .append(ROLE, object.getRole().name())
+                .append(LOGIN, object.getAccount().getLogin())
+                .append(PASSWORD, object.getAccount().getPassword());
         if (object.getRole() == User.Role.STUDENT) {
             doc.append(GROUP_ID, object.getGroup().getId());
         }
         if (object.getId() == null) {
             doc.append(ID, getNextId());
+            doc.append(TOKEN, object.getAccount().getToken());
         } else {
             doc.append(ID, object.getId());
         }
@@ -59,14 +62,14 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         if (doc == null || doc.isEmpty()) {
             throw new PersistentException("Empty document.");
         }
-        MongoAccountDao accountDao = new MongoAccountDao();
         User user = new User()
                 .setId(doc.getInteger(ID))
                 .setFirstName(String.valueOf(doc.get(FIRST_NAME)))
                 .setLastName(String.valueOf(doc.get(LAST_NAME)))
-                .setRole(User.Role.valueOf(String.valueOf(doc.get(ROLE))))
-                .setAccount(accountDao.getById(doc.getInteger(ACCOUNT_ID)));
-
+                .setRole(User.Role.valueOf(String.valueOf(doc.get(ROLE))));
+        user.setAccount(new User.Account().setLogin(String.valueOf(doc.get(LOGIN)))
+                .setPassword(String.valueOf(doc.get(PASSWORD)))
+                .setToken(String.valueOf(doc.get(TOKEN))));
         if (user.getRole() == User.Role.STUDENT) {
             MongoGroupDao groupDao = new MongoGroupDao();
             user.setGroup(groupDao.getById(doc.getInteger(GROUP_ID)));
@@ -98,16 +101,12 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
 
     @Override
     public User getByToken(String token) {
-        Account account = new MongoAccountDao().getByToken(token);
-        Document doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
-        return parseDocument(doc);
+        return getBy((eq(TOKEN, token)), null).get(0);
     }
 
     @Override
     public User getByLogin(String login, String password) {
-        Account account = new MongoAccountDao().getByLogin(login, password);
-        Document doc = collection.find(eq(ACCOUNT_ID, account.getId())).first();
-        return parseDocument(doc);
+        return getBy(and(eq(LOGIN, login), eq(PASSWORD, password)), null).get(0);
     }
 
 }

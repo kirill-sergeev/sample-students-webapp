@@ -8,7 +8,6 @@
     <persistence-unit name="learn" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-        <class>com.sergeev.studapp.model.Account</class>
         <class>com.sergeev.studapp.model.Course</class>
         <class>com.sergeev.studapp.model.Discipline</class>
         <class>com.sergeev.studapp.model.Group</class>

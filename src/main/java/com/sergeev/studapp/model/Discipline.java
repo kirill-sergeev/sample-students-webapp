@@ -5,8 +5,11 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.sergeev.studapp.model.Constants.*;
+
 @Entity
-@Table(name = Constants.DISCIPLINES)
+@Table(name = DISCIPLINES,
+        indexes = { @Index(columnList = TITLE) })
 public class Discipline implements Identified {
 
     private Integer id;
@@ -14,8 +17,7 @@ public class Discipline implements Identified {
     private Set<Course> courses = new HashSet<>();
 
     @Override
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -26,7 +28,7 @@ public class Discipline implements Identified {
         return this;
     }
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 30, nullable = false, unique = true)
     public String getTitle() {
         return title;
     }

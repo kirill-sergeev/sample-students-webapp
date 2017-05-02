@@ -16,34 +16,40 @@ import static com.sergeev.studapp.model.Constants.*;
 public class PgUserDao extends PgGenericDao<User> implements UserDao {
 
     private static final String SQL_SELECT_USER_BY_LOGIN_AND_PASSWORD =
-            "SELECT * FROM accounts a, users u WHERE a.id = u.account_id AND a.login = ? AND a.password = ?";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.id AND a.login = ? AND a.password = ?";
     private static final String SQL_SELECT_USER_BY_TOKEN =
-            "SELECT * FROM accounts a, users u WHERE a.id = u.account_id AND token = ?";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.id AND token = ?";
     private static final String SQL_SELECT_USER_BY_ROLE =
-            "SELECT * FROM users WHERE role_id = ? ORDER BY first_name, last_name";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.id AND role_id = ? ORDER BY first_name, last_name";
     private static final String SQL_SELECT_USER_BY_GROUP =
-            "SELECT * FROM users WHERE group_id = ?";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.id AND group_id = ?";
     private static final String SQL_SELECT_USER_BY_NAME_AND_ROLE =
-            "SELECT * FROM users WHERE lower(first_name||' '||last_name) LIKE (?) AND role_id = ?";
+            "SELECT * FROM accounts a, users u WHERE a.id = u.id AND lower(first_name||' '||last_name) LIKE (?) AND role_id = ?";
 
     @Override
     protected String getSelectQuery() {
-        return "SELECT * FROM users WHERE id = ? ORDER BY first_name, last_name";
+        return "SELECT * FROM accounts a, users u WHERE a.id = u.id AND u.id = ? ORDER BY first_name, last_name";
     }
 
     @Override
     protected String getSelectAllQuery() {
-        return "SELECT * FROM users ORDER BY first_name, last_name";
+        return "SELECT * FROM accounts a, users u WHERE a.id = u.id ORDER BY first_name, last_name";
     }
 
     @Override
     protected String getCreateQuery() {
-        return "INSERT INTO users (first_name, last_name, role_id, account_id, group_id) VALUES (?, ?, ?, ?, ?)";
+        return "WITH ins AS (" +
+                "INSERT INTO users (first_name, last_name, role_id, group_id) " +
+                "VALUES (?, ?, ?, ?) RETURNING id) " +
+                "INSERT INTO accounts (id, login, password) " +
+                "VALUES ((SELECT id FROM ins), ?, ?) RETURNING id";
     }
 
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE users SET first_name = ?, last_name = ?, group_id = ? WHERE id = ?";
+        return "WITH upd AS (UPDATE users u SET first_name = ?, last_name = ?, group_id = ? WHERE u.id = ? " +
+                "RETURNING *) " +
+                "UPDATE accounts a SET login = ?, password = ?, token = ? WHERE a.id = (SELECT id FROM upd)";
     }
 
     @Override
@@ -56,13 +62,15 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
         List<User> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                PgAccountDao accountDao = new PgAccountDao();
                 User user = new User()
-                        .setId(rs.getInt(ID))
+                        .setId(rs.getInt(1)) //ID
                         .setFirstName(rs.getString(FIRST_NAME))
                         .setLastName(rs.getString(LAST_NAME))
-                        .setAccount(accountDao.getById(rs.getInt(ACCOUNT_ID), con))
                         .setRole(User.Role.values()[rs.getInt(ROLE)]);
+                user.setAccount(new User.Account()
+                        .setLogin(rs.getString(LOGIN))
+                        .setPassword(rs.getString(PASSWORD))
+                        .setToken(rs.getString(TOKEN)));
                 if (user.getRole() == User.Role.STUDENT) {
                     PgGroupDao groupDao = new PgGroupDao();
                     user.setGroup(groupDao.getById(rs.getInt(GROUP_ID), con));
@@ -84,12 +92,13 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
             st.setString(1, user.getFirstName());
             st.setString(2, user.getLastName());
             st.setInt(3, user.getRole().ordinal());
-            st.setInt(4, user.getAccount().getId());
             if (user.getRole() == User.Role.STUDENT) {
-                st.setInt(5, user.getGroup().getId());
+                st.setInt(4, user.getGroup().getId());
             } else {
-                st.setNull(5, java.sql.Types.NULL);
+                st.setNull(4, java.sql.Types.NULL);
             }
+            st.setString(5, user.getAccount().getLogin());
+            st.setString(6, user.getAccount().getPassword());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }
@@ -106,6 +115,9 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
                 st.setNull(3, java.sql.Types.NULL);
             }
             st.setInt(4, user.getId());
+            st.setString(5, user.getAccount().getLogin());
+            st.setString(6, user.getAccount().getPassword());
+            st.setString(7, user.getAccount().getToken());
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

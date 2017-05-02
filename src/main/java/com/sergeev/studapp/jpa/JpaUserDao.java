@@ -13,14 +13,14 @@ public class JpaUserDao extends JpaGenericDao<User> implements UserDao {
     @Override
     public User getByToken(String token) {
         TypedQuery<User> query = entityManager.createQuery
-                ("SELECT u FROM Account a, User u WHERE u.account = a AND a.token = ?1", User.class);
+                ("SELECT u FROM User u WHERE u.account.token = ?1", User.class);
         return query.setParameter(1, token).getSingleResult();
     }
 
     @Override
     public User getByLogin(String login, String password) {
         TypedQuery<User> query = entityManager.createQuery
-                ("SELECT u FROM Account a, User u WHERE u.account = a AND a.login = ?1 AND a.password = ?2", User.class);
+                ("SELECT u FROM User u WHERE u.account.login = ?1 AND u.account.password = ?2", User.class);
         return query.setParameter(1, login)
                 .setParameter(2, password).getSingleResult();
     }

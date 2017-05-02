@@ -4,8 +4,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.sergeev.studapp.model.Constants.*;
+
 @Entity
-@Table(name = Constants.COURSES)
+@Table(name = COURSES,
+        uniqueConstraints = {@UniqueConstraint(
+                columnNames = {DISCIPLINE_ID, GROUP_ID, USER_ID})})
 public class Course implements Identified {
 
     private Integer id;
@@ -28,7 +32,7 @@ public class Course implements Identified {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     public Discipline getDiscipline() {
         return discipline;
     }
@@ -39,7 +43,7 @@ public class Course implements Identified {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     public Group getGroup() {
         return group;
     }
@@ -50,7 +54,7 @@ public class Course implements Identified {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = USER_ID, nullable = false)
     public User getTeacher() {
         return teacher;
     }
@@ -79,6 +83,5 @@ public class Course implements Identified {
                 ", teacher=" + teacher +
                 '}';
     }
-
 
 }

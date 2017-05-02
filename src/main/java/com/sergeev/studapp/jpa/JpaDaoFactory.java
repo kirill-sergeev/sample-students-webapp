@@ -24,10 +24,6 @@ public class JpaDaoFactory extends DaoFactory {
     }
 
     @Override
-    public AccountDao getAccountDao() {
-        return new JpaAccountDao();
-    }
-    @Override
     public CourseDao getCourseDao() {
         return new JpaCourseDao();
     }

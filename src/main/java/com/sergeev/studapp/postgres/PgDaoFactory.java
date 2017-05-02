@@ -49,10 +49,6 @@ public class PgDaoFactory extends DaoFactory {
     }
 
     @Override
-    public AccountDao getAccountDao() {
-        return new PgAccountDao();
-    }
-    @Override
     public CourseDao getCourseDao() {
         return new PgCourseDao();
     }

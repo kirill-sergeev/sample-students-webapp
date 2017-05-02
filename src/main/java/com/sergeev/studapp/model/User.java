@@ -1,11 +1,17 @@
 package com.sergeev.studapp.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.sergeev.studapp.model.Constants.*;
+
 @Entity
-@Table(name = Constants.USERS)
+@Table(name = USERS,
+        indexes = {@Index(columnList = FIRST_NAME + "," + LAST_NAME)})
+@SecondaryTable(name = ACCOUNTS,
+        indexes = {@Index(columnList = LOGIN + "," + PASSWORD), @Index(columnList = TOKEN)})
 public class User implements Identified {
 
     private Integer id;
@@ -30,7 +36,11 @@ public class User implements Identified {
         return this;
     }
 
-    @OneToOne
+    @AttributeOverrides({
+            @AttributeOverride(name = LOGIN, column = @Column(table = ACCOUNTS, length = 61, nullable = false, unique = true)),
+            @AttributeOverride(name = PASSWORD, column = @Column(table = ACCOUNTS, nullable = false)),
+            @AttributeOverride(name = TOKEN, column = @Column(table = ACCOUNTS, unique = true))
+    })
     public Account getAccount() {
         return account;
     }
@@ -51,7 +61,7 @@ public class User implements Identified {
         return this;
     }
 
-    @Column(name = Constants.FIRST_NAME, length = 30, nullable = false)
+    @Column(name = FIRST_NAME, length = 30, nullable = false)
     public String getFirstName() {
         return firstName;
     }
@@ -61,7 +71,7 @@ public class User implements Identified {
         return this;
     }
 
-    @Column(name = Constants.LAST_NAME, length = 30, nullable = false)
+    @Column(name = LAST_NAME, length = 30, nullable = false)
     public String getLastName() {
         return lastName;
     }
@@ -71,6 +81,7 @@ public class User implements Identified {
         return this;
     }
 
+    @Column(name = ROLE, nullable = false)
     public Role getRole() {
         return role;
     }
@@ -114,6 +125,51 @@ public class User implements Identified {
 
     public enum Role {
         GUEST, STUDENT, TEACHER, ADMIN
+    }
+
+    @Embeddable
+    public static class Account implements Serializable {
+
+        private String login;
+        private String password;
+        private String token;
+
+        public String getLogin() {
+            return login;
+        }
+
+        public Account setLogin(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public Account setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public String getToken() {
+            return token;
+        }
+
+        public Account setToken(String token) {
+            this.token = token;
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return "Account{" +
+                    "login='" + login + '\'' +
+                    ", password='" + password + '\'' +
+                    ", token='" + token + '\'' +
+                    '}';
+        }
+
     }
 
 }

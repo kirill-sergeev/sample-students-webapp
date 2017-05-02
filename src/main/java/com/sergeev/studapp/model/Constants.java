@@ -20,14 +20,13 @@ public interface Constants {
     String USERS = "users";
 
     /**
-     * PK names.
+     * PK name.
      */
     String ID = "id";
 
     /**
      * FK names.
      */
-    String ACCOUNT_ID = "account_id";
     String COURSE_ID = "course_id";
     String DISCIPLINE_ID = "discipline_id";
     String GROUP_ID = "group_id";

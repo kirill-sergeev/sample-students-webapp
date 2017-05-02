@@ -29,7 +29,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
     @Override
     protected String getUpdateQuery() {
-        return "UPDATE groups SET title= ? WHERE id = ?";
+        return "UPDATE groups SET title = ? WHERE id = ?";
     }
     @Override
     protected String getDeleteQuery() {

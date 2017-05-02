@@ -7,8 +7,10 @@ import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.sergeev.studapp.model.Constants.*;
 @Entity
-@Table(name = Constants.LESSONS)
+@Table(name = LESSONS,
+        uniqueConstraints = {@UniqueConstraint(columnNames = {COURSE_ID, DATE, ORDER, TYPE})})
 public class Lesson implements Identified {
 
     private Integer id;
@@ -19,8 +21,7 @@ public class Lesson implements Identified {
     private Set<Mark> marks = new HashSet<>();
 
     @Override
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -32,7 +33,7 @@ public class Lesson implements Identified {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     public Course getCourse() {
         return course;
     }
@@ -52,7 +53,7 @@ public class Lesson implements Identified {
         return this;
     }
 
-    @Column(name = Constants.ORDER, nullable = false)
+    @Column(name = ORDER, nullable = false)
     public Order getOrder() {
         return order;
     }

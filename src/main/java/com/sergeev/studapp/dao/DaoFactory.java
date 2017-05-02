@@ -28,10 +28,9 @@ public abstract class DaoFactory {
     }
 
     public static DaoFactory getDaoFactory() {
-        return getDaoFactory(POSTGRESQL);
+        return getDaoFactory(JPA);
     }
 
-    public abstract AccountDao getAccountDao();
     public abstract CourseDao getCourseDao();
     public abstract DisciplineDao getDisciplineDao();
     public abstract GroupDao getGroupDao();

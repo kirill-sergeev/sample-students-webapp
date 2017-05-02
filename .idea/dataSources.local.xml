@@ -17,7 +17,7 @@
       <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <introspection-schemas>students_jpa:</introspection-schemas>
+      <introspection-schemas>students_jpa:public</introspection-schemas>
     </data-source>
   </component>
 </project>

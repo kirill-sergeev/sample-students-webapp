@@ -3,8 +3,10 @@ package com.sergeev.studapp.model;
 
 import javax.persistence.*;
 
+import static com.sergeev.studapp.model.Constants.*;
+
 @Entity
-@Table(name = Constants.MARKS)
+@Table(name = MARKS)
 public class Mark implements Identified {
 
     private Integer id;
@@ -13,8 +15,7 @@ public class Mark implements Identified {
     private Integer value;
 
     @Override
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Integer getId() {
         return id;
     }
@@ -26,7 +27,7 @@ public class Mark implements Identified {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(nullable = false)
     public Lesson getLesson() {
         return lesson;
     }
@@ -37,7 +38,7 @@ public class Mark implements Identified {
     }
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = USER_ID, nullable = false)
     public User getStudent() {
         return student;
     }
@@ -47,7 +48,7 @@ public class Mark implements Identified {
         return this;
     }
 
-    @Column(name = Constants.VALUE, nullable = false)
+    @Column(name = VALUE, nullable = false)
     public Integer getValue() {
         return value;
     }

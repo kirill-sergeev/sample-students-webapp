@@ -1,7 +1,6 @@
 package com.sergeev.studapp.controller;
 
 import com.sergeev.studapp.model.User;
-import com.sergeev.studapp.service.AccountService;
 import com.sergeev.studapp.service.ApplicationException;
 import com.sergeev.studapp.service.UserService;
 import org.slf4j.Logger;
@@ -41,7 +40,7 @@ public class SessionServlet extends HttpServlet {
                 try {
                     user = UserService.readByLogin(login, password);
                 } catch (ApplicationException e) {
-                    LOG.info("Bad login/password.");
+                    LOG.info("Bad login/password.", e);
                 }
 
                 if (user == null) {
@@ -56,9 +55,8 @@ public class SessionServlet extends HttpServlet {
 
                 if ("remember".equals(remember)) {
                     token = UUID.randomUUID().toString();
-                    user.getAccount().setToken(token);
                     try {
-                        AccountService.update(user);
+                        UserService.updateAccount(token, user.getId());
                     } catch (ApplicationException e) {
                         LOG.info("Cannot update token.");
                     }

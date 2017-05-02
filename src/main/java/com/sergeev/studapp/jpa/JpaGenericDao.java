@@ -24,7 +24,6 @@ public abstract class JpaGenericDao <T extends Identified> implements GenericDao
     public void save(T object) {
         transaction = entityManager.getTransaction();
         transaction.begin();
-        System.out.println(object);
         entityManager.persist(object);
         transaction.commit();
     }

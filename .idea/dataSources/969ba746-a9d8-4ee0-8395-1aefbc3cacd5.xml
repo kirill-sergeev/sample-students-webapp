@@ -23,5 +23,467 @@
     <schema id="7" parent="2" name="information_schema">
       <ObjectId>12119</ObjectId>
     </schema>
+    <schema id="8" parent="2" name="public">
+      <ObjectId>83712</ObjectId>
+      <IntrospectionTimestamp>2017-05-02.10:44:40.969</IntrospectionTimestamp>
+      <IntrospectionStateNumber>5620</IntrospectionStateNumber>
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <sequence id="9" parent="8" name="courses_id_seq">
+      <ObjectId>85444</ObjectId>
+      <StateNumber>5596</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="10" parent="8" name="disciplines_id_seq">
+      <ObjectId>85452</ObjectId>
+      <StateNumber>5597</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="11" parent="8" name="groups_id_seq">
+      <ObjectId>85460</ObjectId>
+      <StateNumber>5598</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="12" parent="8" name="lessons_id_seq">
+      <ObjectId>85468</ObjectId>
+      <StateNumber>5599</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="13" parent="8" name="marks_id_seq">
+      <ObjectId>85476</ObjectId>
+      <StateNumber>5600</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <sequence id="14" parent="8" name="users_id_seq">
+      <ObjectId>85484</ObjectId>
+      <StateNumber>5601</StateNumber>
+      <SequenceIdentity>1</SequenceIdentity>
+      <BelongsToColumn>1</BelongsToColumn>
+    </sequence>
+    <table id="15" parent="8" name="accounts">
+      <ObjectId>85436</ObjectId>
+      <StateNumber>5613</StateNumber>
+    </table>
+    <table id="16" parent="8" name="courses">
+      <ObjectId>85446</ObjectId>
+      <StateNumber>5617</StateNumber>
+    </table>
+    <table id="17" parent="8" name="disciplines">
+      <ObjectId>85454</ObjectId>
+      <StateNumber>5614</StateNumber>
+    </table>
+    <table id="18" parent="8" name="groups">
+      <ObjectId>85462</ObjectId>
+      <StateNumber>5620</StateNumber>
+    </table>
+    <table id="19" parent="8" name="lessons">
+      <ObjectId>85470</ObjectId>
+      <StateNumber>5618</StateNumber>
+    </table>
+    <table id="20" parent="8" name="marks">
+      <ObjectId>85478</ObjectId>
+      <StateNumber>5619</StateNumber>
+    </table>
+    <table id="21" parent="8" name="users">
+      <ObjectId>85486</ObjectId>
+      <StateNumber>5620</StateNumber>
+    </table>
+    <column id="22" parent="15" name="login">
+      <Position>1</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5595</StateNumber>
+    </column>
+    <column id="23" parent="15" name="password">
+      <Position>2</Position>
+      <DataType>varchar(255)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5595</StateNumber>
+    </column>
+    <column id="24" parent="15" name="token">
+      <Position>3</Position>
+      <DataType>varchar(255)|0</DataType>
+      <StateNumber>5595</StateNumber>
+    </column>
+    <column id="25" parent="15" name="id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5595</StateNumber>
+    </column>
+    <index id="26" parent="15" name="uk_cc2c9baeppipgy2rjeccwcqs0">
+      <ObjectId>85494</ObjectId>
+      <ColNames>login</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="27" parent="15" name="uk_8yxeow0t327h4pp39wl7lnali">
+      <ObjectId>85496</ObjectId>
+      <ColNames>token</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="28" parent="15" name="accounts_pkey">
+      <ObjectId>85442</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="29" parent="15" name="idxlddae52pftmq6fph5qm4hhs4t">
+      <ObjectId>85492</ObjectId>
+      <ColNames>login
+password</ColNames>
+    </index>
+    <index id="30" parent="15" name="idx8yxeow0t327h4pp39wl7lnali">
+      <ObjectId>85493</ObjectId>
+      <ColNames>token</ColNames>
+    </index>
+    <key id="31" parent="15" name="accounts_pkey">
+      <ObjectId>85443</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>accounts_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="32" parent="15" name="uk_cc2c9baeppipgy2rjeccwcqs0">
+      <ObjectId>85495</ObjectId>
+      <ColNames>login</ColNames>
+      <UnderlyingIndexName>uk_cc2c9baeppipgy2rjeccwcqs0</UnderlyingIndexName>
+    </key>
+    <key id="33" parent="15" name="uk_8yxeow0t327h4pp39wl7lnali">
+      <ObjectId>85497</ObjectId>
+      <ColNames>token</ColNames>
+      <UnderlyingIndexName>uk_8yxeow0t327h4pp39wl7lnali</UnderlyingIndexName>
+    </key>
+    <foreign-key id="34" parent="15" name="fklsevhk46j1mfa8r9bak4tr4x3">
+      <ObjectId>85509</ObjectId>
+      <ColNames>id</ColNames>
+      <RefTableName>users</RefTableName>
+      <RefKeyName>users_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="35" parent="16" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5596</StateNumber>
+      <SequenceName>courses_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;courses_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="36" parent="16" name="discipline_id">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5596</StateNumber>
+    </column>
+    <column id="37" parent="16" name="group_id">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5596</StateNumber>
+    </column>
+    <column id="38" parent="16" name="user_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5596</StateNumber>
+    </column>
+    <index id="39" parent="16" name="courses_pkey">
+      <ObjectId>85450</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="40" parent="16" name="ukki1couqiac881nrc3slnanr9d">
+      <ObjectId>85498</ObjectId>
+      <ColNames>discipline_id
+group_id
+user_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="41" parent="16" name="courses_pkey">
+      <ObjectId>85451</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>courses_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="42" parent="16" name="ukki1couqiac881nrc3slnanr9d">
+      <ObjectId>85499</ObjectId>
+      <ColNames>discipline_id
+group_id
+user_id</ColNames>
+      <UnderlyingIndexName>ukki1couqiac881nrc3slnanr9d</UnderlyingIndexName>
+    </key>
+    <foreign-key id="43" parent="16" name="fk8usosf91rsuk9u6wtrdkuijh9">
+      <ObjectId>85514</ObjectId>
+      <ColNames>discipline_id</ColNames>
+      <RefTableName>disciplines</RefTableName>
+      <RefKeyName>disciplines_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="44" parent="16" name="fkqeed8jx354sfrloky6s2iu6wa">
+      <ObjectId>85519</ObjectId>
+      <ColNames>group_id</ColNames>
+      <RefTableName>groups</RefTableName>
+      <RefKeyName>groups_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="45" parent="16" name="fk51k53m6m5gi9n91fnlxkxgpmv">
+      <ObjectId>85524</ObjectId>
+      <ColNames>user_id</ColNames>
+      <RefTableName>users</RefTableName>
+      <RefKeyName>users_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="46" parent="17" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5597</StateNumber>
+      <SequenceName>disciplines_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;disciplines_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="47" parent="17" name="title">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5597</StateNumber>
+    </column>
+    <index id="48" parent="17" name="disciplines_pkey">
+      <ObjectId>85458</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="49" parent="17" name="uk_g0baj7ugbunq7vth7ipk81kil">
+      <ObjectId>85501</ObjectId>
+      <ColNames>title</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="50" parent="17" name="idxg0baj7ugbunq7vth7ipk81kil">
+      <ObjectId>85500</ObjectId>
+      <ColNames>title</ColNames>
+    </index>
+    <key id="51" parent="17" name="disciplines_pkey">
+      <ObjectId>85459</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>disciplines_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="52" parent="17" name="uk_g0baj7ugbunq7vth7ipk81kil">
+      <ObjectId>85502</ObjectId>
+      <ColNames>title</ColNames>
+      <UnderlyingIndexName>uk_g0baj7ugbunq7vth7ipk81kil</UnderlyingIndexName>
+    </key>
+    <column id="53" parent="18" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5598</StateNumber>
+      <SequenceName>groups_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;groups_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="54" parent="18" name="title">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5598</StateNumber>
+    </column>
+    <index id="55" parent="18" name="groups_pkey">
+      <ObjectId>85466</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="56" parent="18" name="uk_ct3jhny5hfe6uj2osyn8a4p83">
+      <ObjectId>85504</ObjectId>
+      <ColNames>title</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="57" parent="18" name="idxct3jhny5hfe6uj2osyn8a4p83">
+      <ObjectId>85503</ObjectId>
+      <ColNames>title</ColNames>
+    </index>
+    <key id="58" parent="18" name="groups_pkey">
+      <ObjectId>85467</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>groups_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="59" parent="18" name="uk_ct3jhny5hfe6uj2osyn8a4p83">
+      <ObjectId>85505</ObjectId>
+      <ColNames>title</ColNames>
+      <UnderlyingIndexName>uk_ct3jhny5hfe6uj2osyn8a4p83</UnderlyingIndexName>
+    </key>
+    <column id="60" parent="19" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5599</StateNumber>
+      <SequenceName>lessons_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;lessons_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="61" parent="19" name="date">
+      <Position>2</Position>
+      <DataType>date|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5599</StateNumber>
+    </column>
+    <column id="62" parent="19" name="ordinal">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5599</StateNumber>
+    </column>
+    <column id="63" parent="19" name="type_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5599</StateNumber>
+    </column>
+    <column id="64" parent="19" name="course_id">
+      <Position>5</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5599</StateNumber>
+    </column>
+    <index id="65" parent="19" name="lessons_pkey">
+      <ObjectId>85474</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="66" parent="19" name="ukkepjnvnov1jxav04ku188d0md">
+      <ObjectId>85506</ObjectId>
+      <ColNames>course_id
+date
+ordinal
+type_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="67" parent="19" name="lessons_pkey">
+      <ObjectId>85475</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>lessons_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <key id="68" parent="19" name="ukkepjnvnov1jxav04ku188d0md">
+      <ObjectId>85507</ObjectId>
+      <ColNames>course_id
+date
+ordinal
+type_id</ColNames>
+      <UnderlyingIndexName>ukkepjnvnov1jxav04ku188d0md</UnderlyingIndexName>
+    </key>
+    <foreign-key id="69" parent="19" name="fk17ucc7gjfjddsyi0gvstkqeat">
+      <ObjectId>85529</ObjectId>
+      <ColNames>course_id</ColNames>
+      <RefTableName>courses</RefTableName>
+      <RefKeyName>courses_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="70" parent="20" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5600</StateNumber>
+      <SequenceName>marks_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;marks_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="71" parent="20" name="mark">
+      <Position>2</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5600</StateNumber>
+    </column>
+    <column id="72" parent="20" name="lesson_id">
+      <Position>3</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5600</StateNumber>
+    </column>
+    <column id="73" parent="20" name="user_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5600</StateNumber>
+    </column>
+    <index id="74" parent="20" name="marks_pkey">
+      <ObjectId>85482</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="75" parent="20" name="marks_pkey">
+      <ObjectId>85483</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>marks_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="76" parent="20" name="fkifv5i7be9llpbgqn1tcs46xgw">
+      <ObjectId>85534</ObjectId>
+      <ColNames>lesson_id</ColNames>
+      <RefTableName>lessons</RefTableName>
+      <RefKeyName>lessons_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="77" parent="20" name="fkexm2itxq6fj3pll51arpieejd">
+      <ObjectId>85539</ObjectId>
+      <ColNames>user_id</ColNames>
+      <RefTableName>users</RefTableName>
+      <RefKeyName>users_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="78" parent="21" name="id">
+      <Position>1</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5601</StateNumber>
+      <SequenceName>users_id_seq</SequenceName>
+      <DefaultExpression>nextval(&apos;users_id_seq&apos;::regclass)</DefaultExpression>
+    </column>
+    <column id="79" parent="21" name="first_name">
+      <Position>2</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5601</StateNumber>
+    </column>
+    <column id="80" parent="21" name="last_name">
+      <Position>3</Position>
+      <DataType>varchar(30)|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5601</StateNumber>
+    </column>
+    <column id="81" parent="21" name="role_id">
+      <Position>4</Position>
+      <DataType>integer|0</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5601</StateNumber>
+    </column>
+    <column id="82" parent="21" name="group_id">
+      <Position>5</Position>
+      <DataType>integer|0</DataType>
+      <StateNumber>5601</StateNumber>
+    </column>
+    <index id="83" parent="21" name="users_pkey">
+      <ObjectId>85490</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="84" parent="21" name="idxthp22fhvkfxnn4092vqg3igcj">
+      <ObjectId>85508</ObjectId>
+      <ColNames>first_name
+last_name</ColNames>
+    </index>
+    <key id="85" parent="21" name="users_pkey">
+      <ObjectId>85491</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="86" parent="21" name="fkemfuglprp85bh5xwhfm898ysc">
+      <ObjectId>85544</ObjectId>
+      <ColNames>group_id</ColNames>
+      <RefTableName>groups</RefTableName>
+      <RefKeyName>groups_pkey</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
   </database-model>
 </dataSource>
