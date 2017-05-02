@@ -38,7 +38,7 @@ public class SessionServlet extends HttpServlet {
                 login = request.getParameter("login").toLowerCase();
                 password = request.getParameter("password");
                 try {
-                    user = UserService.readByLogin(login, password);
+                    user = UserService.getByLogin(login, password);
                 } catch (ApplicationException e) {
                     LOG.info("Bad login/password.", e);
                 }

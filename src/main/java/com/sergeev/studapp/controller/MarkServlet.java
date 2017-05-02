@@ -30,12 +30,12 @@ public class MarkServlet extends HttpServlet {
         Integer studentId;
 
         if (path.matches("^/mark/?")) {
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 lessonId = Integer.valueOf(request.getParameter("lesson"));
                 studentId = Integer.valueOf(request.getParameter("student"));
                 Integer value = Integer.valueOf((request.getParameter("value")));
                 try {
-                    MarkService.create(lessonId, studentId, value);
+                    MarkService.save(lessonId, studentId, value);
                 } catch (ApplicationException e) {
                     LOG.info("Mark cannot be created.");
                     response.sendRedirect("/lesson/" + lessonId);
@@ -48,7 +48,7 @@ public class MarkServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    lessonId = MarkService.read(id).getLesson().getId();
+                    lessonId = MarkService.get(id).getLesson().getId();
                     MarkService.delete(id);
                 } catch (ApplicationException e) {
                     LOG.info("Mark cannot be deleted, because mark doesn't exist.");
@@ -80,9 +80,9 @@ public class MarkServlet extends HttpServlet {
             studentId = Integer.valueOf(path.split("/")[3]);
             disciplineId = Integer.valueOf(path.split("/")[5]);
             try {
-                marks = MarkService.readByDisciplineAndStudent(disciplineId, studentId);
-                student = UserService.read(studentId);
-                discipline = DisciplineService.read(disciplineId);
+                marks = MarkService.getByDisciplineAndStudent(disciplineId, studentId);
+                student = UserService.get(studentId);
+                discipline = DisciplineService.get(disciplineId);
             } catch (ApplicationException e) {
                 LOG.info("Mark not found.");
                 response.sendRedirect("/mark");
@@ -100,8 +100,8 @@ public class MarkServlet extends HttpServlet {
             lessonId = Integer.valueOf(path.split("/")[6]);
 
             try {
-                lesson = LessonService.read(lessonId);
-                students = UserService.readByGroup(groupId);
+                lesson = LessonService.get(lessonId);
+                students = UserService.getByGroup(groupId);
             } catch (ApplicationException e) {
                 LOG.info("Mark cannot be created.");
                 response.sendRedirect("/");

@@ -36,12 +36,12 @@ public class StudentServlet extends HttpServlet {
 
         if (path.matches("^/student/?")) {
 
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
                 groupId = Integer.valueOf(request.getParameter("group"));
                 try {
-                    UserService.createStudent(firstName, lastName, groupId);
+                    UserService.addStudent(firstName, lastName, groupId);
                 } catch (ApplicationException e) {
                     LOG.info("Student cannot be created.");
                     response.sendRedirect("/student/new");
@@ -71,7 +71,7 @@ public class StudentServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    UserService.delete(id);
+                    UserService.remove(id);
                 } catch (ApplicationException e) {
                     LOG.info("Student cannot be deleted, because student doesn't exist.");
                     response.sendRedirect("/student");
@@ -106,14 +106,14 @@ public class StudentServlet extends HttpServlet {
         Map<Course, Double> coursesMarks;
 
         if (path.matches("^/student/?")) {
-            students = UserService.readAll(User.Role.STUDENT);
+            students = UserService.getAll(User.Role.STUDENT);
             request.setAttribute("students", students);
             request.getRequestDispatcher("/students.jsp").forward(request, response);
             return;
         }
 
         if (path.matches("^/student/new/?")) {
-            groups = GroupService.readAll();
+            groups = GroupService.getAll();
             request.setAttribute("groups", groups);
             request.getRequestDispatcher("/add-student.jsp").forward(request, response);
             return;
@@ -122,7 +122,7 @@ public class StudentServlet extends HttpServlet {
         if (path.matches("^/student/[^/]+/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                student = UserService.read(id);
+                student = UserService.get(id);
                 coursesMarks = UserService.studentAvgMarks(id);
             } catch (ApplicationException e) {
                 LOG.info("Student not found.", e);
@@ -138,13 +138,13 @@ public class StudentServlet extends HttpServlet {
         if (path.matches("^/student/[^/]+/change/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                student = UserService.read(id);
+                student = UserService.get(id);
             } catch (ApplicationException e) {
                 LOG.info("Student cannot be updated, because student doesn't exist.");
                 response.sendRedirect("/student");
                 return;
             }
-            groups = GroupService.readAll();
+            groups = GroupService.getAll();
             request.setAttribute("student", student);
             request.setAttribute("groups", groups);
             request.getRequestDispatcher("/change-student.jsp").forward(request, response);

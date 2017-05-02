@@ -2,95 +2,52 @@ package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.DisciplineDao;
-import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Collections;
 import java.util.List;
 
-public class DisciplineService {
+public final class DisciplineService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DisciplineService.class);
     private static final DisciplineDao DISCIPLINE_DAO = DaoFactory.getDaoFactory().getDisciplineDao();
 
-    private static Discipline discipline;
-    private static List<Discipline> disciplines;
-
-    public static Discipline create(String title) throws ApplicationException {
-        if (!checkTitle(title)){
+    public static Discipline save(String title) {
+        if (!checkTitle(title)) {
             throw new ApplicationException("Bad parameters.");
         }
-
-        discipline = new Discipline();
-        discipline.setTitle(title);
-
-        try {
-            DISCIPLINE_DAO.save(discipline);
-        } catch (PersistentException e) {
-            e.printStackTrace();
-        }
-
+        Discipline discipline = new Discipline().setTitle(title);
+        DISCIPLINE_DAO.save(discipline);
         return discipline;
     }
 
-    public static Discipline read(Integer id) throws ApplicationException {
-        try {
-            discipline = DISCIPLINE_DAO.getById(id);
-        } catch (PersistentException e) {
-            throw new ApplicationException("Discipline not found.", e);
-        }
-
+    public static Discipline update(String title, int id) {
+        Discipline discipline = new Discipline()
+                .setId(id)
+                .setTitle(title);
+        DISCIPLINE_DAO.update(discipline);
         return discipline;
     }
 
-    public static List<Discipline> readAll(){
-
-        try {
-            disciplines = DISCIPLINE_DAO.getAll();
-        } catch (PersistentException e) {
-            disciplines  = Collections.emptyList();
-        }
-
-        return disciplines;
+    public static void remove(int id) {
+        DISCIPLINE_DAO.remove(id);
     }
 
-    public static Discipline update(String title, Integer id) throws ApplicationException {
-        if (id == null || !checkTitle(title)) {
-            throw new ApplicationException("Bad parameters.");
-        }
-
-        discipline = new Discipline();
-        discipline.setId(id);
-        discipline.setTitle(title);
-
-        try {
-            DISCIPLINE_DAO.update(discipline);
-        } catch (PersistentException e) {
-            throw new ApplicationException("Cannot update discipline.", e);
-        }
-
-        return discipline;
+    public static Discipline get(int id) {
+        return DISCIPLINE_DAO.getById(id);
     }
 
-    public static void delete(Integer id) throws ApplicationException {
-        if (id == null){
-            throw new ApplicationException("Bad parameters.");
-        }
-
-        try {
-            DISCIPLINE_DAO.remove(id);
-        } catch (PersistentException e) {
-            throw new ApplicationException("Cannot remove group, because group not found.", e);
-        }
+    public static List<Discipline> getAll() {
+        return DISCIPLINE_DAO.getAll();
     }
-
+    
     private static boolean checkTitle(String title) {
-        if (title == null || title.isEmpty()) {
-            return false;
-        }
         String expression = "(?u)^\\p{Lu}.{1,29}$";
-        return title.matches(expression);
+        return !(title == null || title.isEmpty()) && title.matches(expression);
     }
+
+    private DisciplineService() {
+    }
+
 }

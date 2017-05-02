@@ -30,10 +30,10 @@ public class DisciplineServlet extends HttpServlet {
 
         if (path.matches("^/discipline/?")) {
 
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 title = request.getParameter("title");
                 try {
-                    DisciplineService.create(title);
+                    DisciplineService.save(title);
                 } catch (ApplicationException e) {
                     LOG.info("Discipline cannot be created.");
                     response.sendRedirect("/discipline/new");
@@ -60,7 +60,7 @@ public class DisciplineServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    DisciplineService.delete(id);
+                    DisciplineService.remove(id);
                 } catch (ApplicationException e) {
                     LOG.info("Discipline cannot be deleted, because discipline doesn't exist.");
                     response.sendRedirect("/discipline");
@@ -82,8 +82,8 @@ public class DisciplineServlet extends HttpServlet {
         List<Discipline> disciplines;
 
         if (path.matches("^/discipline/?")) {
-            disciplines = DisciplineService.readAll();
-            courses = CourseService.readAll();
+            disciplines = DisciplineService.getAll();
+            courses = CourseService.getAll();
 
             request.setAttribute("disciplines", disciplines);
             request.setAttribute("courses", courses);
@@ -99,8 +99,8 @@ public class DisciplineServlet extends HttpServlet {
         if (path.matches("^/discipline/[^/]+/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                discipline = DisciplineService.read(id);
-                courses = CourseService.readByDiscipline(id);
+                discipline = DisciplineService.get(id);
+                courses = CourseService.getByDiscipline(id);
             } catch (ApplicationException e) {
                 LOG.info("Discipline not found.");
                 response.sendRedirect("/discipline");
@@ -115,7 +115,7 @@ public class DisciplineServlet extends HttpServlet {
         if (path.matches("^/discipline/[^/]+/change/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                discipline = DisciplineService.read(id);
+                discipline = DisciplineService.get(id);
             } catch (ApplicationException e) {
                 LOG.info("Discipline cannot be updated, because discipline doesn't exist.");
                 response.sendRedirect("/discipline");

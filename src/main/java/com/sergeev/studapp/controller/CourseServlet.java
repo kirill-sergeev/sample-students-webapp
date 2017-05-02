@@ -32,13 +32,13 @@ public class CourseServlet extends HttpServlet {
 
         if (path.matches("^/course/?")) {
 
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 disciplineId = Integer.valueOf(request.getParameter("discipline"));
                 groupId = Integer.valueOf(request.getParameter("group"));
                 teacherId = Integer.valueOf(request.getParameter("teacher"));
 
                 try {
-                    CourseService.create(disciplineId, groupId, teacherId);
+                    CourseService.save(disciplineId, groupId, teacherId);
                 } catch (ApplicationException e) {
                     LOG.info("Course cannot be created.");
                     response.sendRedirect("/course/new");
@@ -67,14 +67,14 @@ public class CourseServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    groupId = CourseService.read(id).getGroup().getId();
+                    groupId = CourseService.get(id).getGroup().getId();
                 } catch (ApplicationException e) {
                     LOG.info("Course cannot be deleted, because course doesn't exist.");
                     response.sendRedirect("/");
                     return;
                 }
                 try {
-                    CourseService.delete(id);
+                    CourseService.remove(id);
                 } catch (ApplicationException e) {
                     LOG.info("Course cannot be deleted, because course contains lessons.");
                     response.sendRedirect("/group/" + groupId);
@@ -97,9 +97,9 @@ public class CourseServlet extends HttpServlet {
         List<User> teachers;
 
         if (path.matches("^/course/new/?")) {
-            disciplines = DisciplineService.readAll();
-            groups = GroupService.readAll();
-            teachers = UserService.readAll(User.Role.TEACHER);
+            disciplines = DisciplineService.getAll();
+            groups = GroupService.getAll();
+            teachers = UserService.getAll(User.Role.TEACHER);
 
             request.setAttribute("disciplines", disciplines);
             request.setAttribute("groups", groups);
@@ -111,15 +111,15 @@ public class CourseServlet extends HttpServlet {
         if (path.matches("^/course/[^/]+/change/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                course = CourseService.read(id);
+                course = CourseService.get(id);
             } catch (ApplicationException e) {
                 LOG.info("Course cannot be updated, because course doesn't exist.");
                 response.sendRedirect("/course");
                 return;
             }
-            disciplines = DisciplineService.readAll();
-            groups = GroupService.readAll();
-            teachers = UserService.readAll(User.Role.TEACHER);
+            disciplines = DisciplineService.getAll();
+            groups = GroupService.getAll();
+            teachers = UserService.getAll(User.Role.TEACHER);
 
             request.setAttribute("course", course);
             request.setAttribute("disciplines", disciplines);

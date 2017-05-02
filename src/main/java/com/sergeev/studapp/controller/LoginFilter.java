@@ -56,7 +56,7 @@ public class LoginFilter implements Filter {
         if (user == null) {
             if (loginCookie != null) {
                 try {
-                    user = UserService.readByToken(loginCookie.getValue());
+                    user = UserService.getByToken(loginCookie.getValue());
                 } catch (ApplicationException e) {
                     LOG.info("Broken cookie.");
                 }

@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TransferService {
+public final class TransferService {
 
     private static List<Course> courses;
     private static List<Discipline> disciplines;
@@ -49,7 +49,6 @@ public class TransferService {
         Map<Integer, Integer> userIDs = new HashMap<>();
 
         prepareSchema(database);
-
 
         for (Group group : groups) {
             oldId = group.getId();
@@ -129,8 +128,12 @@ public class TransferService {
         }
     }
 
+    private TransferService() {
+    }
+
     public static void main(String[] args) throws PersistentException {
         exportFrom(DaoFactory.POSTGRESQL);
         importTo(DaoFactory.JPA);
     }
+
 }

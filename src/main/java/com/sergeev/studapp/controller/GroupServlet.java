@@ -31,10 +31,10 @@ public class GroupServlet extends HttpServlet {
 
         if (path.matches("^/group/?")) {
 
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 title = request.getParameter("title");
                 try {
-                    GroupService.create(title);
+                    GroupService.save(title);
                 } catch (ApplicationException e) {
                     LOG.info("Group cannot be created.");
                     response.sendRedirect("/group/new");
@@ -61,7 +61,7 @@ public class GroupServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    GroupService.delete(id);
+                    GroupService.remove(id);
                 } catch (ApplicationException e) {
                     LOG.info("Group cannot be deleted, because group doesn't exist.");
                     response.sendRedirect("/group");
@@ -85,7 +85,7 @@ public class GroupServlet extends HttpServlet {
         Map<Group, Integer> groupsStudents;
 
         if (path.matches("^/group/?")) {
-            courses = CourseService.readAll();
+            courses = CourseService.getAll();
             groupsStudents = GroupService.studentsCount();
             request.setAttribute("courses", courses);
             request.setAttribute("groupsStudents", groupsStudents);
@@ -101,10 +101,10 @@ public class GroupServlet extends HttpServlet {
         if (path.matches("^/group/[^/]+/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                group = GroupService.read(id);
-                lessons = LessonService.readAll(id);
-                courses = CourseService.readByGroup(id);
-                students = UserService.readByGroup(id);
+                group = GroupService.get(id);
+                lessons = LessonService.getAll(id);
+                courses = CourseService.getByGroup(id);
+                students = UserService.getByGroup(id);
             } catch (ApplicationException e) {
                 LOG.info("Group not found.");
                 response.sendRedirect("/group");
@@ -121,7 +121,7 @@ public class GroupServlet extends HttpServlet {
         if (path.matches("^/group/[^/]+/change/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                group = GroupService.read(id);
+                group = GroupService.get(id);
             } catch (ApplicationException e) {
                 LOG.info("Group cannot be updated, because group doesn't exist.");
                 response.sendRedirect("/group");

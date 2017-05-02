@@ -31,11 +31,11 @@ public class TeacherServlet extends HttpServlet {
 
         if (path.matches("^/teacher/?")) {
 
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 firstName = request.getParameter("first-name");
                 lastName = request.getParameter("last-name");
                 try {
-                    UserService.createTeacher(firstName, lastName);
+                    UserService.addTeacher(firstName, lastName);
                 } catch (ApplicationException e) {
                     LOG.info("Teacher cannot be created.");
                     response.sendRedirect("/teacher/new");
@@ -64,7 +64,7 @@ public class TeacherServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    UserService.delete(id);
+                    UserService.remove(id);
                 } catch (ApplicationException e) {
                     LOG.info("Teacher cannot be deleted, because teacher doesn't exist.");
                     response.sendRedirect("/teacher");
@@ -86,8 +86,8 @@ public class TeacherServlet extends HttpServlet {
         List<Course> courses;
 
         if (path.matches("^/teacher/?")) {
-            teachers = UserService.readAll(User.Role.TEACHER);
-            courses = CourseService.readAll();
+            teachers = UserService.getAll(User.Role.TEACHER);
+            courses = CourseService.getAll();
             request.setAttribute("courses", courses);
             request.setAttribute("teachers", teachers);
             request.getRequestDispatcher("/teachers.jsp").forward(request, response);
@@ -102,8 +102,8 @@ public class TeacherServlet extends HttpServlet {
         if (path.matches("^/teacher/[^/]+/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                teacher = UserService.read(id);
-                courses = CourseService.readByTeacher(id);
+                teacher = UserService.get(id);
+                courses = CourseService.getByTeacher(id);
             } catch (ApplicationException e) {
                 LOG.info("Teacher not found.");
                 response.sendRedirect("/teacher");
@@ -118,7 +118,7 @@ public class TeacherServlet extends HttpServlet {
         if (path.matches("^/teacher/[^/]+/change/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                teacher = UserService.read(id);
+                teacher = UserService.get(id);
             } catch (ApplicationException e) {
                 LOG.info("Teacher cannot be updated, because teacher doesn't exist.");
                 response.sendRedirect("/teacher");

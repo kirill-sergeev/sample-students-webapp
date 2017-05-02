@@ -36,14 +36,14 @@ public class LessonServlet extends HttpServlet {
 
         if (path.matches("^/lesson/?")) {
 
-            if ("create".equals(action)) {
+            if ("save".equals(action)) {
                 groupId = Integer.valueOf(request.getParameter("group"));
                 disciplineId = Integer.valueOf(request.getParameter("discipline"));
                 type = request.getParameter("type");
                 order = Integer.valueOf(request.getParameter("number"));
                 date = LocalDate.parse(request.getParameter("date"));
                 try {
-                    LessonService.create(groupId, disciplineId, type, order, date);
+                    LessonService.save(groupId, disciplineId, type, order, date);
                 } catch (ApplicationException e) {
                     LOG.info("Lesson cannot be created.");
                     e.printStackTrace();
@@ -75,8 +75,8 @@ public class LessonServlet extends HttpServlet {
             } else if ("remove".equals(action)) {
                 id = Integer.valueOf(request.getParameter("id"));
                 try {
-                    groupId = LessonService.read(id).getCourse().getGroup().getId();
-                    LessonService.delete(id);
+                    groupId = LessonService.get(id).getCourse().getGroup().getId();
+                    LessonService.remove(id);
                 } catch (ApplicationException e) {
                     LOG.info("Lesson cannot be deleted, because lesson doesn't exist.");
                     response.sendRedirect("/");
@@ -106,8 +106,8 @@ public class LessonServlet extends HttpServlet {
         if (path.matches("^/lesson/group/[^/]+/?")) {
             groupId= Integer.valueOf(path.split("/")[3]);
             try {
-                group = GroupService.read(groupId);
-                lessons = LessonService.readAll(groupId);
+                group = GroupService.get(groupId);
+                lessons = LessonService.getAll(groupId);
             } catch (ApplicationException e) {
                 LOG.info("Lessons in group not found, because group doesn't exist.");
                 response.sendRedirect("/");
@@ -125,8 +125,8 @@ public class LessonServlet extends HttpServlet {
             types = Lesson.Type.values();
             orders = Lesson.Order.values();
             try {
-                group = GroupService.read(groupId);
-                courses = CourseService.readByGroup(groupId);
+                group = GroupService.get(groupId);
+                courses = CourseService.getByGroup(groupId);
             } catch (ApplicationException e) {
                 LOG.info("Lessons cannot be created, because group doesn't exist.");
                 response.sendRedirect("/");
@@ -142,8 +142,8 @@ public class LessonServlet extends HttpServlet {
         if (path.matches("^/lesson/[^/]+/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                lesson = LessonService.read(id);
-                marks = MarkService.readByLesson(id);
+                lesson = LessonService.get(id);
+                marks = MarkService.getByLesson(id);
             } catch (ApplicationException e) {
                 LOG.info("Lesson not found.");
                 response.sendRedirect("/");
@@ -160,7 +160,7 @@ public class LessonServlet extends HttpServlet {
         if (path.matches("^/lesson/[^/]+/change/?")) {
             Integer id = Integer.valueOf(path.split("/")[2]);
             try {
-                lesson = LessonService.read(id);
+                lesson = LessonService.get(id);
             } catch (ApplicationException e) {
                 LOG.info("Lesson cannot be updated, because lesson doesn't exist.");
                 response.sendRedirect("/lesson");
