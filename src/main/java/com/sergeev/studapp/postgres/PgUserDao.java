@@ -26,6 +26,10 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     private static final String SQL_SELECT_USER_BY_NAME_AND_ROLE =
             "SELECT * FROM accounts a, users u WHERE a.id = u.id AND lower(first_name||' '||last_name) LIKE (?) AND role_id = ?";
 
+    public PgUserDao(Connection con) {
+        super(con);
+    }
+
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM accounts a, users u WHERE a.id = u.id AND u.id = ? ORDER BY first_name, last_name";
@@ -58,7 +62,7 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
     }
 
     @Override
-    protected List<User> parseResultSet(ResultSet rs, Connection con) {
+    protected List<User> parseResultSet(ResultSet rs) {
         List<User> list = new ArrayList<>();
         try {
             while (rs.next()) {
@@ -72,8 +76,8 @@ public class PgUserDao extends PgGenericDao<User> implements UserDao {
                         .setPassword(rs.getString(PASSWORD))
                         .setToken(rs.getString(TOKEN)));
                 if (user.getRole() == User.Role.STUDENT) {
-                    PgGroupDao groupDao = new PgGroupDao();
-                    user.setGroup(groupDao.getById(rs.getInt(GROUP_ID), con));
+                    PgGroupDao groupDao = new PgGroupDao(con);
+                    user.setGroup(groupDao.getById(rs.getInt(GROUP_ID)));
                 }
                 list.add(user);
             }

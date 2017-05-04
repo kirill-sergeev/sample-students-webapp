@@ -11,42 +11,40 @@ import java.util.List;
 public final class MarkService {
 
     private static final Logger LOG = LoggerFactory.getLogger(MarkService.class);
-    private static final MarkDao MARK_DAO = DaoFactory.getDaoFactory().getMarkDao();
+    private static MarkDao markDao = DaoFactory.getDaoFactory().getMarkDao();
 
     public static Mark save(int lessonId, int studentId, int value) {
         if (value < 0 || value > 100) {
             throw new ApplicationException("Bad parameters.");
         }
-        Mark mark = new Mark()
-                .setValue(value)
-                .setLesson(LessonService.get(lessonId))
-                .setStudent(UserService.get(studentId));
-        MARK_DAO.save(mark);
+        Mark mark = null;
+        try (DaoFactory dao = DaoFactory.getDaoFactory()) {
+            dao.startTransaction();
+            mark = new Mark()
+                    .setValue(value)
+                    .setLesson(dao.getLessonDao().getById(lessonId))
+                    .setStudent(dao.getUserDao().getById(studentId));
+            dao.getMarkDao().save(mark);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return mark;
     }
 
     public static Mark get(int id) {
-        return MARK_DAO.getById(id);
+        return DaoFactory.getDaoFactory().getMarkDao().getById(id);
     }
 
     public static List<Mark> getByLesson(int lessonId) {
-        return MARK_DAO.getByLesson(lessonId);
-    }
-
-    public static List<Mark> readAll() {
-        return MARK_DAO.getAll();
+        return markDao.getByLesson(lessonId);
     }
 
     public static List<Mark> getByDisciplineAndStudent(int disciplineId, int studentId) {
-        return MARK_DAO.getByDisciplineAndStudent(disciplineId, studentId);
+        return markDao.getByDisciplineAndStudent(disciplineId, studentId);
     }
 
     public static void delete(int id) {
-        MARK_DAO.remove(id);
-    }
-
-    static Double getAvgMark(int studentId, int disciplineId) {
-        return MARK_DAO.getAvgMark(studentId, disciplineId);
+        markDao.remove(id);
     }
 
     private MarkService() {

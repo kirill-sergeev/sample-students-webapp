@@ -16,6 +16,10 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
             "SELECT * FROM lessons l, courses c WHERE l.course_id = c.id " +
                     "AND c.group_id = ? ORDER BY l.date, l.ordinal";
 
+    public PgLessonDao(Connection con) {
+        super(con);
+    }
+
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM lessons WHERE id = ?";
@@ -38,14 +42,14 @@ public class PgLessonDao extends PgGenericDao<Lesson> implements LessonDao {
     }
 
     @Override
-    protected List<Lesson> parseResultSet(ResultSet rs, Connection con) {
+    protected List<Lesson> parseResultSet(ResultSet rs) {
         List<Lesson> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                PgCourseDao courseDao = new PgCourseDao();
+                PgCourseDao courseDao = new PgCourseDao(con);
                 Lesson lesson = new Lesson()
                         .setId(rs.getInt(ID))
-                        .setCourse(courseDao.getById(rs.getInt(COURSE_ID), con))
+                        .setCourse(courseDao.getById(rs.getInt(COURSE_ID)))
                         .setDate(rs.getDate(DATE).toLocalDate())
                         .setOrder(Lesson.Order.values()[rs.getInt(ORDER) - 1])
                         .setType(Lesson.Type.values()[rs.getInt(TYPE) - 1]);

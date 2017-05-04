@@ -21,6 +21,10 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
             "SELECT * FROM marks m, lessons l, courses c WHERE m.lesson_id = l.id " +
                     "AND l.course_id = c.id AND c.discipline_id = ? AND m.user_id = ?";
 
+    public PgMarkDao(Connection con) {
+        super(con);
+    }
+
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM marks WHERE id = ?";
@@ -47,16 +51,16 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     }
 
     @Override
-    protected List<Mark> parseResultSet(ResultSet rs, Connection con) {
+    protected List<Mark> parseResultSet(ResultSet rs) {
         List<Mark> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                PgLessonDao lessonDao = new PgLessonDao();
-                PgUserDao userDao = new PgUserDao();
+                PgLessonDao lessonDao = new PgLessonDao(con);
+                PgUserDao userDao = new PgUserDao(con);
                 Mark mark = new Mark()
                         .setId(rs.getInt(ID))
-                        .setLesson(lessonDao.getById(rs.getInt(LESSON_ID), con))
-                        .setStudent(userDao.getById(rs.getInt(USER_ID), con))
+                        .setLesson(lessonDao.getById(rs.getInt(LESSON_ID)))
+                        .setStudent(userDao.getById(rs.getInt(USER_ID)))
                         .setValue(rs.getInt(VALUE));
                 list.add(mark);
             }
@@ -95,15 +99,14 @@ public class PgMarkDao extends PgGenericDao<Mark> implements MarkDao {
     @Override
     public Double getAvgMark(Integer studentId, Integer disciplineId) {
         double avgMark;
-        try (Connection con = PgDaoFactory.getConnection();
-             CallableStatement st = con.prepareCall(
-                     SQL_SELECT_AVG_MARK_BY_DISCIPLINE_AND_STUDENT)) {
+        try (CallableStatement st = con.prepareCall(
+                SQL_SELECT_AVG_MARK_BY_DISCIPLINE_AND_STUDENT)) {
             st.setInt(1, studentId);
             st.setInt(2, disciplineId);
             st.registerOutParameter(3, Types.NUMERIC);
             st.execute();
             BigDecimal decimal = st.getBigDecimal(3);
-            avgMark = decimal == null ? 0: decimal.doubleValue();
+            avgMark = decimal == null ? 0 : decimal.doubleValue();
         } catch (SQLException e) {
             throw new PersistentException(e);
         }

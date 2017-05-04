@@ -11,35 +11,38 @@ import java.util.List;
 public final class DisciplineService {
 
     private static final Logger LOG = LoggerFactory.getLogger(DisciplineService.class);
-    private static final DisciplineDao DISCIPLINE_DAO = DaoFactory.getDaoFactory().getDisciplineDao();
+    private static DisciplineDao disciplineDao = DaoFactory.getDaoFactory().getDisciplineDao();
 
     public static Discipline save(String title) {
         if (!checkTitle(title)) {
             throw new ApplicationException("Bad parameters.");
         }
         Discipline discipline = new Discipline().setTitle(title);
-        DISCIPLINE_DAO.save(discipline);
+        disciplineDao.save(discipline);
         return discipline;
     }
 
     public static Discipline update(String title, int id) {
+        if (!checkTitle(title)) {
+            throw new ApplicationException("Bad parameters.");
+        }
         Discipline discipline = new Discipline()
                 .setId(id)
                 .setTitle(title);
-        DISCIPLINE_DAO.update(discipline);
+        disciplineDao.update(discipline);
         return discipline;
     }
 
     public static void remove(int id) {
-        DISCIPLINE_DAO.remove(id);
+        disciplineDao.remove(id);
     }
 
     public static Discipline get(int id) {
-        return DISCIPLINE_DAO.getById(id);
+        return disciplineDao.getById(id);
     }
 
     public static List<Discipline> getAll() {
-        return DISCIPLINE_DAO.getAll();
+        return disciplineDao.getAll();
     }
     
     private static boolean checkTitle(String title) {

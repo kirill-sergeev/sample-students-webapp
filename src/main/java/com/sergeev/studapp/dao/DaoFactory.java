@@ -4,7 +4,7 @@ import com.sergeev.studapp.jpa.JpaDaoFactory;
 import com.sergeev.studapp.mongo.MongoDaoFactory;
 import com.sergeev.studapp.postgres.PgDaoFactory;
 
-public abstract class DaoFactory {
+public abstract class DaoFactory implements AutoCloseable{
 
     public static final int POSTGRESQL = 1;
     public static final int MONGODB = 2;
@@ -13,7 +13,7 @@ public abstract class DaoFactory {
     public static DaoFactory getDaoFactory(int whichFactory) {
         switch (whichFactory) {
             case POSTGRESQL:
-                return PgDaoFactory.getInstance();
+                return new PgDaoFactory();
             case MONGODB:
                 return MongoDaoFactory.getInstance();
             case JPA:
@@ -24,8 +24,11 @@ public abstract class DaoFactory {
     }
 
     public static DaoFactory getDaoFactory() {
-        return getDaoFactory(JPA);
+        return getDaoFactory(POSTGRESQL);
     }
+
+    public abstract void startTransaction();
+    public abstract void abortTransaction();
 
     public abstract CourseDao getCourseDao();
     public abstract DisciplineDao getDisciplineDao();

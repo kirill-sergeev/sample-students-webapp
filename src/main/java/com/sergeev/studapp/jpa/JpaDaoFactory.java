@@ -24,6 +24,21 @@ public class JpaDaoFactory extends DaoFactory {
     }
 
     @Override
+    public void startTransaction() {
+
+    }
+
+    @Override
+    public void abortTransaction() {
+
+    }
+
+    @Override
+    public void close() throws Exception {
+
+    }
+
+    @Override
     public CourseDao getCourseDao() {
         return new JpaCourseDao();
     }

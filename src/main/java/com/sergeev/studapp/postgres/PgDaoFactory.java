@@ -12,8 +12,9 @@ import java.sql.SQLException;
 
 public class PgDaoFactory extends DaoFactory {
 
-    private static final PgDaoFactory PG_DAO_FACTORY = new PgDaoFactory();
     private static DataSource dataSource;
+    private Connection connection;
+
     static int count = 0;
     static{
         try {
@@ -24,7 +25,8 @@ public class PgDaoFactory extends DaoFactory {
         }
     }
 
-    private PgDaoFactory(){
+    public PgDaoFactory(){
+        connection = getConnection();
     }
 
     public static Connection getConnection() {
@@ -44,33 +46,57 @@ public class PgDaoFactory extends DaoFactory {
         return connection;
     }
 
-    public static PgDaoFactory getInstance(){
-        return PG_DAO_FACTORY;
+    @Override
+    public void startTransaction() {
+        try {
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void abortTransaction() {
+        try {
+            connection.rollback();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            connection.commit();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public CourseDao getCourseDao() {
-        return new PgCourseDao();
+        return new PgCourseDao(connection);
     }
     @Override
     public DisciplineDao getDisciplineDao() {
-        return new PgDisciplineDao();
+        return new PgDisciplineDao(connection);
     }
     @Override
     public GroupDao getGroupDao() {
-        return new PgGroupDao();
+        return new PgGroupDao(connection);
     }
     @Override
     public LessonDao getLessonDao() {
-        return new PgLessonDao();
+        return new PgLessonDao(connection);
     }
     @Override
     public MarkDao getMarkDao() {
-        return new PgMarkDao();
+        return new PgMarkDao(connection);
     }
     @Override
     public UserDao getUserDao() {
-        return new PgUserDao();
+        return new PgUserDao(connection);
     }
 
 }

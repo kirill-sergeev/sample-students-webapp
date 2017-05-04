@@ -16,6 +16,10 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class PgDisciplineDao extends PgGenericDao<Discipline> implements DisciplineDao {
 
+    public PgDisciplineDao(Connection con) {
+        super(con);
+    }
+
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM disciplines WHERE id = ?";
@@ -38,7 +42,7 @@ public class PgDisciplineDao extends PgGenericDao<Discipline> implements Discipl
     }
 
     @Override
-    protected List<Discipline> parseResultSet(ResultSet rs, Connection con) {
+    protected List<Discipline> parseResultSet(ResultSet rs) {
         List<Discipline> list = new ArrayList<>();
         try {
             while (rs.next()) {

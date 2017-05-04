@@ -24,6 +24,10 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     private static final String SQL_SELECT_COURSE_BY_DISCIPLINE_AND_GROUP =
             "SELECT * FROM courses WHERE discipline_id = ? AND group_id = ?";
 
+    public PgCourseDao(Connection con) {
+        super(con);
+    }
+
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM courses WHERE id = ?";
@@ -50,18 +54,18 @@ public class PgCourseDao extends PgGenericDao<Course> implements CourseDao {
     }
 
     @Override
-    protected List<Course> parseResultSet(ResultSet rs, Connection con) {
+    protected List<Course> parseResultSet(ResultSet rs) {
         List<Course> list = new ArrayList<>();
         try {
             while (rs.next()) {
-                PgDisciplineDao disciplineDao = new PgDisciplineDao();
-                PgGroupDao groupDao = new PgGroupDao();
-                PgUserDao userDao = new PgUserDao();
+                PgDisciplineDao disciplineDao = new PgDisciplineDao(con);
+                PgGroupDao groupDao = new PgGroupDao(con);
+                PgUserDao userDao = new PgUserDao(con);
                 Course course = new Course()
                         .setId(rs.getInt(ID))
-                        .setGroup(groupDao.getById(rs.getInt(GROUP_ID), con))
-                        .setDiscipline(disciplineDao.getById(rs.getInt(DISCIPLINE_ID), con))
-                        .setTeacher(userDao.getById(rs.getInt(USER_ID), con));
+                        .setGroup(groupDao.getById(rs.getInt(GROUP_ID)))
+                        .setDiscipline(disciplineDao.getById(rs.getInt(DISCIPLINE_ID)))
+                        .setTeacher(userDao.getById(rs.getInt(USER_ID)));
                 list.add(course);
             }
         } catch (SQLException e) {

@@ -15,6 +15,10 @@ import static com.sergeev.studapp.model.Constants.*;
 
 public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
 
+    public PgGroupDao(Connection con) {
+        super(con);
+    }
+
     @Override
     protected String getSelectQuery() {
         return "SELECT * FROM groups WHERE id = ?";
@@ -37,7 +41,7 @@ public class PgGroupDao extends PgGenericDao<Group> implements GroupDao {
     }
 
     @Override
-    protected List<Group> parseResultSet(ResultSet rs, Connection con) {
+    protected List<Group> parseResultSet(ResultSet rs) {
         List<Group> list = new ArrayList<>();
         try {
             while (rs.next()) {

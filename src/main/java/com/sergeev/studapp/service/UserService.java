@@ -15,90 +15,128 @@ import java.util.Random;
 public final class UserService {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
-    private static final UserDao USER_DAO = DaoFactory.getDaoFactory().getUserDao();
+    private static UserDao userDao = DaoFactory.getDaoFactory().getUserDao();
 
     public static User addStudent(String firstName, String lastName, int groupId) {
-        User user = UserService.add(firstName, lastName)
-                .setRole(User.Role.STUDENT)
-                .setGroup(GroupService.get(groupId));
-        USER_DAO.save(user);
+        User user = null;
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            dao.startTransaction();
+            user = add(firstName, lastName)
+                    .setRole(User.Role.STUDENT)
+                    .setGroup(dao.getGroupDao().getById(groupId));
+            dao.getUserDao().save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     public static User addTeacher(String firstName, String lastName) {
-        User user = UserService.add(firstName, lastName).setRole(User.Role.TEACHER);
-        USER_DAO.save(user);
+        User user = null;
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            user = add(firstName, lastName)
+                    .setRole(User.Role.TEACHER);
+            dao.getUserDao().save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     public static User updateStudent(String firstName, String lastName, int groupId, int userId) {
-        User user = update(firstName, lastName, userId)
-                .setGroup(GroupService.get(groupId));
-        USER_DAO.update(user);
+        User user = null;
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            dao.startTransaction();
+            user = update(firstName, lastName, userId)
+                    .setGroup(dao.getGroupDao().getById(groupId));
+            dao.getUserDao().update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     public static User updateTeacher(String firstName, String lastName, int userId) {
-        User user = update(firstName, lastName, userId);
-        USER_DAO.update(user);
+        User user = null;
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            user = update(firstName, lastName, userId);
+            dao.getUserDao().update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     public static User updateAccount(String token, int userId) {
-        User user = USER_DAO.getById(userId);
-        user.getAccount().setToken(token);
-        USER_DAO.update(user);
+        User user = null;
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            dao.startTransaction();
+            user = dao.getUserDao().getById(userId);
+                   user.getAccount().setToken(token);
+            dao.getUserDao().update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return user;
     }
 
     public static User.Role remove(int id) {
-        User user = get(id);
-        User.Role role = user.getRole();
-        USER_DAO.remove(id);
+        User.Role role = null;
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            dao.startTransaction();
+            role = dao.getUserDao().getById(id).getRole();
+            dao.getUserDao().remove(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return role;
     }
 
     public static User get(int id) {
-        return USER_DAO.getById(id);
+        return userDao.getById(id);
     }
 
     public static List<User> getByGroup(int groupId) {
-        return USER_DAO.getByGroup(groupId);
+        return userDao.getByGroup(groupId);
     }
 
     public static User getByToken(String token) {
         if (token == null || token.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-        return USER_DAO.getByToken(token);
+        return userDao.getByToken(token);
     }
 
     public static User getByLogin(String login, String password) {
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-        return USER_DAO.getByLogin(login, password);
+        return userDao.getByLogin(login, password);
     }
 
     public static List<User> getAll(User.Role role) {
-        return USER_DAO.getAll(role);
+        return userDao.getAll(role);
     }
 
     public static List<User> find(User.Role role, String name) {
         if (role == null || name == null || name.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-        return USER_DAO.getByName(name, role);
+        return userDao.getByName(name, role);
     }
 
     public static Map<Course, Double> studentAvgMarks(int id) {
-        User user = get(id);
-        List<Course> courses = CourseService.getByGroup(user.getGroup().getId());
         Map<Course, Double> coursesMarks = new LinkedHashMap<>();
-
-        for (Course course : courses) {
-            double avgMark = MarkService.getAvgMark(id, course.getDiscipline().getId());
-            coursesMarks.put(course, avgMark);
+        try(DaoFactory dao = DaoFactory.getDaoFactory()) {
+            dao.startTransaction();
+            User user = dao.getUserDao().getById(id);
+            List<Course> courses = dao.getCourseDao().getByGroup(user.getGroup().getId());
+            for (Course course : courses) {
+                double avgMark = dao.getMarkDao().getAvgMark(id, course.getDiscipline().getId());
+                coursesMarks.put(course, avgMark);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return coursesMarks;
     }
@@ -121,7 +159,7 @@ public final class UserService {
         if (!checkName(firstName, lastName)) {
             throw new ApplicationException("Bad parameters.");
         }
-        User user = USER_DAO.getById(userId);
+        User user = userDao.getById(userId);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         return user;
