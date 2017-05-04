@@ -37,7 +37,7 @@ public class MarkServlet extends HttpServlet {
                 try {
                     MarkService.save(lessonId, studentId, value);
                 } catch (ApplicationException e) {
-                    LOG.info("Mark cannot be created.");
+                    LOG.info("Mark cannot be created.", e);
                     response.sendRedirect("/lesson/" + lessonId);
                     return;
                 }
@@ -51,7 +51,7 @@ public class MarkServlet extends HttpServlet {
                     lessonId = MarkService.get(id).getLesson().getId();
                     MarkService.delete(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Mark cannot be deleted, because mark doesn't exist.");
+                    LOG.info("Mark cannot be deleted, because mark doesn't exist.", e);
                     response.sendRedirect("/");
                     return;
                 }
@@ -84,7 +84,7 @@ public class MarkServlet extends HttpServlet {
                 student = UserService.get(studentId);
                 discipline = DisciplineService.get(disciplineId);
             } catch (ApplicationException e) {
-                LOG.info("Mark not found.");
+                LOG.info("Mark not found.", e);
                 response.sendRedirect("/mark");
                 return;
             }
@@ -103,7 +103,7 @@ public class MarkServlet extends HttpServlet {
                 lesson = LessonService.get(lessonId);
                 students = UserService.getByGroup(groupId);
             } catch (ApplicationException e) {
-                LOG.info("Mark cannot be created.");
+                LOG.info("Mark cannot be created.", e);
                 response.sendRedirect("/");
                 return;
             }

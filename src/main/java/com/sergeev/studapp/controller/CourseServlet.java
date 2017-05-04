@@ -40,7 +40,7 @@ public class CourseServlet extends HttpServlet {
                 try {
                     CourseService.save(disciplineId, groupId, teacherId);
                 } catch (ApplicationException e) {
-                    LOG.info("Course cannot be created.");
+                    LOG.info("Course cannot be created.", e);
                     response.sendRedirect("/course/new");
                     return;
                 }
@@ -56,7 +56,7 @@ public class CourseServlet extends HttpServlet {
                 try {
                     CourseService.update(disciplineId, groupId, teacherId, id);
                 } catch (ApplicationException e) {
-                    LOG.info("Course cannot be updated.");
+                    LOG.info("Course cannot be updated.", e);
                     response.sendRedirect("/course/" + id + "/change");
                     return;
                 }
@@ -69,14 +69,14 @@ public class CourseServlet extends HttpServlet {
                 try {
                     groupId = CourseService.get(id).getGroup().getId();
                 } catch (ApplicationException e) {
-                    LOG.info("Course cannot be deleted, because course doesn't exist.");
+                    LOG.info("Course cannot be deleted, because course doesn't exist.", e);
                     response.sendRedirect("/");
                     return;
                 }
                 try {
                     CourseService.remove(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Course cannot be deleted, because course contains lessons.");
+                    LOG.info("Course cannot be deleted, because course contains lessons.", e);
                     response.sendRedirect("/group/" + groupId);
                     return;
                 }
@@ -113,7 +113,7 @@ public class CourseServlet extends HttpServlet {
             try {
                 course = CourseService.get(id);
             } catch (ApplicationException e) {
-                LOG.info("Course cannot be updated, because course doesn't exist.");
+                LOG.info("Course cannot be updated, because course doesn't exist.", e);
                 response.sendRedirect("/course");
                 return;
             }

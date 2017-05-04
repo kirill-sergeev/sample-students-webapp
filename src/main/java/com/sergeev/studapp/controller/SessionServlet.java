@@ -58,7 +58,7 @@ public class SessionServlet extends HttpServlet {
                     try {
                         UserService.updateAccount(token, user.getId());
                     } catch (ApplicationException e) {
-                        LOG.info("Cannot update token.");
+                        LOG.info("Cannot update token.", e);
                     }
 
                     loginCookie = new Cookie(LoginFilter.LOGIN_COOKIE, token);

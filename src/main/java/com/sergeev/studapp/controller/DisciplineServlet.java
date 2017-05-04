@@ -35,7 +35,7 @@ public class DisciplineServlet extends HttpServlet {
                 try {
                     DisciplineService.save(title);
                 } catch (ApplicationException e) {
-                    LOG.info("Discipline cannot be created.");
+                    LOG.info("Discipline cannot be created.", e);
                     response.sendRedirect("/discipline/new");
                     return;
                 }
@@ -49,7 +49,7 @@ public class DisciplineServlet extends HttpServlet {
                 try {
                     DisciplineService.update(title, id);
                 } catch (ApplicationException e) {
-                    LOG.info("Discipline cannot be updated.");
+                    LOG.info("Discipline cannot be updated.", e);
                     response.sendRedirect("/discipline/" + id + "/change");
                     return;
                 }
@@ -62,7 +62,7 @@ public class DisciplineServlet extends HttpServlet {
                 try {
                     DisciplineService.remove(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Discipline cannot be deleted, because discipline doesn't exist.");
+                    LOG.info("Discipline cannot be deleted, because discipline doesn't exist.", e);
                     response.sendRedirect("/discipline");
                     return;
                 }
@@ -102,7 +102,7 @@ public class DisciplineServlet extends HttpServlet {
                 discipline = DisciplineService.get(id);
                 courses = CourseService.getByDiscipline(id);
             } catch (ApplicationException e) {
-                LOG.info("Discipline not found.");
+                LOG.info("Discipline not found.", e);
                 response.sendRedirect("/discipline");
                 return;
             }
@@ -117,7 +117,7 @@ public class DisciplineServlet extends HttpServlet {
             try {
                 discipline = DisciplineService.get(id);
             } catch (ApplicationException e) {
-                LOG.info("Discipline cannot be updated, because discipline doesn't exist.");
+                LOG.info("Discipline cannot be updated, because discipline doesn't exist.", e);
                 response.sendRedirect("/discipline");
                 return;
             }

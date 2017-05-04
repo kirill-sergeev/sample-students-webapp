@@ -43,7 +43,7 @@ public class StudentServlet extends HttpServlet {
                 try {
                     UserService.addStudent(firstName, lastName, groupId);
                 } catch (ApplicationException e) {
-                    LOG.info("Student cannot be created.");
+                    LOG.info("Student cannot be created.", e);
                     response.sendRedirect("/student/new");
                     return;
                 }
@@ -59,7 +59,7 @@ public class StudentServlet extends HttpServlet {
                 try {
                     UserService.updateStudent(firstName, lastName, groupId, id);
                 } catch (ApplicationException e) {
-                    LOG.info("Student cannot be updated.");
+                    LOG.info("Student cannot be updated.", e);
                     e.printStackTrace();
                     response.sendRedirect("/student/" + id + "/change");
                     return;
@@ -73,7 +73,7 @@ public class StudentServlet extends HttpServlet {
                 try {
                     UserService.remove(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Student cannot be deleted, because student doesn't exist.");
+                    LOG.info("Student cannot be deleted, because student doesn't exist.", e);
                     response.sendRedirect("/student");
                     return;
                 }
@@ -86,7 +86,7 @@ public class StudentServlet extends HttpServlet {
             try {
                 students = UserService.find(User.Role.STUDENT, name);
             } catch (ApplicationException e) {
-                LOG.info("Student not found.");
+                LOG.info("Student not found.", e);
                 response.sendRedirect("/student");
                 return;
             }
@@ -140,7 +140,7 @@ public class StudentServlet extends HttpServlet {
             try {
                 student = UserService.get(id);
             } catch (ApplicationException e) {
-                LOG.info("Student cannot be updated, because student doesn't exist.");
+                LOG.info("Student cannot be updated, because student doesn't exist.", e);
                 response.sendRedirect("/student");
                 return;
             }

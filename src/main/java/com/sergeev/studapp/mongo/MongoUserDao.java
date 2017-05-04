@@ -86,27 +86,27 @@ public class MongoUserDao extends MongoGenericDao<User> implements UserDao {
         or.add(query1);
         or.add(query2);
         BasicDBObject query = new BasicDBObject("$or", or);
-        return getBy(query, Sorts.ascending(FIRST_NAME, LAST_NAME));
+        return getByParams(query, Sorts.ascending(FIRST_NAME, LAST_NAME));
     }
 
     @Override
     public List<User> getByGroup(Integer groupId) {
-        return getBy((eq(GROUP_ID, groupId)), Sorts.ascending(FIRST_NAME, LAST_NAME));
+        return getByParams((eq(GROUP_ID, groupId)), Sorts.ascending(FIRST_NAME, LAST_NAME));
     }
 
     @Override
     public List<User> getAll(User.Role role) {
-        return getBy((eq(ROLE, role.name())), Sorts.ascending(FIRST_NAME, LAST_NAME));
+        return getByParams((eq(ROLE, role.name())), Sorts.ascending(FIRST_NAME, LAST_NAME));
     }
 
     @Override
     public User getByToken(String token) {
-        return getBy((eq(TOKEN, token)), null).get(0);
+        return getByParams((eq(TOKEN, token)), null).get(0);
     }
 
     @Override
     public User getByLogin(String login, String password) {
-        return getBy(and(eq(LOGIN, login), eq(PASSWORD, password)), null).get(0);
+        return getByParams(and(eq(LOGIN, login), eq(PASSWORD, password)), null).get(0);
     }
 
 }

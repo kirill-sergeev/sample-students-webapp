@@ -64,10 +64,10 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
 
     @Override
     public List<T> getAll() {
-        return getBy(new Document(), ascending(TITLE));
+        return getByParams(new Document(), ascending(TITLE));
     }
 
-    protected List<T> getBy(Bson filter, Bson sort){
+    protected List<T> getByParams(Bson filter, Bson sort){
         List<T> list = new ArrayList<>();
         try (MongoCursor<Document> cursor = collection
                 .find(filter)

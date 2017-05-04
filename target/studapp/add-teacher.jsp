@@ -9,7 +9,7 @@
         <div class="col-3">
             <form action="${pageContext.request.contextPath}/teacher" method="POST">
                 <div class="form-group">
-                    <input type="hidden" name="action" value="create">
+                    <input type="hidden" name="action" value="save">
                     <br>
                     <label>Add a new teacher</label>
                     <input type="text" name="first-name" class="form-control" placeholder="First name...">

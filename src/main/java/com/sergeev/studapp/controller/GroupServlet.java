@@ -36,7 +36,7 @@ public class GroupServlet extends HttpServlet {
                 try {
                     GroupService.save(title);
                 } catch (ApplicationException e) {
-                    LOG.info("Group cannot be created.");
+                    LOG.info("Group cannot be created.", e);
                     response.sendRedirect("/group/new");
                     return;
                 }
@@ -50,7 +50,7 @@ public class GroupServlet extends HttpServlet {
                 try {
                     GroupService.update(title, id);
                 } catch (ApplicationException e) {
-                    LOG.info("Group cannot be updated.");
+                    LOG.info("Group cannot be updated.", e);
                     response.sendRedirect("/group/" + id + "/change");
                     return;
                 }
@@ -63,7 +63,7 @@ public class GroupServlet extends HttpServlet {
                 try {
                     GroupService.remove(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Group cannot be deleted, because group doesn't exist.");
+                    LOG.info("Group cannot be deleted, because group doesn't exist.", e);
                     response.sendRedirect("/group");
                     return;
                 }
@@ -106,7 +106,7 @@ public class GroupServlet extends HttpServlet {
                 courses = CourseService.getByGroup(id);
                 students = UserService.getByGroup(id);
             } catch (ApplicationException e) {
-                LOG.info("Group not found.");
+                LOG.info("Group not found.", e);
                 response.sendRedirect("/group");
                 return;
             }
@@ -123,7 +123,7 @@ public class GroupServlet extends HttpServlet {
             try {
                 group = GroupService.get(id);
             } catch (ApplicationException e) {
-                LOG.info("Group cannot be updated, because group doesn't exist.");
+                LOG.info("Group cannot be updated, because group doesn't exist.", e);
                 response.sendRedirect("/group");
                 return;
             }

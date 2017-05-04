@@ -10,7 +10,7 @@
     <div class="row justify-content-md-center">
         <div class="col-3">
             <form action="${pageContext.request.contextPath}/student" method="POST">
-                <input type="hidden" name="action" value="create">
+                <input type="hidden" name="action" value="save">
                 <br>
                 <label>Add a new student</label>
                 <div class="form-group">

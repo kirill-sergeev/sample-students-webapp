@@ -3,12 +3,8 @@ package com.sergeev.studapp.dao;
 import com.sergeev.studapp.jpa.JpaDaoFactory;
 import com.sergeev.studapp.mongo.MongoDaoFactory;
 import com.sergeev.studapp.postgres.PgDaoFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class DaoFactory {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DaoFactory.class);
 
     public static final int POSTGRESQL = 1;
     public static final int MONGODB = 2;
@@ -28,7 +24,7 @@ public abstract class DaoFactory {
     }
 
     public static DaoFactory getDaoFactory() {
-        return getDaoFactory(POSTGRESQL);
+        return getDaoFactory(JPA);
     }
 
     public abstract CourseDao getCourseDao();

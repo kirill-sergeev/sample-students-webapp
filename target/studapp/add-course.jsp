@@ -15,7 +15,7 @@
             <label>Add a new course</label>
             <form action="${pageContext.request.contextPath}/course" method="POST">
                 <div class="form-group">
-                    <input type="hidden" name="action" value="create">
+                    <input type="hidden" name="action" value="save">
                     <label>Discipline  </label>
                         <select class="form-control" name="discipline">
                             <option disabled selected value>< select an option ></option>

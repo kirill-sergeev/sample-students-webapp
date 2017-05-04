@@ -53,12 +53,12 @@ public class LoginFilter implements Filter {
             }
         }
 
-        if (user == null) {
-            if (loginCookie != null) {
+        if (loginCookie != null) {
+            if (user == null) {
                 try {
                     user = UserService.getByToken(loginCookie.getValue());
                 } catch (ApplicationException e) {
-                    LOG.info("Broken cookie.");
+                    LOG.info("Broken cookie.", e);
                 }
                 req.getSession().setAttribute("user", user);
             }

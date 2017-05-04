@@ -37,7 +37,7 @@ public class TeacherServlet extends HttpServlet {
                 try {
                     UserService.addTeacher(firstName, lastName);
                 } catch (ApplicationException e) {
-                    LOG.info("Teacher cannot be created.");
+                    LOG.info("Teacher cannot be created.", e);
                     response.sendRedirect("/teacher/new");
                     return;
                 }
@@ -52,7 +52,7 @@ public class TeacherServlet extends HttpServlet {
                 try {
                     UserService.updateTeacher(firstName, lastName, id);
                 } catch (ApplicationException e) {
-                    LOG.info("Teacher cannot be updated.");
+                    LOG.info("Teacher cannot be updated.", e);
                     e.printStackTrace();
                     response.sendRedirect("/teacher/" + id + "/change");
                     return;
@@ -66,7 +66,7 @@ public class TeacherServlet extends HttpServlet {
                 try {
                     UserService.remove(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Teacher cannot be deleted, because teacher doesn't exist.");
+                    LOG.info("Teacher cannot be deleted, because teacher doesn't exist.", e);
                     response.sendRedirect("/teacher");
                     return;
                 }
@@ -105,7 +105,7 @@ public class TeacherServlet extends HttpServlet {
                 teacher = UserService.get(id);
                 courses = CourseService.getByTeacher(id);
             } catch (ApplicationException e) {
-                LOG.info("Teacher not found.");
+                LOG.info("Teacher not found.", e);
                 response.sendRedirect("/teacher");
                 return;
             }
@@ -120,7 +120,7 @@ public class TeacherServlet extends HttpServlet {
             try {
                 teacher = UserService.get(id);
             } catch (ApplicationException e) {
-                LOG.info("Teacher cannot be updated, because teacher doesn't exist.");
+                LOG.info("Teacher cannot be updated, because teacher doesn't exist.", e);
                 response.sendRedirect("/teacher");
                 return;
             }

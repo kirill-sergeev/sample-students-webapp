@@ -10,7 +10,7 @@
             <br>
             <form action="${pageContext.request.contextPath}/group" method="POST">
                 <div class="form-group">
-                    <input type="hidden" name="action" value="create">
+                    <input type="hidden" name="action" value="save">
                     <label>Add a new group</label>
                     <input type="text" name="title" class="form-control" placeholder="Title...">
                 </div>

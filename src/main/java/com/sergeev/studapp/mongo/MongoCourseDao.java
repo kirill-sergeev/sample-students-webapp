@@ -62,22 +62,22 @@ public class MongoCourseDao extends MongoGenericDao<Course> implements CourseDao
 
     @Override
     public List<Course> getByDiscipline(Integer disciplineId) {
-        return getBy((eq(DISCIPLINE_ID, disciplineId)), null);
+        return getByParams((eq(DISCIPLINE_ID, disciplineId)), null);
     }
 
     @Override
     public List<Course> getByGroup(Integer groupId) {
-        return getBy((eq(GROUP_ID, groupId)), null);
+        return getByParams((eq(GROUP_ID, groupId)), null);
     }
 
     @Override
     public List<Course> getByTeacher(Integer userId) {
-        return getBy((eq(USER_ID, userId)), null);
+        return getByParams((eq(USER_ID, userId)), null);
     }
 
     @Override
     public Course getByDisciplineAndGroup(Integer disciplineId, Integer groupId) {
-        return getBy((and(eq(DISCIPLINE_ID, disciplineId), eq(GROUP_ID, groupId))), null).get(0);
+        return getByParams((and(eq(DISCIPLINE_ID, disciplineId), eq(GROUP_ID, groupId))), null).get(0);
     }
 
 }

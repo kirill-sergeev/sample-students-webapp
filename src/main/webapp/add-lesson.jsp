@@ -16,7 +16,7 @@
                 <br>
                 <label>Add a new lesson</label>
                 <div class="form-group">
-                    <input type="hidden" name="action" value="create">
+                    <input type="hidden" name="action" value="save">
                     <input type="hidden" name="group" class="form-control" value="${group.id}">
                 </div>
                 <div class="form-group">

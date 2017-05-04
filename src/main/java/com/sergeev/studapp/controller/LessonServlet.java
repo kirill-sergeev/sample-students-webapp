@@ -45,7 +45,7 @@ public class LessonServlet extends HttpServlet {
                 try {
                     LessonService.save(groupId, disciplineId, type, order, date);
                 } catch (ApplicationException e) {
-                    LOG.info("Lesson cannot be created.");
+                    LOG.info("Lesson cannot be created.", e);
                     e.printStackTrace();
                     response.sendRedirect("/lesson/new/group/"+groupId);
                     return;
@@ -64,7 +64,7 @@ public class LessonServlet extends HttpServlet {
                 try {
                     LessonService.update(groupId, disciplineId, type, order, date, id);
                 } catch (ApplicationException e) {
-                    LOG.info("Lesson cannot be updated.");
+                    LOG.info("Lesson cannot be updated.", e);
                     response.sendRedirect("/lesson/" + id + "/change");
                     return;
                 }
@@ -78,7 +78,7 @@ public class LessonServlet extends HttpServlet {
                     groupId = LessonService.get(id).getCourse().getGroup().getId();
                     LessonService.remove(id);
                 } catch (ApplicationException e) {
-                    LOG.info("Lesson cannot be deleted, because lesson doesn't exist.");
+                    LOG.info("Lesson cannot be deleted, because lesson doesn't exist.", e);
                     response.sendRedirect("/");
                     return;
                 }
@@ -109,7 +109,7 @@ public class LessonServlet extends HttpServlet {
                 group = GroupService.get(groupId);
                 lessons = LessonService.getAll(groupId);
             } catch (ApplicationException e) {
-                LOG.info("Lessons in group not found, because group doesn't exist.");
+                LOG.info("Lessons in group not found, because group doesn't exist.", e);
                 response.sendRedirect("/");
                 return;
             }
@@ -128,7 +128,7 @@ public class LessonServlet extends HttpServlet {
                 group = GroupService.get(groupId);
                 courses = CourseService.getByGroup(groupId);
             } catch (ApplicationException e) {
-                LOG.info("Lessons cannot be created, because group doesn't exist.");
+                LOG.info("Lessons cannot be created, because group doesn't exist.", e);
                 response.sendRedirect("/");
                 return;
             }
@@ -162,7 +162,7 @@ public class LessonServlet extends HttpServlet {
             try {
                 lesson = LessonService.get(id);
             } catch (ApplicationException e) {
-                LOG.info("Lesson cannot be updated, because lesson doesn't exist.");
+                LOG.info("Lesson cannot be updated, because lesson doesn't exist.", e);
                 response.sendRedirect("/lesson");
                 return;
             }
