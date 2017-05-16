@@ -24,7 +24,7 @@ public abstract class DaoFactory implements AutoCloseable{
     }
 
     public static DaoFactory getDaoFactory() {
-        return getDaoFactory(POSTGRESQL);
+        return getDaoFactory(JPA);
     }
 
     public abstract void startTransaction();

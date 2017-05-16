@@ -7,6 +7,7 @@ import com.sergeev.studapp.model.Group;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +44,13 @@ public final class GroupService {
     }
 
     public static List<Group> getAll() {
-        return groupDao.getAll();
+        List<Group> groups;
+        try {
+            groups = groupDao.getAll();
+        } catch (PersistentException e){
+            groups = Collections.emptyList();
+        }
+        return groups;
     }
 
     public static Map<Group, Integer> studentsCount() {

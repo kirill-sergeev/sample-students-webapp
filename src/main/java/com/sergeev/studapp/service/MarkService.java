@@ -2,10 +2,12 @@ package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.MarkDao;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Mark;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class MarkService {
@@ -36,11 +38,23 @@ public final class MarkService {
     }
 
     public static List<Mark> getByLesson(int lessonId) {
-        return markDao.getByLesson(lessonId);
+        List<Mark> marks;
+        try {
+            marks = markDao.getByLesson(lessonId);
+        } catch (PersistentException e){
+            marks = Collections.emptyList();
+        }
+        return marks;
     }
 
     public static List<Mark> getByDisciplineAndStudent(int disciplineId, int studentId) {
-        return markDao.getByDisciplineAndStudent(disciplineId, studentId);
+        List<Mark> marks;
+        try {
+            marks = markDao.getByDisciplineAndStudent(disciplineId, studentId);
+        } catch (PersistentException e){
+            marks = Collections.emptyList();
+        }
+        return marks;
     }
 
     public static void delete(int id) {

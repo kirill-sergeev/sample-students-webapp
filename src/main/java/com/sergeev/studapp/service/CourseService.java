@@ -1,6 +1,8 @@
 package com.sergeev.studapp.service;
 
-import com.sergeev.studapp.dao.*;
+import com.sergeev.studapp.dao.CourseDao;
+import com.sergeev.studapp.dao.DaoFactory;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Discipline;
 import com.sergeev.studapp.model.Group;
@@ -8,6 +10,7 @@ import com.sergeev.studapp.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class CourseService {
@@ -61,19 +64,43 @@ public final class CourseService {
     }
 
     public static List<Course> getAll() {
-        return courseDao.getAll();
+        List<Course> courses;
+        try {
+          courses = courseDao.getAll();
+        } catch (PersistentException e){
+            courses = Collections.emptyList();
+        }
+        return courses;
     }
 
     public static List<Course> getByGroup(int groupId) {
-        return courseDao.getByGroup(groupId);
+        List<Course> courses;
+        try {
+            courses = courseDao.getByGroup(groupId);
+        } catch (PersistentException e){
+            courses = Collections.emptyList();
+        }
+        return courses;
     }
 
     public static List<Course> getByTeacher(int teacherId) {
-        return courseDao.getByTeacher(teacherId);
+        List<Course> courses;
+        try {
+            courses = courseDao.getByTeacher(teacherId);
+        } catch (PersistentException e){
+            courses = Collections.emptyList();
+        }
+        return courses;
     }
 
     public static List<Course> getByDiscipline(int disciplineId) {
-        return courseDao.getByDiscipline(disciplineId);
+        List<Course> courses;
+        try {
+            courses = courseDao.getByDiscipline(disciplineId);
+        } catch (PersistentException e){
+            courses = Collections.emptyList();
+        }
+        return courses;
     }
 
     private CourseService() {

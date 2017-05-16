@@ -14,7 +14,7 @@ public abstract class JpaGenericDao<T extends Identified> implements GenericDao<
 
     protected EntityTransaction transaction;
     protected Class<T> entityClass;
-    protected EntityManager entityManager = JpaDaoFactory.getConnection();
+
 
     public JpaGenericDao() {
         ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
@@ -23,18 +23,23 @@ public abstract class JpaGenericDao<T extends Identified> implements GenericDao<
 
     @Override
     public void save(T object) {
+        EntityManager entityManager = JpaDaoFactory.getConnection();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
             entityManager.persist(object);
             transaction.commit();
+            entityManager.close();
         } catch (Exception e) {
             throw new PersistentException(e);
+        } finally {
+            entityManager.close();
         }
     }
 
     @Override
     public void update(T object) {
+        EntityManager entityManager = JpaDaoFactory.getConnection();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
@@ -42,11 +47,14 @@ public abstract class JpaGenericDao<T extends Identified> implements GenericDao<
             transaction.commit();
         } catch (Exception e) {
             throw new PersistentException(e);
+        } finally {
+            entityManager.close();
         }
     }
 
     @Override
     public void remove(Integer id) {
+        EntityManager entityManager = JpaDaoFactory.getConnection();
         try {
             transaction = entityManager.getTransaction();
             transaction.begin();
@@ -54,26 +62,34 @@ public abstract class JpaGenericDao<T extends Identified> implements GenericDao<
             transaction.commit();
         } catch (Exception e) {
             throw new PersistentException(e);
+        } finally {
+            entityManager.close();
         }
     }
 
     @Override
     public T getById(Integer id) {
+        EntityManager entityManager = JpaDaoFactory.getConnection();
         try {
             return entityManager.find(entityClass, id);
         } catch (Exception e) {
             throw new PersistentException(e);
+        } finally {
+            entityManager.close();
         }
     }
 
     @Override
     public List<T> getAll() {
+        EntityManager entityManager = JpaDaoFactory.getConnection();
         try {
             String select = String.format("SELECT e FROM %s e", entityClass.getSimpleName());
             TypedQuery<T> query = entityManager.createQuery(select, entityClass);
             return query.getResultList();
         } catch (Exception e) {
             throw new PersistentException(e);
+        } finally {
+            entityManager.close();
         }
     }
 

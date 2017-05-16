@@ -2,10 +2,12 @@ package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.DisciplineDao;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Discipline;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 public final class DisciplineService {
@@ -42,9 +44,15 @@ public final class DisciplineService {
     }
 
     public static List<Discipline> getAll() {
-        return disciplineDao.getAll();
+        List<Discipline> disciplines;
+        try {
+            disciplines = disciplineDao.getAll();
+        } catch (PersistentException e) {
+            disciplines = Collections.emptyList();
+        }
+        return disciplines;
     }
-    
+
     private static boolean checkTitle(String title) {
         String expression = "(?u)^\\p{Lu}.{1,29}$";
         return !(title == null || title.isEmpty()) && title.matches(expression);

@@ -1,16 +1,14 @@
 package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.dao.UserDao;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public final class UserService {
 
@@ -97,7 +95,13 @@ public final class UserService {
     }
 
     public static List<User> getByGroup(int groupId) {
-        return userDao.getByGroup(groupId);
+        List<User> users;
+        try {
+            users = userDao.getByGroup(groupId);
+        } catch (PersistentException e){
+            users = Collections.emptyList();
+        }
+        return users;
     }
 
     public static User getByToken(String token) {
@@ -115,14 +119,26 @@ public final class UserService {
     }
 
     public static List<User> getAll(User.Role role) {
-        return userDao.getAll(role);
+        List<User> users;
+        try {
+            users = userDao.getAll(role);
+        } catch (PersistentException e){
+            users = Collections.emptyList();
+        }
+        return users;
     }
 
     public static List<User> find(User.Role role, String name) {
         if (role == null || name == null || name.isEmpty()) {
             throw new ApplicationException("Bad parameters.");
         }
-        return userDao.getByName(name, role);
+        List<User> users;
+        try {
+            users = userDao.getByName(name, role);
+        } catch (PersistentException e){
+            users = Collections.emptyList();
+        }
+        return users;
     }
 
     public static Map<Course, Double> studentAvgMarks(int id) {

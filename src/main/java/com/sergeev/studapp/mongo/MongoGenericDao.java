@@ -78,6 +78,9 @@ public abstract class MongoGenericDao<T extends Identified> implements GenericDa
                 list.add(item);
             }
         }
+        if (list.isEmpty()) {
+            throw new PersistentException("Record not found.");
+        }
         return list;
     }
 

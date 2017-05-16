@@ -25,7 +25,7 @@
             <property name="hibernate.hbm2ddl.import_files" value="insert.sql"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
             <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.DefaultNamingStrategy"/>
             <property name="connection_pool_size" value="50"/>
         </properties>

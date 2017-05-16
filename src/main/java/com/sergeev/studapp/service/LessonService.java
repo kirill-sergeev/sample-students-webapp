@@ -2,12 +2,14 @@ package com.sergeev.studapp.service;
 
 import com.sergeev.studapp.dao.DaoFactory;
 import com.sergeev.studapp.dao.LessonDao;
+import com.sergeev.studapp.dao.PersistentException;
 import com.sergeev.studapp.model.Course;
 import com.sergeev.studapp.model.Lesson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 public final class LessonService {
@@ -59,7 +61,13 @@ public final class LessonService {
     }
 
     public static List<Lesson> getAll(int groupId) {
-        return lessonDao.getByGroup(groupId);
+        List<Lesson> lessons;
+        try {
+            lessons = lessonDao.getByGroup(groupId);
+        } catch (PersistentException e){
+            lessons = Collections.emptyList();
+        }
+        return lessons;
     }
 
     private LessonService() {
