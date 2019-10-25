@@ -1,8 +1,0 @@
-
-ssquid:S1450"RRemove the "doc" field and declare it as a local variable in the relevant methods.(Ä¹¿®ùÿÿÿÿ8õş ©±+
-tsquid:S1450"SRemove the "user" field and declare it as a local variable in the relevant methods.(’Ø¾ıÿÿÿÿ8õş ©±+
-zsquid:S1450"YRemove the "collection" field and declare it as a local variable in the relevant methods.(»µÖıÿÿÿÿ8õş ©±+
-h$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(¾±ÆÊøÿÿÿÿ8õş ©±+
-h$squid:AssignmentInSubExpressionCheck".Extract the assignment out of this expression.(Ÿ–ôòøÿÿÿÿ8õş ©±+
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8õş ©±+
-Gsquid:S1168"+Return an empty collection instead of null.(¥¹ï8õş ©±+
